@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>가수인생활 엔터테인먼트</title>
+  <meta name="description" content="공연기획·문화예술행사·가수 매니지먼트 및 대중문화예술 콘텐츠를 기획·제작하는 가수인생활 엔터테인먼트 공식 홈페이지입니다.">
+  <style>
+    :root{
+      --bg:#0d0d0f; --panel:#17171b; --gold:#d9b45b; --gold2:#f2d58b;
+      --text:#f7f4ec; --muted:#c8c2b7; --line:#333238; --white:#fff;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:"Noto Sans KR","Malgun Gothic",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .wrap{width:min(1120px,92%);margin:auto}
+    header{position:sticky;top:0;z-index:50;background:rgba(13,13,15,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{font-weight:900;letter-spacing:-.04em;font-size:1.15rem}
+    .brand span{color:var(--gold)}
+    .menu{display:flex;gap:22px;font-size:.95rem}
+    .menu a:hover{color:var(--gold2)}
+    .hero{min-height:78vh;display:grid;place-items:center;position:relative;overflow:hidden;
+      background:
+      radial-gradient(circle at 75% 25%,rgba(217,180,91,.26),transparent 34%),
+      radial-gradient(circle at 15% 75%,rgba(130,97,33,.22),transparent 32%),
+      linear-gradient(145deg,#09090a 0%,#16151a 55%,#0e0e10 100%)}
+    .hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px);background-size:52px 52px;mask-image:linear-gradient(to bottom,black,transparent)}
+    .hero-inner{position:relative;text-align:center;padding:90px 0 78px}
+    .eyebrow{color:var(--gold2);font-weight:800;letter-spacing:.18em;font-size:.82rem}
+    h1{font-size:clamp(2.5rem,7vw,5.6rem);line-height:1.05;letter-spacing:-.06em;margin:16px 0 22px}
+    .hero p{font-size:clamp(1.05rem,2vw,1.35rem);color:var(--muted);max-width:760px;margin:0 auto 34px}
+    .buttons{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 22px;border-radius:999px;border:1px solid var(--gold);font-weight:800}
+    .btn.primary{background:var(--gold);color:#15120c}
+    .btn:hover{transform:translateY(-2px)}
+    section{padding:88px 0}
+    .section-head{text-align:center;margin-bottom:44px}
+    .section-head small{color:var(--gold);font-weight:900;letter-spacing:.15em}
+    .section-head h2{font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.05em;margin:10px 0}
+    .section-head p{color:var(--muted);max-width:720px;margin:auto}
+    .grid{display:grid;gap:20px}
+    .cards{grid-template-columns:repeat(3,1fr)}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:28px}
+    .card .num{color:var(--gold);font-weight:900;font-size:.85rem}
+    .card h3{font-size:1.35rem;margin:8px 0 8px}
+    .card p{color:var(--muted);margin:0}
+    .about{grid-template-columns:1.1fr .9fr;align-items:stretch}
+    .about-copy,.about-box{background:var(--panel);border:1px solid var(--line);border-radius:26px;padding:34px}
+    .about-copy h3{font-size:2rem;margin-top:0}
+    .about-copy p{color:var(--muted)}
+    .about-box{display:grid;gap:16px}
+    .fact{padding:18px;border:1px solid var(--line);border-radius:16px}
+    .fact b{display:block;color:var(--gold2);font-size:1.05rem}
+    .gallery{grid-template-columns:repeat(3,1fr)}
+    .photo{aspect-ratio:4/3;border-radius:20px;border:1px solid var(--line);background:
+      linear-gradient(145deg,rgba(217,180,91,.18),rgba(255,255,255,.03)),
+      #1a1a1f;display:grid;place-items:center;text-align:center;padding:22px;color:var(--muted)}
+    .photo strong{color:var(--gold2);display:block;font-size:1.15rem}
+    .contact{grid-template-columns:1fr 1fr}
+    .contact-box{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:30px}
+    .contact-box h3{margin-top:0}
+    .contact-list{display:grid;gap:13px;color:var(--muted)}
+    .notice{font-size:.9rem;color:#aaa}
+    footer{border-top:1px solid var(--line);padding:30px 0;color:#aaa;text-align:center}
+    @media(max-width:800px){
+      .menu{display:none}
+      .cards,.gallery,.about,.contact{grid-template-columns:1fr}
+      section{padding:66px 0}
+      .hero{min-height:72vh}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">가수인생활 <span>엔터테인먼트</span></a>
+    <nav class="menu">
+      <a href="#about">회사소개</a>
+      <a href="#service">사업분야</a>
+      <a href="#gallery">활동사진</a>
+      <a href="#contact">문의</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow">GASUIN LIFE ENTERTAINMENT</div>
+      <h1>무대와 사람을 잇는<br>문화예술 파트너</h1>
+      <p>공연기획·문화예술행사·가수 매니지먼트 및 대중문화예술 콘텐츠를 기획·제작하는 가수인생활 엔터테인먼트입니다.</p>
+      <div class="buttons">
+        <a class="btn primary" href="#contact">공연·행사 문의</a>
+        <a class="btn" href="https://www.facebook.com/gasuinent" target="_blank" rel="noopener">페이스북 보기</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <small>ABOUT US</small>
+        <h2>가수인생활 엔터테인먼트</h2>
+        <p>공연 현장의 경험과 문화예술 네트워크를 바탕으로 행사 목적에 맞는 무대와 콘텐츠를 기획합니다.</p>
+      </div>
+      <div class="grid about">
+        <div class="about-copy">
+          <h3>대표 이명로</h3>
+          <p>지역 문화예술 활성화와 대중문화예술인의 활동 기회 확대를 목표로 공연·축제·봉사공연·전통시장 활성화 행사 등 다양한 현장을 기획하고 운영합니다.</p>
+          <p>행사의 성격과 예산, 관객층을 고려하여 출연진 구성부터 프로그램 기획, 현장 운영까지 실무적으로 준비합니다.</p>
+        </div>
+        <div class="about-box">
+          <div class="fact"><b>공연기획</b>지역축제, 기념행사, 문화공연, 특별무대</div>
+          <div class="fact"><b>가수 매니지먼트</b>출연 협의, 무대 구성, 공연 프로그램 운영</div>
+          <div class="fact"><b>콘텐츠 제작</b>홍보영상, 공연 콘텐츠, 온라인 문화예술 콘텐츠</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="service">
+    <div class="wrap">
+      <div class="section-head">
+        <small>SERVICES</small>
+        <h2>주요 사업분야</h2>
+        <p>행사 규모와 목적에 맞춰 필요한 분야를 선택하고 맞춤형으로 구성합니다.</p>
+      </div>
+      <div class="grid cards">
+        <article class="card"><div class="num">01</div><h3>문화예술행사</h3><p>지역축제, 전통시장 행사, 복지관 공연, 기념행사 등 현장형 문화프로그램을 기획합니다.</p></article>
+        <article class="card"><div class="num">02</div><h3>가수·공연팀 섭외</h3><p>행사 성격에 맞는 가수, 공연팀, 사회자와 협의하여 안정적인 무대를 구성합니다.</p></article>
+        <article class="card"><div class="num">03</div><h3>무대 프로그램 운영</h3><p>공연 순서, 진행 구성, 현장 동선, 관객 참여 프로그램을 체계적으로 준비합니다.</p></article>
+        <article class="card"><div class="num">04</div><h3>지역상생 프로젝트</h3><p>전통시장과 소상공인 활성화를 위한 공연 및 상생형 문화사업을 기획합니다.</p></article>
+        <article class="card"><div class="num">05</div><h3>봉사·공익 공연</h3><p>복지기관, 어르신 행사, 지역공동체를 위한 따뜻한 문화나눔 무대를 만듭니다.</p></article>
+        <article class="card"><div class="num">06</div><h3>홍보 콘텐츠</h3><p>행사 소개글, 보도자료, 사진·영상 콘텐츠와 온라인 홍보물을 함께 준비합니다.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery">
+    <div class="wrap">
+      <div class="section-head">
+        <small>GALLERY</small>
+        <h2>공연 및 행사 활동</h2>
+        <p>아래 영역은 앞으로 대표 공연사진으로 교체할 수 있습니다.</p>
+      </div>
+      <div class="grid gallery">
+        <div class="photo"><div><strong>지역 문화공연</strong>공연사진 추가 예정</div></div>
+        <div class="photo"><div><strong>전통시장 상생행사</strong>행사사진 추가 예정</div></div>
+        <div class="photo"><div><strong>봉사·공익 공연</strong>활동사진 추가 예정</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <small>CONTACT</small>
+        <h2>공연·행사 문의</h2>
+        <p>행사명, 날짜, 장소, 예상 관객 수와 요청 내용을 정리해 연락해 주세요.</p>
+      </div>
+      <div class="grid contact">
+        <div class="contact-box">
+          <h3>문의 안내</h3>
+          <div class="contact-list">
+            <div>대표: 이명로</div>
+            <div>전화: 홈페이지 공개 전 입력 예정</div>
+            <div>이메일: 홈페이지 공개 전 입력 예정</div>
+          </div>
+          <p class="notice">전화번호와 이메일은 공개 여부를 확인한 뒤 넣는 것이 안전합니다.</p>
+        </div>
+        <div class="contact-box">
+          <h3>공식 채널</h3>
+          <div class="buttons" style="justify-content:flex-start">
+            <a class="btn primary" href="https://www.facebook.com/gasuinent" target="_blank" rel="noopener">페이스북 페이지</a>
+            <a class="btn" href="#" onclick="alert('유튜브 주소를 입력한 뒤 연결됩니다.');return false;">유튜브 준비 중</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 가수인생활 엔터테인먼트. All rights reserved.</div>
+</footer>
+</body>
+</html>
