@@ -175,6 +175,31 @@ body.page-mode {
 }
 </style>
 
+
+<style>
+.schedule-filter{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.schedule-filter-btn{padding:10px 17px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);font:inherit;font-weight:800;cursor:pointer}
+.schedule-filter-btn.active{background:var(--gold);color:#111;border-color:var(--gold)}
+.schedule-panel{display:none;max-width:1000px;margin:0 auto}
+.schedule-panel.active{display:block}
+.event-row{width:100%;display:grid;grid-template-columns:150px 1fr 40px;align-items:center;gap:20px;padding:20px 22px;margin:0 0 10px;background:var(--panel);border:1px solid var(--line);border-radius:18px;color:#fff;text-align:left;cursor:pointer;font:inherit}
+.event-date{display:flex;align-items:center;justify-content:center;min-height:70px;border-radius:14px;background:rgba(217,174,81,.1);color:var(--gold2);font-weight:900}
+.event-text b{display:block;font-size:1.25rem;margin-bottom:6px}
+.event-text em{font-style:normal;color:var(--muted)}
+.event-plus{font-size:1.5rem;color:var(--gold2);text-align:center}
+.event-detail{display:none;margin:-2px 0 14px;padding:18px 24px 22px;background:#111318;border:1px solid rgba(217,174,81,.25);border-radius:0 0 18px 18px}
+.event-detail.open{display:block}
+.event-detail p{display:grid;grid-template-columns:130px 1fr;gap:16px;margin:0;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.event-detail p:last-child{border-bottom:0}
+.event-detail strong{color:var(--gold2)}
+.event-detail span{color:#ddd;line-height:1.7}
+@media(max-width:800px){
+ .event-row{grid-template-columns:1fr 36px}
+ .event-date{grid-column:1/-1;min-height:56px}
+ .event-detail p{grid-template-columns:1fr;gap:4px}
+}
+</style>
+
 </head>
 <body>
 <header><div class="wrap nav"><a class="brand" href="#top"><img src="logo.png" alt="로고"><div>가수인생활 <span>엔터테인먼트</span></div></a><nav class="menu"><a href="#about">회사소개</a><a href="#business">사업분야</a><a href="#partners">함께하는 단체</a><a href="#news">뉴스</a><a href="#notice">공지</a><a href="#schedule">일정</a><a href="#projects">실적</a><a href="#contact">문의</a></nav></div></header>
@@ -348,73 +373,124 @@ body.page-mode {
 
 
 
+
 <section id="schedule">
   <div class="wrap">
     <div class="head">
       <small>SCHEDULE</small>
       <h2>행사일정</h2>
-      <p>공연, 협회, 봉사·공익 일정을 구분하여 확인하고 세부내용을 펼쳐볼 수 있습니다.</p>
+      <p>분류를 누르면 해당 일정만 표시되고, 일정 제목을 누르면 날짜·시간·장소 등 세부정보가 열립니다.</p>
     </div>
 
-    <div class="schedule-tabs">
-      <button class="schedule-tab active" type="button" data-schedule="all">전체</button>
-      <button class="schedule-tab" type="button" data-schedule="엔터테인먼트">엔터테인먼트</button>
-      <button class="schedule-tab" type="button" data-schedule="협회">협회</button>
-      <button class="schedule-tab" type="button" data-schedule="봉사">봉사·공익</button>
+    <div class="schedule-filter">
+      <button type="button" class="schedule-filter-btn active" data-target="schedule-all">전체</button>
+      <button type="button" class="schedule-filter-btn" data-target="schedule-ent">엔터테인먼트</button>
+      <button type="button" class="schedule-filter-btn" data-target="schedule-assoc">협회</button>
+      <button type="button" class="schedule-filter-btn" data-target="schedule-vol">봉사·공익</button>
     </div>
 
-    <div class="schedule-list">
-      <details class="schedule-detail" data-schedule-category="엔터테인먼트">
-        <summary>
-          <div class="schedule-date"><strong>일정</strong><span>협의 중</span></div>
-          <div class="schedule-copy"><span class="schedule-badge">엔터테인먼트</span><h3>공연·행사 기획 일정</h3><p>지역축제, 기업행사 및 문화공연 일정</p></div>
-        </summary>
-        <div class="schedule-info">
+    <div class="schedule-panels">
+      <div id="schedule-all" class="schedule-panel active">
+        <button type="button" class="event-row" data-detail="detail-ent-all">
+          <span class="event-date">협의 중</span>
+          <span class="event-text"><b>공연·행사 기획 일정</b><em>엔터테인먼트</em></span>
+          <span class="event-plus">＋</span>
+        </button>
+        <div id="detail-ent-all" class="event-detail">
           <p><strong>행사명</strong><span>공연·행사 기획 일정</span></p>
           <p><strong>날짜</strong><span>확정 후 등록</span></p>
           <p><strong>시간</strong><span>확정 후 등록</span></p>
           <p><strong>장소</strong><span>확정 후 등록</span></p>
-          <p><strong>주최·주관</strong><span>가수인생활 엔터테인먼트 또는 협력기관 협의</span></p>
-          <p><strong>행사 내용</strong><span>지역축제, 기업행사, 문화공연 및 출연진 섭외 등 행사 성격에 맞춰 기획합니다.</span></p>
+          <p><strong>주최·주관</strong><span>가수인생활 엔터테인먼트 또는 협력기관</span></p>
+          <p><strong>행사 내용</strong><span>지역축제, 기업행사, 문화공연, 가수 섭외 등 행사 성격에 맞춰 기획합니다.</span></p>
           <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
         </div>
-      </details>
 
-      <details class="schedule-detail" data-schedule-category="협회">
-        <summary>
-          <div class="schedule-date"><strong>2026</strong><span>예정</span></div>
-          <div class="schedule-copy"><span class="schedule-badge association">협회</span><h3>수성못 나가수 가요제</h3><p>시민 참여형 생활문화 가요제 사업</p></div>
-        </summary>
-        <div class="schedule-info">
+        <button type="button" class="event-row" data-detail="detail-assoc-all">
+          <span class="event-date">2026 예정</span>
+          <span class="event-text"><b>수성못 나가수 가요제</b><em>협회</em></span>
+          <span class="event-plus">＋</span>
+        </button>
+        <div id="detail-assoc-all" class="event-detail">
           <p><strong>행사명</strong><span>수성못 나가수 가요제</span></p>
           <p><strong>날짜</strong><span>세부 일정 확정 후 등록</span></p>
           <p><strong>시간</strong><span>확정 후 등록</span></p>
           <p><strong>장소</strong><span>수성못 일원 · 최종 장소 확정 후 등록</span></p>
           <p><strong>주최·주관</strong><span>한국가수인생활협회 / 관련 단체 협의</span></p>
-          <p><strong>행사 내용</strong><span>시민과 생활예술인이 함께 참여하는 가요제와 문화공연 프로그램을 준비합니다.</span></p>
+          <p><strong>행사 내용</strong><span>시민과 생활예술인이 함께 참여하는 가요제와 문화공연입니다.</span></p>
           <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
         </div>
-      </details>
 
-      <details class="schedule-detail" data-schedule-category="봉사">
-        <summary>
-          <div class="schedule-date"><strong>상시</strong><span>접수</span></div>
-          <div class="schedule-copy"><span class="schedule-badge volunteer">봉사·공익</span><h3>복지시설 및 지역사회 문화나눔 공연</h3><p>복지관, 요양시설, 전통시장 등 공익공연</p></div>
-        </summary>
-        <div class="schedule-info">
+        <button type="button" class="event-row" data-detail="detail-vol-all">
+          <span class="event-date">상시 접수</span>
+          <span class="event-text"><b>문화나눔 및 공익공연</b><em>봉사·공익</em></span>
+          <span class="event-plus">＋</span>
+        </button>
+        <div id="detail-vol-all" class="event-detail">
           <p><strong>행사명</strong><span>문화나눔 및 공익공연</span></p>
           <p><strong>날짜</strong><span>신청기관과 일정 협의</span></p>
           <p><strong>시간</strong><span>협의 후 확정</span></p>
           <p><strong>장소</strong><span>복지시설, 전통시장 및 지역사회 행사장</span></p>
           <p><strong>주최·주관</strong><span>한국가수인생활협회 / 나가수공연단·봉사단</span></p>
-          <p><strong>행사 내용</strong><span>어르신과 지역주민을 위한 문화공연, 전통시장 활성화 공연 및 재능봉사 활동입니다.</span></p>
+          <p><strong>행사 내용</strong><span>어르신과 지역주민을 위한 문화공연 및 재능봉사 활동입니다.</span></p>
           <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
         </div>
-      </details>
+      </div>
+
+      <div id="schedule-ent" class="schedule-panel">
+        <button type="button" class="event-row" data-detail="detail-ent">
+          <span class="event-date">협의 중</span>
+          <span class="event-text"><b>공연·행사 기획 일정</b><em>엔터테인먼트</em></span>
+          <span class="event-plus">＋</span>
+        </button>
+        <div id="detail-ent" class="event-detail">
+          <p><strong>행사명</strong><span>공연·행사 기획 일정</span></p>
+          <p><strong>날짜</strong><span>확정 후 등록</span></p>
+          <p><strong>시간</strong><span>확정 후 등록</span></p>
+          <p><strong>장소</strong><span>확정 후 등록</span></p>
+          <p><strong>주최·주관</strong><span>가수인생활 엔터테인먼트 또는 협력기관</span></p>
+          <p><strong>행사 내용</strong><span>지역축제, 기업행사, 문화공연, 가수 섭외 등 행사 성격에 맞춰 기획합니다.</span></p>
+          <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
+        </div>
+      </div>
+
+      <div id="schedule-assoc" class="schedule-panel">
+        <button type="button" class="event-row" data-detail="detail-assoc">
+          <span class="event-date">2026 예정</span>
+          <span class="event-text"><b>수성못 나가수 가요제</b><em>협회</em></span>
+          <span class="event-plus">＋</span>
+        </button>
+        <div id="detail-assoc" class="event-detail">
+          <p><strong>행사명</strong><span>수성못 나가수 가요제</span></p>
+          <p><strong>날짜</strong><span>세부 일정 확정 후 등록</span></p>
+          <p><strong>시간</strong><span>확정 후 등록</span></p>
+          <p><strong>장소</strong><span>수성못 일원 · 최종 장소 확정 후 등록</span></p>
+          <p><strong>주최·주관</strong><span>한국가수인생활협회 / 관련 단체 협의</span></p>
+          <p><strong>행사 내용</strong><span>시민과 생활예술인이 함께 참여하는 가요제와 문화공연입니다.</span></p>
+          <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
+        </div>
+      </div>
+
+      <div id="schedule-vol" class="schedule-panel">
+        <button type="button" class="event-row" data-detail="detail-vol">
+          <span class="event-date">상시 접수</span>
+          <span class="event-text"><b>문화나눔 및 공익공연</b><em>봉사·공익</em></span>
+          <span class="event-plus">＋</span>
+        </button>
+        <div id="detail-vol" class="event-detail">
+          <p><strong>행사명</strong><span>문화나눔 및 공익공연</span></p>
+          <p><strong>날짜</strong><span>신청기관과 일정 협의</span></p>
+          <p><strong>시간</strong><span>협의 후 확정</span></p>
+          <p><strong>장소</strong><span>복지시설, 전통시장 및 지역사회 행사장</span></p>
+          <p><strong>주최·주관</strong><span>한국가수인생활협회 / 나가수공연단·봉사단</span></p>
+          <p><strong>행사 내용</strong><span>어르신과 지역주민을 위한 문화공연 및 재능봉사 활동입니다.</span></p>
+          <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
+        </div>
+      </div>
     </div>
-    <p class="schedule-note">※ 일정 제목을 누르면 세부내용이 펼쳐집니다. 확정된 일정은 날짜·시간·장소 확인 후 등록합니다.</p>
   </div>
 </section>
+
 
 
 <section id="projects"><div class="wrap"><div class="head"><small>PROJECTS</small><h2>주요 실적 및 프로젝트</h2><p>협력기관이 쉽게 확인할 수 있도록 대표 사업을 정리합니다.</p></div><div class="grid four"><div class="project"><span class="tag">가요제</span><h3>수성못 나가수 가요제</h3><p>지역 대표 문화행사로 발전시키기 위한 프로젝트입니다.</p></div><div class="project"><span class="tag">전통시장</span><h3>희망 음악회</h3><p>전통시장 활성화와 소상공인 상생을 위한 프로젝트입니다.</p></div><div class="project"><span class="tag">지역상생</span><h3>공항시장 상생공연</h3><p>상생상품권과 문화공연을 연계한 지역경제 활성화 사례입니다.</p></div><div class="project"><span class="tag">문화복지</span><h3>의성 노인복지관 공연</h3><p>어르신과 지역민을 위한 문화나눔 공연입니다.</p></div></div></div></section>
@@ -786,6 +862,58 @@ document.addEventListener('DOMContentLoaded', function () {
         item.removeAttribute('open');
       } else {
         item.setAttribute('open', '');
+      }
+    });
+  });
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var filterButtons = document.querySelectorAll('.schedule-filter-btn');
+  var panels = document.querySelectorAll('.schedule-panel');
+
+  filterButtons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      var targetId = button.getAttribute('data-target');
+
+      filterButtons.forEach(function (b) {
+        b.classList.remove('active');
+      });
+      button.classList.add('active');
+
+      panels.forEach(function (panel) {
+        panel.classList.remove('active');
+      });
+
+      var targetPanel = document.getElementById(targetId);
+      if (targetPanel) {
+        targetPanel.classList.add('active');
+      }
+    });
+  });
+
+  document.querySelectorAll('.event-row').forEach(function (row) {
+    row.addEventListener('click', function () {
+      var detailId = row.getAttribute('data-detail');
+      var detail = document.getElementById(detailId);
+      var plus = row.querySelector('.event-plus');
+
+      if (!detail) return;
+
+      var isOpen = detail.classList.contains('open');
+
+      document.querySelectorAll('.event-detail.open').forEach(function (openDetail) {
+        openDetail.classList.remove('open');
+      });
+      document.querySelectorAll('.event-plus').forEach(function (icon) {
+        icon.textContent = '＋';
+      });
+
+      if (!isOpen) {
+        detail.classList.add('open');
+        if (plus) plus.textContent = '－';
       }
     });
   });
