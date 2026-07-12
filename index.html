@@ -154,6 +154,27 @@ body.page-mode {
 @media(max-width:800px){.schedule-item{grid-template-columns:1fr}.schedule-date{min-height:74px}}
 </style>
 
+
+<style>
+.schedule-detail{background:var(--panel);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.schedule-detail.is-hidden{display:none}
+.schedule-detail summary{display:grid;grid-template-columns:150px 1fr;gap:24px;align-items:center;padding:22px;cursor:pointer;list-style:none}
+.schedule-detail summary::-webkit-details-marker{display:none}
+.schedule-detail summary::after{content:'＋';position:absolute;right:28px;color:var(--gold2);font-size:1.4rem}
+.schedule-detail[open] summary::after{content:'－'}
+.schedule-detail summary{position:relative;padding-right:70px}
+.schedule-info{border-top:1px solid rgba(217,174,81,.18);padding:20px 28px 26px;background:#111318}
+.schedule-info p{display:grid;grid-template-columns:130px 1fr;gap:18px;margin:0;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.schedule-info p:last-child{border-bottom:0}
+.schedule-info strong{color:var(--gold2)}
+.schedule-info span{color:#ddd;line-height:1.7}
+@media(max-width:800px){
+ .schedule-detail summary{grid-template-columns:1fr;padding:18px 55px 18px 18px}
+ .schedule-info{padding:16px 20px 22px}
+ .schedule-info p{grid-template-columns:1fr;gap:5px}
+}
+</style>
+
 </head>
 <body>
 <header><div class="wrap nav"><a class="brand" href="#top"><img src="logo.png" alt="로고"><div>가수인생활 <span>엔터테인먼트</span></div></a><nav class="menu"><a href="#about">회사소개</a><a href="#business">사업분야</a><a href="#partners">함께하는 단체</a><a href="#news">뉴스</a><a href="#notice">공지</a><a href="#schedule">일정</a><a href="#projects">실적</a><a href="#contact">문의</a></nav></div></header>
@@ -326,12 +347,13 @@ body.page-mode {
 </div>
 
 
+
 <section id="schedule">
   <div class="wrap">
     <div class="head">
       <small>SCHEDULE</small>
       <h2>행사일정</h2>
-      <p>공연, 협회, 봉사활동 일정을 구분하여 확인할 수 있습니다.</p>
+      <p>공연, 협회, 봉사·공익 일정을 구분하여 확인하고 세부내용을 펼쳐볼 수 있습니다.</p>
     </div>
 
     <div class="schedule-tabs">
@@ -342,22 +364,58 @@ body.page-mode {
     </div>
 
     <div class="schedule-list">
-      <article class="schedule-item" data-schedule-category="엔터테인먼트">
-        <div class="schedule-date"><strong>일정</strong><span>협의 중</span></div>
-        <div class="schedule-copy"><span class="schedule-badge">엔터테인먼트</span><h3>공연·행사 기획 일정</h3><p>지역축제, 기업행사 및 문화공연 일정은 계약·협의 확정 후 안내합니다.</p></div>
-      </article>
-      <article class="schedule-item" data-schedule-category="협회">
-        <div class="schedule-date"><strong>2026</strong><span>예정</span></div>
-        <div class="schedule-copy"><span class="schedule-badge association">협회</span><h3>수성못 나가수 가요제</h3><p>시민 참여형 생활문화 가요제 사업을 준비하고 있습니다. 세부 일정은 확정 후 공지합니다.</p></div>
-      </article>
-      <article class="schedule-item" data-schedule-category="봉사">
-        <div class="schedule-date"><strong>상시</strong><span>접수</span></div>
-        <div class="schedule-copy"><span class="schedule-badge volunteer">봉사·공익</span><h3>복지시설 및 지역사회 문화나눔 공연</h3><p>복지관, 요양시설, 전통시장 등 공익공연 요청을 접수하고 일정 협의 후 진행합니다.</p></div>
-      </article>
+      <details class="schedule-detail" data-schedule-category="엔터테인먼트">
+        <summary>
+          <div class="schedule-date"><strong>일정</strong><span>협의 중</span></div>
+          <div class="schedule-copy"><span class="schedule-badge">엔터테인먼트</span><h3>공연·행사 기획 일정</h3><p>지역축제, 기업행사 및 문화공연 일정</p></div>
+        </summary>
+        <div class="schedule-info">
+          <p><strong>행사명</strong><span>공연·행사 기획 일정</span></p>
+          <p><strong>날짜</strong><span>확정 후 등록</span></p>
+          <p><strong>시간</strong><span>확정 후 등록</span></p>
+          <p><strong>장소</strong><span>확정 후 등록</span></p>
+          <p><strong>주최·주관</strong><span>가수인생활 엔터테인먼트 또는 협력기관 협의</span></p>
+          <p><strong>행사 내용</strong><span>지역축제, 기업행사, 문화공연 및 출연진 섭외 등 행사 성격에 맞춰 기획합니다.</span></p>
+          <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
+        </div>
+      </details>
+
+      <details class="schedule-detail" data-schedule-category="협회">
+        <summary>
+          <div class="schedule-date"><strong>2026</strong><span>예정</span></div>
+          <div class="schedule-copy"><span class="schedule-badge association">협회</span><h3>수성못 나가수 가요제</h3><p>시민 참여형 생활문화 가요제 사업</p></div>
+        </summary>
+        <div class="schedule-info">
+          <p><strong>행사명</strong><span>수성못 나가수 가요제</span></p>
+          <p><strong>날짜</strong><span>세부 일정 확정 후 등록</span></p>
+          <p><strong>시간</strong><span>확정 후 등록</span></p>
+          <p><strong>장소</strong><span>수성못 일원 · 최종 장소 확정 후 등록</span></p>
+          <p><strong>주최·주관</strong><span>한국가수인생활협회 / 관련 단체 협의</span></p>
+          <p><strong>행사 내용</strong><span>시민과 생활예술인이 함께 참여하는 가요제와 문화공연 프로그램을 준비합니다.</span></p>
+          <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
+        </div>
+      </details>
+
+      <details class="schedule-detail" data-schedule-category="봉사">
+        <summary>
+          <div class="schedule-date"><strong>상시</strong><span>접수</span></div>
+          <div class="schedule-copy"><span class="schedule-badge volunteer">봉사·공익</span><h3>복지시설 및 지역사회 문화나눔 공연</h3><p>복지관, 요양시설, 전통시장 등 공익공연</p></div>
+        </summary>
+        <div class="schedule-info">
+          <p><strong>행사명</strong><span>문화나눔 및 공익공연</span></p>
+          <p><strong>날짜</strong><span>신청기관과 일정 협의</span></p>
+          <p><strong>시간</strong><span>협의 후 확정</span></p>
+          <p><strong>장소</strong><span>복지시설, 전통시장 및 지역사회 행사장</span></p>
+          <p><strong>주최·주관</strong><span>한국가수인생활협회 / 나가수공연단·봉사단</span></p>
+          <p><strong>행사 내용</strong><span>어르신과 지역주민을 위한 문화공연, 전통시장 활성화 공연 및 재능봉사 활동입니다.</span></p>
+          <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
+        </div>
+      </details>
     </div>
-    <p class="schedule-note">※ 확정된 행사 일정은 날짜·시간·장소를 확인한 뒤 이 화면에 순차적으로 등록합니다.</p>
+    <p class="schedule-note">※ 일정 제목을 누르면 세부내용이 펼쳐집니다. 확정된 일정은 날짜·시간·장소 확인 후 등록합니다.</p>
   </div>
 </section>
+
 
 <section id="projects"><div class="wrap"><div class="head"><small>PROJECTS</small><h2>주요 실적 및 프로젝트</h2><p>협력기관이 쉽게 확인할 수 있도록 대표 사업을 정리합니다.</p></div><div class="grid four"><div class="project"><span class="tag">가요제</span><h3>수성못 나가수 가요제</h3><p>지역 대표 문화행사로 발전시키기 위한 프로젝트입니다.</p></div><div class="project"><span class="tag">전통시장</span><h3>희망 음악회</h3><p>전통시장 활성화와 소상공인 상생을 위한 프로젝트입니다.</p></div><div class="project"><span class="tag">지역상생</span><h3>공항시장 상생공연</h3><p>상생상품권과 문화공연을 연계한 지역경제 활성화 사례입니다.</p></div><div class="project"><span class="tag">문화복지</span><h3>의성 노인복지관 공연</h3><p>어르신과 지역민을 위한 문화나눔 공연입니다.</p></div></div></div></section>
 <section id="resources"><div class="wrap"><div class="head"><small>RESOURCES</small><h2>자료실</h2><p>사업계획서, 공연 제안서, 신청서, 보도자료 등을 제공할 예정입니다.</p></div><div class="grid three"><div class="resource"><h3>사업·공연 제안서</h3><p>공연기획 및 문화예술사업 제안자료를 등록합니다.</p></div><div class="resource"><h3>신청서·양식</h3><p>공연 신청서, 협력 신청서와 기타 서식을 등록합니다.</p></div><div class="resource"><h3>보도자료·포스터</h3><p>행사 보도자료와 홍보 포스터를 등록합니다.</p></div></div></div></section>
