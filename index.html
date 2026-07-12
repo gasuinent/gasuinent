@@ -200,6 +200,52 @@ body.page-mode {
 }
 </style>
 
+
+<style>
+.schedule-filter{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.schedule-filter-btn{padding:10px 17px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);font:inherit;font-weight:800;cursor:pointer}
+.schedule-filter-btn.active{background:var(--gold);color:#111;border-color:var(--gold)}
+.schedule-panel{display:none;max-width:1000px;margin:0 auto}
+.schedule-panel.active{display:block}
+.schedule-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;margin-bottom:16px;overflow:hidden}
+.schedule-card-head{display:grid;grid-template-columns:150px 1fr auto;gap:20px;align-items:center;padding:20px 22px}
+.schedule-card-date{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:78px;border-radius:14px;background:rgba(217,174,81,.1);color:var(--gold2);font-weight:900;text-align:center}
+.schedule-card-date span{font-size:.9rem;color:var(--muted);margin-top:4px}
+.schedule-card-copy h3{margin:8px 0 6px;font-size:1.3rem}
+.schedule-card-copy p{margin:0;color:var(--muted)}
+.schedule-tag{display:inline-block;padding:6px 11px;border-radius:999px;background:rgba(217,174,81,.16);color:var(--gold2);font-size:.85rem;font-weight:900}
+.schedule-card-actions{display:flex;gap:8px;flex-wrap:wrap}
+.schedule-small-btn{padding:9px 13px;border:1px solid var(--gold);border-radius:999px;background:transparent;color:var(--gold2);font:inherit;font-weight:800;cursor:pointer}
+.schedule-detail{display:none;padding:18px 24px 22px;border-top:1px solid rgba(217,174,81,.18);background:#111318}
+.schedule-detail.open{display:block}
+.schedule-detail p{display:grid;grid-template-columns:130px 1fr;gap:16px;margin:0;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.schedule-detail p:last-child{border-bottom:0}
+.schedule-detail strong{color:var(--gold2)}
+.schedule-detail span{color:#ddd;line-height:1.7}
+.schedule-note{text-align:center;color:#aaa;margin-top:22px}
+
+.schedule-editor{position:fixed;inset:0;display:none;z-index:12000}
+.schedule-editor.open{display:block}
+.schedule-editor-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.8)}
+.schedule-editor-dialog{position:relative;max-width:760px;margin:4vh auto;padding:30px;background:#15171c;border:1px solid rgba(217,174,81,.38);border-radius:24px;max-height:90vh;overflow:auto}
+.schedule-editor-close{position:absolute;right:18px;top:12px;border:0;background:transparent;color:#fff;font-size:2rem;cursor:pointer}
+.schedule-editor-dialog h3{font-size:2rem;margin:0 0 24px}
+.schedule-editor-dialog label{display:block;color:#fff;font-weight:700;margin-bottom:16px}
+.schedule-editor-dialog input,.schedule-editor-dialog select,.schedule-editor-dialog textarea{width:100%;box-sizing:border-box;margin-top:8px;padding:13px 14px;border:1px solid rgba(217,174,81,.35);border-radius:12px;background:#101216;color:#fff;font:inherit}
+.editor-grid{display:grid;gap:16px}
+.editor-grid.two{grid-template-columns:1fr 1fr}
+.editor-grid.three{grid-template-columns:1fr 1fr 1fr}
+.editor-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.editor-actions button{border:0;cursor:pointer;font:inherit}
+@media(max-width:800px){
+  .schedule-card-head{grid-template-columns:1fr}
+  .schedule-card-actions{justify-content:flex-start}
+  .schedule-detail p{grid-template-columns:1fr;gap:4px}
+  .editor-grid.two,.editor-grid.three{grid-template-columns:1fr}
+  .schedule-editor-dialog{margin:2vh 12px;padding:24px}
+}
+</style>
+
 </head>
 <body>
 <header><div class="wrap nav"><a class="brand" href="#top"><img src="logo.png" alt="로고"><div>가수인생활 <span>엔터테인먼트</span></div></a><nav class="menu"><a href="#about">회사소개</a><a href="#business">사업분야</a><a href="#partners">함께하는 단체</a><a href="#news">뉴스</a><a href="#notice">공지</a><a href="#schedule">일정</a><a href="#projects">실적</a><a href="#contact">문의</a></nav></div></header>
@@ -374,12 +420,13 @@ body.page-mode {
 
 
 
+
 <section id="schedule">
   <div class="wrap">
     <div class="head">
       <small>SCHEDULE</small>
       <h2>행사일정</h2>
-      <p>분류를 누르면 해당 일정만 표시되고, 일정 제목을 누르면 날짜·시간·장소 등 세부정보가 열립니다.</p>
+      <p>분류별 일정을 확인하고, 「일정 수정」을 눌러 날짜·시간·장소 등 세부내용을 직접 저장할 수 있습니다.</p>
     </div>
 
     <div class="schedule-filter">
@@ -390,106 +437,66 @@ body.page-mode {
     </div>
 
     <div class="schedule-panels">
-      <div id="schedule-all" class="schedule-panel active">
-        <button type="button" class="event-row" data-detail="detail-ent-all">
-          <span class="event-date">협의 중</span>
-          <span class="event-text"><b>공연·행사 기획 일정</b><em>엔터테인먼트</em></span>
-          <span class="event-plus">＋</span>
-        </button>
-        <div id="detail-ent-all" class="event-detail">
-          <p><strong>행사명</strong><span>공연·행사 기획 일정</span></p>
-          <p><strong>날짜</strong><span>확정 후 등록</span></p>
-          <p><strong>시간</strong><span>확정 후 등록</span></p>
-          <p><strong>장소</strong><span>확정 후 등록</span></p>
-          <p><strong>주최·주관</strong><span>가수인생활 엔터테인먼트 또는 협력기관</span></p>
-          <p><strong>행사 내용</strong><span>지역축제, 기업행사, 문화공연, 가수 섭외 등 행사 성격에 맞춰 기획합니다.</span></p>
-          <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
-        </div>
-
-        <button type="button" class="event-row" data-detail="detail-assoc-all">
-          <span class="event-date">2026 예정</span>
-          <span class="event-text"><b>수성못 나가수 가요제</b><em>협회</em></span>
-          <span class="event-plus">＋</span>
-        </button>
-        <div id="detail-assoc-all" class="event-detail">
-          <p><strong>행사명</strong><span>수성못 나가수 가요제</span></p>
-          <p><strong>날짜</strong><span>세부 일정 확정 후 등록</span></p>
-          <p><strong>시간</strong><span>확정 후 등록</span></p>
-          <p><strong>장소</strong><span>수성못 일원 · 최종 장소 확정 후 등록</span></p>
-          <p><strong>주최·주관</strong><span>한국가수인생활협회 / 관련 단체 협의</span></p>
-          <p><strong>행사 내용</strong><span>시민과 생활예술인이 함께 참여하는 가요제와 문화공연입니다.</span></p>
-          <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
-        </div>
-
-        <button type="button" class="event-row" data-detail="detail-vol-all">
-          <span class="event-date">상시 접수</span>
-          <span class="event-text"><b>문화나눔 및 공익공연</b><em>봉사·공익</em></span>
-          <span class="event-plus">＋</span>
-        </button>
-        <div id="detail-vol-all" class="event-detail">
-          <p><strong>행사명</strong><span>문화나눔 및 공익공연</span></p>
-          <p><strong>날짜</strong><span>신청기관과 일정 협의</span></p>
-          <p><strong>시간</strong><span>협의 후 확정</span></p>
-          <p><strong>장소</strong><span>복지시설, 전통시장 및 지역사회 행사장</span></p>
-          <p><strong>주최·주관</strong><span>한국가수인생활협회 / 나가수공연단·봉사단</span></p>
-          <p><strong>행사 내용</strong><span>어르신과 지역주민을 위한 문화공연 및 재능봉사 활동입니다.</span></p>
-          <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
-        </div>
-      </div>
-
-      <div id="schedule-ent" class="schedule-panel">
-        <button type="button" class="event-row" data-detail="detail-ent">
-          <span class="event-date">협의 중</span>
-          <span class="event-text"><b>공연·행사 기획 일정</b><em>엔터테인먼트</em></span>
-          <span class="event-plus">＋</span>
-        </button>
-        <div id="detail-ent" class="event-detail">
-          <p><strong>행사명</strong><span>공연·행사 기획 일정</span></p>
-          <p><strong>날짜</strong><span>확정 후 등록</span></p>
-          <p><strong>시간</strong><span>확정 후 등록</span></p>
-          <p><strong>장소</strong><span>확정 후 등록</span></p>
-          <p><strong>주최·주관</strong><span>가수인생활 엔터테인먼트 또는 협력기관</span></p>
-          <p><strong>행사 내용</strong><span>지역축제, 기업행사, 문화공연, 가수 섭외 등 행사 성격에 맞춰 기획합니다.</span></p>
-          <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
-        </div>
-      </div>
-
-      <div id="schedule-assoc" class="schedule-panel">
-        <button type="button" class="event-row" data-detail="detail-assoc">
-          <span class="event-date">2026 예정</span>
-          <span class="event-text"><b>수성못 나가수 가요제</b><em>협회</em></span>
-          <span class="event-plus">＋</span>
-        </button>
-        <div id="detail-assoc" class="event-detail">
-          <p><strong>행사명</strong><span>수성못 나가수 가요제</span></p>
-          <p><strong>날짜</strong><span>세부 일정 확정 후 등록</span></p>
-          <p><strong>시간</strong><span>확정 후 등록</span></p>
-          <p><strong>장소</strong><span>수성못 일원 · 최종 장소 확정 후 등록</span></p>
-          <p><strong>주최·주관</strong><span>한국가수인생활협회 / 관련 단체 협의</span></p>
-          <p><strong>행사 내용</strong><span>시민과 생활예술인이 함께 참여하는 가요제와 문화공연입니다.</span></p>
-          <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
-        </div>
-      </div>
-
-      <div id="schedule-vol" class="schedule-panel">
-        <button type="button" class="event-row" data-detail="detail-vol">
-          <span class="event-date">상시 접수</span>
-          <span class="event-text"><b>문화나눔 및 공익공연</b><em>봉사·공익</em></span>
-          <span class="event-plus">＋</span>
-        </button>
-        <div id="detail-vol" class="event-detail">
-          <p><strong>행사명</strong><span>문화나눔 및 공익공연</span></p>
-          <p><strong>날짜</strong><span>신청기관과 일정 협의</span></p>
-          <p><strong>시간</strong><span>협의 후 확정</span></p>
-          <p><strong>장소</strong><span>복지시설, 전통시장 및 지역사회 행사장</span></p>
-          <p><strong>주최·주관</strong><span>한국가수인생활협회 / 나가수공연단·봉사단</span></p>
-          <p><strong>행사 내용</strong><span>어르신과 지역주민을 위한 문화공연 및 재능봉사 활동입니다.</span></p>
-          <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
-        </div>
-      </div>
+      <div id="schedule-all" class="schedule-panel active"></div>
+      <div id="schedule-ent" class="schedule-panel"></div>
+      <div id="schedule-assoc" class="schedule-panel"></div>
+      <div id="schedule-vol" class="schedule-panel"></div>
     </div>
+
+    <p class="schedule-note">※ 저장한 일정은 현재 사용 중인 이 컴퓨터의 브라우저에 저장됩니다.</p>
   </div>
 </section>
+
+<div id="scheduleEditor" class="schedule-editor" aria-hidden="true">
+  <div class="schedule-editor-backdrop" data-close-schedule-editor></div>
+  <div class="schedule-editor-dialog">
+    <button type="button" class="schedule-editor-close" data-close-schedule-editor>×</button>
+    <h3>일정 수정</h3>
+
+    <div class="editor-grid two">
+      <label>행사명
+        <input type="text" id="editTitle">
+      </label>
+      <label>분류
+        <select id="editCategory">
+          <option value="ent">엔터테인먼트</option>
+          <option value="assoc">협회</option>
+          <option value="vol">봉사·공익</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="editor-grid three">
+      <label>날짜
+        <input type="date" id="editDate">
+      </label>
+      <label>시작 시간
+        <input type="time" id="editStart">
+      </label>
+      <label>종료 시간
+        <input type="time" id="editEnd">
+      </label>
+    </div>
+
+    <label>장소
+      <input type="text" id="editPlace">
+    </label>
+
+    <label>주최·주관
+      <input type="text" id="editOrganizer">
+    </label>
+
+    <label>행사 내용
+      <textarea id="editDescription" rows="5"></textarea>
+    </label>
+
+    <div class="editor-actions">
+      <button type="button" id="saveSchedule" class="btn primary">저장</button>
+      <button type="button" id="resetSchedule" class="btn">기본값으로 되돌리기</button>
+    </div>
+  </div>
+</div>
+
 
 
 
@@ -917,6 +924,219 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const STORAGE_KEY = 'gasuinent_schedule_v1';
+
+  const defaults = [
+    {
+      id: 'ent-1',
+      category: 'ent',
+      title: '공연·행사 기획 일정',
+      date: '',
+      start: '',
+      end: '',
+      place: '확정 후 등록',
+      organizer: '가수인생활 엔터테인먼트 또는 협력기관',
+      description: '지역축제, 기업행사, 문화공연, 가수 섭외 등 행사 성격에 맞춰 기획합니다.'
+    },
+    {
+      id: 'assoc-1',
+      category: 'assoc',
+      title: '수성못 나가수 가요제',
+      date: '',
+      start: '',
+      end: '',
+      place: '수성못 일원 · 최종 장소 확정 후 등록',
+      organizer: '한국가수인생활협회 / 관련 단체 협의',
+      description: '시민과 생활예술인이 함께 참여하는 가요제와 문화공연입니다.'
+    },
+    {
+      id: 'vol-1',
+      category: 'vol',
+      title: '문화나눔 및 공익공연',
+      date: '',
+      start: '',
+      end: '',
+      place: '복지시설, 전통시장 및 지역사회 행사장',
+      organizer: '한국가수인생활협회 / 나가수공연단·봉사단',
+      description: '어르신과 지역주민을 위한 문화공연 및 재능봉사 활동입니다.'
+    }
+  ];
+
+  let schedules = loadSchedules();
+  let editingId = null;
+
+  const categoryNames = {
+    ent: '엔터테인먼트',
+    assoc: '협회',
+    vol: '봉사·공익'
+  };
+
+  function loadSchedules() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(defaults));
+    } catch (e) {
+      return JSON.parse(JSON.stringify(defaults));
+    }
+  }
+
+  function saveSchedules() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(schedules));
+  }
+
+  function formatDate(date) {
+    if (!date) return '날짜 미정';
+    const d = new Date(date + 'T00:00:00');
+    return d.getFullYear() + '년 ' + (d.getMonth() + 1) + '월 ' + d.getDate() + '일';
+  }
+
+  function formatTime(start, end) {
+    if (!start && !end) return '시간 미정';
+    if (start && end) return start + ' ~ ' + end;
+    return start || end;
+  }
+
+  function cardHTML(item) {
+    return `
+      <article class="schedule-card" data-id="${item.id}">
+        <div class="schedule-card-head">
+          <div class="schedule-card-date">
+            ${formatDate(item.date)}
+            <span>${formatTime(item.start, item.end)}</span>
+          </div>
+          <div class="schedule-card-copy">
+            <span class="schedule-tag">${categoryNames[item.category]}</span>
+            <h3>${escapeHTML(item.title)}</h3>
+            <p>${escapeHTML(item.place || '장소 미정')}</p>
+          </div>
+          <div class="schedule-card-actions">
+            <button type="button" class="schedule-small-btn toggle-schedule" data-id="${item.id}">세부보기</button>
+            <button type="button" class="schedule-small-btn edit-schedule" data-id="${item.id}">일정 수정</button>
+          </div>
+        </div>
+        <div class="schedule-detail" id="detail-${item.id}">
+          <p><strong>행사명</strong><span>${escapeHTML(item.title)}</span></p>
+          <p><strong>날짜</strong><span>${formatDate(item.date)}</span></p>
+          <p><strong>시간</strong><span>${formatTime(item.start, item.end)}</span></p>
+          <p><strong>장소</strong><span>${escapeHTML(item.place || '장소 미정')}</span></p>
+          <p><strong>주최·주관</strong><span>${escapeHTML(item.organizer || '확정 후 등록')}</span></p>
+          <p><strong>행사 내용</strong><span>${escapeHTML(item.description || '내용 미입력')}</span></p>
+          <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
+        </div>
+      </article>`;
+  }
+
+  function escapeHTML(value) {
+    return String(value || '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+  }
+
+  function render() {
+    document.getElementById('schedule-all').innerHTML = schedules.map(cardHTML).join('');
+    document.getElementById('schedule-ent').innerHTML = schedules.filter(x => x.category === 'ent').map(cardHTML).join('');
+    document.getElementById('schedule-assoc').innerHTML = schedules.filter(x => x.category === 'assoc').map(cardHTML).join('');
+    document.getElementById('schedule-vol').innerHTML = schedules.filter(x => x.category === 'vol').map(cardHTML).join('');
+
+    bindCardButtons();
+  }
+
+  function bindCardButtons() {
+    document.querySelectorAll('.toggle-schedule').forEach(function (button) {
+      button.addEventListener('click', function () {
+        const id = button.dataset.id;
+        const detail = button.closest('.schedule-card').querySelector('.schedule-detail');
+        detail.classList.toggle('open');
+        button.textContent = detail.classList.contains('open') ? '접기' : '세부보기';
+      });
+    });
+
+    document.querySelectorAll('.edit-schedule').forEach(function (button) {
+      button.addEventListener('click', function () {
+        openEditor(button.dataset.id);
+      });
+    });
+  }
+
+  function openEditor(id) {
+    editingId = id;
+    const item = schedules.find(x => x.id === id);
+    if (!item) return;
+
+    document.getElementById('editTitle').value = item.title || '';
+    document.getElementById('editCategory').value = item.category || 'ent';
+    document.getElementById('editDate').value = item.date || '';
+    document.getElementById('editStart').value = item.start || '';
+    document.getElementById('editEnd').value = item.end || '';
+    document.getElementById('editPlace').value = item.place || '';
+    document.getElementById('editOrganizer').value = item.organizer || '';
+    document.getElementById('editDescription').value = item.description || '';
+
+    document.getElementById('scheduleEditor').classList.add('open');
+    document.getElementById('scheduleEditor').setAttribute('aria-hidden', 'false');
+  }
+
+  function closeEditor() {
+    document.getElementById('scheduleEditor').classList.remove('open');
+    document.getElementById('scheduleEditor').setAttribute('aria-hidden', 'true');
+  }
+
+  document.querySelectorAll('.schedule-filter-btn').forEach(function (button) {
+    button.addEventListener('click', function () {
+      document.querySelectorAll('.schedule-filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.schedule-panel').forEach(p => p.classList.remove('active'));
+
+      button.classList.add('active');
+      document.getElementById(button.dataset.target).classList.add('active');
+    });
+  });
+
+  document.getElementById('saveSchedule').addEventListener('click', function () {
+    const item = schedules.find(x => x.id === editingId);
+    if (!item) return;
+
+    item.title = document.getElementById('editTitle').value.trim();
+    item.category = document.getElementById('editCategory').value;
+    item.date = document.getElementById('editDate').value;
+    item.start = document.getElementById('editStart').value;
+    item.end = document.getElementById('editEnd').value;
+    item.place = document.getElementById('editPlace').value.trim();
+    item.organizer = document.getElementById('editOrganizer').value.trim();
+    item.description = document.getElementById('editDescription').value.trim();
+
+    saveSchedules();
+    render();
+    closeEditor();
+    alert('일정이 저장되었습니다.');
+  });
+
+  document.getElementById('resetSchedule').addEventListener('click', function () {
+    if (!editingId) return;
+    const original = defaults.find(x => x.id === editingId);
+    const index = schedules.findIndex(x => x.id === editingId);
+    if (original && index >= 0) {
+      schedules[index] = JSON.parse(JSON.stringify(original));
+      saveSchedules();
+      render();
+      closeEditor();
+      alert('기본값으로 되돌렸습니다.');
+    }
+  });
+
+  document.querySelectorAll('[data-close-schedule-editor]').forEach(function (el) {
+    el.addEventListener('click', closeEditor);
+  });
+
+  render();
 });
 </script>
 
