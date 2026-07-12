@@ -272,6 +272,20 @@ button,a,summary{touch-action:manipulation}
 }
 </style>
 
+
+<style>
+.project-card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:26px}
+.project-card h3{font-size:1.45rem;margin:10px 0 12px}
+.project-card>p{color:var(--muted);line-height:1.75}
+.project-toggle{margin-top:18px;padding:10px 16px;border:1px solid var(--gold);border-radius:999px;background:transparent;color:var(--gold2);font:inherit;font-weight:900;cursor:pointer}
+.project-body-box{display:none;margin-top:18px;padding-top:14px;border-top:1px solid rgba(217,174,81,.18)}
+.project-body-box.open{display:block}
+.project-body-box p{display:grid;grid-template-columns:120px 1fr;gap:16px;margin:0;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.project-body-box strong{color:var(--gold2)}
+.project-body-box span{color:#ddd;line-height:1.7}
+@media(max-width:800px){.project-body-box p{grid-template-columns:1fr;gap:4px}}
+</style>
+
 </head>
 <body>
 <header><div class="wrap nav"><a class="brand" href="#top"><img src="logo.png" alt="로고"><div>가수인생활 <span>엔터테인먼트</span></div></a><nav class="menu"><a href="#about">회사소개</a><a href="#business">사업분야</a><a href="#partners">함께하는 단체</a><a href="#news">뉴스</a><a href="#notice">공지</a><a href="#schedule">일정</a><a href="#projects">실적</a><a href="#contact">문의</a></nav></div></header>
@@ -527,75 +541,72 @@ button,a,summary{touch-action:manipulation}
 
 
 
+
 <section id="projects">
   <div class="wrap">
     <div class="head">
       <small>PROJECTS</small>
       <h2>주요 실적 및 프로젝트</h2>
-      <p>대표 사업을 분야별로 확인하고, 제목을 누르면 세부내용이 펼쳐집니다.</p>
+      <p>각 항목의 「세부보기」를 누르면 해당 내용만 펼쳐집니다.</p>
     </div>
 
     <div class="project-grid">
-      <details class="project-detail">
-        <summary>
-          <span class="tag">가요제</span>
-          <h3>수성못 나가수 가요제</h3>
-          <p>시민 참여형 생활문화 축제로 발전시키기 위한 프로젝트입니다.</p>
-        </summary>
-        <div class="project-body">
+      <article class="project-card">
+        <span class="tag">가요제</span>
+        <h3>수성못 나가수 가요제</h3>
+        <p>시민 참여형 생활문화 축제로 발전시키기 위한 프로젝트입니다.</p>
+        <button type="button" class="project-toggle" data-project="project-1">세부보기</button>
+        <div id="project-1" class="project-body-box">
           <p><strong>사업명</strong><span>수성못 나가수 가요제</span></p>
           <p><strong>추진 목적</strong><span>생활가수와 시민이 함께하는 지역 대표 문화행사 조성</span></p>
-          <p><strong>주요 내용</strong><span>가요제 예선·본선, 초청공연, 시민 참여 프로그램, 지역문화 활성화</span></p>
+          <p><strong>주요 내용</strong><span>가요제 예선·본선, 초청공연, 시민 참여 프로그램</span></p>
           <p><strong>추진 주체</strong><span>한국가수인생활협회 / 나가수공연단</span></p>
           <p><strong>진행 상태</strong><span>사업계획 및 관련 기관 협의 단계</span></p>
         </div>
-      </details>
+      </article>
 
-      <details class="project-detail">
-        <summary>
-          <span class="tag">전통시장</span>
-          <h3>희망 음악회</h3>
-          <p>전통시장 활성화와 소상공인 상생을 위한 문화공연 프로젝트입니다.</p>
-        </summary>
-        <div class="project-body">
+      <article class="project-card">
+        <span class="tag">전통시장</span>
+        <h3>희망 음악회</h3>
+        <p>전통시장 활성화와 소상공인 상생을 위한 문화공연 프로젝트입니다.</p>
+        <button type="button" class="project-toggle" data-project="project-2">세부보기</button>
+        <div id="project-2" class="project-body-box">
           <p><strong>사업명</strong><span>전통시장 활성화 희망 음악회</span></p>
           <p><strong>추진 목적</strong><span>시장 방문객 유입, 체류시간 증가, 소상공인 매출 증대</span></p>
           <p><strong>주요 내용</strong><span>무료 문화공연, 상생상품권 운영, 상인회와 지역주민 참여</span></p>
           <p><strong>추진 주체</strong><span>한국가수인생활협회 / 나가수공연단·봉사단</span></p>
-          <p><strong>운영 원칙</strong><span>상인회 예산 부담을 줄이고 지역경제 안에서 소비가 순환하도록 운영</span></p>
         </div>
-      </details>
+      </article>
 
-      <details class="project-detail">
-        <summary>
-          <span class="tag">지역상생</span>
-          <h3>공항시장 상생공연</h3>
-          <p>상생상품권과 문화공연을 연계한 전통시장 활성화 사례입니다.</p>
-        </summary>
-        <div class="project-body">
+      <article class="project-card">
+        <span class="tag">지역상생</span>
+        <h3>공항시장 상생공연</h3>
+        <p>상생상품권과 문화공연을 연계한 전통시장 활성화 사례입니다.</p>
+        <button type="button" class="project-toggle" data-project="project-3">세부보기</button>
+        <div id="project-3" class="project-body-box">
           <p><strong>행사명</strong><span>공항시장 전통시장 살리기 무료공연</span></p>
           <p><strong>장소</strong><span>대구 동구 공항시장</span></p>
-          <p><strong>주요 내용</strong><span>공연 출연료와 기부금을 상생상품권으로 환원하여 시장 내 사용을 유도</span></p>
+          <p><strong>주요 내용</strong><span>공연 출연료와 기부금을 상생상품권으로 환원하여 시장 내 사용 유도</span></p>
           <p><strong>기대 효과</strong><span>지역주민 참여 확대와 소상공인 매출 증대</span></p>
         </div>
-      </details>
+      </article>
 
-      <details class="project-detail">
-        <summary>
-          <span class="tag">문화복지</span>
-          <h3>의성 노인복지관 공연</h3>
-          <p>어르신과 지역주민을 위한 무료 문화나눔 공연입니다.</p>
-        </summary>
-        <div class="project-body">
+      <article class="project-card">
+        <span class="tag">문화복지</span>
+        <h3>의성 노인복지관 공연</h3>
+        <p>어르신과 지역주민을 위한 무료 문화나눔 공연입니다.</p>
+        <button type="button" class="project-toggle" data-project="project-4">세부보기</button>
+        <div id="project-4" class="project-body-box">
           <p><strong>행사명</strong><span>의성 노인복지관 무료 문화공연</span></p>
           <p><strong>대상</strong><span>복지관 이용 어르신과 지역주민</span></p>
           <p><strong>주요 내용</strong><span>트로트와 대중가요 중심의 문화공연 및 소통 프로그램</span></p>
           <p><strong>추진 주체</strong><span>나가수공연단·봉사단</span></p>
         </div>
-      </details>
+      </article>
     </div>
   </div>
 </section>
+
 
 <section id="resources"><div class="wrap"><div class="head"><small>RESOURCES</small><h2>자료실</h2><p>사업계획서, 공연 제안서, 신청서, 보도자료 등을 제공할 예정입니다.</p></div><div class="grid three"><div class="resource"><h3>사업·공연 제안서</h3><p>공연기획 및 문화예술사업 제안자료를 등록합니다.</p></div><div class="resource"><h3>신청서·양식</h3><p>공연 신청서, 협력 신청서와 기타 서식을 등록합니다.</p></div><div class="resource"><h3>보도자료·포스터</h3><p>행사 보도자료와 홍보 포스터를 등록합니다.</p></div></div></div></section>
 <section id="youtube"><div class="wrap"><div class="head"><small>VIDEO CENTER</small><h2>영상센터</h2><p>공식 유튜브 채널에서 공연과 창작 음악을 만나보세요.</p></div><div class="grid two"><div class="channel"><h3>나가수TV</h3><p>공연, 행사, 문화예술 활동을 전합니다.</p><a class="btn primary" href="https://www.youtube.com/@TV-fy1wy" target="_blank">채널 바로가기</a></div><div class="channel"><h3>이명로의 힐링트로트</h3><p>감성 트로트, 힐링음악, 창작곡을 소개합니다.</p><a class="btn primary" href="https://www.youtube.com/channel/UC-2z5bBNXcTkagGRwovnFNw" target="_blank">채널 바로가기</a></div></div></div></section>
@@ -876,277 +887,98 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const tabs = document.querySelectorAll('.schedule-tab');
-  const details = document.querySelectorAll('.schedule-detail');
-
-  tabs.forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      const filter = tab.getAttribute('data-schedule');
-
-      tabs.forEach(function (item) {
-        item.classList.remove('active');
-      });
-      tab.classList.add('active');
-
-      details.forEach(function (item) {
-        const category = item.getAttribute('data-schedule-category');
-        const visible = filter === 'all' || category === filter;
-
-        item.classList.toggle('is-hidden', !visible);
-
-        if (!visible) {
-          item.removeAttribute('open');
-        }
-      });
-    });
-  });
-
-  details.forEach(function (item) {
-    const summary = item.querySelector('summary');
-
-    summary.addEventListener('click', function (event) {
-      event.preventDefault();
-
-      const isOpen = item.hasAttribute('open');
-
-      details.forEach(function (other) {
-        if (other !== item) {
-          other.removeAttribute('open');
-        }
-      });
-
-      if (isOpen) {
-        item.removeAttribute('open');
-      } else {
-        item.setAttribute('open', '');
-      }
-    });
-  });
-});
-</script>
 
 
 
 
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const STORAGE_KEY = 'gasuinent_schedule_v1';
 
-  const defaults = [
-    {
-      id: 'ent-1',
-      category: 'ent',
-      title: '공연·행사 기획 일정',
-      date: '',
-      start: '',
-      end: '',
-      place: '확정 후 등록',
-      organizer: '가수인생활 엔터테인먼트 또는 협력기관',
-      description: '지역축제, 기업행사, 문화공연, 가수 섭외 등 행사 성격에 맞춰 기획합니다.'
-    },
-    {
-      id: 'assoc-1',
-      category: 'assoc',
-      title: '수성못 나가수 가요제',
-      date: '',
-      start: '',
-      end: '',
-      place: '수성못 일원 · 최종 장소 확정 후 등록',
-      organizer: '한국가수인생활협회 / 관련 단체 협의',
-      description: '시민과 생활예술인이 함께 참여하는 가요제와 문화공연입니다.'
-    },
-    {
-      id: 'vol-1',
-      category: 'vol',
-      title: '문화나눔 및 공익공연',
-      date: '',
-      start: '',
-      end: '',
-      place: '복지시설, 전통시장 및 지역사회 행사장',
-      organizer: '한국가수인생활협회 / 나가수공연단·봉사단',
-      description: '어르신과 지역주민을 위한 문화공연 및 재능봉사 활동입니다.'
-    }
-  ];
 
-  let schedules = loadSchedules();
-  let editingId = null;
-
-  const categoryNames = {
-    ent: '엔터테인먼트',
-    assoc: '협회',
-    vol: '봉사·공익'
-  };
-
-  function loadSchedules() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      return saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(defaults));
-    } catch (e) {
-      return JSON.parse(JSON.stringify(defaults));
-    }
-  }
-
-  function saveSchedules() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(schedules));
-  }
-
-  function formatDate(date) {
-    if (!date) return '날짜 미정';
-    const d = new Date(date + 'T00:00:00');
-    return d.getFullYear() + '년 ' + (d.getMonth() + 1) + '월 ' + d.getDate() + '일';
-  }
-
-  function formatTime(start, end) {
-    if (!start && !end) return '시간 미정';
-    if (start && end) return start + ' ~ ' + end;
-    return start || end;
-  }
-
-  function cardHTML(item) {
-    return `
-      <article class="schedule-card" data-id="${item.id}">
-        <div class="schedule-card-head">
-          <div class="schedule-card-date">
-            ${formatDate(item.date)}
-            <span>${formatTime(item.start, item.end)}</span>
-          </div>
-          <div class="schedule-card-copy">
-            <span class="schedule-tag">${categoryNames[item.category]}</span>
-            <h3>${escapeHTML(item.title)}</h3>
-            <p>${escapeHTML(item.place || '장소 미정')}</p>
-          </div>
-          <div class="schedule-card-actions">
-            <button type="button" class="schedule-small-btn toggle-schedule" data-id="${item.id}">세부보기</button>
-            <button type="button" class="schedule-small-btn edit-schedule" data-id="${item.id}">일정 수정</button>
-          </div>
-        </div>
-        <div class="schedule-detail" id="detail-${item.id}">
-          <p><strong>행사명</strong><span>${escapeHTML(item.title)}</span></p>
-          <p><strong>날짜</strong><span>${formatDate(item.date)}</span></p>
-          <p><strong>시간</strong><span>${formatTime(item.start, item.end)}</span></p>
-          <p><strong>장소</strong><span>${escapeHTML(item.place || '장소 미정')}</span></p>
-          <p><strong>주최·주관</strong><span>${escapeHTML(item.organizer || '확정 후 등록')}</span></p>
-          <p><strong>행사 내용</strong><span>${escapeHTML(item.description || '내용 미입력')}</span></p>
-          <p><strong>문의처</strong><span>010-5070-3175 / myung4002@naver.com</span></p>
-        </div>
-      </article>`;
-  }
-
-  function escapeHTML(value) {
-    return String(value || '')
-      .replaceAll('&', '&amp;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;')
-      .replaceAll('"', '&quot;')
-      .replaceAll("'", '&#039;');
-  }
-
-  function render() {
-    document.getElementById('schedule-all').innerHTML = schedules.map(cardHTML).join('');
-    document.getElementById('schedule-ent').innerHTML = schedules.filter(x => x.category === 'ent').map(cardHTML).join('');
-    document.getElementById('schedule-assoc').innerHTML = schedules.filter(x => x.category === 'assoc').map(cardHTML).join('');
-    document.getElementById('schedule-vol').innerHTML = schedules.filter(x => x.category === 'vol').map(cardHTML).join('');
-
-    bindCardButtons();
-  }
-
-  function bindCardButtons() {
-    document.querySelectorAll('.toggle-schedule').forEach(function (button) {
-      button.addEventListener('click', function () {
-        const id = button.dataset.id;
-        const detail = button.closest('.schedule-card').querySelector('.schedule-detail');
-        detail.classList.toggle('open');
-        button.textContent = detail.classList.contains('open') ? '접기' : '세부보기';
-      });
-    });
-
-    document.querySelectorAll('.edit-schedule').forEach(function (button) {
-      button.addEventListener('click', function () {
-        openEditor(button.dataset.id);
-      });
-    });
-  }
-
-  function openEditor(id) {
-    editingId = id;
-    const item = schedules.find(x => x.id === id);
-    if (!item) return;
-
-    document.getElementById('editTitle').value = item.title || '';
-    document.getElementById('editCategory').value = item.category || 'ent';
-    document.getElementById('editDate').value = item.date || '';
-    document.getElementById('editStart').value = item.start || '';
-    document.getElementById('editEnd').value = item.end || '';
-    document.getElementById('editPlace').value = item.place || '';
-    document.getElementById('editOrganizer').value = item.organizer || '';
-    document.getElementById('editDescription').value = item.description || '';
-
-    document.getElementById('scheduleEditor').classList.add('open');
-    document.getElementById('scheduleEditor').setAttribute('aria-hidden', 'false');
-  }
-
-  function closeEditor() {
-    document.getElementById('scheduleEditor').classList.remove('open');
-    document.getElementById('scheduleEditor').setAttribute('aria-hidden', 'true');
-  }
-
-  document.querySelectorAll('.schedule-filter-btn').forEach(function (button) {
-    button.addEventListener('click', function () {
-      document.querySelectorAll('.schedule-filter-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.schedule-panel').forEach(p => p.classList.remove('active'));
-
-      button.classList.add('active');
-      document.getElementById(button.dataset.target).classList.add('active');
-    });
-  });
-
-  document.getElementById('saveSchedule').addEventListener('click', function () {
-    const item = schedules.find(x => x.id === editingId);
-    if (!item) return;
-
-    item.title = document.getElementById('editTitle').value.trim();
-    item.category = document.getElementById('editCategory').value;
-    item.date = document.getElementById('editDate').value;
-    item.start = document.getElementById('editStart').value;
-    item.end = document.getElementById('editEnd').value;
-    item.place = document.getElementById('editPlace').value.trim();
-    item.organizer = document.getElementById('editOrganizer').value.trim();
-    item.description = document.getElementById('editDescription').value.trim();
-
-    saveSchedules();
-    render();
-    closeEditor();
-    alert('일정이 저장되었습니다.');
-  });
-
-  document.getElementById('resetSchedule').addEventListener('click', function () {
-    if (!editingId) return;
-    const original = defaults.find(x => x.id === editingId);
-    const index = schedules.findIndex(x => x.id === editingId);
-    if (original && index >= 0) {
-      schedules[index] = JSON.parse(JSON.stringify(original));
-      saveSchedules();
-      render();
-      closeEditor();
-      alert('기본값으로 되돌렸습니다.');
-    }
-  });
-
-  document.querySelectorAll('[data-close-schedule-editor]').forEach(function (el) {
-    el.addEventListener('click', closeEditor);
-  });
-
-  render();
-});
-</script>
 
 
 <script>
 window.addEventListener('error', function(event){
   console.log('페이지 기능 오류:', event.message);
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  /* 실적 세부보기 */
+  document.querySelectorAll('.project-toggle').forEach(function(btn){
+    btn.onclick = function(){
+      var box = document.getElementById(btn.getAttribute('data-project'));
+      if(!box) return;
+      var open = box.classList.contains('open');
+      document.querySelectorAll('.project-body-box.open').forEach(function(x){x.classList.remove('open')});
+      document.querySelectorAll('.project-toggle').forEach(function(x){x.textContent='세부보기'});
+      if(!open){
+        box.classList.add('open');
+        btn.textContent='접기';
+      }
+    };
+  });
+
+  /* 일정 수정 버튼 */
+  document.addEventListener('click', function(e){
+    var editBtn = e.target.closest('.edit-schedule');
+    if(editBtn){
+      e.preventDefault();
+      var id = editBtn.getAttribute('data-id');
+      var saved;
+      try{ saved = JSON.parse(localStorage.getItem('gasuinent_schedule_v1') || '[]'); }catch(err){ saved=[]; }
+
+      var defaults = [
+        {id:'ent-1',category:'ent',title:'공연·행사 기획 일정',date:'',start:'',end:'',place:'확정 후 등록',organizer:'가수인생활 엔터테인먼트 또는 협력기관',description:'지역축제, 기업행사, 문화공연, 가수 섭외 등 행사 성격에 맞춰 기획합니다.'},
+        {id:'assoc-1',category:'assoc',title:'수성못 나가수 가요제',date:'',start:'',end:'',place:'수성못 일원 · 최종 장소 확정 후 등록',organizer:'한국가수인생활협회 / 관련 단체 협의',description:'시민과 생활예술인이 함께 참여하는 가요제와 문화공연입니다.'},
+        {id:'vol-1',category:'vol',title:'문화나눔 및 공익공연',date:'',start:'',end:'',place:'복지시설, 전통시장 및 지역사회 행사장',organizer:'한국가수인생활협회 / 나가수공연단·봉사단',description:'어르신과 지역주민을 위한 문화공연 및 재능봉사 활동입니다.'}
+      ];
+      var list = saved.length ? saved : defaults;
+      var item = list.find(function(x){return x.id===id}) || defaults.find(function(x){return x.id===id});
+      if(!item) return;
+
+      window.__editingScheduleId = id;
+      window.__scheduleList = list;
+      document.getElementById('editTitle').value=item.title||'';
+      document.getElementById('editCategory').value=item.category||'ent';
+      document.getElementById('editDate').value=item.date||'';
+      document.getElementById('editStart').value=item.start||'';
+      document.getElementById('editEnd').value=item.end||'';
+      document.getElementById('editPlace').value=item.place||'';
+      document.getElementById('editOrganizer').value=item.organizer||'';
+      document.getElementById('editDescription').value=item.description||'';
+      var editor=document.getElementById('scheduleEditor');
+      editor.classList.add('open');
+      editor.setAttribute('aria-hidden','false');
+    }
+  });
+
+  var saveBtn=document.getElementById('saveSchedule');
+  if(saveBtn){
+    saveBtn.onclick=function(){
+      var id=window.__editingScheduleId;
+      var list=window.__scheduleList||[];
+      var item=list.find(function(x){return x.id===id});
+      if(!item) return;
+      item.title=document.getElementById('editTitle').value.trim();
+      item.category=document.getElementById('editCategory').value;
+      item.date=document.getElementById('editDate').value;
+      item.start=document.getElementById('editStart').value;
+      item.end=document.getElementById('editEnd').value;
+      item.place=document.getElementById('editPlace').value.trim();
+      item.organizer=document.getElementById('editOrganizer').value.trim();
+      item.description=document.getElementById('editDescription').value.trim();
+      localStorage.setItem('gasuinent_schedule_v1',JSON.stringify(list));
+      alert('일정이 저장되었습니다. 페이지를 새로고침하면 반영됩니다.');
+      document.getElementById('scheduleEditor').classList.remove('open');
+      location.reload();
+    };
+  }
+
+  document.querySelectorAll('[data-close-schedule-editor]').forEach(function(x){
+    x.onclick=function(){document.getElementById('scheduleEditor').classList.remove('open')};
+  });
 });
 </script>
 
