@@ -38,6 +38,37 @@ body.page-mode {
 }
 </style>
 
+
+<style>
+.contact-top{grid-template-columns:repeat(3,1fr);margin-bottom:26px}
+.contact-top a{color:var(--gold2);text-decoration:none}
+.inquiry-wrap{max-width:980px;margin:0 auto}
+.inquiry-form{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:32px}
+.form-row{display:grid;gap:18px;margin-bottom:18px}
+.form-row.two{grid-template-columns:repeat(2,1fr)}
+.form-row.three{grid-template-columns:repeat(3,1fr)}
+.inquiry-form label{display:block;color:#fff;font-weight:700}
+.inquiry-form input,.inquiry-form select,.inquiry-form textarea{
+  width:100%;box-sizing:border-box;margin-top:8px;padding:14px 15px;
+  border:1px solid rgba(217,174,81,.35);border-radius:12px;
+  background:#111318;color:#fff;font:inherit;outline:none
+}
+.inquiry-form input:focus,.inquiry-form select:focus,.inquiry-form textarea:focus{
+  border-color:var(--gold2);box-shadow:0 0 0 3px rgba(217,174,81,.12)
+}
+.inquiry-form textarea{resize:vertical}
+.privacy-check{margin:18px 0;color:#ccc}
+.privacy-check label{font-weight:500}
+.privacy-check input{width:auto;margin:0 8px 0 0}
+.form-buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+.form-buttons button{border:0;cursor:pointer;font:inherit}
+.form-note{margin:16px 0 0;color:#aaa;font-size:.92rem}
+@media(max-width:800px){
+  .contact-top,.form-row.two,.form-row.three{grid-template-columns:1fr}
+  .inquiry-form{padding:22px}
+}
+</style>
+
 </head>
 <body>
 <header><div class="wrap nav"><a class="brand" href="#top"><img src="logo.png" alt="로고"><div>가수인생활 <span>엔터테인먼트</span></div></a><nav class="menu"><a href="#about">회사소개</a><a href="#business">사업분야</a><a href="#partners">함께하는 단체</a><a href="#news">뉴스</a><a href="#notice">공지</a><a href="#schedule">일정</a><a href="#projects">실적</a><a href="#contact">문의</a></nav></div></header>
@@ -53,7 +84,90 @@ body.page-mode {
 <section id="resources"><div class="wrap"><div class="head"><small>RESOURCES</small><h2>자료실</h2><p>사업계획서, 공연 제안서, 신청서, 보도자료 등을 제공할 예정입니다.</p></div><div class="grid three"><div class="resource"><h3>사업·공연 제안서</h3><p>공연기획 및 문화예술사업 제안자료를 등록합니다.</p></div><div class="resource"><h3>신청서·양식</h3><p>공연 신청서, 협력 신청서와 기타 서식을 등록합니다.</p></div><div class="resource"><h3>보도자료·포스터</h3><p>행사 보도자료와 홍보 포스터를 등록합니다.</p></div></div></div></section>
 <section id="youtube"><div class="wrap"><div class="head"><small>VIDEO CENTER</small><h2>영상센터</h2><p>공식 유튜브 채널에서 공연과 창작 음악을 만나보세요.</p></div><div class="grid two"><div class="channel"><h3>나가수TV</h3><p>공연, 행사, 문화예술 활동을 전합니다.</p><a class="btn primary" href="https://www.youtube.com/@TV-fy1wy" target="_blank">채널 바로가기</a></div><div class="channel"><h3>이명로의 힐링트로트</h3><p>감성 트로트, 힐링음악, 창작곡을 소개합니다.</p><a class="btn primary" href="https://www.youtube.com/channel/UC-2z5bBNXcTkagGRwovnFNw" target="_blank">채널 바로가기</a></div></div></div></section>
 <section id="gallery"><div class="wrap"><div class="head"><small>GALLERY</small><h2>갤러리</h2><p>공연, 행사, 봉사활동 사진을 다음 단계에서 추가합니다.</p></div><div class="grid gallery"><div class="photo">공연사진 추가 예정</div><div class="photo">행사사진 추가 예정</div><div class="photo">봉사활동 사진 추가 예정</div></div></div></section>
-<section id="contact"><div class="wrap"><div class="head"><small>CONTACT</small><h2>공연 신청·후원·협력 문의</h2><p>행사명, 일정, 장소, 예상 관객 수와 요청사항을 정리해 문의해 주세요.</p></div><div class="grid three"><div class="panel"><h3>공연 신청</h3><p>공연, 축제, 기업행사, 전통시장 행사, 복지시설 공연 의뢰를 받습니다.</p></div><div class="panel"><h3>후원·협력</h3><p>후원기관, 협력기관, 업무협약, 협찬 및 자원봉사 참여를 안내합니다.</p></div><div class="panel"><h3>연락처</h3><p>대표: 이명로</p><p>전화: 공개번호 입력 예정</p><p>이메일: 공개 이메일 입력 예정</p></div></div></div></section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="head">
+      <small>CONTACT</small>
+      <h2>공연 신청·후원·협력 문의</h2>
+      <p>아래 내용을 입력한 뒤 「문의 내용 작성하기」를 누르면 이메일 작성창이 열립니다.</p>
+    </div>
+
+    <div class="grid contact contact-top">
+      <div class="panel">
+        <h3>공연 신청</h3>
+        <p>공연, 축제, 기업행사, 전통시장 행사, 복지시설 공연 의뢰를 받습니다.</p>
+      </div>
+      <div class="panel">
+        <h3>후원·협력</h3>
+        <p>후원기관, 협력기관, 업무협약, 협찬 및 재능봉사 참여를 안내합니다.</p>
+      </div>
+      <div class="panel">
+        <h3>연락처</h3>
+        <p><strong>대표: 이명로</strong></p>
+        <p>전화: <a href="tel:01050703175">010-5070-3175</a></p>
+        <p>이메일: <a href="mailto:myung4002@naver.com">myung4002@naver.com</a></p>
+      </div>
+    </div>
+
+    <div class="inquiry-wrap">
+      <form id="inquiryForm" class="inquiry-form">
+        <div class="form-row two">
+          <label>이름 또는 단체명
+            <input type="text" id="inqName" required placeholder="예: 홍길동 / ○○상인회">
+          </label>
+          <label>연락처
+            <input type="tel" id="inqPhone" required placeholder="예: 010-1234-5678">
+          </label>
+        </div>
+
+        <div class="form-row two">
+          <label>문의 구분
+            <select id="inqType" required>
+              <option value="">선택하세요</option>
+              <option>공연 신청</option>
+              <option>행사 기획</option>
+              <option>가수 섭외</option>
+              <option>후원·협력</option>
+              <option>봉사공연</option>
+              <option>기타 문의</option>
+            </select>
+          </label>
+          <label>행사명
+            <input type="text" id="inqEvent" placeholder="예: 전통시장 희망음악회">
+          </label>
+        </div>
+
+        <div class="form-row three">
+          <label>행사 날짜
+            <input type="date" id="inqDate">
+          </label>
+          <label>행사 장소
+            <input type="text" id="inqPlace" placeholder="예: 대구 ○○시장">
+          </label>
+          <label>예상 관객 수
+            <input type="number" id="inqAudience" min="0" placeholder="예: 300">
+          </label>
+        </div>
+
+        <label>요청사항
+          <textarea id="inqMessage" rows="6" required placeholder="행사 내용, 공연 시간, 필요한 출연진, 예산 또는 요청사항을 적어주세요."></textarea>
+        </label>
+
+        <div class="privacy-check">
+          <label><input type="checkbox" id="inqAgree" required> 문의 회신을 위한 개인정보 제공에 동의합니다.</label>
+        </div>
+
+        <div class="form-buttons">
+          <button type="submit" class="btn primary">문의 내용 작성하기</button>
+          <a class="btn" href="tel:01050703175">전화 바로 걸기</a>
+        </div>
+        <p class="form-note">※ 버튼을 누르면 사용 중인 이메일 프로그램이 열리며, 작성한 내용이 자동으로 입력됩니다.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
 </main>
 <footer><div class="wrap"><img src="logo.png" alt="로고"><div>© 2026 가수인생활 엔터테인먼트. All rights reserved.</div></div></footer>
 
@@ -130,6 +244,55 @@ body.page-mode {
 })();
 </script>
 <!-- PAGE-MODE-END -->
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('inquiryForm');
+  if (!form) return;
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const name = document.getElementById('inqName').value.trim();
+    const phone = document.getElementById('inqPhone').value.trim();
+    const type = document.getElementById('inqType').value;
+    const eventName = document.getElementById('inqEvent').value.trim();
+    const date = document.getElementById('inqDate').value;
+    const place = document.getElementById('inqPlace').value.trim();
+    const audience = document.getElementById('inqAudience').value;
+    const message = document.getElementById('inqMessage').value.trim();
+    const agree = document.getElementById('inqAgree').checked;
+
+    if (!name || !phone || !type || !message || !agree) {
+      alert('필수 항목과 개인정보 동의를 확인해 주세요.');
+      return;
+    }
+
+    const subject = '[홈페이지 문의] ' + type + ' - ' + name;
+    const body = [
+      '가수인생활 엔터테인먼트 홈페이지 문의',
+      '',
+      '이름/단체명: ' + name,
+      '연락처: ' + phone,
+      '문의 구분: ' + type,
+      '행사명: ' + (eventName || '미입력'),
+      '행사 날짜: ' + (date || '미입력'),
+      '행사 장소: ' + (place || '미입력'),
+      '예상 관객 수: ' + (audience || '미입력'),
+      '',
+      '요청사항:',
+      message
+    ].join('\n');
+
+    window.location.href =
+      'mailto:myung4002@naver.com?subject=' +
+      encodeURIComponent(subject) +
+      '&body=' +
+      encodeURIComponent(body);
+  });
+});
+</script>
 
 </body>
 </html>
