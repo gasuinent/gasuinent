@@ -69,6 +69,33 @@ body.page-mode {
 }
 </style>
 
+
+<style>
+.news-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.news-tab{padding:10px 17px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);font:inherit;font-weight:800;cursor:pointer}
+.news-tab.active,.news-tab:hover{background:var(--gold);color:#111;border-color:var(--gold)}
+.news-board{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.news-card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:26px;display:flex;flex-direction:column;min-height:260px}
+.news-card.featured{grid-column:1/-1;background:linear-gradient(145deg,rgba(217,174,81,.16),rgba(255,255,255,.03)),var(--panel)}
+.news-card h3{font-size:1.45rem;margin:8px 0 14px}
+.news-summary{color:var(--muted);line-height:1.8;flex:1}
+.news-open{align-self:flex-start;margin-top:18px;padding:11px 16px;border:1px solid var(--gold);border-radius:999px;background:transparent;color:var(--gold2);font:inherit;font-weight:800;cursor:pointer}
+.news-open:hover{background:var(--gold);color:#111}
+.news-card.is-hidden{display:none}
+.news-modal{position:fixed;inset:0;display:none;z-index:9999}
+.news-modal.open{display:block}
+.news-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.78)}
+.news-modal-dialog{position:relative;max-width:760px;margin:7vh auto;padding:34px;background:#15171c;border:1px solid rgba(217,174,81,.35);border-radius:24px;color:#fff;max-height:82vh;overflow:auto;box-shadow:0 25px 80px rgba(0,0,0,.55)}
+.news-modal-close{position:absolute;right:18px;top:14px;border:0;background:transparent;color:#fff;font-size:2rem;cursor:pointer}
+.news-modal-dialog h3{font-size:2rem;margin:12px 36px 22px 0}
+.news-modal-body p{color:#ddd;line-height:1.95;margin:0 0 16px}
+@media(max-width:800px){
+  .news-board{grid-template-columns:1fr}
+  .news-card.featured{grid-column:auto}
+  .news-modal-dialog{margin:4vh 14px;padding:26px}
+}
+</style>
+
 </head>
 <body>
 <header><div class="wrap nav"><a class="brand" href="#top"><img src="logo.png" alt="로고"><div>가수인생활 <span>엔터테인먼트</span></div></a><nav class="menu"><a href="#about">회사소개</a><a href="#business">사업분야</a><a href="#partners">함께하는 단체</a><a href="#news">뉴스</a><a href="#notice">공지</a><a href="#schedule">일정</a><a href="#projects">실적</a><a href="#contact">문의</a></nav></div></header>
@@ -77,7 +104,97 @@ body.page-mode {
 <section id="about"><div class="wrap"><div class="head"><small>COMPANY</small><h2>회사소개</h2><p>가수인생활 엔터테인먼트는 문화예술을 통해 사람과 지역을 연결하는 문화예술 기획사입니다.</p></div><div class="grid two"><div class="panel"><h3>가수인생활 엔터테인먼트</h3><p>공연기획, 문화예술행사, 가수 매니지먼트, 지역축제 및 대중문화예술 콘텐츠 제작을 추진합니다.</p><p>행사의 목적과 관객층에 맞춘 출연진 구성, 공연 프로그램 기획, 무대 운영과 홍보 콘텐츠 제작을 통해 현장에 필요한 문화예술 서비스를 제공합니다.</p><p class="quote">신뢰받는 문화예술 파트너로서 지역과 함께 성장하겠습니다.</p></div><div class="panel"><h3>대표 인사말</h3><p>안녕하십니까. 가수인생활 엔터테인먼트 대표 <strong>이명로</strong>입니다.</p><p>공연 하나에도 진심을 담고, 행사 하나에도 지역사회와 함께하는 가치를 담아 관객과 출연자 모두가 만족할 수 있는 무대를 만들겠습니다.</p><p><strong>대표 이명로</strong></p></div></div></div></section>
 <section id="business"><div class="wrap"><div class="head"><small>BUSINESS</small><h2>주요 사업분야</h2><p>행사 목적과 현장 여건에 맞춰 필요한 서비스를 맞춤형으로 구성합니다.</p></div><div class="grid three"><div class="card"><div class="num">01</div><h3>공연기획</h3><p>지역축제, 기념행사, 문화공연, 특별무대를 기획합니다.</p></div><div class="card"><div class="num">02</div><h3>문화예술행사</h3><p>전통시장, 복지기관, 시민행사 등 현장형 프로그램을 운영합니다.</p></div><div class="card"><div class="num">03</div><h3>가수 매니지먼트</h3><p>가수 섭외, 출연 협의, 무대 구성과 프로그램을 지원합니다.</p></div><div class="card"><div class="num">04</div><h3>지역상생 프로젝트</h3><p>전통시장 활성화와 소상공인 상생을 위한 공연사업을 추진합니다.</p></div><div class="card"><div class="num">05</div><h3>봉사·공익 공연</h3><p>복지시설과 지역공동체를 위한 문화나눔 무대를 만듭니다.</p></div><div class="card"><div class="num">06</div><h3>문화콘텐츠 제작</h3><p>공연영상, 홍보영상, 음원과 온라인 콘텐츠를 기획합니다.</p></div></div></div></section>
 <section id="partners"><div class="wrap"><div class="head"><small>PARTNERS</small><h2>함께하는 단체</h2><p>각 단체는 운영 형태가 다르며 문화예술사업을 위해 상호 협력합니다.</p></div><div class="grid three"><div class="org"><h3>한국가수인생활협회</h3><p>고유번호증을 보유한 비영리단체로 문화예술인의 활동 지원과 지역 문화예술 발전을 위해 활동합니다.</p></div><div class="org"><h3>나가수공연단</h3><p>지역축제, 문화행사, 전통시장과 복지시설 등 다양한 현장에서 공연을 펼칩니다.</p></div><div class="org"><h3>나가수봉사단</h3><p>재능기부 공연과 문화예술 봉사활동으로 지역사회에 희망과 나눔을 전합니다.</p></div></div></div></section>
-<section id="news"><div class="wrap"><div class="head"><small>NEWS CENTER</small><h2>가수인생활 뉴스</h2><p>공연소식, 협회소식, 봉사활동, 보도자료를 신문형 카드로 정리합니다.</p></div><div class="tabs"><span class="tab">전체</span><span class="tab">공연소식</span><span class="tab">협회소식</span><span class="tab">봉사활동</span><span class="tab">보도자료</span></div><div class="grid news-feature"><article class="news news-main"><span class="tag">대표기사</span><h3>전통시장 활성화와 지역상생을 위한 희망 음악회</h3><p>문화공연을 통해 지역경제와 시민에게 활력을 전합니다.</p></article><div class="news-list"><div class="news-item"><span class="tag">공연소식</span><b>의성 노인복지관 문화공연</b><small>기사 추가 예정</small></div><div class="news-item"><span class="tag">상생사업</span><b>공항시장 전통시장 활성화 공연</b><small>기사 추가 예정</small></div><div class="news-item"><span class="tag">가요제</span><b>수성못 나가수 가요제 추진 소식</b><small>기사 추가 예정</small></div></div></div></div></section>
+
+<section id="news">
+  <div class="wrap">
+    <div class="head">
+      <small>NEWS CENTER</small>
+      <h2>가수인생활 뉴스</h2>
+      <p>공연소식, 협회소식, 봉사활동, 보도자료를 분야별로 확인할 수 있습니다.</p>
+    </div>
+
+    <div class="news-tabs" role="tablist" aria-label="뉴스 분류">
+      <button type="button" class="news-tab active" data-filter="all">전체</button>
+      <button type="button" class="news-tab" data-filter="공연소식">공연소식</button>
+      <button type="button" class="news-tab" data-filter="협회소식">협회소식</button>
+      <button type="button" class="news-tab" data-filter="봉사활동">봉사활동</button>
+      <button type="button" class="news-tab" data-filter="보도자료">보도자료</button>
+    </div>
+
+    <div class="news-board">
+      <article class="news-card featured" data-category="공연소식">
+        <span class="tag">공연소식</span>
+        <h3>전통시장 활성화와 지역상생을 위한 희망 음악회</h3>
+        <p class="news-summary">문화공연과 상생상품권을 연계하여 전통시장과 소상공인에게 실질적인 활력을 전하는 지역상생 프로젝트입니다.</p>
+        <button type="button" class="news-open"
+          data-title="전통시장 활성화와 지역상생을 위한 희망 음악회"
+          data-category="공연소식"
+          data-body="한국가수인생활협회와 나가수공연단·봉사단은 전통시장 방문객 유입과 소상공인 매출 증대를 위해 희망 음악회를 추진합니다.|공연과 함께 시장 전용 상생상품권을 배포하여 지역 안에서 소비가 순환하도록 돕고, 상인과 주민이 함께 참여하는 문화축제를 만들어갑니다.|행사 일정과 장소가 확정되면 홈페이지 공지와 뉴스에서 안내합니다.">
+          기사 자세히 보기
+        </button>
+      </article>
+
+      <article class="news-card" data-category="봉사활동">
+        <span class="tag">봉사활동</span>
+        <h3>의성 노인복지관 무료 문화공연</h3>
+        <p class="news-summary">어르신과 지역주민에게 음악으로 위로와 즐거움을 전한 문화나눔 공연입니다.</p>
+        <button type="button" class="news-open"
+          data-title="의성 노인복지관 무료 문화공연"
+          data-category="봉사활동"
+          data-body="나가수봉사단과 공연단은 의성 노인복지관을 찾아 무료 문화공연을 진행했습니다.|트로트와 대중가요를 함께 부르며 어르신들과 따뜻한 시간을 나누었고, 지역 문화복지 향상을 위한 지속적인 재능기부 활동을 약속했습니다.|관련 공연 사진과 영상은 갤러리와 나가수TV를 통해 순차적으로 소개할 예정입니다.">
+          기사 자세히 보기
+        </button>
+      </article>
+
+      <article class="news-card" data-category="보도자료">
+        <span class="tag">보도자료</span>
+        <h3>공항시장 전통시장 활성화 무료공연</h3>
+        <p class="news-summary">공연 출연료와 기부금을 상생상품권으로 환원해 시장 안에서 사용할 수 있도록 지원한 행사입니다.</p>
+        <button type="button" class="news-open"
+          data-title="공항시장 전통시장 활성화 무료공연"
+          data-category="보도자료"
+          data-body="대구 동구 공항시장에서 전통시장 살리기운동의 하나로 무료공연을 진행했습니다.|협회는 출연료와 기부금을 시장 전용 상생상품권으로 만들어 지역주민에게 배포하고, 일정 기간 안에 시장에서 사용하도록 하여 소상공인 매출 증대에 도움이 되도록 했습니다.|앞으로도 공연과 지역경제가 함께 살아나는 상생형 문화사업을 확대해 나갈 계획입니다.">
+          기사 자세히 보기
+        </button>
+      </article>
+
+      <article class="news-card" data-category="협회소식">
+        <span class="tag">협회소식</span>
+        <h3>한국가수인생활협회 활동 안내</h3>
+        <p class="news-summary">고유번호증을 보유한 비영리단체로서 문화예술 활동과 지역사회 공익사업을 추진합니다.</p>
+        <button type="button" class="news-open"
+          data-title="한국가수인생활협회 활동 안내"
+          data-category="협회소식"
+          data-body="한국가수인생활협회는 생활가수와 지역 예술인의 활동 지원, 복지시설 위문공연, 전통시장 활성화 공연, 지역축제 참여 등을 추진합니다.|가수인생활 엔터테인먼트와는 운영 형태를 구분하면서도 문화예술사업과 공익공연 분야에서 상호 협력합니다.|회원 모집, 정기총회, 교육, 공모사업 관련 내용은 공지사항에서 별도로 안내합니다.">
+          기사 자세히 보기
+        </button>
+      </article>
+
+      <article class="news-card" data-category="공연소식">
+        <span class="tag">공연소식</span>
+        <h3>수성못 나가수 가요제 추진 소식</h3>
+        <p class="news-summary">시민 참여형 생활문화 축제로 발전시키기 위한 가요제 사업을 준비하고 있습니다.</p>
+        <button type="button" class="news-open"
+          data-title="수성못 나가수 가요제 추진 소식"
+          data-category="공연소식"
+          data-body="수성못 나가수 가요제는 시민과 생활예술인이 함께하는 참여형 문화행사를 목표로 준비 중입니다.|예선과 본선, 초청공연, 시민 참여 프로그램을 구성하고 안전한 행사 운영과 지역 문화관광 활성화를 함께 추진합니다.|세부 일정, 참가신청, 장소와 운영계획은 확정 후 공지사항과 행사일정에서 안내합니다.">
+          기사 자세히 보기
+        </button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div id="newsModal" class="news-modal" aria-hidden="true">
+  <div class="news-modal-backdrop" data-close-news></div>
+  <div class="news-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="newsModalTitle">
+    <button type="button" class="news-modal-close" data-close-news aria-label="닫기">×</button>
+    <span id="newsModalCategory" class="tag"></span>
+    <h3 id="newsModalTitle"></h3>
+    <div id="newsModalBody" class="news-modal-body"></div>
+  </div>
+</div>
+
 <section id="notice"><div class="wrap"><div class="head"><small>NOTICE</small><h2>공지사항</h2><p>엔터테인먼트 공지와 협회 공지를 구분했습니다.</p></div><div class="grid two"><div class="notice"><h3>가수인생활 엔터테인먼트 공지</h3><p>공연 의뢰, 행사 모집, 가수 모집, 협업 및 신규사업 안내를 게시합니다.</p></div><div class="notice"><h3>한국가수인생활협회 공지</h3><p>협회 회원, 정기총회, 공모사업, 교육 및 공익활동 안내를 게시합니다.</p></div></div></div></section>
 <section id="schedule"><div class="wrap"><div class="head"><small>SCHEDULE</small><h2>행사일정</h2><p>엔터테인먼트 일정과 협회 일정을 구분하여 관리합니다.</p></div><div class="grid two"><div class="panel"><h3>엔터테인먼트 일정</h3><p>공연·축제·문화행사 일정을 등록합니다.</p></div><div class="panel"><h3>협회 일정</h3><p>봉사활동·협회행사·상생사업 일정을 등록합니다.</p></div></div></div></section>
 <section id="projects"><div class="wrap"><div class="head"><small>PROJECTS</small><h2>주요 실적 및 프로젝트</h2><p>협력기관이 쉽게 확인할 수 있도록 대표 사업을 정리합니다.</p></div><div class="grid four"><div class="project"><span class="tag">가요제</span><h3>수성못 나가수 가요제</h3><p>지역 대표 문화행사로 발전시키기 위한 프로젝트입니다.</p></div><div class="project"><span class="tag">전통시장</span><h3>희망 음악회</h3><p>전통시장 활성화와 소상공인 상생을 위한 프로젝트입니다.</p></div><div class="project"><span class="tag">지역상생</span><h3>공항시장 상생공연</h3><p>상생상품권과 문화공연을 연계한 지역경제 활성화 사례입니다.</p></div><div class="project"><span class="tag">문화복지</span><h3>의성 노인복지관 공연</h3><p>어르신과 지역민을 위한 문화나눔 공연입니다.</p></div></div></div></section>
@@ -290,6 +407,65 @@ document.addEventListener('DOMContentLoaded', function () {
       encodeURIComponent(subject) +
       '&body=' +
       encodeURIComponent(body);
+  });
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const tabs = document.querySelectorAll('.news-tab');
+  const cards = document.querySelectorAll('.news-card');
+  const modal = document.getElementById('newsModal');
+  const modalTitle = document.getElementById('newsModalTitle');
+  const modalCategory = document.getElementById('newsModalCategory');
+  const modalBody = document.getElementById('newsModalBody');
+
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(t){ t.classList.remove('active'); });
+      tab.classList.add('active');
+      const filter = tab.dataset.filter;
+
+      cards.forEach(function(card){
+        const show = filter === 'all' || card.dataset.category === filter;
+        card.classList.toggle('is-hidden', !show);
+      });
+    });
+  });
+
+  document.querySelectorAll('.news-open').forEach(function(button){
+    button.addEventListener('click', function(){
+      modalTitle.textContent = button.dataset.title || '';
+      modalCategory.textContent = button.dataset.category || '';
+      modalBody.innerHTML = '';
+
+      (button.dataset.body || '').split('|').forEach(function(paragraph){
+        const p = document.createElement('p');
+        p.textContent = paragraph;
+        modalBody.appendChild(p);
+      });
+
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  document.querySelectorAll('[data-close-news]').forEach(function(button){
+    button.addEventListener('click', function(){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    });
+  });
+
+  document.addEventListener('keydown', function(event){
+    if(event.key === 'Escape' && modal.classList.contains('open')){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
   });
 });
 </script>
