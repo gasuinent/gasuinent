@@ -23,17 +23,26 @@ section{padding:88px 0}.head{text-align:center;margin-bottom:43px}.head small{co
 @media(max-width:760px){.two,.three,.four,.news-feature,.gallery{grid-template-columns:1fr}section{padding:66px 0}.hero{min-height:80vh}.hero-inner{padding:30px 0 40px}.hero-logo-wrap{width:58vw;max-width:320px;margin-bottom:6px}.hero-logo{-webkit-mask-image:radial-gradient(ellipse 84% 72% at center,#000 56%,rgba(0,0,0,.85) 74%,transparent 100%);mask-image:radial-gradient(ellipse 84% 72% at center,#000 56%,rgba(0,0,0,.85) 74%,transparent 100%)}h1{font-size:clamp(2.2rem,12vw,3.8rem)}}
 </style>
 
+<!-- PAGE-MODE-START -->
 <style>
-/* 상단 메뉴를 누르면 해당 분야만 표시 */
-main > section{display:none}
-main > section.active-page{display:block}
+/* 메뉴를 누르면 선택한 분야 한 개만 보이도록 설정 */
+main > section {
+  display: none !important;
+}
+main > section.page-active {
+  display: block !important;
+}
+/* 메뉴별 화면에서 불필요한 세로 이동을 줄임 */
+body.page-mode {
+  overflow-y: auto;
+}
 </style>
 
 </head>
 <body>
 <header><div class="wrap nav"><a class="brand" href="#top"><img src="logo.png" alt="로고"><div>가수인생활 <span>엔터테인먼트</span></div></a><nav class="menu"><a href="#about">회사소개</a><a href="#business">사업분야</a><a href="#partners">함께하는 단체</a><a href="#news">뉴스</a><a href="#notice">공지</a><a href="#schedule">일정</a><a href="#projects">실적</a><a href="#contact">문의</a></nav></div></header>
 <main id="top">
-<section class="hero active-page"><div class="wrap hero-inner"><div class="hero-logo-wrap"><img class="hero-logo" src="hero-logo.png" alt="가수인생활 엔터테인먼트 메인 로고"></div><h1>무대와 사람을 잇는<br>문화예술 플랫폼</h1><p>공연을 통해 지역을 살리고, 예술을 통해 사람을 연결합니다.</p><div class="btns"><a class="btn primary" href="#contact">공연·행사 문의</a><a class="btn" href="https://www.youtube.com/@TV-fy1wy" target="_blank">나가수TV</a><a class="btn" href="https://www.youtube.com/channel/UC-2z5bBNXcTkagGRwovnFNw" target="_blank">이명로의 힐링트로트</a><a class="btn" href="https://www.facebook.com/gasuinent" target="_blank">페이스북</a></div></div></section>
+<section class="hero page-active"><div class="wrap hero-inner"><div class="hero-logo-wrap"><img class="hero-logo" src="hero-logo.png" alt="가수인생활 엔터테인먼트 메인 로고"></div><h1>무대와 사람을 잇는<br>문화예술 플랫폼</h1><p>공연을 통해 지역을 살리고, 예술을 통해 사람을 연결합니다.</p><div class="btns"><a class="btn primary" href="#contact">공연·행사 문의</a><a class="btn" href="https://www.youtube.com/@TV-fy1wy" target="_blank">나가수TV</a><a class="btn" href="https://www.youtube.com/channel/UC-2z5bBNXcTkagGRwovnFNw" target="_blank">이명로의 힐링트로트</a><a class="btn" href="https://www.facebook.com/gasuinent" target="_blank">페이스북</a></div></div></section>
 <section id="about"><div class="wrap"><div class="head"><small>COMPANY</small><h2>회사소개</h2><p>가수인생활 엔터테인먼트는 문화예술을 통해 사람과 지역을 연결하는 문화예술 기획사입니다.</p></div><div class="grid two"><div class="panel"><h3>가수인생활 엔터테인먼트</h3><p>공연기획, 문화예술행사, 가수 매니지먼트, 지역축제 및 대중문화예술 콘텐츠 제작을 추진합니다.</p><p>행사의 목적과 관객층에 맞춘 출연진 구성, 공연 프로그램 기획, 무대 운영과 홍보 콘텐츠 제작을 통해 현장에 필요한 문화예술 서비스를 제공합니다.</p><p class="quote">신뢰받는 문화예술 파트너로서 지역과 함께 성장하겠습니다.</p></div><div class="panel"><h3>대표 인사말</h3><p>안녕하십니까. 가수인생활 엔터테인먼트 대표 <strong>이명로</strong>입니다.</p><p>공연 하나에도 진심을 담고, 행사 하나에도 지역사회와 함께하는 가치를 담아 관객과 출연자 모두가 만족할 수 있는 무대를 만들겠습니다.</p><p><strong>대표 이명로</strong></p></div></div></div></section>
 <section id="business"><div class="wrap"><div class="head"><small>BUSINESS</small><h2>주요 사업분야</h2><p>행사 목적과 현장 여건에 맞춰 필요한 서비스를 맞춤형으로 구성합니다.</p></div><div class="grid three"><div class="card"><div class="num">01</div><h3>공연기획</h3><p>지역축제, 기념행사, 문화공연, 특별무대를 기획합니다.</p></div><div class="card"><div class="num">02</div><h3>문화예술행사</h3><p>전통시장, 복지기관, 시민행사 등 현장형 프로그램을 운영합니다.</p></div><div class="card"><div class="num">03</div><h3>가수 매니지먼트</h3><p>가수 섭외, 출연 협의, 무대 구성과 프로그램을 지원합니다.</p></div><div class="card"><div class="num">04</div><h3>지역상생 프로젝트</h3><p>전통시장 활성화와 소상공인 상생을 위한 공연사업을 추진합니다.</p></div><div class="card"><div class="num">05</div><h3>봉사·공익 공연</h3><p>복지시설과 지역공동체를 위한 문화나눔 무대를 만듭니다.</p></div><div class="card"><div class="num">06</div><h3>문화콘텐츠 제작</h3><p>공연영상, 홍보영상, 음원과 온라인 콘텐츠를 기획합니다.</p></div></div></div></section>
 <section id="partners"><div class="wrap"><div class="head"><small>PARTNERS</small><h2>함께하는 단체</h2><p>각 단체는 운영 형태가 다르며 문화예술사업을 위해 상호 협력합니다.</p></div><div class="grid three"><div class="org"><h3>한국가수인생활협회</h3><p>고유번호증을 보유한 비영리단체로 문화예술인의 활동 지원과 지역 문화예술 발전을 위해 활동합니다.</p></div><div class="org"><h3>나가수공연단</h3><p>지역축제, 문화행사, 전통시장과 복지시설 등 다양한 현장에서 공연을 펼칩니다.</p></div><div class="org"><h3>나가수봉사단</h3><p>재능기부 공연과 문화예술 봉사활동으로 지역사회에 희망과 나눔을 전합니다.</p></div></div></div></section>
@@ -49,57 +58,75 @@ main > section.active-page{display:block}
 <footer><div class="wrap"><img src="logo.png" alt="로고"><div>© 2026 가수인생활 엔터테인먼트. All rights reserved.</div></div></footer>
 
 <script>
-(function(){
-  const sectionIds = [
-    'top','about','business','partners','news','notice','schedule',
-    'projects','resources','youtube','gallery','contact'
-  ];
+(function () {
+  const validPages = new Set([
+    'home', 'about', 'business', 'partners', 'news',
+    'notice', 'schedule', 'projects', 'resources',
+    'youtube', 'gallery', 'contact'
+  ]);
 
-  function showSection(id){
-    const targetId = sectionIds.includes(id) ? id : 'top';
+  function getPageName() {
+    const hash = window.location.hash.replace('#', '').trim();
+    if (!hash || hash === 'top') return 'home';
+    return validPages.has(hash) ? hash : 'home';
+  }
 
-    document.querySelectorAll('main > section').forEach(section => {
-      section.classList.remove('active-page');
+  function showOnly(pageName) {
+    document.body.classList.add('page-mode');
+
+    document.querySelectorAll('main > section').forEach(function (section) {
+      section.classList.remove('page-active');
     });
 
-    const target = targetId === 'top'
-      ? document.querySelector('main > .hero')
-      : document.getElementById(targetId);
-
-    if(target){
-      target.classList.add('active-page');
-      window.scrollTo({top:0, behavior:'instant'});
+    let target;
+    if (pageName === 'home') {
+      target = document.querySelector('main > section.hero');
+    } else {
+      target = document.getElementById(pageName);
     }
+
+    if (!target) {
+      target = document.querySelector('main > section.hero');
+    }
+
+    target.classList.add('page-active');
+    window.scrollTo(0, 0);
   }
 
-  function currentHash(){
-    return window.location.hash.replace('#','') || 'top';
+  function moveTo(pageName) {
+    const hash = pageName === 'home' ? '#top' : '#' + pageName;
+    if (window.location.hash !== hash) {
+      history.pushState({ page: pageName }, '', hash);
+    }
+    showOnly(pageName);
   }
 
-  document.addEventListener('DOMContentLoaded', function(){
-    showSection(currentHash());
+  document.addEventListener('DOMContentLoaded', function () {
+    showOnly(getPageName());
 
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-      link.addEventListener('click', function(e){
-        const id = this.getAttribute('href').replace('#','') || 'top';
-        if(sectionIds.includes(id)){
-          e.preventDefault();
-          history.pushState(null, '', '#' + id);
-          showSection(id);
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        const raw = link.getAttribute('href').replace('#', '').trim();
+        const pageName = (!raw || raw === 'top') ? 'home' : raw;
+
+        if (validPages.has(pageName)) {
+          event.preventDefault();
+          moveTo(pageName);
         }
       });
     });
   });
 
-  window.addEventListener('hashchange', function(){
-    showSection(currentHash());
+  window.addEventListener('hashchange', function () {
+    showOnly(getPageName());
   });
 
-  window.addEventListener('popstate', function(){
-    showSection(currentHash());
+  window.addEventListener('popstate', function () {
+    showOnly(getPageName());
   });
 })();
 </script>
+<!-- PAGE-MODE-END -->
 
 </body>
 </html>
