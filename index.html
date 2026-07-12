@@ -22,6 +22,22 @@ section{padding:88px 0}.head{text-align:center;margin-bottom:43px}.head small{co
 @media(max-width:980px){.menu{display:none}.four{grid-template-columns:repeat(2,1fr)}.hero-logo-wrap{width:min(590px,64vw)}}
 @media(max-width:760px){.two,.three,.four,.news-feature,.gallery{grid-template-columns:1fr}section{padding:66px 0}.hero{min-height:80vh}.hero-inner{padding:30px 0 40px}.hero-logo-wrap{width:58vw;max-width:320px;margin-bottom:6px}.hero-logo{-webkit-mask-image:radial-gradient(ellipse 84% 72% at center,#000 56%,rgba(0,0,0,.85) 74%,transparent 100%);mask-image:radial-gradient(ellipse 84% 72% at center,#000 56%,rgba(0,0,0,.85) 74%,transparent 100%)}h1{font-size:clamp(2.2rem,12vw,3.8rem)}}
 </style>
+
+<!-- PAGE-MODE-START -->
+<style>
+/* 메뉴를 누르면 선택한 분야 한 개만 보이도록 설정 */
+main > section {
+  display: none !important;
+}
+main > section.page-active {
+  display: block !important;
+}
+/* 메뉴별 화면에서 불필요한 세로 이동을 줄임 */
+body.page-mode {
+  overflow-y: auto;
+}
+</style>
+
 </head>
 <body>
 <header><div class="wrap nav"><a class="brand" href="#top"><img src="logo.png" alt="로고"><div>가수인생활 <span>엔터테인먼트</span></div></a><nav class="menu"><a href="#about">회사소개</a><a href="#business">사업분야</a><a href="#partners">함께하는 단체</a><a href="#news">뉴스</a><a href="#notice">공지</a><a href="#schedule">일정</a><a href="#projects">실적</a><a href="#contact">문의</a></nav></div></header>
@@ -40,5 +56,80 @@ section{padding:88px 0}.head{text-align:center;margin-bottom:43px}.head small{co
 <section id="contact"><div class="wrap"><div class="head"><small>CONTACT</small><h2>공연 신청·후원·협력 문의</h2><p>행사명, 일정, 장소, 예상 관객 수와 요청사항을 정리해 문의해 주세요.</p></div><div class="grid three"><div class="panel"><h3>공연 신청</h3><p>공연, 축제, 기업행사, 전통시장 행사, 복지시설 공연 의뢰를 받습니다.</p></div><div class="panel"><h3>후원·협력</h3><p>후원기관, 협력기관, 업무협약, 협찬 및 자원봉사 참여를 안내합니다.</p></div><div class="panel"><h3>연락처</h3><p>대표: 이명로</p><p>전화: 공개번호 입력 예정</p><p>이메일: 공개 이메일 입력 예정</p></div></div></div></section>
 </main>
 <footer><div class="wrap"><img src="logo.png" alt="로고"><div>© 2026 가수인생활 엔터테인먼트. All rights reserved.</div></div></footer>
+
+<script>
+(function () {
+  const validPages = new Set([
+    'home', 'about', 'business', 'partners', 'news',
+    'notice', 'schedule', 'projects', 'resources',
+    'youtube', 'gallery', 'contact'
+  ]);
+
+  function getPageName() {
+    const hash = window.location.hash.replace('#', '').trim();
+    if (!hash || hash === 'top') return 'home';
+    return validPages.has(hash) ? hash : 'home';
+  }
+
+  function showOnly(pageName) {
+    document.body.classList.add('page-mode');
+
+    document.querySelectorAll('main > section').forEach(function (section) {
+      section.classList.remove('page-active');
+    });
+
+    let target;
+    if (pageName === 'home') {
+      target = document.querySelector('main > section.hero');
+    } else {
+      target = document.getElementById(pageName);
+    }
+
+    if (!target) {
+      target = document.querySelector('main > section.hero');
+    }
+
+    target.classList.add('page-active');
+    window.scrollTo(0, 0);
+  }
+
+  function moveTo(pageName) {
+    const hash = pageName === 'home' ? '#top' : '#' + pageName;
+    if (window.location.hash !== hash) {
+      history.pushState({ page: pageName }, '', hash);
+    }
+    showOnly(pageName);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('main > section').forEach(function (section) {
+      section.classList.remove('page-active');
+    });
+    showOnly(getPageName());
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        const raw = link.getAttribute('href').replace('#', '').trim();
+        const pageName = (!raw || raw === 'top') ? 'home' : raw;
+
+        if (validPages.has(pageName)) {
+          event.preventDefault();
+          moveTo(pageName);
+        }
+      });
+    });
+  });
+
+  window.addEventListener('hashchange', function () {
+    showOnly(getPageName());
+  });
+
+  window.addEventListener('popstate', function () {
+    showOnly(getPageName());
+  });
+})();
+</script>
+<!-- PAGE-MODE-END -->
+
 </body>
 </html>
