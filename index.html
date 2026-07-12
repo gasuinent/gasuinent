@@ -738,18 +738,55 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 
 
+
+
+
 <script>
-document.addEventListener('DOMContentLoaded', function(){
-  const tabs=document.querySelectorAll('.schedule-tab');
-  const items=document.querySelectorAll('.schedule-item');
-  tabs.forEach(function(tab){
-    tab.addEventListener('click',function(){
-      tabs.forEach(function(t){t.classList.remove('active')});
-      tab.classList.add('active');
-      const filter=tab.dataset.schedule;
-      items.forEach(function(item){
-        item.classList.toggle('is-hidden',filter!=='all'&&item.dataset.scheduleCategory!==filter);
+document.addEventListener('DOMContentLoaded', function () {
+  const tabs = document.querySelectorAll('.schedule-tab');
+  const details = document.querySelectorAll('.schedule-detail');
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      const filter = tab.getAttribute('data-schedule');
+
+      tabs.forEach(function (item) {
+        item.classList.remove('active');
       });
+      tab.classList.add('active');
+
+      details.forEach(function (item) {
+        const category = item.getAttribute('data-schedule-category');
+        const visible = filter === 'all' || category === filter;
+
+        item.classList.toggle('is-hidden', !visible);
+
+        if (!visible) {
+          item.removeAttribute('open');
+        }
+      });
+    });
+  });
+
+  details.forEach(function (item) {
+    const summary = item.querySelector('summary');
+
+    summary.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      const isOpen = item.hasAttribute('open');
+
+      details.forEach(function (other) {
+        if (other !== item) {
+          other.removeAttribute('open');
+        }
+      });
+
+      if (isOpen) {
+        item.removeAttribute('open');
+      } else {
+        item.setAttribute('open', '');
+      }
     });
   });
 });
