@@ -246,6 +246,32 @@ body.page-mode {
 }
 </style>
 
+
+<style>
+/* 통합 검토 보완 */
+.project-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.project-detail{background:var(--panel);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.project-detail summary{list-style:none;cursor:pointer;padding:26px;min-height:180px}
+.project-detail summary::-webkit-details-marker{display:none}
+.project-detail summary h3{margin:4px 0 12px;font-size:1.45rem}
+.project-detail summary p{margin:0;color:var(--muted);line-height:1.75}
+.project-detail summary::after{content:'＋ 상세보기';display:inline-block;margin-top:18px;color:var(--gold2);font-weight:900}
+.project-detail[open] summary::after{content:'－ 접기'}
+.project-body{padding:8px 26px 24px;border-top:1px solid rgba(217,174,81,.18);background:#111318}
+.project-body p{display:grid;grid-template-columns:120px 1fr;gap:16px;margin:0;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.project-body p:last-child{border-bottom:0}
+.project-body strong{color:var(--gold2)}
+.project-body span{color:#ddd;line-height:1.7}
+
+/* 링크와 버튼 터치 안정성 */
+button,a,summary{touch-action:manipulation}
+.menu a{white-space:nowrap}
+@media(max-width:800px){
+  .project-grid{grid-template-columns:1fr}
+  .project-body p{grid-template-columns:1fr;gap:4px}
+}
+</style>
+
 </head>
 <body>
 <header><div class="wrap nav"><a class="brand" href="#top"><img src="logo.png" alt="로고"><div>가수인생활 <span>엔터테인먼트</span></div></a><nav class="menu"><a href="#about">회사소개</a><a href="#business">사업분야</a><a href="#partners">함께하는 단체</a><a href="#news">뉴스</a><a href="#notice">공지</a><a href="#schedule">일정</a><a href="#projects">실적</a><a href="#contact">문의</a></nav></div></header>
@@ -500,7 +526,77 @@ body.page-mode {
 
 
 
-<section id="projects"><div class="wrap"><div class="head"><small>PROJECTS</small><h2>주요 실적 및 프로젝트</h2><p>협력기관이 쉽게 확인할 수 있도록 대표 사업을 정리합니다.</p></div><div class="grid four"><div class="project"><span class="tag">가요제</span><h3>수성못 나가수 가요제</h3><p>지역 대표 문화행사로 발전시키기 위한 프로젝트입니다.</p></div><div class="project"><span class="tag">전통시장</span><h3>희망 음악회</h3><p>전통시장 활성화와 소상공인 상생을 위한 프로젝트입니다.</p></div><div class="project"><span class="tag">지역상생</span><h3>공항시장 상생공연</h3><p>상생상품권과 문화공연을 연계한 지역경제 활성화 사례입니다.</p></div><div class="project"><span class="tag">문화복지</span><h3>의성 노인복지관 공연</h3><p>어르신과 지역민을 위한 문화나눔 공연입니다.</p></div></div></div></section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="head">
+      <small>PROJECTS</small>
+      <h2>주요 실적 및 프로젝트</h2>
+      <p>대표 사업을 분야별로 확인하고, 제목을 누르면 세부내용이 펼쳐집니다.</p>
+    </div>
+
+    <div class="project-grid">
+      <details class="project-detail">
+        <summary>
+          <span class="tag">가요제</span>
+          <h3>수성못 나가수 가요제</h3>
+          <p>시민 참여형 생활문화 축제로 발전시키기 위한 프로젝트입니다.</p>
+        </summary>
+        <div class="project-body">
+          <p><strong>사업명</strong><span>수성못 나가수 가요제</span></p>
+          <p><strong>추진 목적</strong><span>생활가수와 시민이 함께하는 지역 대표 문화행사 조성</span></p>
+          <p><strong>주요 내용</strong><span>가요제 예선·본선, 초청공연, 시민 참여 프로그램, 지역문화 활성화</span></p>
+          <p><strong>추진 주체</strong><span>한국가수인생활협회 / 나가수공연단</span></p>
+          <p><strong>진행 상태</strong><span>사업계획 및 관련 기관 협의 단계</span></p>
+        </div>
+      </details>
+
+      <details class="project-detail">
+        <summary>
+          <span class="tag">전통시장</span>
+          <h3>희망 음악회</h3>
+          <p>전통시장 활성화와 소상공인 상생을 위한 문화공연 프로젝트입니다.</p>
+        </summary>
+        <div class="project-body">
+          <p><strong>사업명</strong><span>전통시장 활성화 희망 음악회</span></p>
+          <p><strong>추진 목적</strong><span>시장 방문객 유입, 체류시간 증가, 소상공인 매출 증대</span></p>
+          <p><strong>주요 내용</strong><span>무료 문화공연, 상생상품권 운영, 상인회와 지역주민 참여</span></p>
+          <p><strong>추진 주체</strong><span>한국가수인생활협회 / 나가수공연단·봉사단</span></p>
+          <p><strong>운영 원칙</strong><span>상인회 예산 부담을 줄이고 지역경제 안에서 소비가 순환하도록 운영</span></p>
+        </div>
+      </details>
+
+      <details class="project-detail">
+        <summary>
+          <span class="tag">지역상생</span>
+          <h3>공항시장 상생공연</h3>
+          <p>상생상품권과 문화공연을 연계한 전통시장 활성화 사례입니다.</p>
+        </summary>
+        <div class="project-body">
+          <p><strong>행사명</strong><span>공항시장 전통시장 살리기 무료공연</span></p>
+          <p><strong>장소</strong><span>대구 동구 공항시장</span></p>
+          <p><strong>주요 내용</strong><span>공연 출연료와 기부금을 상생상품권으로 환원하여 시장 내 사용을 유도</span></p>
+          <p><strong>기대 효과</strong><span>지역주민 참여 확대와 소상공인 매출 증대</span></p>
+        </div>
+      </details>
+
+      <details class="project-detail">
+        <summary>
+          <span class="tag">문화복지</span>
+          <h3>의성 노인복지관 공연</h3>
+          <p>어르신과 지역주민을 위한 무료 문화나눔 공연입니다.</p>
+        </summary>
+        <div class="project-body">
+          <p><strong>행사명</strong><span>의성 노인복지관 무료 문화공연</span></p>
+          <p><strong>대상</strong><span>복지관 이용 어르신과 지역주민</span></p>
+          <p><strong>주요 내용</strong><span>트로트와 대중가요 중심의 문화공연 및 소통 프로그램</span></p>
+          <p><strong>추진 주체</strong><span>나가수공연단·봉사단</span></p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
 <section id="resources"><div class="wrap"><div class="head"><small>RESOURCES</small><h2>자료실</h2><p>사업계획서, 공연 제안서, 신청서, 보도자료 등을 제공할 예정입니다.</p></div><div class="grid three"><div class="resource"><h3>사업·공연 제안서</h3><p>공연기획 및 문화예술사업 제안자료를 등록합니다.</p></div><div class="resource"><h3>신청서·양식</h3><p>공연 신청서, 협력 신청서와 기타 서식을 등록합니다.</p></div><div class="resource"><h3>보도자료·포스터</h3><p>행사 보도자료와 홍보 포스터를 등록합니다.</p></div></div></div></section>
 <section id="youtube"><div class="wrap"><div class="head"><small>VIDEO CENTER</small><h2>영상센터</h2><p>공식 유튜브 채널에서 공연과 창작 음악을 만나보세요.</p></div><div class="grid two"><div class="channel"><h3>나가수TV</h3><p>공연, 행사, 문화예술 활동을 전합니다.</p><a class="btn primary" href="https://www.youtube.com/@TV-fy1wy" target="_blank">채널 바로가기</a></div><div class="channel"><h3>이명로의 힐링트로트</h3><p>감성 트로트, 힐링음악, 창작곡을 소개합니다.</p><a class="btn primary" href="https://www.youtube.com/channel/UC-2z5bBNXcTkagGRwovnFNw" target="_blank">채널 바로가기</a></div></div></div></section>
 <section id="gallery"><div class="wrap"><div class="head"><small>GALLERY</small><h2>갤러리</h2><p>공연, 행사, 봉사활동 사진을 다음 단계에서 추가합니다.</p></div><div class="grid gallery"><div class="photo">공연사진 추가 예정</div><div class="photo">행사사진 추가 예정</div><div class="photo">봉사활동 사진 추가 예정</div></div></div></section>
@@ -774,51 +870,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<script>
-document.addEventListener('DOMContentLoaded', function(){
-  const tabs = document.querySelectorAll('.notice-tab');
-  const items = document.querySelectorAll('.notice-item');
-  const modal = document.getElementById('noticeModal');
-  const title = document.getElementById('noticeModalTitle');
-  const category = document.getElementById('noticeModalCategory');
-  const body = document.getElementById('noticeModalBody');
 
-  tabs.forEach(function(tab){
-    tab.addEventListener('click', function(){
-      tabs.forEach(function(t){t.classList.remove('active')});
-      tab.classList.add('active');
-      const filter = tab.dataset.noticeFilter;
-      items.forEach(function(item){
-        item.classList.toggle('is-hidden', filter !== 'all' && item.dataset.noticeCategory !== filter);
-      });
-    });
-  });
-
-  document.querySelectorAll('.notice-open').forEach(function(button){
-    button.addEventListener('click', function(){
-      category.textContent = button.dataset.category || '';
-      title.textContent = button.dataset.title || '';
-      body.innerHTML = '';
-      (button.dataset.body || '').split('|').forEach(function(text){
-        const p = document.createElement('p');
-        p.textContent = text;
-        body.appendChild(p);
-      });
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden','false');
-      document.body.style.overflow='hidden';
-    });
-  });
-
-  document.querySelectorAll('[data-close-notice]').forEach(function(el){
-    el.addEventListener('click', function(){
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden','true');
-      document.body.style.overflow='';
-    });
-  });
-});
-</script>
 
 
 
@@ -876,56 +928,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  var filterButtons = document.querySelectorAll('.schedule-filter-btn');
-  var panels = document.querySelectorAll('.schedule-panel');
 
-  filterButtons.forEach(function (button) {
-    button.addEventListener('click', function () {
-      var targetId = button.getAttribute('data-target');
-
-      filterButtons.forEach(function (b) {
-        b.classList.remove('active');
-      });
-      button.classList.add('active');
-
-      panels.forEach(function (panel) {
-        panel.classList.remove('active');
-      });
-
-      var targetPanel = document.getElementById(targetId);
-      if (targetPanel) {
-        targetPanel.classList.add('active');
-      }
-    });
-  });
-
-  document.querySelectorAll('.event-row').forEach(function (row) {
-    row.addEventListener('click', function () {
-      var detailId = row.getAttribute('data-detail');
-      var detail = document.getElementById(detailId);
-      var plus = row.querySelector('.event-plus');
-
-      if (!detail) return;
-
-      var isOpen = detail.classList.contains('open');
-
-      document.querySelectorAll('.event-detail.open').forEach(function (openDetail) {
-        openDetail.classList.remove('open');
-      });
-      document.querySelectorAll('.event-plus').forEach(function (icon) {
-        icon.textContent = '＋';
-      });
-
-      if (!isOpen) {
-        detail.classList.add('open');
-        if (plus) plus.textContent = '－';
-      }
-    });
-  });
-});
-</script>
 
 
 <script>
@@ -1137,6 +1140,13 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   render();
+});
+</script>
+
+
+<script>
+window.addEventListener('error', function(event){
+  console.log('페이지 기능 오류:', event.message);
 });
 </script>
 
