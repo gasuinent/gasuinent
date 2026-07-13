@@ -286,6 +286,100 @@ button,a,summary{touch-action:manipulation}
 @media(max-width:800px){.project-body-box p{grid-template-columns:1fr;gap:4px}}
 </style>
 
+
+<style>
+/* V30 모바일 메인 화면 안정화 */
+@media (max-width:760px){
+  header{position:sticky;top:0}
+  .nav{
+    min-height:82px;
+    width:94%;
+  }
+  .brand{
+    gap:10px;
+    font-size:1.05rem;
+    line-height:1.25;
+  }
+  .brand img{
+    width:54px;
+    height:54px;
+    flex:0 0 54px;
+  }
+
+  .hero{
+    min-height:calc(100dvh - 82px);
+    height:auto;
+    display:block;
+    overflow:visible;
+    padding:0;
+  }
+  .hero-inner{
+    width:92%;
+    padding:28px 0 38px;
+    min-height:calc(100dvh - 82px);
+    justify-content:flex-start;
+  }
+  .hero-logo-wrap{
+    width:min(76vw,330px);
+    max-width:none;
+    margin:0 auto 18px;
+    flex:0 0 auto;
+  }
+  .hero-logo{
+    width:100%;
+    height:auto;
+    object-fit:contain;
+    -webkit-mask-image:none;
+    mask-image:none;
+  }
+  .hero h1{
+    width:100%;
+    margin:0 0 22px;
+    font-size:clamp(2.25rem,10.8vw,3.45rem);
+    line-height:1.08;
+    letter-spacing:-.045em;
+    word-break:keep-all;
+  }
+  .hero p{
+    width:100%;
+    max-width:640px;
+    margin:0 auto 28px;
+    padding:0 4px;
+    font-size:1.04rem;
+    line-height:1.75;
+    word-break:keep-all;
+  }
+  .hero .btns{
+    width:100%;
+    max-width:620px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  .hero .btn{
+    width:100%;
+    min-height:58px;
+    padding:0 10px;
+    font-size:1rem;
+    line-height:1.25;
+    text-align:center;
+  }
+  footer{
+    padding:30px 0 38px;
+  }
+}
+
+@media (max-width:390px){
+  .brand{font-size:.98rem}
+  .brand img{width:50px;height:50px;flex-basis:50px}
+  .hero-logo-wrap{width:72vw}
+  .hero h1{font-size:2.25rem}
+  .hero p{font-size:.98rem}
+  .hero .btn{font-size:.92rem;min-height:54px}
+}
+</style>
+
 </head>
 <body>
 <header><div class="wrap nav"><a class="brand" href="#top"><img src="logo.png" alt="로고"><div>가수인생활 <span>엔터테인먼트</span></div></a><nav class="menu"><a href="#about">회사소개</a><a href="#business">사업분야</a><a href="#partners">함께하는 단체</a><a href="#news">뉴스</a><a href="#notice">공지</a><a href="#schedule">일정</a><a href="#projects">실적</a><a href="#contact">문의</a></nav></div></header>
