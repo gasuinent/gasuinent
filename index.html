@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>가수인생활 엔터테인먼트</title>
-<!-- V33: 사회환원 비전 및 공식 뉴스채널 강화 -->
+<!-- V35: PC 방문자 화면 전체 보완 -->
 <meta name="description" content="가수인생활 엔터테인먼트 공식 홈페이지. 공연기획, 가수 매니지먼트, 무료공연, 문화예술교육, 지역상생, 사회환원 활동과 공식 뉴스 안내.">
 <style>
 :root{--bg:#080809;--panel:#151518;--panel2:#1d1d22;--gold:#d9ae51;--gold2:#f3d582;--text:#faf6ed;--muted:#c9c0b1;--line:#34343a}
@@ -316,6 +316,26 @@ button,a,summary{touch-action:manipulation}
 @media(max-width:600px){.social-value-bar{grid-template-columns:1fr}.about-panel,.greeting-panel{padding:24px}}
 </style>
 
+
+<style>
+/* V35 PC 방문자 화면 전체 보완 */
+.news-meta,.project-meta{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px;color:#d7cfc1;font-size:.88rem}
+.news-meta span,.project-meta span{display:inline-flex;align-items:center;padding:5px 9px;border:1px solid rgba(217,174,81,.22);border-radius:999px;background:rgba(255,255,255,.025)}
+.news-status,.project-status{color:var(--gold2)!important;font-weight:900}
+.news-card{gap:2px}.news-card h3{margin:6px 0 10px}.news-card .tag{margin-bottom:8px}
+.notice-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px;font-size:.82rem;color:var(--muted)}
+.notice-meta b{color:var(--gold2)}
+.notice-details summary{line-height:1.55}.notice-details summary .notice-title{display:block;padding-right:36px}
+.notice-important{display:inline-block;margin-right:7px;padding:3px 7px;border-radius:999px;background:var(--gold);color:#17130b;font-size:.72rem;font-weight:900;vertical-align:2px}
+.schedule-state{display:inline-block;margin-left:8px;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.08);color:#fff;font-size:.78rem;font-weight:900}
+.schedule-state.confirmed{background:var(--gold);color:#17130b}
+.project-card{display:flex;flex-direction:column}.project-card>p{flex:1}.project-toggle{align-self:flex-start}
+.resource,.channel,.photo{transition:transform .2s ease,border-color .2s ease,background .2s ease}.resource:hover,.channel:hover,.photo:hover{transform:translateY(-3px);border-color:rgba(217,174,81,.65)}
+.resource-status{display:inline-block;margin-top:12px;color:var(--gold2);font-size:.85rem;font-weight:900}
+.required-mark{color:var(--gold2);margin-left:4px}.privacy-box{margin-top:8px;padding:14px 16px;border:1px solid rgba(217,174,81,.2);border-radius:12px;background:#101216;color:#cfc7ba;font-size:.9rem;line-height:1.7}
+.form-help{display:block;margin-top:6px;color:#a9a092;font-size:.82rem;font-weight:400}
+@media(max-width:800px){.news-meta,.project-meta{font-size:.8rem}}
+</style>
 </head>
 <body>
 <header><div class="wrap nav"><a class="brand" href="#top"><img src="logo.png" alt="로고"><div>가수인생활 <span>엔터테인먼트</span></div></a><nav class="menu" aria-label="주요 메뉴"><a href="#about">회사소개</a><a href="#business">사업분야</a><a href="#partners">함께하는 단체</a><a href="#news">뉴스</a><a href="#notice">공지</a><a href="#schedule">일정</a><a href="#projects">실적</a><div class="more-menu"><button type="button" class="more-menu-button" aria-expanded="false">더보기 ▾</button><div class="more-menu-list"><a href="#resources">자료실</a><a href="#youtube">영상센터</a><a href="#gallery">갤러리</a></div></div><a href="#contact">문의</a></nav></div></header>
@@ -346,6 +366,7 @@ button,a,summary{touch-action:manipulation}
     <div class="news-board">
       <article class="news-card featured" data-category="사회환원">
         <span class="tag">사회환원</span>
+        <div class="news-meta"><span>운영 원칙</span><span class="news-status">상시 공개</span></div>
         <h3>문화예술로 성장하고 사회와 나누겠습니다</h3>
         <p class="news-summary">무료공연, 문화예술교육과 사회환원 활동을 지속적으로 기록하고 공개하는 운영 원칙을 안내합니다.</p>
         <button type="button" class="news-open"
@@ -358,6 +379,7 @@ button,a,summary{touch-action:manipulation}
 
       <article class="news-card featured" data-category="행사안내">
         <span class="tag">행사안내</span>
+        <div class="news-meta"><span>일정 협의 중</span><span class="news-status">추진 예정</span></div>
         <h3>전통시장 활성화와 지역상생을 위한 희망 음악회</h3>
         <p class="news-summary">문화공연과 상생상품권을 연계하여 전통시장과 소상공인에게 실질적인 활력을 전하는 지역상생 프로젝트입니다.</p>
         <button type="button" class="news-open"
@@ -370,6 +392,7 @@ button,a,summary{touch-action:manipulation}
 
       <article class="news-card" data-category="무료공연">
         <span class="tag">무료공연</span>
+        <div class="news-meta"><span>의성 노인복지관</span><span class="news-status">행사 완료</span></div>
         <h3>의성 노인복지관 무료 문화공연</h3>
         <p class="news-summary">어르신과 지역주민에게 음악으로 위로와 즐거움을 전한 문화나눔 공연입니다.</p>
         <button type="button" class="news-open"
@@ -382,6 +405,7 @@ button,a,summary{touch-action:manipulation}
 
       <article class="news-card" data-category="보도자료">
         <span class="tag">보도자료</span>
+        <div class="news-meta"><span>대구 동구 공항시장</span><span class="news-status">행사 완료</span></div>
         <h3>공항시장 전통시장 활성화 무료공연</h3>
         <p class="news-summary">공연 출연료와 기부금을 상생상품권으로 환원해 시장 안에서 사용할 수 있도록 지원한 행사입니다.</p>
         <button type="button" class="news-open"
@@ -394,6 +418,7 @@ button,a,summary{touch-action:manipulation}
 
       <article class="news-card" data-category="봉사활동">
         <span class="tag">봉사활동</span>
+        <div class="news-meta"><span>협회 공식 안내</span><span class="news-status">상시 안내</span></div>
         <h3>한국가수인생활협회 활동 안내</h3>
         <p class="news-summary">고유번호증을 보유한 비영리단체로서 문화예술 활동과 지역사회 공익사업을 추진합니다.</p>
         <button type="button" class="news-open"
@@ -406,6 +431,7 @@ button,a,summary{touch-action:manipulation}
 
       <article class="news-card" data-category="공연소식">
         <span class="tag">공연소식</span>
+        <div class="news-meta"><span>수성못 일원</span><span class="news-status">추진 준비</span></div>
         <h3>수성못 나가수 가요제 추진 소식</h3>
         <p class="news-summary">시민 참여형 생활문화 축제로 발전시키기 위한 가요제 사업을 준비하고 있습니다.</p>
         <button type="button" class="news-open"
@@ -444,7 +470,7 @@ button,a,summary{touch-action:manipulation}
         <h3>가수인생활 엔터테인먼트 공지</h3>
 
         <details class="notice-details">
-          <summary>공연·행사 기획 및 협력 문의 안내</summary>
+          <summary><span class="notice-title"><span class="notice-important">필독</span>공연·행사 기획 및 협력 문의 안내</span><span class="notice-meta"><b>엔터테인먼트</b><span>2026.07.14</span></span></summary>
           <div class="notice-content">
             <p>가수인생활 엔터테인먼트는 지역축제, 기업행사, 문화공연, 전통시장 행사, 가수 및 출연진 섭외 관련 문의를 받고 있습니다.</p>
             <p>행사명, 일정, 장소, 예상 관객 수와 요청사항을 정리하여 홈페이지 문의 메뉴에서 접수해 주세요.</p>
@@ -453,7 +479,7 @@ button,a,summary{touch-action:manipulation}
         </details>
 
         <details class="notice-details">
-          <summary>문화예술 협력기관 및 사업 파트너 모집</summary>
+          <summary><span class="notice-title">문화예술 협력기관 및 사업 파트너 모집</span><span class="notice-meta"><b>엔터테인먼트</b><span>상시 모집</span></span></summary>
           <div class="notice-content">
             <p>공연기획, 문화예술행사, 콘텐츠 제작과 지역상생 프로젝트를 함께 추진할 기관과 협력 파트너를 찾습니다.</p>
             <p>업무협약, 공동기획, 행사운영, 무대·음향 협력 등 다양한 형태로 협의할 수 있습니다.</p>
@@ -465,7 +491,7 @@ button,a,summary{touch-action:manipulation}
         <h3>한국가수인생활협회 공지</h3>
 
         <details class="notice-details">
-          <summary>협회 회원 및 문화예술 활동 안내</summary>
+          <summary><span class="notice-title"><span class="notice-important">중요</span>협회 회원 및 문화예술 활동 안내</span><span class="notice-meta"><b>한국가수인생활협회</b><span>상시 안내</span></span></summary>
           <div class="notice-content">
             <p>한국가수인생활협회는 고유번호증을 보유한 비영리단체로 생활가수와 지역 예술인의 활동 지원, 문화공연과 공익사업을 추진합니다.</p>
             <p>회원 관련 안내, 정기총회, 교육과 공모사업 소식은 협회 공지로 구분해 게시합니다.</p>
@@ -473,7 +499,7 @@ button,a,summary{touch-action:manipulation}
         </details>
 
         <details class="notice-details">
-          <summary>나가수공연단·봉사단 공익공연 참여 안내</summary>
+          <summary><span class="notice-title">나가수공연단·봉사단 공익공연 참여 안내</span><span class="notice-meta"><b>공연단·봉사단</b><span>상시 접수</span></span></summary>
           <div class="notice-content">
             <p>나가수공연단과 나가수봉사단은 복지시설 위문공연, 전통시장 활성화 공연과 지역사회 문화나눔 활동을 추진합니다.</p>
             <p>공익공연 협력이나 재능봉사 참여는 홈페이지 문의 메뉴를 이용해 주세요.</p>
@@ -531,6 +557,7 @@ button,a,summary{touch-action:manipulation}
       <article class="project-card">
         <span class="tag">가요제</span>
         <h3>수성못 나가수 가요제</h3>
+        <div class="project-meta"><span>수성못 일원</span><span class="project-status">추진 준비</span></div>
         <p>시민 참여형 생활문화 축제로 발전시키기 위한 프로젝트입니다.</p>
         <button type="button" class="project-toggle" data-project="project-1">세부보기</button>
         <div id="project-1" class="project-body-box">
@@ -545,6 +572,7 @@ button,a,summary{touch-action:manipulation}
       <article class="project-card">
         <span class="tag">전통시장</span>
         <h3>희망 음악회</h3>
+        <div class="project-meta"><span>전통시장</span><span class="project-status">추진 협의</span></div>
         <p>전통시장 활성화와 소상공인 상생을 위한 문화공연 프로젝트입니다.</p>
         <button type="button" class="project-toggle" data-project="project-2">세부보기</button>
         <div id="project-2" class="project-body-box">
@@ -558,6 +586,7 @@ button,a,summary{touch-action:manipulation}
       <article class="project-card">
         <span class="tag">지역상생</span>
         <h3>공항시장 상생공연</h3>
+        <div class="project-meta"><span>대구 동구 공항시장</span><span class="project-status">완료 사업</span></div>
         <p>상생상품권과 문화공연을 연계한 전통시장 활성화 사례입니다.</p>
         <button type="button" class="project-toggle" data-project="project-3">세부보기</button>
         <div id="project-3" class="project-body-box">
@@ -571,6 +600,7 @@ button,a,summary{touch-action:manipulation}
       <article class="project-card">
         <span class="tag">문화복지</span>
         <h3>의성 노인복지관 공연</h3>
+        <div class="project-meta"><span>의성 노인복지관</span><span class="project-status">완료 사업</span></div>
         <p>어르신과 지역주민을 위한 무료 문화나눔 공연입니다.</p>
         <button type="button" class="project-toggle" data-project="project-4">세부보기</button>
         <div id="project-4" class="project-body-box">
@@ -585,9 +615,9 @@ button,a,summary{touch-action:manipulation}
 </section>
 
 
-<section id="resources"><div class="wrap"><div class="head"><small>RESOURCES</small><h2>자료실</h2><p>사업계획서, 공연 제안서, 신청서, 보도자료 등을 제공할 예정입니다.</p></div><div class="grid three"><div class="resource"><h3>사업·공연 제안서</h3><p>공연기획 및 문화예술사업 제안자료를 등록합니다.</p></div><div class="resource"><h3>신청서·양식</h3><p>공연 신청서, 협력 신청서와 기타 서식을 등록합니다.</p></div><div class="resource"><h3>보도자료·포스터</h3><p>행사 보도자료와 홍보 포스터를 등록합니다.</p></div></div></div></section>
+<section id="resources"><div class="wrap"><div class="head"><small>RESOURCES</small><h2>자료실</h2><p>사업·공연 제안서와 각종 신청서, 보도자료를 분야별로 제공합니다.</p></div><div class="grid three"><div class="resource"><h3>사업·공연 제안서</h3><p>공연기획 및 문화예술사업 제안자료를 순차적으로 등록합니다.</p><span class="resource-status">자료 준비 중</span></div><div class="resource"><h3>신청서·양식</h3><p>공연 신청서, 협력 신청서와 필요한 서식을 제공합니다.</p><span class="resource-status">양식 준비 중</span></div><div class="resource"><h3>보도자료·포스터</h3><p>행사 보도자료와 홍보 포스터를 공개합니다.</p><span class="resource-status">게시 준비 중</span></div></div></div></section>
 <section id="youtube"><div class="wrap"><div class="head"><small>VIDEO CENTER</small><h2>영상센터</h2><p>공식 유튜브 채널에서 공연과 창작 음악을 만나보세요.</p></div><div class="grid two"><div class="channel"><h3>나가수TV</h3><p>공연, 행사, 문화예술 활동을 전합니다.</p><a class="btn primary" href="https://www.youtube.com/@TV-fy1wy" target="_blank">채널 바로가기</a></div><div class="channel"><h3>이명로의 힐링트로트</h3><p>감성 트로트, 힐링음악, 창작곡을 소개합니다.</p><a class="btn primary" href="https://www.youtube.com/channel/UC-2z5bBNXcTkagGRwovnFNw" target="_blank">채널 바로가기</a></div></div></div></section>
-<section id="gallery"><div class="wrap"><div class="head"><small>GALLERY</small><h2>갤러리</h2><p>공연, 행사, 봉사활동 사진을 다음 단계에서 추가합니다.</p></div><div class="grid gallery"><div class="photo">공연사진 추가 예정</div><div class="photo">행사사진 추가 예정</div><div class="photo">봉사활동 사진 추가 예정</div></div></div></section>
+<section id="gallery"><div class="wrap"><div class="head"><small>GALLERY</small><h2>갤러리</h2><p>공연, 행사, 봉사활동의 현장 모습을 분야별로 기록해 공개합니다.</p></div><div class="grid gallery"><div class="photo">공연 현장 사진<br><small>사진 준비 중</small></div><div class="photo">행사·축제 사진<br><small>사진 준비 중</small></div><div class="photo">봉사·문화나눔 사진<br><small>사진 준비 중</small></div></div></div></section>
 
 <section id="contact">
   <div class="wrap">
@@ -617,16 +647,16 @@ button,a,summary{touch-action:manipulation}
     <div class="inquiry-wrap">
       <form id="inquiryForm" class="inquiry-form">
         <div class="form-row two">
-          <label>이름 또는 단체명
+          <label>이름 또는 단체명<span class="required-mark">*</span>
             <input type="text" id="inqName" required placeholder="예: 홍길동 / ○○상인회">
           </label>
-          <label>연락처
+          <label>연락처<span class="required-mark">*</span>
             <input type="tel" id="inqPhone" required placeholder="예: 010-1234-5678">
           </label>
         </div>
 
         <div class="form-row two">
-          <label>문의 구분
+          <label>문의 구분<span class="required-mark">*</span>
             <select id="inqType" required>
               <option value="">선택하세요</option>
               <option>공연 신청</option>
@@ -654,19 +684,19 @@ button,a,summary{touch-action:manipulation}
           </label>
         </div>
 
-        <label>요청사항
+        <label>요청사항<span class="required-mark">*</span>
           <textarea id="inqMessage" rows="6" required placeholder="행사 내용, 공연 시간, 필요한 출연진, 예산 또는 요청사항을 적어주세요."></textarea>
         </label>
 
         <div class="privacy-check">
-          <label><input type="checkbox" id="inqAgree" required> 문의 회신을 위한 개인정보 제공에 동의합니다.</label>
+          <label><input type="checkbox" id="inqAgree" required> 문의 회신을 위한 개인정보 수집·이용에 동의합니다.<span class="required-mark">*</span></label><div class="privacy-box">수집 항목: 이름 또는 단체명, 연락처, 문의 내용<br>이용 목적: 공연·후원·협력 문의 확인 및 회신<br>보유 기간: 문의 처리 완료 후 필요한 기간 동안 보관하며, 목적 달성 후 안전하게 삭제합니다.</div>
         </div>
 
         <div class="form-buttons">
           <button type="submit" class="btn primary">문의 내용 작성하기</button>
           <a class="btn" href="tel:01050703175">전화 바로 걸기</a>
         </div>
-        <p class="form-note">※ 버튼을 누르면 사용 중인 이메일 프로그램이 열리며, 작성한 내용이 자동으로 입력됩니다.</p>
+        <p class="form-note">※ <span class="required-mark">*</span> 표시는 필수 입력 항목입니다. 버튼을 누르면 사용 중인 이메일 프로그램이 열리고 작성한 내용이 자동으로 입력됩니다.</p>
       </form>
     </div>
   </div>
@@ -779,7 +809,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const agree = document.getElementById('inqAgree').checked;
 
     if (!name || !phone || !type || !message || !agree) {
-      alert('필수 항목과 개인정보 동의를 확인해 주세요.');
+      alert('별표(*)가 표시된 필수 항목과 개인정보 동의를 확인해 주세요.');
+      return;
+    }
+
+    if (!/^[0-9+()\-\s]{8,20}$/.test(phone)) {
+      alert('연락처를 숫자와 하이픈(-) 형식으로 정확히 입력해 주세요.');
+      document.getElementById('inqPhone').focus();
       return;
     }
 
@@ -910,7 +946,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function safeText(value){return String(value==null?'':value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');}
   function dateLabel(date){if(!date)return '일정 협의 중';const p=date.split('-');return p.length===3?p[0]+'. '+p[1]+'. '+p[2]+'.':date;}
   function timeLabel(item){if(item.start&&item.end)return item.start+' ~ '+item.end;if(item.start)return item.start+' 시작';return '시간 협의 중';}
-  function cardHtml(item){return '<article class="schedule-card" data-category="'+safeText(item.category)+'"><div class="schedule-card-head"><div class="schedule-card-date">'+safeText(dateLabel(item.date))+'<span>'+safeText(timeLabel(item))+'</span></div><div class="schedule-card-copy"><span class="schedule-tag">'+safeText(categoryNames[item.category]||'일정')+'</span><h3>'+safeText(item.title)+'</h3><p>'+safeText(item.place||'장소 협의 중')+'</p></div><div class="schedule-card-actions"><button type="button" class="schedule-small-btn view-schedule">세부보기</button></div></div><div class="schedule-detail"><p><strong>행사명</strong><span>'+safeText(item.title)+'</span></p><p><strong>날짜·시간</strong><span>'+safeText(dateLabel(item.date))+' / '+safeText(timeLabel(item))+'</span></p><p><strong>장소</strong><span>'+safeText(item.place||'장소 협의 중')+'</span></p><p><strong>주최·주관</strong><span>'+safeText(item.organizer||'협의 중')+'</span></p><p><strong>행사 내용</strong><span>'+safeText(item.description||'내용 준비 중')+'</span></p></div></article>';}
+  function cardHtml(item){const confirmed=Boolean(item.date);const state=confirmed?'확정':'협의 중';return '<article class="schedule-card" data-category="'+safeText(item.category)+'"><div class="schedule-card-head"><div class="schedule-card-date">'+safeText(dateLabel(item.date))+'<span>'+safeText(timeLabel(item))+'</span></div><div class="schedule-card-copy"><span class="schedule-tag">'+safeText(categoryNames[item.category]||'일정')+'</span><span class="schedule-state '+(confirmed?'confirmed':'')+'">'+state+'</span><h3>'+safeText(item.title)+'</h3><p>'+safeText(item.place||'장소 협의 중')+'</p></div><div class="schedule-card-actions"><button type="button" class="schedule-small-btn view-schedule">세부보기</button></div></div><div class="schedule-detail"><p><strong>진행 상태</strong><span>'+state+'</span></p><p><strong>행사명</strong><span>'+safeText(item.title)+'</span></p><p><strong>날짜·시간</strong><span>'+safeText(dateLabel(item.date))+' / '+safeText(timeLabel(item))+'</span></p><p><strong>장소</strong><span>'+safeText(item.place||'장소 협의 중')+'</span></p><p><strong>주최·주관</strong><span>'+safeText(item.organizer||'협의 중')+'</span></p><p><strong>행사 내용</strong><span>'+safeText(item.description||'내용 준비 중')+'</span></p></div></article>';}
   function render(){const list=readSchedules();const map={all:list,ent:list.filter(x=>x.category==='ent'),assoc:list.filter(x=>x.category==='assoc'),vol:list.filter(x=>x.category==='vol')};Object.keys(map).forEach(function(k){const el=document.getElementById('schedule-'+k);if(el)el.innerHTML=map[k].map(cardHtml).join('');});}
   render();
   document.querySelectorAll('.project-toggle').forEach(function(btn){btn.addEventListener('click',function(){const box=document.getElementById(btn.dataset.project);if(!box)return;const open=box.classList.contains('open');document.querySelectorAll('.project-body-box.open').forEach(x=>x.classList.remove('open'));document.querySelectorAll('.project-toggle').forEach(x=>x.textContent='세부보기');if(!open){box.classList.add('open');btn.textContent='접기';}});});
