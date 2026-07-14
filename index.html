@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>가수인생활 엔터테인먼트</title>
-<!-- V32: PC 메뉴 정리 및 방문자 화면 전용 -->
-<meta name="description" content="가수인생활 엔터테인먼트 공식 홈페이지. 공연기획, 문화예술행사, 가수 매니지먼트, 지역상생 프로젝트, 뉴스, 공지사항, 행사일정 안내.">
+<!-- V33: 사회환원 비전 및 공식 뉴스채널 강화 -->
+<meta name="description" content="가수인생활 엔터테인먼트 공식 홈페이지. 공연기획, 가수 매니지먼트, 무료공연, 문화예술교육, 지역상생, 사회환원 활동과 공식 뉴스 안내.">
 <style>
 :root{--bg:#080809;--panel:#151518;--panel2:#1d1d22;--gold:#d9ae51;--gold2:#f3d582;--text:#faf6ed;--muted:#c9c0b1;--line:#34343a}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:"Malgun Gothic",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.72}a{text-decoration:none;color:inherit}img{max-width:100%;display:block}.wrap{width:min(1180px,92%);margin:auto}
@@ -296,64 +296,85 @@ button,a,summary{touch-action:manipulation}
 </style>
 
 
+
+<style>
+/* V33 사회환원 비전 화면 보완 */
+.about-grid{align-items:stretch}
+.about-panel,.greeting-panel{padding:32px;min-height:100%}
+.about-panel h3,.greeting-panel h3{font-size:1.55rem;margin:4px 0 18px}
+.greeting-panel p{font-size:1.02rem;line-height:1.9}
+.representative{margin-top:24px;color:var(--gold2)!important}
+.social-value-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.social-value-bar>div{background:#111318;border:1px solid rgba(217,174,81,.28);border-radius:16px;padding:18px;text-align:center}
+.social-value-bar b{display:block;color:var(--gold2);margin-bottom:7px}
+.social-value-bar span{color:var(--muted);font-size:.9rem;line-height:1.6}
+.business-grid .card{min-height:220px;transition:transform .2s ease,border-color .2s ease,background .2s ease}
+.business-grid .card:hover{transform:translateY(-4px);border-color:rgba(217,174,81,.72);background:#1b1b20}
+.business-grid .num{font-size:1rem;margin-bottom:14px}
+.business-grid h3{margin:0 0 12px;font-size:1.35rem}
+@media(max-width:900px){.social-value-bar{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.social-value-bar{grid-template-columns:1fr}.about-panel,.greeting-panel{padding:24px}}
+</style>
+
 </head>
 <body>
 <header><div class="wrap nav"><a class="brand" href="#top"><img src="logo.png" alt="로고"><div>가수인생활 <span>엔터테인먼트</span></div></a><nav class="menu" aria-label="주요 메뉴"><a href="#about">회사소개</a><a href="#business">사업분야</a><a href="#partners">함께하는 단체</a><a href="#news">뉴스</a><a href="#notice">공지</a><a href="#schedule">일정</a><a href="#projects">실적</a><div class="more-menu"><button type="button" class="more-menu-button" aria-expanded="false">더보기 ▾</button><div class="more-menu-list"><a href="#resources">자료실</a><a href="#youtube">영상센터</a><a href="#gallery">갤러리</a></div></div><a href="#contact">문의</a></nav></div></header>
 <main id="top">
 <section class="hero"><div class="wrap hero-inner"><div class="hero-logo-wrap"><img class="hero-logo" src="hero-logo.png" alt="가수인생활 엔터테인먼트 메인 로고"></div><h1>무대와 사람을 잇는<br>문화예술 플랫폼</h1><p>공연을 통해 지역을 살리고, 예술을 통해 사람을 연결합니다.</p><div class="btns"><a class="btn primary" href="#contact">공연·행사 문의</a><a class="btn" href="https://www.youtube.com/@TV-fy1wy" target="_blank">나가수TV</a><a class="btn" href="https://www.youtube.com/channel/UC-2z5bBNXcTkagGRwovnFNw" target="_blank">이명로의 힐링트로트</a><a class="btn" href="https://www.facebook.com/gasuinent" target="_blank">페이스북</a></div></div></section>
-<section id="about"><div class="wrap"><div class="head"><small>COMPANY</small><h2>회사소개</h2><p>가수인생활 엔터테인먼트는 문화예술을 통해 사람과 지역을 연결하는 문화예술 기획사입니다.</p></div><div class="grid two"><div class="panel"><h3>가수인생활 엔터테인먼트</h3><p>공연기획, 문화예술행사, 가수 매니지먼트, 지역축제 및 대중문화예술 콘텐츠 제작을 추진합니다.</p><p>행사의 목적과 관객층에 맞춘 출연진 구성, 공연 프로그램 기획, 무대 운영과 홍보 콘텐츠 제작을 통해 현장에 필요한 문화예술 서비스를 제공합니다.</p><p class="quote">신뢰받는 문화예술 파트너로서 지역과 함께 성장하겠습니다.</p></div><div class="panel"><h3>대표 인사말</h3><p>안녕하십니까. 가수인생활 엔터테인먼트 대표 <strong>이명로</strong>입니다.</p><p>공연 하나에도 진심을 담고, 행사 하나에도 지역사회와 함께하는 가치를 담아 관객과 출연자 모두가 만족할 수 있는 무대를 만들겠습니다.</p><p><strong>대표 이명로</strong></p></div></div></div></section>
-<section id="business"><div class="wrap"><div class="head"><small>BUSINESS</small><h2>주요 사업분야</h2><p>행사 목적과 현장 여건에 맞춰 필요한 서비스를 맞춤형으로 구성합니다.</p></div><div class="grid three"><div class="card"><div class="num">01</div><h3>공연기획</h3><p>지역축제, 기념행사, 문화공연, 특별무대를 기획합니다.</p></div><div class="card"><div class="num">02</div><h3>문화예술행사</h3><p>전통시장, 복지기관, 시민행사 등 현장형 프로그램을 운영합니다.</p></div><div class="card"><div class="num">03</div><h3>가수 매니지먼트</h3><p>가수 섭외, 출연 협의, 무대 구성과 프로그램을 지원합니다.</p></div><div class="card"><div class="num">04</div><h3>지역상생 프로젝트</h3><p>전통시장 활성화와 소상공인 상생을 위한 공연사업을 추진합니다.</p></div><div class="card"><div class="num">05</div><h3>봉사·공익 공연</h3><p>복지시설과 지역공동체를 위한 문화나눔 무대를 만듭니다.</p></div><div class="card"><div class="num">06</div><h3>문화콘텐츠 제작</h3><p>공연영상, 홍보영상, 음원과 온라인 콘텐츠를 기획합니다.</p></div></div></div></section>
+<section id="about"><div class="wrap"><div class="head"><small>COMPANY &amp; SOCIAL VALUE</small><h2>회사소개</h2><p>가수인생활 엔터테인먼트는 공연과 문화예술의 성장을 지역사회와 함께 나누는 사회환원형 문화예술 기획사를 지향합니다.</p></div><div class="grid two about-grid"><div class="panel about-panel"><span class="tag">회사 비전</span><h3>문화예술로 받은 사랑을 사회에 돌려드립니다</h3><p>공연기획, 가수 매니지먼트, 지역축제, 문화콘텐츠 제작을 전문적으로 추진하며 장애인, 아동, 어르신, 문화소외계층과 일반 시민이 함께 누릴 수 있는 문화예술 프로그램을 마련합니다.</p><p>노래교실과 시민 참여형 교육, 복지시설 무료공연, 지역상생 행사를 통해 누구나 노래하고 즐길 수 있는 무대를 만들겠습니다.</p><p class="quote">회사가 안정적으로 성장하면 수익의 50% 사회환원을 장기 목표로 삼고, 무료공연과 문화나눔 사업의 내용과 결과를 홈페이지 뉴스에 투명하게 공개하겠습니다.</p></div><div class="panel greeting-panel"><span class="tag">대표 인사말</span><h3>사람을 먼저 생각하는 엔터테인먼트</h3><p>안녕하십니까. 가수인생활 엔터테인먼트 대표 <strong>이명로</strong>입니다.</p><p>저희는 단순히 수익만을 추구하는 회사가 아니라, 공연과 노래를 통해 희망과 위로를 전하고 회사의 성장을 사회와 함께 나누는 따뜻한 문화예술 기업이 되고자 합니다.</p><p>장애인, 아동, 어르신과 일반 시민에게 노래를 배우고 무대에 참여할 기회를 드리며, 무료공연과 문화나눔 활동을 꾸준히 이어가겠습니다.</p><p class="representative"><strong>가수인생활 엔터테인먼트 대표 이명로</strong></p></div></div><div class="social-value-bar"><div><b>문화예술 교육</b><span>장애인·아동·어르신·일반 시민 노래교실</span></div><div><b>무료공연</b><span>복지시설과 문화소외계층을 위한 문화나눔</span></div><div><b>지역상생</b><span>전통시장과 소상공인이 함께 성장하는 공연</span></div><div><b>투명한 공개</b><span>행사와 사회환원 활동을 뉴스에서 기록</span></div></div></div></section>
+<section id="business"><div class="wrap"><div class="head"><small>BUSINESS</small><h2>주요 사업분야</h2><p>전문적인 엔터테인먼트 사업과 문화복지·사회환원 활동을 함께 추진합니다.</p></div><div class="grid three business-grid"><div class="card"><div class="num">01</div><h3>공연기획</h3><p>지역축제, 기념행사, 문화공연과 시민 참여형 무대를 기획·운영합니다.</p></div><div class="card"><div class="num">02</div><h3>문화예술교육</h3><p>장애인, 아동, 어르신과 일반 시민을 위한 노래교실과 참여 프로그램을 운영합니다.</p></div><div class="card"><div class="num">03</div><h3>가수 매니지먼트</h3><p>가수 발굴과 육성, 출연 협의, 무대 구성과 활동 지원을 추진합니다.</p></div><div class="card"><div class="num">04</div><h3>지역상생 프로젝트</h3><p>전통시장과 소상공인의 활력을 높이는 공연과 상생 프로그램을 만듭니다.</p></div><div class="card"><div class="num">05</div><h3>무료·봉사공연</h3><p>복지시설과 문화소외계층을 찾아가 음악으로 희망과 즐거움을 전합니다.</p></div><div class="card"><div class="num">06</div><h3>콘텐츠·사회환원</h3><p>공연영상과 음원 콘텐츠를 제작하고, 성장의 결실을 문화나눔으로 환원합니다.</p></div></div></div></section>
 <section id="partners"><div class="wrap"><div class="head"><small>PARTNERS</small><h2>함께하는 단체</h2><p>각 단체는 운영 형태가 다르며 문화예술사업을 위해 상호 협력합니다.</p></div><div class="grid three"><div class="org"><h3>한국가수인생활협회</h3><p>고유번호증을 보유한 비영리단체로 문화예술인의 활동 지원과 지역 문화예술 발전을 위해 활동합니다.</p></div><div class="org"><h3>나가수공연단</h3><p>지역축제, 문화행사, 전통시장과 복지시설 등 다양한 현장에서 공연을 펼칩니다.</p></div><div class="org"><h3>나가수봉사단</h3><p>재능기부 공연과 문화예술 봉사활동으로 지역사회에 희망과 나눔을 전합니다.</p></div></div></div></section>
 
 <section id="news">
   <div class="wrap">
     <div class="head">
-      <small>NEWS CENTER</small>
-      <h2>가수인생활 뉴스</h2>
-      <p>공연소식, 협회소식, 봉사활동, 보도자료를 분야별로 확인할 수 있습니다.</p>
+      <small>OFFICIAL NEWS CHANNEL</small>
+      <h2>가수인생활 공식 뉴스</h2>
+      <p>무료공연, 봉사활동, 노래교실, 사회환원과 행사 소식을 매일 기록하고 투명하게 공개합니다.</p>
     </div>
 
     <div class="news-tabs" role="tablist" aria-label="뉴스 분류">
       <button type="button" class="news-tab active" data-filter="all">전체</button>
-      <button type="button" class="news-tab" data-filter="엔터테인먼트소식">엔터테인먼트 소식</button>
-      <button type="button" class="news-tab" data-filter="공연소식">공연소식</button>
-      <button type="button" class="news-tab" data-filter="협회소식">협회소식</button>
+      <button type="button" class="news-tab" data-filter="행사안내">행사안내</button>
+      <button type="button" class="news-tab" data-filter="무료공연">무료공연</button>
       <button type="button" class="news-tab" data-filter="봉사활동">봉사활동</button>
+      <button type="button" class="news-tab" data-filter="노래교실">노래교실</button>
+      <button type="button" class="news-tab" data-filter="사회환원">사회환원</button>
       <button type="button" class="news-tab" data-filter="보도자료">보도자료</button>
     </div>
 
     <div class="news-board">
-      <article class="news-card featured" data-category="엔터테인먼트소식">
-        <span class="tag">엔터테인먼트 소식</span>
-        <h3>가수인생활 엔터테인먼트 공식 소식</h3>
-        <p class="news-summary">공연기획, 문화예술행사, 가수 매니지먼트, 신규사업과 협력 소식을 전합니다.</p>
+      <article class="news-card featured" data-category="사회환원">
+        <span class="tag">사회환원</span>
+        <h3>문화예술로 성장하고 사회와 나누겠습니다</h3>
+        <p class="news-summary">무료공연, 문화예술교육과 사회환원 활동을 지속적으로 기록하고 공개하는 운영 원칙을 안내합니다.</p>
         <button type="button" class="news-open"
-          data-title="가수인생활 엔터테인먼트 공식 소식"
-          data-category="엔터테인먼트 소식"
-          data-body="가수인생활 엔터테인먼트의 공연기획, 문화예술행사, 가수 매니지먼트 및 문화콘텐츠 제작 관련 소식을 안내합니다.|지역축제와 기업행사, 전통시장 행사, 복지시설 문화공연 등 새로운 공연 및 사업 추진 소식을 홈페이지를 통해 전해드릴 예정입니다.|공연 의뢰, 업무협약, 협찬 및 협력 관련 문의는 홈페이지 문의 메뉴를 이용해 주시기 바랍니다.">
+          data-title="문화예술로 성장하고 사회와 나누겠습니다"
+          data-category="사회환원"
+          data-body="가수인생활 엔터테인먼트는 전문적인 공연기획과 가수 매니지먼트 사업을 통해 성장하면서 그 결실을 지역사회와 함께 나누는 회사를 지향합니다.|장애인, 아동, 어르신, 문화소외계층과 일반 시민을 위한 노래교실, 무료공연, 문화나눔 행사를 꾸준히 추진하겠습니다.|회사가 안정적으로 성장하면 수익의 50% 사회환원을 장기 목표로 삼고, 구체적인 행사와 나눔 활동의 내용과 결과를 홈페이지 뉴스에 투명하게 공개하겠습니다.">
           기사 자세히 보기
         </button>
       </article>
 
-      <article class="news-card featured" data-category="공연소식">
-        <span class="tag">공연소식</span>
+      <article class="news-card featured" data-category="행사안내">
+        <span class="tag">행사안내</span>
         <h3>전통시장 활성화와 지역상생을 위한 희망 음악회</h3>
         <p class="news-summary">문화공연과 상생상품권을 연계하여 전통시장과 소상공인에게 실질적인 활력을 전하는 지역상생 프로젝트입니다.</p>
         <button type="button" class="news-open"
           data-title="전통시장 활성화와 지역상생을 위한 희망 음악회"
-          data-category="공연소식"
+          data-category="행사안내"
           data-body="한국가수인생활협회와 나가수공연단·봉사단은 전통시장 방문객 유입과 소상공인 매출 증대를 위해 희망 음악회를 추진합니다.|공연과 함께 시장 전용 상생상품권을 배포하여 지역 안에서 소비가 순환하도록 돕고, 상인과 주민이 함께 참여하는 문화축제를 만들어갑니다.|행사 일정과 장소가 확정되면 홈페이지 공지와 뉴스에서 안내합니다.">
           기사 자세히 보기
         </button>
       </article>
 
-      <article class="news-card" data-category="봉사활동">
-        <span class="tag">봉사활동</span>
+      <article class="news-card" data-category="무료공연">
+        <span class="tag">무료공연</span>
         <h3>의성 노인복지관 무료 문화공연</h3>
         <p class="news-summary">어르신과 지역주민에게 음악으로 위로와 즐거움을 전한 문화나눔 공연입니다.</p>
         <button type="button" class="news-open"
           data-title="의성 노인복지관 무료 문화공연"
-          data-category="봉사활동"
+          data-category="무료공연"
           data-body="나가수봉사단과 공연단은 의성 노인복지관을 찾아 무료 문화공연을 진행했습니다.|트로트와 대중가요를 함께 부르며 어르신들과 따뜻한 시간을 나누었고, 지역 문화복지 향상을 위한 지속적인 재능기부 활동을 약속했습니다.|관련 공연 사진과 영상은 갤러리와 나가수TV를 통해 순차적으로 소개할 예정입니다.">
           기사 자세히 보기
         </button>
@@ -371,13 +392,13 @@ button,a,summary{touch-action:manipulation}
         </button>
       </article>
 
-      <article class="news-card" data-category="협회소식">
-        <span class="tag">협회소식</span>
+      <article class="news-card" data-category="봉사활동">
+        <span class="tag">봉사활동</span>
         <h3>한국가수인생활협회 활동 안내</h3>
         <p class="news-summary">고유번호증을 보유한 비영리단체로서 문화예술 활동과 지역사회 공익사업을 추진합니다.</p>
         <button type="button" class="news-open"
           data-title="한국가수인생활협회 활동 안내"
-          data-category="협회소식"
+          data-category="봉사활동"
           data-body="한국가수인생활협회는 생활가수와 지역 예술인의 활동 지원, 복지시설 위문공연, 전통시장 활성화 공연, 지역축제 참여 등을 추진합니다.|가수인생활 엔터테인먼트와는 운영 형태를 구분하면서도 문화예술사업과 공익공연 분야에서 상호 협력합니다.|회원 모집, 정기총회, 교육, 공모사업 관련 내용은 공지사항에서 별도로 안내합니다.">
           기사 자세히 보기
         </button>
