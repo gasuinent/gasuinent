@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>가수인생활 엔터테인먼트</title>
-<!-- V36: 모바일 화면 1차 최적화 -->
+<!-- V37: 모바일 화면 최종 다듬기 -->
 <meta name="description" content="가수인생활 엔터테인먼트 공식 홈페이지. 공연기획, 가수 매니지먼트, 무료공연, 문화예술교육, 지역상생, 사회환원 활동과 공식 뉴스 안내.">
 <style>
 :root{--bg:#080809;--panel:#151518;--panel2:#1d1d22;--gold:#d9ae51;--gold2:#f3d582;--text:#faf6ed;--muted:#c9c0b1;--line:#34343a}
@@ -370,6 +370,38 @@ button,a,summary{touch-action:manipulation}
   .brand{font-size:.92rem}.brand img{width:43px;height:43px}.nav{min-height:70px}.mobile-menu-toggle{width:41px;height:41px}
   .hero-inner{min-height:calc(100svh - 70px);padding-top:16px}.hero-logo-wrap{width:min(55vw,245px)}
   .hero h1{font-size:2.28rem}.hero p{font-size:1rem}.btn{font-size:.94rem;min-height:54px}.btn:nth-child(3){font-size:.86rem}
+}
+</style>
+
+<style id="v37-mobile-final-style">
+@media(max-width:760px){
+  .mobile-menu-panel nav{padding:8px 0 14px;gap:6px}
+  .mobile-menu-panel a{padding:9px 7px;border-radius:11px;font-size:.94rem}
+  .hero-inner{min-height:auto;padding:12px 0 24px}
+  .hero-logo-wrap{width:min(48vw,240px);margin:0 auto 0}
+  .hero h1{font-size:clamp(2.05rem,9.4vw,2.8rem);line-height:1.08;margin:0 0 14px}
+  .hero p{font-size:1rem;line-height:1.68;max-width:94%;margin-bottom:18px}
+  .btns{gap:8px;padding:0 2px}
+  .btn{min-height:52px;padding:7px 7px;font-size:.94rem}
+  .btn:nth-child(3){font-size:.86rem}
+  section{padding:50px 0}
+  .head{margin-bottom:23px}
+  .head h2{font-size:2.12rem;line-height:1.18}
+  .head p{font-size:.98rem;line-height:1.68}
+  .about-panel h3,.greeting-panel h3{font-size:1.62rem;line-height:1.35}
+  .about-panel p,.greeting-panel p{font-size:.96rem;line-height:1.66}
+  .about-panel,.greeting-panel{padding:21px}
+  #contact .head h2{font-size:1.92rem;line-height:1.24;letter-spacing:-.045em;word-break:keep-all}
+  #contact .head p{font-size:.94rem;line-height:1.65}
+}
+@media(max-width:390px){
+  .mobile-menu-panel a{padding:8px 5px;font-size:.9rem}
+  .hero-logo-wrap{width:min(45vw,205px)}
+  .hero h1{font-size:1.98rem}
+  .hero p{font-size:.94rem;line-height:1.62}
+  .btn{min-height:49px;font-size:.88rem}
+  .btn:nth-child(3){font-size:.79rem}
+  #contact .head h2{font-size:1.72rem}
 }
 </style>
 </head>
