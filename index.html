@@ -1,59 +1,393 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>가수인생활 엔터테인먼트</title>
-<meta name="description" content="가수인생활 엔터테인먼트 공식 홈페이지. 공연기획, 가수 매니지먼트, 무료공연, 문화예술교육, 지역상생 및 사회환원 활동 안내.">
-<style>
-:root{--bg:#080808;--panel:#151518;--panel2:#101116;--gold:#e0b354;--gold2:#f2cf7a;--text:#f6f2e9;--muted:#c9c1b5;--line:#34343a;--danger:#e06d6d}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:"Malgun Gothic","Noto Sans KR",Arial,sans-serif;line-height:1.72}a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}.wrap{max-width:1120px;margin:auto;padding:0 28px}
-header{position:sticky;top:0;z-index:100;background:#050505;border-bottom:1px solid var(--line);box-shadow:0 8px 28px rgba(0,0,0,.28)}.head{min-height:94px;display:flex;align-items:center;justify-content:space-between;gap:22px}.brand{display:flex;align-items:center;gap:13px;font-size:22px;font-weight:900;white-space:nowrap}.brand img{width:62px;height:62px;object-fit:contain;border-radius:50%}.brand b{color:var(--gold2)}
-.desktop-nav{display:flex;align-items:center;justify-content:flex-end;gap:4px;flex-wrap:wrap}.desktop-nav a{padding:12px 10px;border-radius:10px;color:var(--muted);font-size:15px;font-weight:850;white-space:nowrap}.desktop-nav a:hover,.desktop-nav a.active{background:rgba(224,179,84,.13);color:var(--gold2)}.menu-btn{display:none;width:58px;height:58px;border:1px solid var(--line);border-radius:18px;background:#141519;color:var(--gold2);font-size:30px;cursor:pointer}.mobile-nav{display:none;position:fixed;inset:86px 0 0;background:rgba(0,0,0,.985);padding:22px;overflow:auto;z-index:99}.mobile-nav.open{display:block}.mobile-nav a{display:block;max-width:620px;margin:0 auto 9px;padding:14px 18px;border:1px solid var(--line);border-radius:14px;font-size:19px;font-weight:800}.mobile-nav a.active{background:var(--gold);color:#111;border-color:var(--gold)}
-main>section{display:none;min-height:calc(100vh - 94px);padding:82px 0;border-bottom:1px solid var(--line)}main>section.page-active{display:block}.hero{place-items:center;text-align:center;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 0%,rgba(255,195,63,.34),transparent 28%),radial-gradient(circle at 50% 78%,rgba(224,179,84,.16),transparent 38%),linear-gradient(180deg,#070604 0%,#080808 56%,#050505 100%)}.hero.page-active{display:grid}.hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.78;background-image:radial-gradient(circle,rgba(255,211,102,.95) 0 1px,transparent 1.8px),radial-gradient(circle,rgba(255,184,48,.55) 0 1.4px,transparent 2.1px);background-size:120px 120px,190px 190px;background-position:15px 20px,70px 35px}.hero .wrap{position:relative;z-index:1;max-width:1280px}.hero-logo{display:block;width:min(680px,58vw);max-height:520px;object-fit:contain;margin:0 auto 8px;filter:drop-shadow(0 0 34px rgba(224,179,84,.42))}.eyebrow{color:var(--gold);font-weight:900;letter-spacing:.17em;font-size:18px}.hero h1{font-size:clamp(50px,6.2vw,88px);line-height:1.1;margin:8px 0 18px}.hero .lead{font-size:clamp(20px,2vw,30px);max-width:920px;margin:auto;color:var(--muted)}.hero-actions{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:32px}
-h2{font-size:clamp(38px,5vw,64px);line-height:1.2;margin:10px 0 18px}.section-head{text-align:center;margin-bottom:48px}.lead{font-size:clamp(18px,2.4vw,26px);color:var(--muted);max-width:850px;margin:auto}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.card{background:var(--panel);border:1px solid var(--line);border-radius:30px;padding:38px}.card h3{font-size:28px;line-height:1.35;margin:10px 0 18px}.card p{font-size:18px;color:var(--muted)}.tag,.status{display:inline-block;padding:8px 14px;border-radius:999px;font-weight:900;margin:0 7px 8px 0}.tag{background:#3a3120;color:var(--gold2)}.status{border:1px solid #594a2c;color:var(--gold2)}.btn{display:inline-flex;align-items:center;justify-content:center;margin-top:18px;padding:13px 22px;border:2px solid var(--gold);border-radius:999px;color:var(--gold2);font-size:18px;font-weight:900;background:transparent;cursor:pointer}.btn.fill{background:var(--gold);color:#16120b}.btn.small{font-size:15px;padding:9px 15px;margin:8px 6px 0 0}.btn.danger{border-color:var(--danger);color:#ffc5c5}.bar{background:#372e20;color:var(--gold2);padding:12px 18px;border-radius:18px;font-weight:900;margin-bottom:22px}.project-detail{display:none;margin-top:22px;border-top:1px solid #4a402d;padding-top:18px}.project-card.open .project-detail{display:block}.filters{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:22px 0 34px}.filters button{padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:#090909;color:var(--muted);font-weight:900;cursor:pointer}.filters button.active{background:var(--gold);color:#111}.hidden{display:none!important}
-.news-card,.notice-card{min-height:230px;display:flex;flex-direction:column}.news-card p,.notice-card p{flex:1}.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.photo{min-height:280px;border:1px solid #765e31;border-radius:28px;background:linear-gradient(135deg,#3d3528,#1c1c22);display:grid;place-items:center;text-align:center;color:var(--muted);font-size:21px;padding:20px}.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:28px}label{display:block;font-weight:900;margin:18px 0 8px}input,select,textarea{width:100%;background:#111217;color:#fff;border:1px solid #765e31;border-radius:15px;padding:15px}textarea{min-height:170px;resize:vertical}.notice{font-size:17px;color:var(--muted)}
-.admin-toolbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:-18px 0 30px}.admin-only{display:none}.admin-mode .admin-only{display:inline-flex}.edit-panel{display:none;margin-top:20px;padding:22px;border-radius:20px;border:1px solid rgba(224,179,84,.35);background:#101116}.edit-panel.open{display:block}.edit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.edit-grid .full{grid-column:1/-1}.save-note{color:var(--gold2);font-weight:800;margin-top:12px}.modal{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.8);padding:24px}.modal.open{display:grid;place-items:center}.modal-box{width:min(720px,100%);max-height:85vh;overflow:auto;background:#15171c;border:1px solid rgba(224,179,84,.35);border-radius:24px;padding:30px;position:relative}.modal-close{position:absolute;right:14px;top:10px;background:none;border:0;color:#fff;font-size:30px;cursor:pointer}
-footer{text-align:center;padding:55px 20px;color:#aaa;border-top:1px solid var(--line)}footer img{width:120px;height:120px;object-fit:contain;border-radius:50%;display:block;margin:0 auto 18px}
-@media(max-width:1020px){.desktop-nav{display:none}.menu-btn{display:block}.head{min-height:86px}.mobile-nav{inset:86px 0 0}main>section{min-height:calc(100vh - 86px)}}
-@media(max-width:760px){.wrap{padding:0 20px}.head{min-height:78px}.brand{font-size:17px;gap:8px;min-width:0}.brand img{width:50px;height:50px}.brand span{overflow:hidden;text-overflow:ellipsis}.menu-btn{width:50px;height:50px;font-size:26px;border-radius:15px}.mobile-nav{inset:78px 0 0;padding:15px}.mobile-nav a{font-size:17px;padding:12px 15px}main>section{min-height:calc(100vh - 78px);padding:55px 0}.hero{padding:32px 0}.hero-logo{width:min(360px,86vw);max-height:330px}.hero h1{font-size:clamp(36px,10vw,52px)}.hero .lead{font-size:17px}.hero-actions{gap:9px;margin-top:22px}.hero-actions .btn{min-width:calc(50% - 7px);font-size:14px;padding:10px}.eyebrow{font-size:13px}.grid,.grid3,.gallery,.contact-grid,.edit-grid{grid-template-columns:1fr}.card{padding:25px 21px;border-radius:23px}.card h3{font-size:24px}.card p{font-size:16px}.edit-grid .full{grid-column:auto}.photo{min-height:200px}.section-head{margin-bottom:30px}h2{font-size:clamp(31px,9vw,44px)}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>가수인생활 엔터테인먼트</title>
+  <meta name="description" content="가수인생활 엔터테인먼트 공식 홈페이지. 공연기획, 가수 매니지먼트, 무료공연, 문화예술교육, 지역상생, 사회환원 활동 안내.">
+  <!-- V44: PC 상단 메뉴 한 줄 정리 + 첫 화면 세로 간격 최적화 -->
+  <style>
+    :root{
+      --bg:#080808;--panel:#151518;--panel2:#101116;--gold:#e0b354;--gold2:#f2cf7a;
+      --text:#f6f2e9;--muted:#c9c1b5;--line:#34343a;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:"Pretendard","Noto Sans KR",Arial,sans-serif;line-height:1.72}
+    a{color:inherit;text-decoration:none}
+    button,input,select,textarea{font:inherit}
+    .wrap{max-width:1240px;margin:auto;padding:0 24px}
+    header{position:sticky;top:0;z-index:100;background:#050505;border-bottom:1px solid var(--line);box-shadow:0 8px 28px rgba(0,0,0,.28)}
+    .head{min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .brand{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;white-space:nowrap;flex:0 0 auto}
+    .brand img{width:54px;height:54px;object-fit:contain;border-radius:50%}
+    .brand b{color:var(--gold2)}
+    .desktop-nav{display:flex;align-items:center;justify-content:flex-end;gap:1px;flex-wrap:nowrap}
+    .desktop-nav a{padding:10px 7px;border-radius:9px;color:var(--muted);font-size:14px;font-weight:850;white-space:nowrap}
+    .desktop-nav a:hover,.desktop-nav a.active{background:rgba(224,179,84,.13);color:var(--gold2)}
+    .menu-btn{display:none;width:58px;height:58px;border:1px solid var(--line);border-radius:18px;background:#141519;color:var(--gold2);font-size:30px;cursor:pointer;flex:0 0 auto}
+    .mobile-nav{display:none;position:fixed;inset:86px 0 0;background:rgba(0,0,0,.985);padding:22px;overflow:auto}
+    .mobile-nav.open{display:block}
+    .mobile-nav a{display:block;max-width:620px;margin:0 auto 9px;padding:14px 18px;border:1px solid var(--line);border-radius:14px;font-size:19px;font-weight:800}
+    .mobile-nav a.active{background:var(--gold);color:#111;border-color:var(--gold)}
+    .hero{min-height:calc(100vh - 86px);display:grid;place-items:center;text-align:center;padding:26px 0 24px;position:relative;overflow:hidden;background:
+      radial-gradient(circle at 50% 0%,rgba(255,195,63,.34),transparent 28%),
+      radial-gradient(circle at 50% 78%,rgba(224,179,84,.16),transparent 38%),
+      linear-gradient(180deg,#070604 0%,#080808 56%,#050505 100%)}
+    .hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.78;background-image:
+      radial-gradient(circle,rgba(255,211,102,.95) 0 1px,transparent 1.8px),
+      radial-gradient(circle,rgba(255,184,48,.55) 0 1.4px,transparent 2.1px);background-size:120px 120px,190px 190px;background-position:15px 20px,70px 35px}
+    .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:150px;background:linear-gradient(180deg,transparent,rgba(224,179,84,.06));border-bottom:1px solid rgba(224,179,84,.45)}
+    .hero .wrap{position:relative;z-index:1;max-width:1280px}
+    .hero-logo{display:block;width:min(620px,52vw);max-height:390px;object-fit:contain;margin:0 auto 2px;background:transparent;filter:drop-shadow(0 0 32px rgba(224,179,84,.38))}
+    .hero h1{font-size:clamp(48px,5.5vw,78px);line-height:1.08;margin:4px 0 10px;text-shadow:0 4px 20px rgba(0,0,0,.75)}
+    .hero .lead{font-size:clamp(18px,1.6vw,25px);max-width:920px}
+    .hero-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:20px}
+    .hero-actions .btn{min-width:190px;margin-top:0;padding:12px 20px;background:rgba(8,8,8,.72);backdrop-filter:blur(4px)}
+    .hero-actions .btn.fill{box-shadow:0 8px 28px rgba(224,179,84,.25)}
+    .eyebrow{color:var(--gold);font-weight:900;letter-spacing:.18em;font-size:22px}
+    h1{font-size:clamp(48px,8vw,86px);line-height:1.15;margin:18px 0 24px}
+    h2{font-size:clamp(40px,6vw,66px);line-height:1.2;margin:12px 0 20px}
+    h3{font-size:32px;line-height:1.35;margin:0 0 26px}
+    .lead{font-size:clamp(20px,3vw,31px);color:var(--muted);max-width:900px;margin:auto}
+    section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108px}
+    .section-head{text-align:center;margin-bottom:56px}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:34px;padding:44px}
+    .card p{font-size:19px;color:var(--muted);line-height:1.78}
+    .tag{display:inline-block;padding:9px 16px;border-radius:999px;background:#3a3120;color:var(--gold2);font-weight:900;margin-right:8px}
+    .status{display:inline-block;padding:9px 16px;border:1px solid #594a2c;border-radius:999px;color:var(--gold2);font-weight:900}
+    .btn{display:inline-block;margin-top:22px;padding:16px 28px;border:2px solid var(--gold);border-radius:999px;color:var(--gold2);font-size:21px;font-weight:900;background:transparent;cursor:pointer}
+    .btn.fill{background:var(--gold);color:#16120b}
+    .filters{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:30px 0 46px}
+    .filters button{padding:14px 24px;border-radius:999px;border:1px solid var(--line);background:#090909;color:var(--muted);font-weight:900;font-size:20px}
+    .filters button.active{background:var(--gold);color:#111}
+    details{border:1px solid #594a2c;border-radius:24px;padding:26px 30px;margin:18px 0;background:var(--panel2)}
+    summary{cursor:pointer;font-size:24px;font-weight:900}
+    details p{font-size:20px;color:var(--muted)}
+    .project-card .bar{background:#372e20;color:var(--gold2);padding:12px 18px;border-radius:999px;font-weight:900;margin-bottom:26px}
+    .project-detail{display:none;margin-top:26px;border-top:1px solid #4a402d;padding-top:24px}
+    .project-card.open .project-detail{display:block}
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .photo{min-height:320px;border:1px solid #765e31;border-radius:32px;background:linear-gradient(135deg,#3d3528,#1c1c22);display:grid;place-items:center;text-align:center;color:var(--muted);font-size:24px}
+    .contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:28px}
+    label{display:block;font-weight:900;margin:20px 0 8px}
+    input,select,textarea{width:100%;background:#111217;color:#fff;border:1px solid #765e31;border-radius:18px;padding:18px}
+    textarea{min-height:200px;resize:vertical}
+    .notice{font-size:18px;color:var(--muted)}
+    footer{text-align:center;padding:80px 20px;color:#aaa}
+    footer img{width:160px;height:160px;object-fit:contain;border-radius:50%;display:block;margin:0 auto 24px}
+    @media(max-width:1020px){
+      .desktop-nav{display:none}
+      .menu-btn{display:block}
+      .head{min-height:86px}
+      .mobile-nav{inset:86px 0 0}
+    }
+    @media(max-width:760px){
+      .wrap{padding:0 21px}
+      .head{min-height:78px}
+      .brand{font-size:18px;gap:9px;min-width:0}
+      .brand img{width:50px;height:50px}
+      .brand span{overflow:hidden;text-overflow:ellipsis}
+      .menu-btn{width:50px;height:50px;font-size:26px;border-radius:15px}
+      .mobile-nav{inset:78px 0 0;padding:15px}
+      .mobile-nav a{font-size:17px;padding:12px 15px}
+      .hero{min-height:calc(100vh - 78px);padding:38px 0 34px}
+      .hero-logo{width:min(300px,76vw);max-height:280px;margin-bottom:8px}
+      .hero h1{font-size:clamp(36px,10vw,52px);margin:8px 0 14px}
+      .hero .lead{font-size:17px;line-height:1.65}
+      .hero-actions{gap:10px;margin-top:24px}
+      .hero-actions .btn{min-width:calc(50% - 8px);font-size:15px;padding:11px 12px}
+      .eyebrow{font-size:14px;letter-spacing:.11em}
+      h1{font-size:clamp(36px,10vw,52px)}
+      h2{font-size:clamp(32px,9vw,45px)}
+      .lead{font-size:18px;line-height:1.7}
+      section{padding:58px 0;scroll-margin-top:88px}
+      .section-head{margin-bottom:32px}
+      .grid,.grid3,.gallery,.contact-grid{grid-template-columns:1fr}
+      .card{padding:27px 23px;border-radius:24px}
+      .card p{font-size:17px;line-height:1.7}
+      h3{font-size:25px;margin-bottom:18px}
+      .filters{gap:8px;margin:20px 0 30px}
+      .filters button{font-size:15px;padding:10px 14px}
+      details{padding:19px 20px;border-radius:18px}
+      summary{font-size:18px}
+      details p{font-size:16px}
+      .btn{font-size:17px;padding:12px 18px}
+      .photo{min-height:210px;font-size:19px}
+      footer{padding:48px 20px}
+      footer img{width:112px;height:112px}
+    }
+  </style>
 </head>
 <body>
-<header><div class="wrap head"><a class="brand page-link" href="#home" data-page="home"><img src="logo.png" alt="가수인생활 엔터테인먼트 로고"><span>가수인생활 <b>엔터테인먼트</b></span></a><nav class="desktop-nav" aria-label="PC 주요 메뉴"><a href="#home" data-page="home">홈</a><a href="#about" data-page="about">회사소개</a><a href="#partners" data-page="partners">함께하는 단체</a><a href="#news" data-page="news">뉴스</a><a href="#notice" data-page="notice">공지</a><a href="#schedule" data-page="schedule">일정</a><a href="#projects" data-page="projects">실적</a><a href="#resources" data-page="resources">자료실</a><a href="#video" data-page="video">영상센터</a><a href="#gallery" data-page="gallery">갤러리</a><a href="#contact" data-page="contact">문의</a></nav><button class="menu-btn" id="menuBtn" aria-label="모바일 메뉴 열기" aria-expanded="false">☰</button></div></header>
-<nav class="mobile-nav" id="mobileNav" aria-label="모바일 주요 메뉴"><a href="#home" data-page="home">홈</a><a href="#about" data-page="about">회사소개</a><a href="#partners" data-page="partners">함께하는 단체</a><a href="#news" data-page="news">공식 뉴스</a><a href="#notice" data-page="notice">공지사항</a><a href="#schedule" data-page="schedule">행사일정</a><a href="#projects" data-page="projects">주요 실적</a><a href="#resources" data-page="resources">자료실</a><a href="#video" data-page="video">영상센터</a><a href="#gallery" data-page="gallery">갤러리</a><a href="#contact" data-page="contact">문의</a></nav>
+<header>
+  <div class="wrap head">
+    <a class="brand" href="#home"><img src="logo.png" alt="가수인생활 엔터테인먼트 로고"><span>가수인생활 <b>엔터테인먼트</b></span></a>
+    <nav class="desktop-nav" aria-label="PC 주요 메뉴">
+      <a href="#home">홈</a><a href="#about">회사소개</a><a href="#partners">함께하는 단체</a>
+      <a href="#news">뉴스</a><a href="#notice">공지</a><a href="#schedule">일정</a>
+      <a href="#projects">실적</a><a href="#resources">자료실</a><a href="#video">영상센터</a>
+      <a href="#gallery">갤러리</a><a href="#contact">문의</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="모바일 메뉴 열기" aria-expanded="false">☰</button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav" aria-label="모바일 주요 메뉴" aria-hidden="true">
+  <a href="#home">홈</a><a href="#about">회사소개</a><a href="#partners">함께하는 단체</a>
+  <a href="#news">공식 뉴스</a><a href="#notice">공지사항</a><a href="#schedule">행사일정</a>
+  <a href="#projects">주요 실적</a><a href="#resources">자료실</a><a href="#video">영상센터</a>
+  <a href="#gallery">갤러리</a><a href="#contact">문의</a>
+</nav>
+
 <main>
-<section id="home" class="hero page-active"><div class="wrap"><img class="hero-logo" src="logo.png" alt="가수인생활 엔터테인먼트 GSE 공식 로고"><div class="eyebrow">GAUSIN SAENGHWAL ENTERTAINMENT</div><h1>무대와 사람을 잇는<br>문화예술 플랫폼</h1><p class="lead">공연을 통해 지역을 살리고, 예술을 통해 사람을 연결합니다.</p><div class="hero-actions"><a class="btn fill" href="#contact" data-page="contact">🎧 공연·행사 문의</a><a class="btn" href="#about" data-page="about">👥 사업소개</a><a class="btn" href="https://www.youtube.com/@이명로의힐링트로트" target="_blank" rel="noopener">🎙 이명로의 힐링트로트</a><a class="btn" href="#partners" data-page="partners">🤝 함께해요</a></div></div></section>
-<section id="about"><div class="wrap"><div class="section-head"><div class="eyebrow">ABOUT</div><h2>문화예술로 성장하고<br>사회와 나누겠습니다</h2></div><div class="card"><p>가수인생활 엔터테인먼트는 전문적인 공연기획과 가수 매니지먼트 사업을 통해 성장하면서 그 결실을 지역사회와 함께 나누는 회사를 지향합니다.</p><p>장애인, 아동, 어르신, 문화소외계층과 일반 시민을 위한 노래교실, 무료공연, 문화나눔 행사를 꾸준히 추진하겠습니다.</p><p>회사가 안정적으로 성장하면 수익의 일부를 사회에 환원하는 것을 장기적인 목표로 삼고, 구체적인 행사와 나눔 활동의 내용과 결과를 홈페이지 뉴스에 투명하게 공개하겠습니다.</p></div></div></section>
-<section id="partners"><div class="wrap"><div class="section-head"><div class="eyebrow">PARTNERS</div><h2>함께하는 단체</h2><p class="lead">각 단체의 법적 형태와 역할을 구분하여 운영합니다.</p></div><div class="grid3"><article class="card"><span class="tag">비영리단체</span><h3>한국가수인생활협회</h3><p>고유번호증 등록단체로서 문화예술 활동, 지역사회 공익사업, 가수 권익과 교류 활동을 추진합니다.</p></article><article class="card"><span class="tag">공연·봉사</span><h3>나가수공연단·봉사단</h3><p>복지시설 위문공연, 전통시장 활성화 공연, 지역축제와 문화나눔 활동을 수행합니다.</p></article><article class="card"><span class="tag">사업체</span><h3>가수인생활 엔터테인먼트</h3><p>공연기획, 가수 매니지먼트, 문화콘텐츠 제작과 행사 운영을 담당하는 별도 사업체입니다.</p></article></div></div></section>
-<section id="news"><div class="wrap"><div class="section-head"><div class="eyebrow">NEWS</div><h2>공식 뉴스</h2><p class="lead">행사와 나눔 활동을 투명하게 전합니다.</p></div><div class="filters" data-filter-group="news"><button class="active" data-filter="all">전체</button><button data-filter="행사안내">행사안내</button><button data-filter="활동소식">활동소식</button><button data-filter="보도자료">보도자료</button></div><div class="grid"><article class="card news-card" data-category="행사안내"><span class="tag">행사안내</span><h3>전통시장 활성화 희망 음악회</h3><p>문화공연과 상생상품권을 연계하여 전통시장과 소상공인에게 활력을 전하는 지역상생 프로젝트입니다.</p><button class="btn small modal-open" data-title="전통시장 활성화 희망 음악회" data-body="한국가수인생활협회와 나가수공연단·봉사단은 전통시장 방문객 유입과 소상공인 매출 증대를 위해 희망 음악회를 추진합니다.|행사 일정과 장소가 확정되면 홈페이지 공지와 뉴스에서 안내합니다.">기사 자세히 보기</button></article><article class="card news-card" data-category="활동소식"><span class="tag">활동소식</span><h3>지역사회 문화나눔 공연</h3><p>복지시설과 지역 주민을 찾아가는 무료 공연 및 봉사활동 소식을 전합니다.</p><button class="btn small modal-open" data-title="지역사회 문화나눔 공연" data-body="노래와 공연으로 지역사회에 따뜻한 위로와 즐거움을 전하는 문화나눔 활동을 이어갑니다.">기사 자세히 보기</button></article></div></div></section>
-<section id="notice"><div class="wrap"><div class="section-head"><div class="eyebrow">NOTICE</div><h2>공지사항</h2></div><div class="filters" data-filter-group="notice"><button class="active" data-filter="all">전체</button><button data-filter="엔터테인먼트">엔터테인먼트</button><button data-filter="협회">협회</button></div><div class="grid"><article class="card notice-card" data-category="엔터테인먼트"><span class="tag">엔터테인먼트</span><h3>공연·행사 문의 안내</h3><p>공연기획, 출연, 행사 협력 문의는 문의 메뉴를 이용해 주세요.</p></article><article class="card notice-card" data-category="협회"><span class="tag">협회</span><h3>회원 및 봉사단 참여 안내</h3><p>협회 활동과 공연·봉사단 참여 절차를 추후 공지합니다.</p></article></div></div></section>
-<section id="schedule"><div class="wrap"><div class="section-head"><div class="eyebrow">SCHEDULE</div><h2>행사일정</h2><p class="lead">일정의 날짜·시간·장소·주최·내용을 확인할 수 있습니다.</p></div><div class="admin-toolbar"><button class="btn small" id="adminToggle">관리자 수정 모드</button><button class="btn small admin-only" id="resetSchedule">기본 일정으로 되돌리기</button></div><div id="scheduleGrid" class="grid"></div><p class="notice" style="text-align:center;margin-top:28px">※ 일정은 행사 확정 상황에 따라 변경될 수 있습니다.</p></div></section>
-<section id="projects"><div class="wrap"><div class="section-head"><div class="eyebrow">PROJECTS</div><h2>주요 실적</h2></div><div class="grid"><article class="card project-card"><span class="tag">전통시장</span><h3>공항시장 활성화 무료공연</h3><p>공연 출연료와 기부금을 상생상품권으로 지역에 환원한 문화상생 행사입니다.</p><button class="btn small detailBtn">세부보기</button><div class="project-detail"><p><b>주최·주관:</b> 한국가수인생활협회 / 나가수공연단·봉사단</p><p><b>내용:</b> 무료공연, 상생상품권 제작·배포, 지역 소비 촉진</p></div></article><article class="card project-card"><span class="tag">복지공연</span><h3>의성 노인복지관 무료공연</h3><p>어르신들과 함께 노래하고 소통한 문화나눔 공연입니다.</p><button class="btn small detailBtn">세부보기</button><div class="project-detail"><p><b>내용:</b> 트로트 공연, 관객 참여 프로그램, 문화봉사 활동</p></div></article></div></div></section>
-<section id="resources"><div class="wrap"><div class="section-head"><div class="eyebrow">RESOURCES</div><h2>자료실</h2></div><div class="grid3"><article class="card"><h3>단체 소개자료</h3><p>협회와 공연단·봉사단의 공식 소개자료를 등록하는 공간입니다.</p><span class="status">준비 중</span></article><article class="card"><h3>사업계획서</h3><p>공익공연, 가요제, 전통시장 활성화 사업자료를 제공합니다.</p><span class="status">준비 중</span></article><article class="card"><h3>신청서·양식</h3><p>공연신청, 협력제안, 회원 관련 양식을 제공합니다.</p><span class="status">준비 중</span></article></div></div></section>
-<section id="video"><div class="wrap"><div class="section-head"><div class="eyebrow">VIDEO</div><h2>영상센터</h2></div><div class="grid"><article class="card"><h3>나가수TV</h3><p>공연과 봉사활동 현장을 영상으로 만나보세요.</p><a class="btn" href="https://www.youtube.com/@TV-fy1wy" target="_blank" rel="noopener">채널 바로가기</a></article><article class="card"><h3>이명로의 힐링 트로트</h3><p>인생과 희망을 노래하는 창작 트로트 채널입니다.</p><a class="btn" href="https://www.youtube.com/@이명로의힐링트로트" target="_blank" rel="noopener">채널 바로가기</a></article></div></div></section>
-<section id="gallery"><div class="wrap"><div class="section-head"><div class="eyebrow">GALLERY</div><h2>갤러리</h2></div><div class="gallery"><div class="photo">공연 사진<br>등록 예정</div><div class="photo">봉사활동 사진<br>등록 예정</div><div class="photo">행사 현장 사진<br>등록 예정</div></div></div></section>
-<section id="contact"><div class="wrap"><div class="section-head"><div class="eyebrow">CONTACT</div><h2>공연·행사 문의</h2><p class="lead">문의 내용을 작성하면 이메일 작성 화면으로 연결됩니다.</p></div><div class="contact-grid"><div class="card"><h3>문의 안내</h3><p><b>이메일</b><br>myung4002@naver.com</p><p>행사 날짜, 장소, 예상 관객 수, 요청 프로그램을 함께 적어주시면 더욱 정확하게 상담할 수 있습니다.</p></div><form class="card" id="contactForm"><label>이름 또는 단체명<input id="name" required></label><label>연락처<input id="phone" required></label><label>문의 구분<select id="type"><option>공연·행사 기획</option><option>가수 출연</option><option>협회·봉사단 참여</option><option>기타 문의</option></select></label><label>행사명<input id="eventName"></label><label>요청사항<textarea id="message" required></textarea></label><label style="font-weight:normal"><input type="checkbox" id="privacy" style="width:auto" required> 개인정보 수집·이용에 동의합니다.</label><button class="btn fill" type="submit">문의 내용 이메일로 보내기</button></form></div></div></section>
+<section id="home" class="hero">
+  <div class="wrap">
+    <img class="hero-logo" src="logo.png" alt="가수인생활 엔터테인먼트 GSE 공식 로고">
+    <div class="eyebrow">GAUSIN SAENGHWAL ENTERTAINMENT</div>
+    <h1>무대와 사람을 잇는 문화예술 플랫폼</h1>
+    <p class="lead">공연을 통해 지역을 살리고, 예술을 통해 사람을 연결합니다.</p>
+    <div class="hero-actions">
+      <a class="btn fill" href="#contact">🎧 공연·행사 문의</a>
+      <a class="btn" href="#about">👥 사업소개</a>
+      <a class="btn" href="https://www.youtube.com/@이명로의힐링트로트" target="_blank" rel="noopener">🎙 이명로의 힐링트로트</a>
+      <a class="btn" href="#partners">🤝 함께해요</a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head"><div class="eyebrow">ABOUT</div><h2>문화예술로 성장하고<br>사회와 나누겠습니다</h2></div>
+    <div class="card">
+      <p>가수인생활 엔터테인먼트는 전문적인 공연기획과 가수 매니지먼트 사업을 통해 성장하면서 그 결실을 지역사회와 함께 나누는 회사를 지향합니다.</p>
+      <p>장애인, 아동, 어르신, 문화소외계층과 일반 시민을 위한 노래교실, 무료공연, 문화나눔 행사를 꾸준히 추진하겠습니다.</p>
+      <p>회사가 안정적으로 성장하면 수익의 일부를 사회에 환원하는 것을 장기적인 목표로 삼고, 구체적인 행사와 나눔 활동의 내용과 결과를 홈페이지 뉴스에 투명하게 공개하겠습니다.</p>
+    </div>
+  </div>
+</section>
+
+<section id="partners">
+  <div class="wrap">
+    <div class="section-head"><div class="eyebrow">PARTNERS</div><h2>함께하는 단체</h2><p class="lead">각 단체는 운영 형태가 다르며 문화예술사업을 위해 상호 협력합니다.</p></div>
+    <div class="grid3">
+      <div class="card"><h3>한국가수인생활협회</h3><p>고유번호증을 보유한 비영리단체로 문화예술인의 활동 지원과 지역 문화예술 발전을 위해 활동합니다.</p></div>
+      <div class="card"><h3>나가수공연단</h3><p>지역축제, 문화행사, 전통시장과 복지시설 등 다양한 현장에서 공연을 펼칩니다.</p></div>
+      <div class="card"><h3>나가수봉사단</h3><p>재능기부 공연과 문화예술 봉사활동으로 지역사회에 희망과 나눔을 전합니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="news">
+  <div class="wrap">
+    <div class="section-head"><div class="eyebrow">OFFICIAL NEWS CHANNEL</div><h2>가수인생활 공식 뉴스</h2><p class="lead">무료공연, 봉사활동, 노래교실, 사회환원과 행사 소식을 기록하고 공개합니다.</p></div>
+    <div class="filters" aria-label="뉴스 분류">
+      <button type="button" class="active" data-filter="전체">전체</button>
+      <button type="button" data-filter="행사안내">행사안내</button>
+      <button type="button" data-filter="무료공연">무료공연</button>
+      <button type="button" data-filter="봉사활동">봉사활동</button>
+      <button type="button" data-filter="노래교실">노래교실</button>
+      <button type="button" data-filter="사회환원">사회환원</button>
+      <button type="button" data-filter="보도자료">보도자료</button>
+    </div>
+    <div class="grid">
+      <article class="card project-card news-card" data-category="사회환원"><div class="bar">사회환원</div><span class="status">상시 공개</span><h3>문화예술로 성장하고 사회와 나누겠습니다</h3><p>무료공연, 문화예술교육과 사회환원 활동을 지속적으로 기록하고 공개하는 운영 원칙을 안내합니다.</p><button class="btn detailBtn" data-label="기사 자세히 보기">기사 자세히 보기</button><div class="project-detail"><p>문화예술 활동의 과정과 결과, 사회환원 계획 및 실천 내용을 홈페이지를 통해 투명하게 알리겠습니다.</p></div></article>
+      <article class="card project-card news-card" data-category="행사안내"><div class="bar">행사안내</div><span class="status">추진 예정</span><h3>전통시장 활성화와 지역상생을 위한 희망 음악회</h3><p>문화공연과 상생상품권을 연계하여 전통시장과 소상공인에게 실질적인 활력을 전하는 프로젝트입니다.</p><button class="btn detailBtn" data-label="기사 자세히 보기">기사 자세히 보기</button><div class="project-detail"><p>한국가수인생활협회와 나가수공연단·봉사단이 전통시장 방문객 유입과 소상공인 매출 증대를 위해 추진합니다.</p></div></article>
+      <article class="card project-card news-card" data-category="무료공연"><div class="bar">무료공연</div><span class="status">행사 완료</span><h3>의성 노인복지관 무료 문화공연</h3><p>어르신과 지역주민에게 음악으로 위로와 즐거움을 전한 문화나눔 공연입니다.</p><button class="btn detailBtn" data-label="기사 자세히 보기">기사 자세히 보기</button><div class="project-detail"><p>공연 현장 사진과 상세 활동 내용은 추후 갤러리와 보도자료에 등록합니다.</p></div></article>
+      <article class="card project-card news-card" data-category="보도자료"><div class="bar">보도자료</div><span class="status">행사 완료</span><h3>공항시장 전통시장 활성화 무료공연</h3><p>공연 출연료와 기부금을 상생상품권으로 환원해 시장 안에서 사용하도록 지원한 행사입니다.</p><button class="btn detailBtn" data-label="기사 자세히 보기">기사 자세히 보기</button><div class="project-detail"><p>공연과 지역 소비를 연결하여 상인과 주민이 함께 참여하는 상생형 문화행사로 운영했습니다.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section id="notice">
+  <div class="wrap">
+    <div class="section-head"><div class="eyebrow">NOTICE</div><h2>공지사항</h2><p class="lead">엔터테인먼트와 한국가수인생활협회 공지를 구분해 확인할 수 있습니다.</p></div>
+    <div class="grid">
+      <div class="card"><h3 style="color:var(--gold2)">가수인생활 엔터테인먼트 공지</h3>
+        <details><summary>필독 · 공연·행사 기획 및 협력 문의 안내</summary><p>지역축제, 기업행사, 문화공연, 전통시장 행사, 가수 및 출연진 섭외 관련 문의를 받고 있습니다. 대표 이명로 · 010-5070-3175 · myung4002@naver.com</p></details>
+        <details><summary>문화예술 협력기관 및 사업 파트너 모집</summary><p>공연기획, 문화예술행사, 콘텐츠 제작과 지역상생 프로젝트를 함께 추진할 기관과 파트너를 찾습니다.</p></details>
+      </div>
+      <div class="card"><h3 style="color:var(--gold2)">한국가수인생활협회 공지</h3>
+        <details><summary>중요 · 협회 회원 및 문화예술 활동 안내</summary><p>고유번호증을 보유한 비영리단체로 생활가수와 지역 예술인의 활동 지원, 문화공연과 공익사업을 추진합니다.</p></details>
+        <details><summary>나가수공연단·봉사단 공익공연 참여 안내</summary><p>복지시설 위문공연, 전통시장 활성화 공연과 지역사회 문화나눔 활동에 참여할 분을 모집합니다.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="schedule">
+  <div class="wrap">
+    <div class="section-head"><div class="eyebrow">SCHEDULE</div><h2>행사일정</h2><p class="lead">분류별 행사일정과 날짜·시간·장소 등 세부내용을 확인할 수 있습니다.</p></div>
+    <div class="grid">
+      <article class="card project-card"><div class="bar">일정 협의 중<br><small>시간 협의 중</small></div><span class="tag">엔터테인먼트</span><span class="status">협의 중</span><h3>공연·행사 기획 일정</h3><p>확정 후 등록</p><button class="btn detailBtn" data-label="세부보기">세부보기</button><div class="project-detail"><p><b>진행 상태:</b> 협의 중</p><p><b>장소:</b> 확정 후 등록</p><p><b>주최·주관:</b> 가수인생활 엔터테인먼트 또는 협력기관</p></div></article>
+      <article class="card project-card"><div class="bar">일정 협의 중<br><small>시간 협의 중</small></div><span class="tag">협회</span><span class="status">협의 중</span><h3>수성못 나가수 가요제</h3><p>수성못 일원 · 최종 장소 확정 후 등록</p><button class="btn detailBtn" data-label="세부보기">세부보기</button><div class="project-detail"><p><b>진행 상태:</b> 협의 중</p><p><b>행사명:</b> 수성못 나가수 가요제</p><p><b>날짜·시간:</b> 일정 협의 중 / 시간 협의 중</p></div></article>
+      <article class="card project-card"><div class="bar">일정 협의 중<br><small>시간 협의 중</small></div><span class="tag">봉사·공익</span><span class="status">협의 중</span><h3>문화나눔 및 공익공연</h3><p>복지시설, 전통시장 및 지역사회 행사장</p><button class="btn detailBtn" data-label="세부보기">세부보기</button><div class="project-detail"><p><b>주최·주관:</b> 한국가수인생활협회 / 나가수공연단·봉사단</p><p><b>행사 내용:</b> 복지시설 위문공연, 전통시장 활성화 공연, 문화나눔 활동</p></div></article>
+    </div>
+    <p class="notice" style="text-align:center;margin-top:30px">※ 일정은 행사 확정 상황에 따라 변경될 수 있습니다.</p>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head"><div class="eyebrow">PROJECTS</div><h2>주요 실적 및 프로젝트</h2><p class="lead">각 항목의 세부보기를 누르면 해당 내용만 펼쳐집니다.</p></div>
+    <div class="grid">
+      <article class="card project-card"><div class="bar">가요제</div><h3>수성못 나가수 가요제</h3><span class="tag">수성못 일원</span><span class="status">추진 준비</span><p>시민 참여형 생활문화 축제로 발전시키기 위한 프로젝트입니다.</p><button class="btn detailBtn" data-label="세부보기">세부보기</button><div class="project-detail"><p><b>추진 목적:</b> 생활가수와 시민이 함께하는 지역 대표 문화행사 조성</p><p><b>주요 내용:</b> 예선·본선, 초청공연, 시민 참여 프로그램</p></div></article>
+      <article class="card project-card"><div class="bar">전통시장</div><h3>희망 음악회</h3><span class="tag">전통시장</span><span class="status">추진 협의</span><p>전통시장 활성화와 소상공인 상생을 위한 문화공연 프로젝트입니다.</p><button class="btn detailBtn" data-label="세부보기">세부보기</button><div class="project-detail"><p>특설무대, 음향, 홍보와 상생상품권을 연계하는 지역상생형 사업입니다.</p></div></article>
+      <article class="card project-card"><div class="bar">지역상생</div><h3>공항시장 상생공연</h3><span class="tag">대구 동구 공항시장</span><span class="status">완료 사업</span><p>상생상품권과 문화공연을 연계한 전통시장 활성화 사례입니다.</p><button class="btn detailBtn" data-label="세부보기">세부보기</button><div class="project-detail"><p>출연료와 기부금을 상품권으로 환원하여 시장 내 소비 순환을 지원했습니다.</p></div></article>
+      <article class="card project-card"><div class="bar">문화복지</div><h3>의성 노인복지관 공연</h3><span class="tag">의성 노인복지관</span><span class="status">완료 사업</span><p>어르신과 지역주민을 위한 무료 문화나눔 공연입니다.</p><button class="btn detailBtn" data-label="세부보기">세부보기</button><div class="project-detail"><p>노래와 문화공연으로 위로와 즐거움을 나눈 공익활동입니다.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section id="resources">
+  <div class="wrap">
+    <div class="section-head"><div class="eyebrow">RESOURCES</div><h2>자료실</h2><p class="lead">사업·공연 제안서와 각종 신청서, 보도자료를 분야별로 제공합니다.</p></div>
+    <div class="grid3">
+      <div class="card"><h3>사업·공연 제안서</h3><p>공연기획 및 문화예술사업 제안자료를 순차적으로 등록합니다.</p><b style="color:var(--gold2)">자료 준비 중</b></div>
+      <div class="card"><h3>신청서·양식</h3><p>공연 신청서, 협력 신청서와 필요한 서식을 제공합니다.</p><b style="color:var(--gold2)">양식 준비 중</b></div>
+      <div class="card"><h3>보도자료·포스터</h3><p>행사 보도자료와 홍보 포스터를 공개합니다.</p><b style="color:var(--gold2)">게시 준비 중</b></div>
+    </div>
+  </div>
+</section>
+
+<section id="video">
+  <div class="wrap">
+    <div class="section-head"><div class="eyebrow">VIDEO CENTER</div><h2>영상센터</h2><p class="lead">공식 유튜브 채널에서 공연과 창작 음악을 만나보세요.</p></div>
+    <div class="grid">
+      <div class="card"><h3>나가수TV</h3><p>공연, 행사, 문화예술 활동을 전합니다.</p><a class="btn fill" href="https://www.youtube.com/@TV-fy1wy" target="_blank" rel="noopener">채널 바로가기</a></div>
+      <div class="card"><h3>이명로의 힐링트로트</h3><p>감성 트로트, 힐링음악, 창작곡을 소개합니다.</p><a class="btn fill" href="https://www.youtube.com/channel/UC-2z5bBNXcTkagGRwovnFNw" target="_blank" rel="noopener">채널 바로가기</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head"><div class="eyebrow">GALLERY</div><h2>갤러리</h2><p class="lead">공연, 행사, 봉사활동의 현장 모습을 분야별로 기록해 공개합니다.</p></div>
+    <div class="gallery"><div class="photo">공연 현장 사진<br><small>사진 준비 중</small></div><div class="photo">행사·축제 사진<br><small>사진 준비 중</small></div><div class="photo">봉사·문화나눔 사진<br><small>사진 준비 중</small></div></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head"><div class="eyebrow">CONTACT</div><h2>공연 신청·후원·협력 문의</h2><p class="lead">아래 내용을 입력한 뒤 문의 내용 작성하기를 누르면 이메일 작성창이 열립니다. 마지막으로 이메일의 보내기 버튼을 눌러야 접수가 완료됩니다.</p></div>
+    <div class="contact-grid">
+      <div class="card">
+        <h3>연락처</h3><p><b>대표: 이명로</b></p><p>전화: <a style="color:var(--gold2)" href="tel:01050703175">010-5070-3175</a></p><p>이메일: <a style="color:var(--gold2)" href="mailto:myung4002@naver.com">myung4002@naver.com</a></p>
+      </div>
+      <form class="card" id="contactForm">
+        <label>이름 또는 단체명 *</label><input id="name" required placeholder="예: 홍길동 / ○○상인회">
+        <label>연락처 *</label><input id="phone" required placeholder="예: 010-1234-5678">
+        <label>문의 구분 *</label><select id="type" required><option value="">선택하세요</option><option>공연 신청</option><option>후원·협력</option><option>행사 기획</option><option>가수·출연진 섭외</option><option>기타 문의</option></select>
+        <label>행사명</label><input id="event" placeholder="예: 전통시장 희망 음악회">
+        <label>예상 관객 수</label><input id="audience" placeholder="예: 300">
+        <label>요청사항 *</label><textarea id="request" required placeholder="행사 내용, 공연 시간, 필요한 출연진, 예산 또는 요청사항을 적어주세요."></textarea>
+        <label style="font-weight:500"><input id="agree" type="checkbox" required style="width:auto;margin-right:10px">문의 회신을 위한 개인정보 수집·이용에 동의합니다. *</label>
+        <p class="notice">수집 항목: 이름 또는 단체명, 연락처, 문의 내용 / 이용 목적: 공연·후원·협력 문의 확인 및 회신 / 목적 달성 후 안전하게 삭제합니다.</p>
+        <button class="btn fill" type="submit">문의 내용 작성하기</button>
+        <a class="btn" href="tel:01050703175">전화 바로 걸기</a>
+      </form>
+    </div>
+  </div>
+</section>
 </main>
-<footer><img src="logo.png" alt="가수인생활 엔터테인먼트 로고"><div>가수인생활 엔터테인먼트 · 한국가수인생활협회 · 나가수공연단·봉사단</div><div>© 2026 Gausin Saenghwal Entertainment</div></footer>
-<div class="modal" id="infoModal" aria-hidden="true"><div class="modal-box"><button class="modal-close" type="button">×</button><span class="tag">공식 안내</span><h3 id="modalTitle"></h3><div id="modalBody"></div></div></div>
+
+<footer><img src="logo.png" alt="가수인생활 엔터테인먼트 로고"><div>© 2026 가수인생활 엔터테인먼트. All rights reserved.</div></footer>
+
 <script>
-const pages=[...document.querySelectorAll('main>section')],navLinks=[...document.querySelectorAll('[data-page]')],mobileNav=document.getElementById('mobileNav'),menuBtn=document.getElementById('menuBtn');
-function showPage(id,updateHash=true){if(!document.getElementById(id))id='home';pages.forEach(s=>s.classList.toggle('page-active',s.id===id));navLinks.forEach(a=>a.classList.toggle('active',a.dataset.page===id));mobileNav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');document.body.style.overflow='';if(updateHash)history.replaceState(null,'','#'+id);window.scrollTo({top:0,behavior:'instant'});}navLinks.forEach(a=>a.addEventListener('click',e=>{if(a.dataset.page){e.preventDefault();showPage(a.dataset.page)}}));menuBtn.addEventListener('click',()=>{const open=mobileNav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open));document.body.style.overflow=open?'hidden':''});window.addEventListener('resize',()=>{if(innerWidth>1020){mobileNav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');document.body.style.overflow=''}});showPage(location.hash.slice(1)||'home',false);
+document.addEventListener('DOMContentLoaded',()=>{
+  const menuBtn=document.getElementById('menuBtn');
+  const mobileNav=document.getElementById('mobileNav');
 
-document.querySelectorAll('.detailBtn').forEach(btn=>btn.addEventListener('click',()=>{const card=btn.closest('.project-card');card.classList.toggle('open');btn.textContent=card.classList.contains('open')?'접기':'세부보기'}));
-document.querySelectorAll('[data-filter-group]').forEach(group=>{const section=group.parentElement;group.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>{group.querySelectorAll('button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const f=btn.dataset.filter;section.querySelectorAll('[data-category]').forEach(card=>card.classList.toggle('hidden',f!=='all'&&card.dataset.category!==f))}))});
-const modal=document.getElementById('infoModal');document.querySelectorAll('.modal-open').forEach(btn=>btn.addEventListener('click',()=>{document.getElementById('modalTitle').textContent=btn.dataset.title||'';document.getElementById('modalBody').innerHTML=(btn.dataset.body||'').split('|').map(x=>'<p>'+x.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]))+'</p>').join('');modal.classList.add('open');modal.setAttribute('aria-hidden','false')}));modal.querySelector('.modal-close').onclick=()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true')};modal.addEventListener('click',e=>{if(e.target===modal)modal.querySelector('.modal-close').click()});
+  function closeMobileMenu(){
+    mobileNav.classList.remove('open');
+    mobileNav.setAttribute('aria-hidden','true');
+    menuBtn.setAttribute('aria-expanded','false');
+    menuBtn.textContent='☰';
+    document.body.style.overflow='';
+  }
 
-const defaultSchedules=[
-{id:'ent',category:'엔터테인먼트',status:'협의 중',title:'공연·행사 기획 일정',date:'일정 협의 중',time:'시간 협의 중',place:'확정 후 등록',host:'가수인생활 엔터테인먼트 또는 협력기관',content:'공연기획, 가수 출연, 행사 운영 협의'},
-{id:'festival',category:'협회',status:'협의 중',title:'수성못 나가수 가요제',date:'일정 협의 중',time:'시간 협의 중',place:'수성못 일원 · 최종 장소 확정 후 등록',host:'한국가수인생활협회 / 나가수공연단',content:'가요제, 축하공연, 시민 참여 문화행사'},
-{id:'volunteer',category:'봉사·공익',status:'협의 중',title:'문화나눔 및 공익공연',date:'일정 협의 중',time:'시간 협의 중',place:'복지시설, 전통시장 및 지역사회 행사장',host:'한국가수인생활협회 / 나가수공연단·봉사단',content:'복지시설 위문공연, 전통시장 활성화 공연, 문화나눔 활동'}];
-function loadSchedules(){try{return JSON.parse(localStorage.getItem('gseSchedules'))||structuredClone(defaultSchedules)}catch(e){return JSON.parse(JSON.stringify(defaultSchedules))}}let schedules=loadSchedules();const scheduleGrid=document.getElementById('scheduleGrid');
-function esc(v=''){return String(v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function renderSchedules(){scheduleGrid.innerHTML=schedules.map((s,i)=>`<article class="card project-card schedule-card" data-index="${i}"><div class="bar"><span class="view-date">${esc(s.date)}</span><br><small class="view-time">${esc(s.time)}</small></div><span class="tag view-category">${esc(s.category)}</span><span class="status view-status">${esc(s.status)}</span><h3 class="view-title">${esc(s.title)}</h3><p class="view-place">${esc(s.place)}</p><button class="btn small schedule-detail-btn">세부보기</button><button class="btn small admin-only schedule-edit-btn">일정 수정</button><div class="project-detail"><p><b>날짜:</b> <span class="view-date2">${esc(s.date)}</span></p><p><b>시간:</b> <span class="view-time2">${esc(s.time)}</span></p><p><b>장소:</b> <span class="view-place2">${esc(s.place)}</span></p><p><b>주최·주관:</b> <span class="view-host">${esc(s.host)}</span></p><p><b>내용:</b> <span class="view-content">${esc(s.content)}</span></p></div><div class="edit-panel"><div class="edit-grid"><label>분류<input name="category" value="${esc(s.category)}"></label><label>상태<input name="status" value="${esc(s.status)}"></label><label class="full">행사명<input name="title" value="${esc(s.title)}"></label><label>날짜<input name="date" value="${esc(s.date)}"></label><label>시간<input name="time" value="${esc(s.time)}"></label><label class="full">장소<input name="place" value="${esc(s.place)}"></label><label class="full">주최·주관<input name="host" value="${esc(s.host)}"></label><label class="full">행사 내용<textarea name="content">${esc(s.content)}</textarea></label></div><button class="btn small fill schedule-save-btn">저장</button><button class="btn small schedule-cancel-btn">취소</button><div class="save-note"></div></div></article>`).join('');bindScheduleButtons()}
-function bindScheduleButtons(){document.querySelectorAll('.schedule-detail-btn').forEach(btn=>btn.onclick=()=>{const card=btn.closest('.schedule-card');card.classList.toggle('open');btn.textContent=card.classList.contains('open')?'접기':'세부보기'});document.querySelectorAll('.schedule-edit-btn').forEach(btn=>btn.onclick=()=>btn.closest('.schedule-card').querySelector('.edit-panel').classList.toggle('open'));document.querySelectorAll('.schedule-cancel-btn').forEach(btn=>btn.onclick=()=>btn.closest('.edit-panel').classList.remove('open'));document.querySelectorAll('.schedule-save-btn').forEach(btn=>btn.onclick=()=>{const card=btn.closest('.schedule-card'),i=Number(card.dataset.index),panel=card.querySelector('.edit-panel');['category','status','title','date','time','place','host','content'].forEach(k=>schedules[i][k]=panel.querySelector(`[name="${k}"]`).value.trim());localStorage.setItem('gseSchedules',JSON.stringify(schedules));renderSchedules();const newCard=scheduleGrid.children[i];newCard.querySelector('.edit-panel').classList.add('open');newCard.querySelector('.save-note').textContent='저장되었습니다. 새로고침해도 유지됩니다.'})}renderSchedules();
-let admin=false;document.getElementById('adminToggle').onclick=()=>{admin=!admin;document.body.classList.toggle('admin-mode',admin);document.getElementById('adminToggle').textContent=admin?'관리자 수정 모드 종료':'관리자 수정 모드'};document.getElementById('resetSchedule').onclick=()=>{if(confirm('저장한 일정 수정 내용을 모두 기본값으로 되돌릴까요?')){localStorage.removeItem('gseSchedules');schedules=JSON.parse(JSON.stringify(defaultSchedules));renderSchedules()}};
-document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();if(!document.getElementById('privacy').checked)return alert('개인정보 수집·이용에 동의해 주세요.');const name=document.getElementById('name').value.trim(),phone=document.getElementById('phone').value.trim(),type=document.getElementById('type').value,eventName=document.getElementById('eventName').value.trim(),message=document.getElementById('message').value.trim();const subject='[홈페이지 문의] '+type+' - '+name;const body=['가수인생활 엔터테인먼트 홈페이지 문의','','이름/단체명: '+name,'연락처: '+phone,'문의 구분: '+type,'행사명: '+(eventName||'미입력'),'','요청사항:',message].join('\n');location.href='mailto:myung4002@naver.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body)});
+  menuBtn.addEventListener('click',()=>{
+    const open=!mobileNav.classList.contains('open');
+    mobileNav.classList.toggle('open',open);
+    mobileNav.setAttribute('aria-hidden',String(!open));
+    menuBtn.setAttribute('aria-expanded',String(open));
+    menuBtn.textContent=open?'×':'☰';
+    document.body.style.overflow=open?'hidden':'';
+  });
+
+  mobileNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMobileMenu));
+
+  window.addEventListener('resize',()=>{
+    if(window.innerWidth>1020) closeMobileMenu();
+  });
+
+  function updateActiveMenu(){
+    const hash=location.hash||'#home';
+    document.querySelectorAll('.desktop-nav a,.mobile-nav a').forEach(a=>{
+      a.classList.toggle('active',a.getAttribute('href')===hash);
+    });
+  }
+  updateActiveMenu();
+  window.addEventListener('hashchange',updateActiveMenu);
+
+  document.querySelectorAll('.detailBtn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const card=btn.closest('.project-card');
+      const parent=card.parentElement;
+      parent.querySelectorAll('.project-card.open').forEach(other=>{
+        if(other!==card){
+          other.classList.remove('open');
+          const otherBtn=other.querySelector('.detailBtn');
+          if(otherBtn) otherBtn.textContent=otherBtn.dataset.label||'세부보기';
+        }
+      });
+      card.classList.toggle('open');
+      btn.textContent=card.classList.contains('open')?'접기':(btn.dataset.label||'세부보기');
+    });
+  });
+
+  document.querySelectorAll('details').forEach(detail=>{
+    detail.addEventListener('toggle',()=>{
+      if(!detail.open) return;
+      const group=detail.closest('.card');
+      if(!group) return;
+      group.querySelectorAll('details[open]').forEach(other=>{
+        if(other!==detail) other.open=false;
+      });
+    });
+  });
+
+  const filterButtons=document.querySelectorAll('.filters button[data-filter]');
+  const newsCards=document.querySelectorAll('.news-card');
+  filterButtons.forEach(button=>{
+    button.addEventListener('click',()=>{
+      filterButtons.forEach(b=>b.classList.remove('active'));
+      button.classList.add('active');
+      const filter=button.dataset.filter;
+      newsCards.forEach(card=>{
+        card.style.display=(filter==='전체'||card.dataset.category===filter)?'block':'none';
+      });
+    });
+  });
+
+  const form=document.getElementById('contactForm');
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+    const g=id=>document.getElementById(id).value.trim();
+    const subject=encodeURIComponent('[홈페이지 문의] '+g('type')+' - '+g('name'));
+    const body=encodeURIComponent(
+`이름 또는 단체명: ${g('name')}
+연락처: ${g('phone')}
+문의 구분: ${g('type')}
+행사명: ${g('event')}
+예상 관객 수: ${g('audience')}
+
+요청사항:
+${g('request')}`);
+    location.href=`mailto:myung4002@naver.com?subject=${subject}&body=${body}`;
+  });
+});
 </script>
-</body></html>
+</body>
+</html>
