@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>가수인생활 엔터테인먼트</title>
   <meta name="description" content="가수인생활 엔터테인먼트 공식 홈페이지. 공연기획, 가수 매니지먼트, 무료공연, 문화예술교육, 지역상생, 사회환원 활동 안내.">
-  <!-- V42: PC 첫 화면 골드 메인 비주얼 적용 + 모바일 반응형 유지 -->
+  <!-- V43: 중앙 로고 배경 제거 + PC 첫 화면 골드 메인 비주얼 + 모바일 반응형 유지 -->
   <style>
     :root{
       --bg:#080808;--panel:#151518;--panel2:#101116;--gold:#e0b354;--gold2:#f2cf7a;
@@ -39,7 +39,7 @@
       radial-gradient(circle,rgba(255,184,48,.55) 0 1.4px,transparent 2.1px);background-size:120px 120px,190px 190px;background-position:15px 20px,70px 35px}
     .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:150px;background:linear-gradient(180deg,transparent,rgba(224,179,84,.06));border-bottom:1px solid rgba(224,179,84,.45)}
     .hero .wrap{position:relative;z-index:1;max-width:1280px}
-    .hero-logo{width:min(520px,48vw);max-height:430px;object-fit:contain;margin:0 auto 10px;filter:drop-shadow(0 0 22px rgba(224,179,84,.28))}
+    .hero-logo{display:block;width:min(500px,44vw);max-height:410px;object-fit:contain;margin:0 auto 10px;background:transparent;filter:drop-shadow(0 0 28px rgba(224,179,84,.34))}
     .hero h1{font-size:clamp(54px,6.4vw,92px);line-height:1.1;margin:8px 0 18px;text-shadow:0 4px 20px rgba(0,0,0,.75)}
     .hero .lead{font-size:clamp(20px,2vw,30px);max-width:920px}
     .hero-actions{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:34px}
@@ -94,7 +94,7 @@
       .mobile-nav{inset:78px 0 0;padding:15px}
       .mobile-nav a{font-size:17px;padding:12px 15px}
       .hero{min-height:calc(100vh - 78px);padding:38px 0 34px}
-      .hero-logo{width:min(330px,82vw);max-height:300px;margin-bottom:8px}
+      .hero-logo{width:min(300px,76vw);max-height:280px;margin-bottom:8px}
       .hero h1{font-size:clamp(36px,10vw,52px);margin:8px 0 14px}
       .hero .lead{font-size:17px;line-height:1.65}
       .hero-actions{gap:10px;margin-top:24px}
@@ -144,7 +144,7 @@
 <main>
 <section id="home" class="hero">
   <div class="wrap">
-    <img class="hero-logo" src="hero-logo.png" alt="가수인생활 엔터테인먼트 GSE 공식 로고">
+    <img class="hero-logo" src="logo.png" alt="가수인생활 엔터테인먼트 GSE 공식 로고">
     <div class="eyebrow">GAUSIN SAENGHWAL ENTERTAINMENT</div>
     <h1>무대와 사람을 잇는 문화예술 플랫폼</h1>
     <p class="lead">공연을 통해 지역을 살리고, 예술을 통해 사람을 연결합니다.</p>
