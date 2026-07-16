@@ -1,0 +1,1065 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>가수인생활 엔터테인먼트</title>
+<!-- V38: 모바일 메뉴 상태 및 화면 이동 최종 보완 -->
+<meta name="description" content="가수인생활 엔터테인먼트 공식 홈페이지. 공연기획, 가수 매니지먼트, 무료공연, 문화예술교육, 지역상생, 사회환원 활동과 공식 뉴스 안내.">
+<style>
+:root{--bg:#080809;--panel:#151518;--panel2:#1d1d22;--gold:#d9ae51;--gold2:#f3d582;--text:#faf6ed;--muted:#c9c0b1;--line:#34343a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:"Malgun Gothic",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.72}a{text-decoration:none;color:inherit}img{max-width:100%;display:block}.wrap{width:min(1180px,92%);margin:auto}
+header{position:sticky;top:0;z-index:50;background:rgba(8,8,9,.95);border-bottom:1px solid var(--line)}.nav{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:12px;font-weight:900}.brand img{width:46px;height:46px;border-radius:50%}.brand span{color:var(--gold2)}.menu{display:flex;gap:18px;font-size:.92rem;white-space:nowrap}
+.menu>a,.more-menu-button{position:relative;padding:25px 0 22px;border:0;background:transparent;color:var(--text);font:inherit;font-weight:800;cursor:pointer}
+.menu>a::after,.more-menu-button::after{content:"";position:absolute;left:0;right:0;bottom:16px;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .2s ease}
+.menu>a:hover::after,.menu>a.active::after,.more-menu:hover .more-menu-button::after{transform:scaleX(1)}
+.more-menu{position:relative;display:flex;align-items:center}
+.more-menu-list{position:absolute;top:62px;right:0;min-width:150px;padding:8px;background:#151518;border:1px solid var(--line);border-radius:14px;box-shadow:0 16px 36px rgba(0,0,0,.45);display:none}
+.more-menu.open .more-menu-list,.more-menu:hover .more-menu-list{display:grid}
+.more-menu-list a{padding:10px 12px;border-radius:9px;color:var(--muted);font-weight:800}
+.more-menu-list a:hover,.more-menu-list a.active{background:rgba(217,174,81,.14);color:var(--gold2)}
+.hero{min-height:calc(100vh - 74px);display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,rgba(242,185,57,.34),transparent 34%),radial-gradient(circle at 50% 32%,rgba(217,174,81,.16),transparent 36%),linear-gradient(180deg,#080808,#0b0b0c 70%,#11100d)}
+.hero-inner{text-align:center;padding:42px 0 46px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.hero-logo-wrap{width:min(390px,34vw);margin:0 auto 8px;display:flex;justify-content:center;align-items:center;line-height:0}
+.hero-logo{width:100%;height:auto;display:block;object-fit:contain;object-position:center;filter:drop-shadow(0 12px 30px rgba(217,174,81,.2))}
+.eyebrow{color:var(--gold2);font-size:.82rem;font-weight:900;letter-spacing:.17em}h1{font-size:clamp(2.7rem,7vw,5.7rem);line-height:1.05;letter-spacing:-.055em;margin:0 0 20px}.hero p{max-width:820px;margin:0 auto 20px;color:var(--text);font-size:clamp(1rem,2vw,1.22rem)}
+.btns{display:flex;justify-content:center;gap:11px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 22px;border-radius:999px;border:1px solid var(--gold);font-weight:900}.btn.primary{background:var(--gold);color:#17130b}
+section{padding:88px 0}.head{text-align:center;margin-bottom:43px}.head small{color:var(--gold);font-weight:900;letter-spacing:.14em}.head h2{font-size:clamp(2rem,4vw,3.15rem);margin:8px 0}.head p{max-width:780px;margin:auto;color:var(--muted)}
+.grid{display:grid;gap:20px}.two{grid-template-columns:1fr 1fr}.three{grid-template-columns:repeat(3,1fr)}.four{grid-template-columns:repeat(4,1fr)}.panel,.card,.notice,.event,.news,.project,.resource,.org,.channel{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:26px}.panel p,.card p,.notice p,.event p,.news p,.project p,.resource p,.org p,.channel p{color:var(--muted)}.tag{display:inline-block;padding:5px 10px;border-radius:999px;background:rgba(217,174,81,.12);color:var(--gold2);font-size:.78rem;font-weight:900;margin-bottom:10px}.quote{border-left:4px solid var(--gold);padding-left:17px;color:var(--gold2);font-weight:800}.num{color:var(--gold);font-weight:900}
+.news-feature{grid-template-columns:1.35fr .65fr}.news-main{min-height:330px;background:linear-gradient(145deg,rgba(217,174,81,.19),rgba(255,255,255,.03)),#1a1a1f;display:flex;flex-direction:column;justify-content:flex-end}.news-list{display:grid;gap:14px}.news-item{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:18px}.tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}.tab{padding:10px 15px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+.gallery{grid-template-columns:repeat(3,1fr)}.photo{aspect-ratio:4/3;border-radius:20px;border:1px solid var(--line);display:grid;place-items:center;text-align:center;background:linear-gradient(145deg,rgba(217,174,81,.16),rgba(255,255,255,.03)),#1a1a1f;color:var(--muted)}footer{padding:34px 0;border-top:1px solid var(--line);text-align:center;color:#aaa}footer img{width:86px;margin:0 auto 12px;border-radius:50%}
+@media(max-width:980px){.menu{display:none}.four{grid-template-columns:repeat(2,1fr)}.hero-logo-wrap{width:min(590px,64vw)}}
+@media(max-width:760px){.two,.three,.four,.news-feature,.gallery{grid-template-columns:1fr}section{padding:66px 0}.hero{min-height:80vh}.hero-inner{padding:30px 0 40px}.hero-logo-wrap{width:58vw;max-width:320px;margin-bottom:6px}.hero-logo{-webkit-mask-image:radial-gradient(ellipse 84% 72% at center,#000 56%,rgba(0,0,0,.85) 74%,transparent 100%);mask-image:radial-gradient(ellipse 84% 72% at center,#000 56%,rgba(0,0,0,.85) 74%,transparent 100%)}h1{font-size:clamp(2.2rem,12vw,3.8rem)}}
+</style>
+
+<!-- PAGE-MODE-START -->
+<style>
+/* 메뉴를 누르면 선택한 분야 한 개만 보이도록 설정 */
+main > section {
+  display: none !important;
+}
+main > section.page-active {
+  display: block !important;
+}
+/* 메뉴별 화면에서 불필요한 세로 이동을 줄임 */
+body.page-mode {
+  overflow-y: auto;
+}
+</style>
+
+
+<style>
+.contact-top{grid-template-columns:repeat(3,1fr);margin-bottom:26px}
+.contact-top a{color:var(--gold2);text-decoration:none}
+.inquiry-wrap{max-width:980px;margin:0 auto}
+.inquiry-form{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:32px}
+.form-row{display:grid;gap:18px;margin-bottom:18px}
+.form-row.two{grid-template-columns:repeat(2,1fr)}
+.form-row.three{grid-template-columns:repeat(3,1fr)}
+.inquiry-form label{display:block;color:#fff;font-weight:700}
+.inquiry-form input,.inquiry-form select,.inquiry-form textarea{
+  width:100%;box-sizing:border-box;margin-top:8px;padding:14px 15px;
+  border:1px solid rgba(217,174,81,.35);border-radius:12px;
+  background:#111318;color:#fff;font:inherit;outline:none
+}
+.inquiry-form input:focus,.inquiry-form select:focus,.inquiry-form textarea:focus{
+  border-color:var(--gold2);box-shadow:0 0 0 3px rgba(217,174,81,.12)
+}
+.inquiry-form textarea{resize:vertical}
+.privacy-check{margin:18px 0;color:#ccc}
+.privacy-check label{font-weight:500}
+.privacy-check input{width:auto;margin:0 8px 0 0}
+.form-buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+.form-buttons button{border:0;cursor:pointer;font:inherit}
+.form-note{margin:16px 0 0;color:#aaa;font-size:.92rem}
+@media(max-width:800px){
+  .contact-top,.form-row.two,.form-row.three{grid-template-columns:1fr}
+  .inquiry-form{padding:22px}
+}
+</style>
+
+
+<style>
+.news-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.news-tab{padding:10px 17px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);font:inherit;font-weight:800;cursor:pointer}
+.news-tab.active,.news-tab:hover{background:var(--gold);color:#111;border-color:var(--gold)}
+.news-board{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.news-card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:26px;display:flex;flex-direction:column;min-height:260px}
+.news-card.featured{grid-column:1/-1;background:linear-gradient(145deg,rgba(217,174,81,.16),rgba(255,255,255,.03)),var(--panel)}
+.news-card h3{font-size:1.45rem;margin:8px 0 14px}
+.news-summary{color:var(--muted);line-height:1.8;flex:1}
+.news-open{align-self:flex-start;margin-top:18px;padding:11px 16px;border:1px solid var(--gold);border-radius:999px;background:transparent;color:var(--gold2);font:inherit;font-weight:800;cursor:pointer}
+.news-open:hover{background:var(--gold);color:#111}
+.news-card.is-hidden{display:none}
+.news-modal{position:fixed;inset:0;display:none;z-index:9999}
+.news-modal.open{display:block}
+.news-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.78)}
+.news-modal-dialog{position:relative;max-width:760px;margin:7vh auto;padding:34px;background:#15171c;border:1px solid rgba(217,174,81,.35);border-radius:24px;color:#fff;max-height:82vh;overflow:auto;box-shadow:0 25px 80px rgba(0,0,0,.55)}
+.news-modal-close{position:absolute;right:18px;top:14px;border:0;background:transparent;color:#fff;font-size:2rem;cursor:pointer}
+.news-modal-dialog h3{font-size:2rem;margin:12px 36px 22px 0}
+.news-modal-body p{color:#ddd;line-height:1.95;margin:0 0 16px}
+@media(max-width:800px){
+  .news-board{grid-template-columns:1fr}
+  .news-card.featured{grid-column:auto}
+  .news-modal-dialog{margin:4vh 14px;padding:26px}
+}
+</style>
+
+
+<style>
+.notice-tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+.notice-tab{padding:10px 18px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);font:inherit;font-weight:800;cursor:pointer}
+.notice-tab.active,.notice-tab:hover{background:var(--gold);color:#111;border-color:var(--gold)}
+.notice-list{display:grid;gap:14px}
+.notice-item{display:grid;grid-template-columns:150px 1fr auto;gap:20px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}
+.notice-item.is-hidden{display:none}
+.notice-badge{display:inline-flex;justify-content:center;align-items:center;width:max-content;padding:8px 13px;border-radius:999px;background:rgba(217,174,81,.16);color:var(--gold2);font-weight:900}
+.notice-badge.association{background:rgba(255,255,255,.08);color:#fff}
+.notice-copy h3{margin:0 0 8px;font-size:1.2rem}
+.notice-copy p{margin:0;color:var(--muted);line-height:1.7}
+.notice-open{padding:10px 15px;border:1px solid var(--gold);border-radius:999px;background:transparent;color:var(--gold2);font:inherit;font-weight:800;cursor:pointer}
+.notice-modal{position:fixed;inset:0;display:none;z-index:10000}
+.notice-modal.open{display:block}
+.notice-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.78)}
+.notice-modal-dialog{position:relative;max-width:760px;margin:8vh auto;padding:34px;background:#15171c;border:1px solid rgba(217,174,81,.35);border-radius:24px;max-height:80vh;overflow:auto}
+.notice-modal-close{position:absolute;right:18px;top:12px;border:0;background:transparent;color:#fff;font-size:2rem;cursor:pointer}
+.notice-modal-dialog h3{font-size:2rem;margin:18px 38px 22px 0}
+.notice-modal-body p{color:#ddd;line-height:1.95;margin:0 0 16px}
+@media(max-width:800px){.notice-item{grid-template-columns:1fr}.notice-open{width:max-content}.notice-modal-dialog{margin:4vh 14px;padding:26px}}
+</style>
+
+
+<style>
+.notice-columns{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.notice-group{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:24px}
+.notice-group h3{margin:0 0 18px;color:var(--gold2)}
+.notice-details{border:1px solid rgba(217,174,81,.25);border-radius:14px;background:#111318;margin-bottom:12px;overflow:hidden}
+.notice-details summary{padding:16px 18px;cursor:pointer;font-weight:800;color:#fff;list-style:none}
+.notice-details summary::-webkit-details-marker{display:none}
+.notice-details summary::after{content:'＋';float:right;color:var(--gold2);font-size:1.2rem}
+.notice-details[open] summary::after{content:'－'}
+.notice-content{padding:0 18px 18px;border-top:1px solid rgba(217,174,81,.16)}
+.notice-content p{color:#d6d6d6;line-height:1.85;margin:14px 0 0}
+@media(max-width:800px){.notice-columns{grid-template-columns:1fr}}
+</style>
+
+
+<style>
+.schedule-tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+.schedule-tab{padding:10px 17px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);font:inherit;font-weight:800;cursor:pointer}
+.schedule-tab.active,.schedule-tab:hover{background:var(--gold);color:#111;border-color:var(--gold)}
+.schedule-list{display:grid;gap:16px;max-width:1000px;margin:0 auto}
+.schedule-item{display:grid;grid-template-columns:150px 1fr;gap:24px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px}
+.schedule-item.is-hidden{display:none}
+.schedule-date{min-height:90px;border-radius:16px;background:rgba(217,174,81,.09);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.schedule-date strong{font-size:1.45rem;color:var(--gold2)}
+.schedule-date span{color:var(--muted);margin-top:4px}
+.schedule-badge{display:inline-block;padding:6px 11px;border-radius:999px;background:rgba(217,174,81,.16);color:var(--gold2);font-weight:900;font-size:.85rem}
+.schedule-badge.association{background:rgba(255,255,255,.08);color:#fff}
+.schedule-badge.volunteer{background:rgba(217,174,81,.1);color:#f0d48c}
+.schedule-copy h3{margin:10px 0 8px;font-size:1.3rem}
+.schedule-copy p{margin:0;color:var(--muted);line-height:1.75}
+.schedule-note{text-align:center;color:#aaa;margin-top:24px}
+@media(max-width:800px){.schedule-item{grid-template-columns:1fr}.schedule-date{min-height:74px}}
+</style>
+
+
+<style>
+.schedule-detail{background:var(--panel);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.schedule-detail.is-hidden{display:none}
+.schedule-detail summary{display:grid;grid-template-columns:150px 1fr;gap:24px;align-items:center;padding:22px;cursor:pointer;list-style:none}
+.schedule-detail summary::-webkit-details-marker{display:none}
+.schedule-detail summary::after{content:'＋';position:absolute;right:28px;color:var(--gold2);font-size:1.4rem}
+.schedule-detail[open] summary::after{content:'－'}
+.schedule-detail summary{position:relative;padding-right:70px}
+.schedule-info{border-top:1px solid rgba(217,174,81,.18);padding:20px 28px 26px;background:#111318}
+.schedule-info p{display:grid;grid-template-columns:130px 1fr;gap:18px;margin:0;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.schedule-info p:last-child{border-bottom:0}
+.schedule-info strong{color:var(--gold2)}
+.schedule-info span{color:#ddd;line-height:1.7}
+@media(max-width:800px){
+ .schedule-detail summary{grid-template-columns:1fr;padding:18px 55px 18px 18px}
+ .schedule-info{padding:16px 20px 22px}
+ .schedule-info p{grid-template-columns:1fr;gap:5px}
+}
+</style>
+
+
+<style>
+.schedule-filter{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.schedule-filter-btn{padding:10px 17px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);font:inherit;font-weight:800;cursor:pointer}
+.schedule-filter-btn.active{background:var(--gold);color:#111;border-color:var(--gold)}
+.schedule-panel{display:none;max-width:1000px;margin:0 auto}
+.schedule-panel.active{display:block}
+.event-row{width:100%;display:grid;grid-template-columns:150px 1fr 40px;align-items:center;gap:20px;padding:20px 22px;margin:0 0 10px;background:var(--panel);border:1px solid var(--line);border-radius:18px;color:#fff;text-align:left;cursor:pointer;font:inherit}
+.event-date{display:flex;align-items:center;justify-content:center;min-height:70px;border-radius:14px;background:rgba(217,174,81,.1);color:var(--gold2);font-weight:900}
+.event-text b{display:block;font-size:1.25rem;margin-bottom:6px}
+.event-text em{font-style:normal;color:var(--muted)}
+.event-plus{font-size:1.5rem;color:var(--gold2);text-align:center}
+.event-detail{display:none;margin:-2px 0 14px;padding:18px 24px 22px;background:#111318;border:1px solid rgba(217,174,81,.25);border-radius:0 0 18px 18px}
+.event-detail.open{display:block}
+.event-detail p{display:grid;grid-template-columns:130px 1fr;gap:16px;margin:0;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.event-detail p:last-child{border-bottom:0}
+.event-detail strong{color:var(--gold2)}
+.event-detail span{color:#ddd;line-height:1.7}
+@media(max-width:800px){
+ .event-row{grid-template-columns:1fr 36px}
+ .event-date{grid-column:1/-1;min-height:56px}
+ .event-detail p{grid-template-columns:1fr;gap:4px}
+}
+</style>
+
+
+<style>
+.schedule-filter{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.schedule-filter-btn{padding:10px 17px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);font:inherit;font-weight:800;cursor:pointer}
+.schedule-filter-btn.active{background:var(--gold);color:#111;border-color:var(--gold)}
+.schedule-panel{display:none;max-width:1000px;margin:0 auto}
+.schedule-panel.active{display:block}
+.schedule-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;margin-bottom:16px;overflow:hidden}
+.schedule-card-head{display:grid;grid-template-columns:150px 1fr auto;gap:20px;align-items:center;padding:20px 22px}
+.schedule-card-date{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:78px;border-radius:14px;background:rgba(217,174,81,.1);color:var(--gold2);font-weight:900;text-align:center}
+.schedule-card-date span{font-size:.9rem;color:var(--muted);margin-top:4px}
+.schedule-card-copy h3{margin:8px 0 6px;font-size:1.3rem}
+.schedule-card-copy p{margin:0;color:var(--muted)}
+.schedule-tag{display:inline-block;padding:6px 11px;border-radius:999px;background:rgba(217,174,81,.16);color:var(--gold2);font-size:.85rem;font-weight:900}
+.schedule-card-actions{display:flex;gap:8px;flex-wrap:wrap}
+.schedule-small-btn{padding:9px 13px;border:1px solid var(--gold);border-radius:999px;background:transparent;color:var(--gold2);font:inherit;font-weight:800;cursor:pointer}
+.schedule-detail{display:none;padding:18px 24px 22px;border-top:1px solid rgba(217,174,81,.18);background:#111318}
+.schedule-detail.open{display:block}
+.schedule-detail p{display:grid;grid-template-columns:130px 1fr;gap:16px;margin:0;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.schedule-detail p:last-child{border-bottom:0}
+.schedule-detail strong{color:var(--gold2)}
+.schedule-detail span{color:#ddd;line-height:1.7}
+.schedule-note{text-align:center;color:#aaa;margin-top:22px}
+
+.schedule-editor{position:fixed;inset:0;display:none;z-index:12000}
+.schedule-editor.open{display:block}
+.schedule-editor-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.8)}
+.schedule-editor-dialog{position:relative;max-width:760px;margin:4vh auto;padding:30px;background:#15171c;border:1px solid rgba(217,174,81,.38);border-radius:24px;max-height:90vh;overflow:auto}
+.schedule-editor-close{position:absolute;right:18px;top:12px;border:0;background:transparent;color:#fff;font-size:2rem;cursor:pointer}
+.schedule-editor-dialog h3{font-size:2rem;margin:0 0 24px}
+.schedule-editor-dialog label{display:block;color:#fff;font-weight:700;margin-bottom:16px}
+.schedule-editor-dialog input,.schedule-editor-dialog select,.schedule-editor-dialog textarea{width:100%;box-sizing:border-box;margin-top:8px;padding:13px 14px;border:1px solid rgba(217,174,81,.35);border-radius:12px;background:#101216;color:#fff;font:inherit}
+.editor-grid{display:grid;gap:16px}
+.editor-grid.two{grid-template-columns:1fr 1fr}
+.editor-grid.three{grid-template-columns:1fr 1fr 1fr}
+.editor-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.editor-actions button{border:0;cursor:pointer;font:inherit}
+@media(max-width:800px){
+  .schedule-card-head{grid-template-columns:1fr}
+  .schedule-card-actions{justify-content:flex-start}
+  .schedule-detail p{grid-template-columns:1fr;gap:4px}
+  .editor-grid.two,.editor-grid.three{grid-template-columns:1fr}
+  .schedule-editor-dialog{margin:2vh 12px;padding:24px}
+}
+</style>
+
+
+<style>
+/* 통합 검토 보완 */
+.project-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.project-detail{background:var(--panel);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.project-detail summary{list-style:none;cursor:pointer;padding:26px;min-height:180px}
+.project-detail summary::-webkit-details-marker{display:none}
+.project-detail summary h3{margin:4px 0 12px;font-size:1.45rem}
+.project-detail summary p{margin:0;color:var(--muted);line-height:1.75}
+.project-detail summary::after{content:'＋ 상세보기';display:inline-block;margin-top:18px;color:var(--gold2);font-weight:900}
+.project-detail[open] summary::after{content:'－ 접기'}
+.project-body{padding:8px 26px 24px;border-top:1px solid rgba(217,174,81,.18);background:#111318}
+.project-body p{display:grid;grid-template-columns:120px 1fr;gap:16px;margin:0;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.project-body p:last-child{border-bottom:0}
+.project-body strong{color:var(--gold2)}
+.project-body span{color:#ddd;line-height:1.7}
+
+/* 링크와 버튼 터치 안정성 */
+button,a,summary{touch-action:manipulation}
+.menu a{white-space:nowrap}
+@media(max-width:800px){
+  .project-grid{grid-template-columns:1fr}
+  .project-body p{grid-template-columns:1fr;gap:4px}
+}
+</style>
+
+
+<style>
+.project-card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:26px}
+.project-card h3{font-size:1.45rem;margin:10px 0 12px}
+.project-card>p{color:var(--muted);line-height:1.75}
+.project-toggle{margin-top:18px;padding:10px 16px;border:1px solid var(--gold);border-radius:999px;background:transparent;color:var(--gold2);font:inherit;font-weight:900;cursor:pointer}
+.project-body-box{display:none;margin-top:18px;padding-top:14px;border-top:1px solid rgba(217,174,81,.18)}
+.project-body-box.open{display:block}
+.project-body-box p{display:grid;grid-template-columns:120px 1fr;gap:16px;margin:0;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.project-body-box strong{color:var(--gold2)}
+.project-body-box span{color:#ddd;line-height:1.7}
+@media(max-width:800px){.project-body-box p{grid-template-columns:1fr;gap:4px}}
+</style>
+
+
+
+<style>
+/* V33 사회환원 비전 화면 보완 */
+.about-grid{align-items:stretch}
+.about-panel,.greeting-panel{padding:32px;min-height:100%}
+.about-panel h3,.greeting-panel h3{font-size:1.55rem;margin:4px 0 18px}
+.greeting-panel p{font-size:1.02rem;line-height:1.9}
+.representative{margin-top:24px;color:var(--gold2)!important}
+.social-value-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.social-value-bar>div{background:#111318;border:1px solid rgba(217,174,81,.28);border-radius:16px;padding:18px;text-align:center}
+.social-value-bar b{display:block;color:var(--gold2);margin-bottom:7px}
+.social-value-bar span{color:var(--muted);font-size:.9rem;line-height:1.6}
+.business-grid .card{min-height:220px;transition:transform .2s ease,border-color .2s ease,background .2s ease}
+.business-grid .card:hover{transform:translateY(-4px);border-color:rgba(217,174,81,.72);background:#1b1b20}
+.business-grid .num{font-size:1rem;margin-bottom:14px}
+.business-grid h3{margin:0 0 12px;font-size:1.35rem}
+@media(max-width:900px){.social-value-bar{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.social-value-bar{grid-template-columns:1fr}.about-panel,.greeting-panel{padding:24px}}
+</style>
+
+
+<style>
+/* V35 PC 방문자 화면 전체 보완 */
+.news-meta,.project-meta{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px;color:#d7cfc1;font-size:.88rem}
+.news-meta span,.project-meta span{display:inline-flex;align-items:center;padding:5px 9px;border:1px solid rgba(217,174,81,.22);border-radius:999px;background:rgba(255,255,255,.025)}
+.news-status,.project-status{color:var(--gold2)!important;font-weight:900}
+.news-card{gap:2px}.news-card h3{margin:6px 0 10px}.news-card .tag{margin-bottom:8px}
+.notice-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px;font-size:.82rem;color:var(--muted)}
+.notice-meta b{color:var(--gold2)}
+.notice-details summary{line-height:1.55}.notice-details summary .notice-title{display:block;padding-right:36px}
+.notice-important{display:inline-block;margin-right:7px;padding:3px 7px;border-radius:999px;background:var(--gold);color:#17130b;font-size:.72rem;font-weight:900;vertical-align:2px}
+.schedule-state{display:inline-block;margin-left:8px;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.08);color:#fff;font-size:.78rem;font-weight:900}
+.schedule-state.confirmed{background:var(--gold);color:#17130b}
+.project-card{display:flex;flex-direction:column}.project-card>p{flex:1}.project-toggle{align-self:flex-start}
+.resource,.channel,.photo{transition:transform .2s ease,border-color .2s ease,background .2s ease}.resource:hover,.channel:hover,.photo:hover{transform:translateY(-3px);border-color:rgba(217,174,81,.65)}
+.resource-status{display:inline-block;margin-top:12px;color:var(--gold2);font-size:.85rem;font-weight:900}
+.required-mark{color:var(--gold2);margin-left:4px}.privacy-box{margin-top:8px;padding:14px 16px;border:1px solid rgba(217,174,81,.2);border-radius:12px;background:#101216;color:#cfc7ba;font-size:.9rem;line-height:1.7}
+.form-help{display:block;margin-top:6px;color:#a9a092;font-size:.82rem;font-weight:400}
+@media(max-width:800px){.news-meta,.project-meta{font-size:.8rem}}
+</style>
+
+<style id="v36-mobile-style">
+.mobile-menu-toggle{display:none;width:46px;height:46px;border:1px solid var(--line);border-radius:13px;background:#111114;padding:10px;cursor:pointer}
+.mobile-menu-toggle span{display:block;height:2px;background:var(--gold2);margin:5px 0;border-radius:2px;transition:.2s}
+.mobile-menu-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.mobile-menu-toggle.open span:nth-child(2){opacity:0}
+.mobile-menu-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu-panel{display:none;background:rgba(8,8,9,.99);border-top:1px solid var(--line);box-shadow:0 18px 35px rgba(0,0,0,.45)}
+.mobile-menu-panel nav{width:min(92%,520px);margin:auto;padding:12px 0 20px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mobile-menu-panel a{padding:12px 10px;text-align:center;border:1px solid var(--line);border-radius:12px;font-weight:800;color:var(--muted);background:#111114}
+.mobile-menu-panel a.active,.mobile-menu-panel a:active{color:#17130b;background:var(--gold);border-color:var(--gold)}
+@media(max-width:980px){
+  .nav{min-height:72px}.mobile-menu-toggle{display:block}.mobile-menu-panel.open{display:block}
+}
+@media(max-width:760px){
+  body{line-height:1.62;overflow-x:hidden}.wrap{width:min(94%,680px)}
+  header{position:sticky}.nav{min-height:76px;gap:10px}.brand{gap:9px;font-size:1rem;min-width:0}.brand img{width:48px;height:48px}.brand div{white-space:nowrap}.mobile-menu-toggle{flex:0 0 44px;width:44px;height:44px}
+  .hero{min-height:auto;display:block;background:radial-gradient(ellipse at 50% 0%,rgba(242,185,57,.28),transparent 31%),linear-gradient(180deg,#080808,#0b0b0c 72%,#11100d)}
+  .hero-inner{padding:22px 0 34px;min-height:calc(100svh - 76px);justify-content:flex-start}
+  .hero-logo-wrap{width:min(58vw,290px);margin:0 auto 4px}
+  .hero-logo{-webkit-mask-image:none;mask-image:none;filter:drop-shadow(0 10px 24px rgba(217,174,81,.18))}
+  .hero h1{font-size:clamp(2.45rem,11vw,3.45rem);line-height:1.08;letter-spacing:-.06em;margin:2px 0 18px}
+  .hero p{font-size:1.08rem;line-height:1.85;max-width:92%;margin-bottom:24px;word-break:keep-all}
+  .btns{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:11px 10px;padding:0 4px}
+  .btn{min-height:58px;padding:8px 10px;font-size:1rem;line-height:1.25;text-align:center;word-break:keep-all}
+  .btn:nth-child(3){font-size:.94rem}
+  section{padding:58px 0}.head{margin-bottom:28px}.head h2{font-size:2.35rem}.head p{word-break:keep-all}
+  .panel,.card,.notice,.event,.news,.project,.resource,.org,.channel{padding:21px;border-radius:18px}
+  footer{padding-bottom:28px}
+}
+@media(max-width:390px){
+  .brand{font-size:.92rem}.brand img{width:43px;height:43px}.nav{min-height:70px}.mobile-menu-toggle{width:41px;height:41px}
+  .hero-inner{min-height:calc(100svh - 70px);padding-top:16px}.hero-logo-wrap{width:min(55vw,245px)}
+  .hero h1{font-size:2.28rem}.hero p{font-size:1rem}.btn{font-size:.94rem;min-height:54px}.btn:nth-child(3){font-size:.86rem}
+}
+</style>
+
+<style id="v38-mobile-final-style">
+@media(max-width:760px){
+  .mobile-menu-panel nav{padding:8px 0 14px;gap:6px}
+  .mobile-menu-panel a{padding:9px 7px;border-radius:11px;font-size:.94rem}
+  .hero-inner{min-height:auto;padding:12px 0 24px}
+  .hero-logo-wrap{width:min(48vw,240px);margin:0 auto 0}
+  .hero h1{font-size:clamp(2.05rem,9.4vw,2.8rem);line-height:1.08;margin:0 0 14px}
+  .hero p{font-size:1rem;line-height:1.68;max-width:94%;margin-bottom:18px}
+  .btns{gap:8px;padding:0 2px}
+  .btn{min-height:52px;padding:7px 7px;font-size:.94rem}
+  .btn:nth-child(3){font-size:.86rem}
+  section{padding:50px 0}
+  .head{margin-bottom:23px}
+  .head h2{font-size:2.12rem;line-height:1.18}
+  .head p{font-size:.98rem;line-height:1.68}
+  .about-panel h3,.greeting-panel h3{font-size:1.62rem;line-height:1.35}
+  .about-panel p,.greeting-panel p{font-size:.96rem;line-height:1.66}
+  .about-panel,.greeting-panel{padding:21px}
+  #contact .head h2{font-size:1.92rem;line-height:1.24;letter-spacing:-.045em;word-break:keep-all}
+  #contact .head p{font-size:.94rem;line-height:1.65}
+}
+@media(max-width:390px){
+  .mobile-menu-panel a{padding:8px 5px;font-size:.9rem}
+  .hero-logo-wrap{width:min(45vw,205px)}
+  .hero h1{font-size:1.98rem}
+  .hero p{font-size:.94rem;line-height:1.62}
+  .btn{min-height:49px;font-size:.88rem}
+  .btn:nth-child(3){font-size:.79rem}
+  #contact .head h2{font-size:1.72rem}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap nav"><a class="brand" href="#top"><img src="logo.png" alt="로고"><div>가수인생활 <span>엔터테인먼트</span></div></a><nav class="menu" aria-label="주요 메뉴"><a href="#about">회사소개</a><a href="#business">사업분야</a><a href="#partners">함께하는 단체</a><a href="#news">뉴스</a><a href="#notice">공지</a><a href="#schedule">일정</a><a href="#projects">실적</a><div class="more-menu"><button type="button" class="more-menu-button" aria-expanded="false">더보기 ▾</button><div class="more-menu-list"><a href="#resources">자료실</a><a href="#youtube">영상센터</a><a href="#gallery">갤러리</a></div></div><a href="#contact">문의</a></nav><button type="button" class="mobile-menu-toggle" aria-label="모바일 메뉴 열기" aria-expanded="false"><span></span><span></span><span></span></button></div><div class="mobile-menu-panel" aria-hidden="true"><nav aria-label="모바일 주요 메뉴"><a href="#about">회사소개</a><a href="#business">사업분야</a><a href="#partners">함께하는 단체</a><a href="#news">뉴스</a><a href="#notice">공지</a><a href="#schedule">일정</a><a href="#projects">실적</a><a href="#resources">자료실</a><a href="#youtube">영상센터</a><a href="#gallery">갤러리</a><a href="#contact">문의</a></nav></div></header>
+<main id="top">
+<section class="hero"><div class="wrap hero-inner"><div class="hero-logo-wrap"><img class="hero-logo" src="hero-logo.png" alt="가수인생활 엔터테인먼트 메인 로고"></div><h1>무대와 사람을 잇는<br>문화예술 플랫폼</h1><p>공연을 통해 지역을 살리고, 예술을 통해 사람을 연결합니다.</p><div class="btns"><a class="btn primary" href="#contact">공연·행사 문의</a><a class="btn" href="https://www.youtube.com/@TV-fy1wy" target="_blank">나가수TV</a><a class="btn" href="https://www.youtube.com/channel/UC-2z5bBNXcTkagGRwovnFNw" target="_blank">이명로의 힐링트로트</a><a class="btn" href="https://www.facebook.com/gasuinent" target="_blank">페이스북</a></div></div></section>
+<section id="about"><div class="wrap"><div class="head"><small>COMPANY &amp; SOCIAL VALUE</small><h2>회사소개</h2><p>가수인생활 엔터테인먼트는 공연과 문화예술의 성장을 지역사회와 함께 나누는 사회환원형 문화예술 기획사를 지향합니다.</p></div><div class="grid two about-grid"><div class="panel about-panel"><span class="tag">회사 비전</span><h3>문화예술로 받은 사랑을 사회에 돌려드립니다</h3><p>공연기획, 가수 매니지먼트, 지역축제, 문화콘텐츠 제작을 전문적으로 추진하며 장애인, 아동, 어르신, 문화소외계층과 일반 시민이 함께 누릴 수 있는 문화예술 프로그램을 마련합니다.</p><p>노래교실과 시민 참여형 교육, 복지시설 무료공연, 지역상생 행사를 통해 누구나 노래하고 즐길 수 있는 무대를 만들겠습니다.</p><p class="quote">회사가 안정적으로 성장하면 수익의 일부를 사회에 환원하는 것을 장기적인 목표로 삼고, 무료공연과 문화나눔 사업의 내용과 결과를 홈페이지 뉴스에 투명하게 공개하겠습니다.</p></div><div class="panel greeting-panel"><span class="tag">대표 인사말</span><h3>사람을 먼저 생각하는 엔터테인먼트</h3><p>안녕하십니까. 가수인생활 엔터테인먼트 대표 <strong>이명로</strong>입니다.</p><p>저희는 단순히 수익만을 추구하는 회사가 아니라, 공연과 노래를 통해 희망과 위로를 전하고 회사의 성장을 사회와 함께 나누는 따뜻한 문화예술 기업이 되고자 합니다.</p><p>장애인, 아동, 어르신과 일반 시민에게 노래를 배우고 무대에 참여할 기회를 드리며, 무료공연과 문화나눔 활동을 꾸준히 이어가겠습니다.</p><p class="representative"><strong>가수인생활 엔터테인먼트 대표 이명로</strong></p></div></div><div class="social-value-bar"><div><b>문화예술 교육</b><span>장애인·아동·어르신·일반 시민 노래교실</span></div><div><b>무료공연</b><span>복지시설과 문화소외계층을 위한 문화나눔</span></div><div><b>지역상생</b><span>전통시장과 소상공인이 함께 성장하는 공연</span></div><div><b>투명한 공개</b><span>행사와 사회환원 활동을 뉴스에서 기록</span></div></div></div></section>
+<section id="business"><div class="wrap"><div class="head"><small>BUSINESS</small><h2>주요 사업분야</h2><p>전문적인 엔터테인먼트 사업과 문화복지·사회환원 활동을 함께 추진합니다.</p></div><div class="grid three business-grid"><div class="card"><div class="num">01</div><h3>공연기획</h3><p>지역축제, 기념행사, 문화공연과 시민 참여형 무대를 기획·운영합니다.</p></div><div class="card"><div class="num">02</div><h3>문화예술교육</h3><p>장애인, 아동, 어르신과 일반 시민을 위한 노래교실과 참여 프로그램을 운영합니다.</p></div><div class="card"><div class="num">03</div><h3>가수 매니지먼트</h3><p>가수 발굴과 육성, 출연 협의, 무대 구성과 활동 지원을 추진합니다.</p></div><div class="card"><div class="num">04</div><h3>지역상생 프로젝트</h3><p>전통시장과 소상공인의 활력을 높이는 공연과 상생 프로그램을 만듭니다.</p></div><div class="card"><div class="num">05</div><h3>무료·봉사공연</h3><p>복지시설과 문화소외계층을 찾아가 음악으로 희망과 즐거움을 전합니다.</p></div><div class="card"><div class="num">06</div><h3>콘텐츠·사회환원</h3><p>공연영상과 음원 콘텐츠를 제작하고, 성장의 결실을 문화나눔으로 환원합니다.</p></div></div></div></section>
+<section id="partners"><div class="wrap"><div class="head"><small>PARTNERS</small><h2>함께하는 단체</h2><p>각 단체는 운영 형태가 다르며 문화예술사업을 위해 상호 협력합니다.</p></div><div class="grid three"><div class="org"><h3>한국가수인생활협회</h3><p>고유번호증을 보유한 비영리단체로 문화예술인의 활동 지원과 지역 문화예술 발전을 위해 활동합니다.</p></div><div class="org"><h3>나가수공연단</h3><p>지역축제, 문화행사, 전통시장과 복지시설 등 다양한 현장에서 공연을 펼칩니다.</p></div><div class="org"><h3>나가수봉사단</h3><p>재능기부 공연과 문화예술 봉사활동으로 지역사회에 희망과 나눔을 전합니다.</p></div></div></div></section>
+
+<section id="news">
+  <div class="wrap">
+    <div class="head">
+      <small>OFFICIAL NEWS CHANNEL</small>
+      <h2>가수인생활 공식 뉴스</h2>
+      <p>무료공연, 봉사활동, 노래교실, 사회환원과 행사 소식을 매일 기록하고 투명하게 공개합니다.</p>
+    </div>
+
+    <div class="news-tabs" role="tablist" aria-label="뉴스 분류">
+      <button type="button" class="news-tab active" data-filter="all">전체</button>
+      <button type="button" class="news-tab" data-filter="행사안내">행사안내</button>
+      <button type="button" class="news-tab" data-filter="무료공연">무료공연</button>
+      <button type="button" class="news-tab" data-filter="봉사활동">봉사활동</button>
+      <button type="button" class="news-tab" data-filter="노래교실">노래교실</button>
+      <button type="button" class="news-tab" data-filter="사회환원">사회환원</button>
+      <button type="button" class="news-tab" data-filter="보도자료">보도자료</button>
+    </div>
+
+    <div class="news-board">
+      <article class="news-card featured" data-category="사회환원">
+        <span class="tag">사회환원</span>
+        <div class="news-meta"><span>운영 원칙</span><span class="news-status">상시 공개</span></div>
+        <h3>문화예술로 성장하고 사회와 나누겠습니다</h3>
+        <p class="news-summary">무료공연, 문화예술교육과 사회환원 활동을 지속적으로 기록하고 공개하는 운영 원칙을 안내합니다.</p>
+        <button type="button" class="news-open"
+          data-title="문화예술로 성장하고 사회와 나누겠습니다"
+          data-category="사회환원"
+          data-body="가수인생활 엔터테인먼트는 전문적인 공연기획과 가수 매니지먼트 사업을 통해 성장하면서 그 결실을 지역사회와 함께 나누는 회사를 지향합니다.|장애인, 아동, 어르신, 문화소외계층과 일반 시민을 위한 노래교실, 무료공연, 문화나눔 행사를 꾸준히 추진하겠습니다.|회사가 안정적으로 성장하면 수익의 일부를 사회에 환원하는 것을 장기적인 목표로 삼고, 구체적인 행사와 나눔 활동의 내용과 결과를 홈페이지 뉴스에 투명하게 공개하겠습니다.">
+          기사 자세히 보기
+        </button>
+      </article>
+
+      <article class="news-card featured" data-category="행사안내">
+        <span class="tag">행사안내</span>
+        <div class="news-meta"><span>일정 협의 중</span><span class="news-status">추진 예정</span></div>
+        <h3>전통시장 활성화와 지역상생을 위한 희망 음악회</h3>
+        <p class="news-summary">문화공연과 상생상품권을 연계하여 전통시장과 소상공인에게 실질적인 활력을 전하는 지역상생 프로젝트입니다.</p>
+        <button type="button" class="news-open"
+          data-title="전통시장 활성화와 지역상생을 위한 희망 음악회"
+          data-category="행사안내"
+          data-body="한국가수인생활협회와 나가수공연단·봉사단은 전통시장 방문객 유입과 소상공인 매출 증대를 위해 희망 음악회를 추진합니다.|공연과 함께 시장 전용 상생상품권을 배포하여 지역 안에서 소비가 순환하도록 돕고, 상인과 주민이 함께 참여하는 문화축제를 만들어갑니다.|행사 일정과 장소가 확정되면 홈페이지 공지와 뉴스에서 안내합니다.">
+          기사 자세히 보기
+        </button>
+      </article>
+
+      <article class="news-card" data-category="무료공연">
+        <span class="tag">무료공연</span>
+        <div class="news-meta"><span>의성 노인복지관</span><span class="news-status">행사 완료</span></div>
+        <h3>의성 노인복지관 무료 문화공연</h3>
+        <p class="news-summary">어르신과 지역주민에게 음악으로 위로와 즐거움을 전한 문화나눔 공연입니다.</p>
+        <button type="button" class="news-open"
+          data-title="의성 노인복지관 무료 문화공연"
+          data-category="무료공연"
+          data-body="나가수봉사단과 공연단은 의성 노인복지관을 찾아 무료 문화공연을 진행했습니다.|트로트와 대중가요를 함께 부르며 어르신들과 따뜻한 시간을 나누었고, 지역 문화복지 향상을 위한 지속적인 재능기부 활동을 약속했습니다.|관련 공연 사진과 영상은 갤러리와 나가수TV를 통해 순차적으로 소개할 예정입니다.">
+          기사 자세히 보기
+        </button>
+      </article>
+
+      <article class="news-card" data-category="보도자료">
+        <span class="tag">보도자료</span>
+        <div class="news-meta"><span>대구 동구 공항시장</span><span class="news-status">행사 완료</span></div>
+        <h3>공항시장 전통시장 활성화 무료공연</h3>
+        <p class="news-summary">공연 출연료와 기부금을 상생상품권으로 환원해 시장 안에서 사용할 수 있도록 지원한 행사입니다.</p>
+        <button type="button" class="news-open"
+          data-title="공항시장 전통시장 활성화 무료공연"
+          data-category="보도자료"
+          data-body="대구 동구 공항시장에서 전통시장 살리기운동의 하나로 무료공연을 진행했습니다.|협회는 출연료와 기부금을 시장 전용 상생상품권으로 만들어 지역주민에게 배포하고, 일정 기간 안에 시장에서 사용하도록 하여 소상공인 매출 증대에 도움이 되도록 했습니다.|앞으로도 공연과 지역경제가 함께 살아나는 상생형 문화사업을 확대해 나갈 계획입니다.">
+          기사 자세히 보기
+        </button>
+      </article>
+
+      <article class="news-card" data-category="봉사활동">
+        <span class="tag">봉사활동</span>
+        <div class="news-meta"><span>협회 공식 안내</span><span class="news-status">상시 안내</span></div>
+        <h3>한국가수인생활협회 활동 안내</h3>
+        <p class="news-summary">고유번호증을 보유한 비영리단체로서 문화예술 활동과 지역사회 공익사업을 추진합니다.</p>
+        <button type="button" class="news-open"
+          data-title="한국가수인생활협회 활동 안내"
+          data-category="봉사활동"
+          data-body="한국가수인생활협회는 생활가수와 지역 예술인의 활동 지원, 복지시설 위문공연, 전통시장 활성화 공연, 지역축제 참여 등을 추진합니다.|가수인생활 엔터테인먼트와는 운영 형태를 구분하면서도 문화예술사업과 공익공연 분야에서 상호 협력합니다.|회원 모집, 정기총회, 교육, 공모사업 관련 내용은 공지사항에서 별도로 안내합니다.">
+          기사 자세히 보기
+        </button>
+      </article>
+
+      <article class="news-card" data-category="공연소식">
+        <span class="tag">공연소식</span>
+        <div class="news-meta"><span>수성못 일원</span><span class="news-status">추진 준비</span></div>
+        <h3>수성못 나가수 가요제 추진 소식</h3>
+        <p class="news-summary">시민 참여형 생활문화 축제로 발전시키기 위한 가요제 사업을 준비하고 있습니다.</p>
+        <button type="button" class="news-open"
+          data-title="수성못 나가수 가요제 추진 소식"
+          data-category="공연소식"
+          data-body="수성못 나가수 가요제는 시민과 생활예술인이 함께하는 참여형 문화행사를 목표로 준비 중입니다.|예선과 본선, 초청공연, 시민 참여 프로그램을 구성하고 안전한 행사 운영과 지역 문화관광 활성화를 함께 추진합니다.|세부 일정, 참가신청, 장소와 운영계획은 확정 후 공지사항과 행사일정에서 안내합니다.">
+          기사 자세히 보기
+        </button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div id="newsModal" class="news-modal" aria-hidden="true">
+  <div class="news-modal-backdrop" data-close-news></div>
+  <div class="news-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="newsModalTitle">
+    <button type="button" class="news-modal-close" data-close-news aria-label="닫기">×</button>
+    <span id="newsModalCategory" class="tag"></span>
+    <h3 id="newsModalTitle"></h3>
+    <div id="newsModalBody" class="news-modal-body"></div>
+  </div>
+</div>
+
+
+
+<section id="notice">
+  <div class="wrap">
+    <div class="head">
+      <small>NOTICE</small>
+      <h2>공지사항</h2>
+      <p>가수인생활 엔터테인먼트와 한국가수인생활협회 공지를 구분해 확인할 수 있습니다.</p>
+    </div>
+
+    <div class="notice-columns">
+      <div class="notice-group">
+        <h3>가수인생활 엔터테인먼트 공지</h3>
+
+        <details class="notice-details">
+          <summary><span class="notice-title"><span class="notice-important">필독</span>공연·행사 기획 및 협력 문의 안내</span><span class="notice-meta"><b>엔터테인먼트</b><span>2026.07.14</span></span></summary>
+          <div class="notice-content">
+            <p>가수인생활 엔터테인먼트는 지역축제, 기업행사, 문화공연, 전통시장 행사, 가수 및 출연진 섭외 관련 문의를 받고 있습니다.</p>
+            <p>행사명, 일정, 장소, 예상 관객 수와 요청사항을 정리하여 홈페이지 문의 메뉴에서 접수해 주세요.</p>
+            <p><strong>대표 이명로 · 010-5070-3175 · myung4002@naver.com</strong></p>
+          </div>
+        </details>
+
+        <details class="notice-details">
+          <summary><span class="notice-title">문화예술 협력기관 및 사업 파트너 모집</span><span class="notice-meta"><b>엔터테인먼트</b><span>상시 모집</span></span></summary>
+          <div class="notice-content">
+            <p>공연기획, 문화예술행사, 콘텐츠 제작과 지역상생 프로젝트를 함께 추진할 기관과 협력 파트너를 찾습니다.</p>
+            <p>업무협약, 공동기획, 행사운영, 무대·음향 협력 등 다양한 형태로 협의할 수 있습니다.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="notice-group">
+        <h3>한국가수인생활협회 공지</h3>
+
+        <details class="notice-details">
+          <summary><span class="notice-title"><span class="notice-important">중요</span>협회 회원 및 문화예술 활동 안내</span><span class="notice-meta"><b>한국가수인생활협회</b><span>상시 안내</span></span></summary>
+          <div class="notice-content">
+            <p>한국가수인생활협회는 고유번호증을 보유한 비영리단체로 생활가수와 지역 예술인의 활동 지원, 문화공연과 공익사업을 추진합니다.</p>
+            <p>회원 관련 안내, 정기총회, 교육과 공모사업 소식은 협회 공지로 구분해 게시합니다.</p>
+          </div>
+        </details>
+
+        <details class="notice-details">
+          <summary><span class="notice-title">나가수공연단·봉사단 공익공연 참여 안내</span><span class="notice-meta"><b>공연단·봉사단</b><span>상시 접수</span></span></summary>
+          <div class="notice-content">
+            <p>나가수공연단과 나가수봉사단은 복지시설 위문공연, 전통시장 활성화 공연과 지역사회 문화나눔 활동을 추진합니다.</p>
+            <p>공익공연 협력이나 재능봉사 참여는 홈페이지 문의 메뉴를 이용해 주세요.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+</div>
+
+
+
+
+
+<section id="schedule">
+  <div class="wrap">
+    <div class="head">
+      <small>SCHEDULE</small>
+      <h2>행사일정</h2>
+      <p>분류별 행사일정과 날짜·시간·장소 등 세부내용을 확인할 수 있습니다.</p>
+    </div>
+
+
+    <div class="schedule-filter">
+      <button type="button" class="schedule-filter-btn active" data-target="schedule-all">전체</button>
+      <button type="button" class="schedule-filter-btn" data-target="schedule-ent">엔터테인먼트</button>
+      <button type="button" class="schedule-filter-btn" data-target="schedule-assoc">협회</button>
+      <button type="button" class="schedule-filter-btn" data-target="schedule-vol">봉사·공익</button>
+    </div>
+
+    <div class="schedule-panels">
+      <div id="schedule-all" class="schedule-panel active"></div>
+      <div id="schedule-ent" class="schedule-panel"></div>
+      <div id="schedule-assoc" class="schedule-panel"></div>
+      <div id="schedule-vol" class="schedule-panel"></div>
+    </div>
+
+    <p class="schedule-note">※ 일정은 행사 확정 상황에 따라 변경될 수 있습니다.</p>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="head">
+      <small>PROJECTS</small>
+      <h2>주요 실적 및 프로젝트</h2>
+      <p>각 항목의 「세부보기」를 누르면 해당 내용만 펼쳐집니다.</p>
+    </div>
+
+    <div class="project-grid">
+      <article class="project-card">
+        <span class="tag">가요제</span>
+        <h3>수성못 나가수 가요제</h3>
+        <div class="project-meta"><span>수성못 일원</span><span class="project-status">추진 준비</span></div>
+        <p>시민 참여형 생활문화 축제로 발전시키기 위한 프로젝트입니다.</p>
+        <button type="button" class="project-toggle" data-project="project-1">세부보기</button>
+        <div id="project-1" class="project-body-box">
+          <p><strong>사업명</strong><span>수성못 나가수 가요제</span></p>
+          <p><strong>추진 목적</strong><span>생활가수와 시민이 함께하는 지역 대표 문화행사 조성</span></p>
+          <p><strong>주요 내용</strong><span>가요제 예선·본선, 초청공연, 시민 참여 프로그램</span></p>
+          <p><strong>추진 주체</strong><span>한국가수인생활협회 / 나가수공연단</span></p>
+          <p><strong>진행 상태</strong><span>사업계획 및 관련 기관 협의 단계</span></p>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <span class="tag">전통시장</span>
+        <h3>희망 음악회</h3>
+        <div class="project-meta"><span>전통시장</span><span class="project-status">추진 협의</span></div>
+        <p>전통시장 활성화와 소상공인 상생을 위한 문화공연 프로젝트입니다.</p>
+        <button type="button" class="project-toggle" data-project="project-2">세부보기</button>
+        <div id="project-2" class="project-body-box">
+          <p><strong>사업명</strong><span>전통시장 활성화 희망 음악회</span></p>
+          <p><strong>추진 목적</strong><span>시장 방문객 유입, 체류시간 증가, 소상공인 매출 증대</span></p>
+          <p><strong>주요 내용</strong><span>무료 문화공연, 상생상품권 운영, 상인회와 지역주민 참여</span></p>
+          <p><strong>추진 주체</strong><span>한국가수인생활협회 / 나가수공연단·봉사단</span></p>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <span class="tag">지역상생</span>
+        <h3>공항시장 상생공연</h3>
+        <div class="project-meta"><span>대구 동구 공항시장</span><span class="project-status">완료 사업</span></div>
+        <p>상생상품권과 문화공연을 연계한 전통시장 활성화 사례입니다.</p>
+        <button type="button" class="project-toggle" data-project="project-3">세부보기</button>
+        <div id="project-3" class="project-body-box">
+          <p><strong>행사명</strong><span>공항시장 전통시장 살리기 무료공연</span></p>
+          <p><strong>장소</strong><span>대구 동구 공항시장</span></p>
+          <p><strong>주요 내용</strong><span>공연 출연료와 기부금을 상생상품권으로 환원하여 시장 내 사용 유도</span></p>
+          <p><strong>기대 효과</strong><span>지역주민 참여 확대와 소상공인 매출 증대</span></p>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <span class="tag">문화복지</span>
+        <h3>의성 노인복지관 공연</h3>
+        <div class="project-meta"><span>의성 노인복지관</span><span class="project-status">완료 사업</span></div>
+        <p>어르신과 지역주민을 위한 무료 문화나눔 공연입니다.</p>
+        <button type="button" class="project-toggle" data-project="project-4">세부보기</button>
+        <div id="project-4" class="project-body-box">
+          <p><strong>행사명</strong><span>의성 노인복지관 무료 문화공연</span></p>
+          <p><strong>대상</strong><span>복지관 이용 어르신과 지역주민</span></p>
+          <p><strong>주요 내용</strong><span>트로트와 대중가요 중심의 문화공연 및 소통 프로그램</span></p>
+          <p><strong>추진 주체</strong><span>나가수공연단·봉사단</span></p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<section id="resources"><div class="wrap"><div class="head"><small>RESOURCES</small><h2>자료실</h2><p>사업·공연 제안서와 각종 신청서, 보도자료를 분야별로 제공합니다.</p></div><div class="grid three"><div class="resource"><h3>사업·공연 제안서</h3><p>공연기획 및 문화예술사업 제안자료를 순차적으로 등록합니다.</p><span class="resource-status">자료 준비 중</span></div><div class="resource"><h3>신청서·양식</h3><p>공연 신청서, 협력 신청서와 필요한 서식을 제공합니다.</p><span class="resource-status">양식 준비 중</span></div><div class="resource"><h3>보도자료·포스터</h3><p>행사 보도자료와 홍보 포스터를 공개합니다.</p><span class="resource-status">게시 준비 중</span></div></div></div></section>
+<section id="youtube"><div class="wrap"><div class="head"><small>VIDEO CENTER</small><h2>영상센터</h2><p>공식 유튜브 채널에서 공연과 창작 음악을 만나보세요.</p></div><div class="grid two"><div class="channel"><h3>나가수TV</h3><p>공연, 행사, 문화예술 활동을 전합니다.</p><a class="btn primary" href="https://www.youtube.com/@TV-fy1wy" target="_blank">채널 바로가기</a></div><div class="channel"><h3>이명로의 힐링트로트</h3><p>감성 트로트, 힐링음악, 창작곡을 소개합니다.</p><a class="btn primary" href="https://www.youtube.com/channel/UC-2z5bBNXcTkagGRwovnFNw" target="_blank">채널 바로가기</a></div></div></div></section>
+<section id="gallery"><div class="wrap"><div class="head"><small>GALLERY</small><h2>갤러리</h2><p>공연, 행사, 봉사활동의 현장 모습을 분야별로 기록해 공개합니다.</p></div><div class="grid gallery"><div class="photo">공연 현장 사진<br><small>사진 준비 중</small></div><div class="photo">행사·축제 사진<br><small>사진 준비 중</small></div><div class="photo">봉사·문화나눔 사진<br><small>사진 준비 중</small></div></div></div></section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="head">
+      <small>CONTACT</small>
+      <h2>공연 신청·후원·협력 문의</h2>
+      <p>아래 내용을 입력한 뒤 「문의 내용 작성하기」를 누르면 이메일 작성창이 열립니다.</p>
+    </div>
+
+    <div class="grid contact contact-top">
+      <div class="panel">
+        <h3>공연 신청</h3>
+        <p>공연, 축제, 기업행사, 전통시장 행사, 복지시설 공연 의뢰를 받습니다.</p>
+      </div>
+      <div class="panel">
+        <h3>후원·협력</h3>
+        <p>후원기관, 협력기관, 업무협약, 협찬 및 재능봉사 참여를 안내합니다.</p>
+      </div>
+      <div class="panel">
+        <h3>연락처</h3>
+        <p><strong>대표: 이명로</strong></p>
+        <p>전화: <a href="tel:01050703175">010-5070-3175</a></p>
+        <p>이메일: <a href="mailto:myung4002@naver.com">myung4002@naver.com</a></p>
+      </div>
+    </div>
+
+    <div class="inquiry-wrap">
+      <form id="inquiryForm" class="inquiry-form">
+        <div class="form-row two">
+          <label>이름 또는 단체명<span class="required-mark">*</span>
+            <input type="text" id="inqName" required placeholder="예: 홍길동 / ○○상인회">
+          </label>
+          <label>연락처<span class="required-mark">*</span>
+            <input type="tel" id="inqPhone" required placeholder="예: 010-1234-5678">
+          </label>
+        </div>
+
+        <div class="form-row two">
+          <label>문의 구분<span class="required-mark">*</span>
+            <select id="inqType" required>
+              <option value="">선택하세요</option>
+              <option>공연 신청</option>
+              <option>행사 기획</option>
+              <option>가수 섭외</option>
+              <option>후원·협력</option>
+              <option>봉사공연</option>
+              <option>기타 문의</option>
+            </select>
+          </label>
+          <label>행사명
+            <input type="text" id="inqEvent" placeholder="예: 전통시장 희망음악회">
+          </label>
+        </div>
+
+        <div class="form-row three">
+          <label>행사 날짜
+            <input type="date" id="inqDate">
+          </label>
+          <label>행사 장소
+            <input type="text" id="inqPlace" placeholder="예: 대구 ○○시장">
+          </label>
+          <label>예상 관객 수
+            <input type="number" id="inqAudience" min="0" placeholder="예: 300">
+          </label>
+        </div>
+
+        <label>요청사항<span class="required-mark">*</span>
+          <textarea id="inqMessage" rows="6" required placeholder="행사 내용, 공연 시간, 필요한 출연진, 예산 또는 요청사항을 적어주세요."></textarea>
+        </label>
+
+        <div class="privacy-check">
+          <label><input type="checkbox" id="inqAgree" required> 문의 회신을 위한 개인정보 수집·이용에 동의합니다.<span class="required-mark">*</span></label><div class="privacy-box">수집 항목: 이름 또는 단체명, 연락처, 문의 내용<br>이용 목적: 공연·후원·협력 문의 확인 및 회신<br>보유 기간: 문의 처리 완료 후 필요한 기간 동안 보관하며, 목적 달성 후 안전하게 삭제합니다.</div>
+        </div>
+
+        <div class="form-buttons">
+          <button type="submit" class="btn primary">문의 내용 작성하기</button>
+          <a class="btn" href="tel:01050703175">전화 바로 걸기</a>
+        </div>
+        <p class="form-note">※ <span class="required-mark">*</span> 표시는 필수 입력 항목입니다. 버튼을 누르면 사용 중인 이메일 프로그램이 열리고 작성한 내용이 자동으로 입력됩니다.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer><div class="wrap"><img src="logo.png" alt="로고"><div>© 2026 가수인생활 엔터테인먼트. All rights reserved.</div></div></footer>
+
+<script>
+(function () {
+  const validPages = new Set([
+    'home', 'about', 'business', 'partners', 'news',
+    'notice', 'schedule', 'projects', 'resources',
+    'youtube', 'gallery', 'contact'
+  ]);
+
+  function getPageName() {
+    const hash = window.location.hash.replace('#', '').trim();
+    if (!hash || hash === 'top') return 'home';
+    return validPages.has(hash) ? hash : 'home';
+  }
+
+  function showOnly(pageName) {
+    document.body.classList.add('page-mode');
+
+    document.querySelectorAll('main > section').forEach(function (section) {
+      section.classList.remove('page-active');
+    });
+
+    let target;
+    if (pageName === 'home') {
+      target = document.querySelector('main > section.hero');
+    } else {
+      target = document.getElementById(pageName);
+    }
+
+    if (!target) {
+      target = document.querySelector('main > section.hero');
+    }
+
+    target.classList.add('page-active');
+    window.scrollTo(0, 0);
+  }
+
+  function moveTo(pageName) {
+    const hash = pageName === 'home' ? '#top' : '#' + pageName;
+    if (window.location.hash !== hash) {
+      history.pushState({ page: pageName }, '', hash);
+    }
+    showOnly(pageName);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('main > section').forEach(function (section) {
+      section.classList.remove('page-active');
+    });
+    showOnly(getPageName());
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        const raw = link.getAttribute('href').replace('#', '').trim();
+        const pageName = (!raw || raw === 'top') ? 'home' : raw;
+
+        if (validPages.has(pageName)) {
+          event.preventDefault();
+          moveTo(pageName);
+        }
+      });
+    });
+  });
+
+  window.addEventListener('hashchange', function () {
+    showOnly(getPageName());
+  });
+
+  window.addEventListener('popstate', function () {
+    showOnly(getPageName());
+  });
+})();
+</script>
+<!-- PAGE-MODE-END -->
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  const more=document.querySelector('.more-menu');
+  const button=document.querySelector('.more-menu-button');
+  if(more&&button){button.addEventListener('click',function(e){e.stopPropagation();const open=more.classList.toggle('open');button.setAttribute('aria-expanded',String(open));});document.addEventListener('click',function(){more.classList.remove('open');button.setAttribute('aria-expanded','false');});}
+  function activeMenu(){
+    const hash=location.hash||'#top';
+    document.querySelectorAll('.menu a, .mobile-menu-panel a').forEach(function(a){
+      a.classList.toggle('active',a.getAttribute('href')===hash);
+    });
+  }
+  activeMenu();
+  window.addEventListener('hashchange',activeMenu);
+  window.addEventListener('popstate',activeMenu);
+});
+</script>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('inquiryForm');
+  if (!form) return;
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const name = document.getElementById('inqName').value.trim();
+    const phone = document.getElementById('inqPhone').value.trim();
+    const type = document.getElementById('inqType').value;
+    const eventName = document.getElementById('inqEvent').value.trim();
+    const date = document.getElementById('inqDate').value;
+    const place = document.getElementById('inqPlace').value.trim();
+    const audience = document.getElementById('inqAudience').value;
+    const message = document.getElementById('inqMessage').value.trim();
+    const agree = document.getElementById('inqAgree').checked;
+
+    if (!name || !phone || !type || !message || !agree) {
+      alert('별표(*)가 표시된 필수 항목과 개인정보 동의를 확인해 주세요.');
+      return;
+    }
+
+    if (!/^[0-9+()\-\s]{8,20}$/.test(phone)) {
+      alert('연락처를 숫자와 하이픈(-) 형식으로 정확히 입력해 주세요.');
+      document.getElementById('inqPhone').focus();
+      return;
+    }
+
+    const subject = '[홈페이지 문의] ' + type + ' - ' + name;
+    const body = [
+      '가수인생활 엔터테인먼트 홈페이지 문의',
+      '',
+      '이름/단체명: ' + name,
+      '연락처: ' + phone,
+      '문의 구분: ' + type,
+      '행사명: ' + (eventName || '미입력'),
+      '행사 날짜: ' + (date || '미입력'),
+      '행사 장소: ' + (place || '미입력'),
+      '예상 관객 수: ' + (audience || '미입력'),
+      '',
+      '요청사항:',
+      message
+    ].join('\n');
+
+    window.location.href =
+      'mailto:myung4002@naver.com?subject=' +
+      encodeURIComponent(subject) +
+      '&body=' +
+      encodeURIComponent(body);
+  });
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const tabs = document.querySelectorAll('.news-tab');
+  const cards = document.querySelectorAll('.news-card');
+  const modal = document.getElementById('newsModal');
+  const modalTitle = document.getElementById('newsModalTitle');
+  const modalCategory = document.getElementById('newsModalCategory');
+  const modalBody = document.getElementById('newsModalBody');
+
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(t){ t.classList.remove('active'); });
+      tab.classList.add('active');
+      const filter = tab.dataset.filter;
+
+      cards.forEach(function(card){
+        const show = filter === 'all' || card.dataset.category === filter;
+        card.classList.toggle('is-hidden', !show);
+      });
+    });
+  });
+
+  document.querySelectorAll('.news-open').forEach(function(button){
+    button.addEventListener('click', function(){
+      modalTitle.textContent = button.dataset.title || '';
+      modalCategory.textContent = button.dataset.category || '';
+      modalBody.innerHTML = '';
+
+      (button.dataset.body || '').split('|').forEach(function(paragraph){
+        const p = document.createElement('p');
+        p.textContent = paragraph;
+        modalBody.appendChild(p);
+      });
+
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  document.querySelectorAll('[data-close-news]').forEach(function(button){
+    button.addEventListener('click', function(){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    });
+  });
+
+  document.addEventListener('keydown', function(event){
+    if(event.key === 'Escape' && modal.classList.contains('open')){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+  });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+window.addEventListener('error', function(event){
+  console.log('페이지 기능 오류:', event.message);
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const STORAGE_KEY = 'gasuinent_schedule_v1';
+  const defaults = [
+    {id:'ent-1',category:'ent',title:'공연·행사 기획 일정',date:'',start:'',end:'',place:'확정 후 등록',organizer:'가수인생활 엔터테인먼트 또는 협력기관',description:'지역축제, 기업행사, 문화공연, 가수 섭외 등 행사 성격에 맞춰 기획합니다.'},
+    {id:'assoc-1',category:'assoc',title:'수성못 나가수 가요제',date:'',start:'',end:'',place:'수성못 일원 · 최종 장소 확정 후 등록',organizer:'한국가수인생활협회 / 관련 단체 협의',description:'시민과 생활예술인이 함께 참여하는 가요제와 문화공연입니다.'},
+    {id:'vol-1',category:'vol',title:'문화나눔 및 공익공연',date:'',start:'',end:'',place:'복지시설, 전통시장 및 지역사회 행사장',organizer:'한국가수인생활협회 / 나가수공연단·봉사단',description:'어르신과 지역주민을 위한 문화공연 및 재능봉사 활동입니다.'}
+  ];
+  const categoryNames = {ent:'엔터테인먼트', assoc:'협회', vol:'봉사·공익'};
+  function readSchedules(){
+    let saved=[];
+    try { saved=JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { saved=[]; }
+    return defaults.map(function(base){
+      const found=saved.find(function(item){return item && item.id===base.id;});
+      return Object.assign({}, base, found || {});
+    });
+  }
+  function safeText(value){return String(value==null?'':value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');}
+  function dateLabel(date){if(!date)return '일정 협의 중';const p=date.split('-');return p.length===3?p[0]+'. '+p[1]+'. '+p[2]+'.':date;}
+  function timeLabel(item){if(item.start&&item.end)return item.start+' ~ '+item.end;if(item.start)return item.start+' 시작';return '시간 협의 중';}
+  function cardHtml(item){const confirmed=Boolean(item.date);const state=confirmed?'확정':'협의 중';return '<article class="schedule-card" data-category="'+safeText(item.category)+'"><div class="schedule-card-head"><div class="schedule-card-date">'+safeText(dateLabel(item.date))+'<span>'+safeText(timeLabel(item))+'</span></div><div class="schedule-card-copy"><span class="schedule-tag">'+safeText(categoryNames[item.category]||'일정')+'</span><span class="schedule-state '+(confirmed?'confirmed':'')+'">'+state+'</span><h3>'+safeText(item.title)+'</h3><p>'+safeText(item.place||'장소 협의 중')+'</p></div><div class="schedule-card-actions"><button type="button" class="schedule-small-btn view-schedule">세부보기</button></div></div><div class="schedule-detail"><p><strong>진행 상태</strong><span>'+state+'</span></p><p><strong>행사명</strong><span>'+safeText(item.title)+'</span></p><p><strong>날짜·시간</strong><span>'+safeText(dateLabel(item.date))+' / '+safeText(timeLabel(item))+'</span></p><p><strong>장소</strong><span>'+safeText(item.place||'장소 협의 중')+'</span></p><p><strong>주최·주관</strong><span>'+safeText(item.organizer||'협의 중')+'</span></p><p><strong>행사 내용</strong><span>'+safeText(item.description||'내용 준비 중')+'</span></p></div></article>';}
+  function render(){const list=readSchedules();const map={all:list,ent:list.filter(x=>x.category==='ent'),assoc:list.filter(x=>x.category==='assoc'),vol:list.filter(x=>x.category==='vol')};Object.keys(map).forEach(function(k){const el=document.getElementById('schedule-'+k);if(el)el.innerHTML=map[k].map(cardHtml).join('');});}
+  render();
+  document.querySelectorAll('.project-toggle').forEach(function(btn){btn.addEventListener('click',function(){const box=document.getElementById(btn.dataset.project);if(!box)return;const open=box.classList.contains('open');document.querySelectorAll('.project-body-box.open').forEach(x=>x.classList.remove('open'));document.querySelectorAll('.project-toggle').forEach(x=>x.textContent='세부보기');if(!open){box.classList.add('open');btn.textContent='접기';}});});
+  document.querySelectorAll('.schedule-filter-btn').forEach(function(btn){btn.addEventListener('click',function(){document.querySelectorAll('.schedule-filter-btn').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.schedule-panel').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const panel=document.getElementById(btn.dataset.target);if(panel)panel.classList.add('active');});});
+  document.addEventListener('click',function(e){const btn=e.target.closest('.view-schedule');if(!btn)return;const card=btn.closest('.schedule-card');const detail=card&&card.querySelector('.schedule-detail');if(!detail)return;const opening=!detail.classList.contains('open');card.parentElement.querySelectorAll('.schedule-detail.open').forEach(x=>x.classList.remove('open'));card.parentElement.querySelectorAll('.view-schedule').forEach(x=>x.textContent='세부보기');if(opening){detail.classList.add('open');btn.textContent='접기';}});
+});
+</script>
+
+
+<script id="v36-mobile-menu-script">
+document.addEventListener('DOMContentLoaded', function(){
+  const toggle=document.querySelector('.mobile-menu-toggle');
+  const panel=document.querySelector('.mobile-menu-panel');
+  if(!toggle||!panel)return;
+
+  function closeMenu(){
+    toggle.classList.remove('open');
+    toggle.setAttribute('aria-expanded','false');
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden','true');
+  }
+
+  toggle.addEventListener('click',function(event){
+    event.stopPropagation();
+    const opening=!panel.classList.contains('open');
+    toggle.classList.toggle('open',opening);
+    toggle.setAttribute('aria-expanded',String(opening));
+    panel.classList.toggle('open',opening);
+    panel.setAttribute('aria-hidden',String(!opening));
+  });
+
+  panel.addEventListener('click',function(event){event.stopPropagation();});
+  panel.querySelectorAll('a').forEach(function(link){link.addEventListener('click',closeMenu);});
+  document.addEventListener('click',function(){if(panel.classList.contains('open'))closeMenu();});
+  document.addEventListener('keydown',function(event){if(event.key==='Escape')closeMenu();});
+  window.addEventListener('resize',function(){if(window.innerWidth>980)closeMenu();});
+  window.addEventListener('hashchange',closeMenu);
+});
+</script>
+</body>
+</html>
