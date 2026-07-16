@@ -26,10 +26,10 @@
     .desktop-nav a{padding:10px 7px;border-radius:9px;color:var(--muted);font-size:14px;font-weight:850;white-space:nowrap}
     .desktop-nav a:hover,.desktop-nav a.active{background:rgba(224,179,84,.13);color:var(--gold2)}
     .menu-btn{display:none;width:58px;height:58px;border:1px solid var(--line);border-radius:18px;background:#141519;color:var(--gold2);font-size:30px;cursor:pointer;flex:0 0 auto}
-    .mobile-nav{display:none;position:fixed;inset:86px 0 0;background:rgba(0,0,0,.985);padding:22px;overflow:auto}
+    .mobile-nav{display:none;position:fixed;inset:86px 0 0;z-index:1000;background:rgba(0,0,0,.985);padding:22px;overflow-y:auto;overscroll-behavior:contain;border-top:1px solid var(--line);box-shadow:0 18px 40px rgba(0,0,0,.55)}
     .mobile-nav.open{display:block}
-    .mobile-nav a{display:block;max-width:620px;margin:0 auto 9px;padding:14px 18px;border:1px solid var(--line);border-radius:14px;font-size:19px;font-weight:800}
-    .mobile-nav a.active{background:var(--gold);color:#111;border-color:var(--gold)}
+    .mobile-nav a{display:block;max-width:620px;margin:0 auto 10px;padding:15px 18px;border:1px solid var(--line);border-radius:14px;background:#111217;color:var(--text);font-size:19px;font-weight:800}
+    .mobile-nav a:hover,.mobile-nav a.active{background:var(--gold);color:#111;border-color:var(--gold)}
     .hero{min-height:calc(100vh - 86px);display:grid;place-items:center;text-align:center;padding:26px 0 24px;position:relative;overflow:hidden;background:
       radial-gradient(circle at 50% 0%,rgba(255,195,63,.34),transparent 28%),
       radial-gradient(circle at 50% 78%,rgba(224,179,84,.16),transparent 38%),
