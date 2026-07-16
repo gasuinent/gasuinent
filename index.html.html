@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>가수인생활 엔터테인먼트</title>
+<meta name="description" content="가수인생활 엔터테인먼트 공식 홈페이지">
+<style>
+:root{
+  --bg:#080808;
+  --panel:#151515;
+  --panel2:#1b1b1b;
+  --gold:#e0b34f;
+  --gold2:#f2d487;
+  --text:#f6f2e8;
+  --muted:#c9c1b5;
+  --line:#35363c;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,"Noto Sans KR",sans-serif;line-height:1.7}
+a{color:inherit;text-decoration:none}
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(8,8,8,.95);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(8px)
+}
+.nav{max-width:1100px;margin:auto;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:clamp(18px,3vw,30px)}
+.brand img{width:58px;height:58px;border-radius:50%;object-fit:cover;background:#000}
+.brand b{color:var(--gold2)}
+.menu-btn{border:1px solid var(--line);background:#111;color:var(--gold2);font-size:28px;width:58px;height:58px;border-radius:18px;cursor:pointer}
+.menu{display:none;position:absolute;right:20px;top:84px;background:#151515;border:1px solid var(--line);border-radius:16px;min-width:220px;padding:10px;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.menu.open{display:block}
+.menu a{display:block;padding:12px 14px;border-radius:10px}
+.menu a:hover{background:#222;color:var(--gold2)}
+.hero{min-height:72vh;display:grid;place-items:center;text-align:center;padding:80px 22px;background:
+radial-gradient(circle at 50% 20%,rgba(224,179,79,.12),transparent 30%),
+linear-gradient(#080808,#080808)}
+.eyebrow{color:var(--gold);font-weight:900;letter-spacing:.16em;font-size:20px}
+h1{font-size:clamp(42px,7vw,78px);line-height:1.15;margin:16px 0 20px}
+.hero p{max-width:780px;margin:auto;color:var(--muted);font-size:clamp(19px,2.6vw,30px)}
+section{max-width:1100px;margin:auto;padding:74px 22px}
+.section-head{text-align:center;margin-bottom:36px}
+.section-head h2{font-size:clamp(38px,6vw,66px);margin:8px 0 12px}
+.section-head p{color:var(--muted);font-size:clamp(18px,2.5vw,26px)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{background:linear-gradient(145deg,#151515,#111);border:1px solid var(--line);border-radius:28px;padding:34px;min-height:220px}
+.card h3{font-size:clamp(25px,3.3vw,38px);margin:0 0 18px}
+.card p{color:var(--muted);font-size:18px}
+.tag{display:inline-block;padding:8px 14px;border:1px solid rgba(224,179,79,.35);border-radius:999px;color:var(--gold2);margin-bottom:18px;background:rgba(224,179,79,.08)}
+.btn{display:inline-block;margin-top:16px;padding:14px 22px;border-radius:999px;border:1px solid var(--gold);color:var(--gold2);font-weight:900}
+.notice-item{border:1px solid rgba(224,179,79,.35);border-radius:24px;padding:26px;margin:14px 0;background:#111218}
+.notice-title{font-size:26px;font-weight:900}
+.small{color:var(--muted)}
+details{margin-top:14px}
+summary{cursor:pointer;color:var(--gold2);font-weight:900}
+details p{margin-top:16px}
+.contact-box{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+footer{border-top:1px solid var(--line);text-align:center;padding:54px 20px;color:#aaa}
+footer img{width:140px;height:140px;object-fit:cover;border-radius:50%;display:block;margin:0 auto 20px}
+@media(max-width:780px){
+  .grid,.contact-box{grid-template-columns:1fr}
+  .brand{font-size:21px}
+  .brand img{width:48px;height:48px}
+  .nav{padding:14px 16px}
+  .menu-btn{width:54px;height:54px}
+  .hero{min-height:62vh;padding-top:50px}
+  section{padding:56px 22px}
+  .card{padding:28px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="brand" href="#home">
+      <img src="logo.png" alt="가수인생활 엔터테인먼트 로고">
+      <span>가수인생활 <b>엔터테인먼트</b></span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="메뉴">☰</button>
+    <nav class="menu" id="menu">
+      <a href="#about">회사소개</a>
+      <a href="#partners">함께하는 단체</a>
+      <a href="#notice">공지사항</a>
+      <a href="#schedule">행사일정</a>
+      <a href="#projects">주요 실적</a>
+      <a href="#video">영상센터</a>
+      <a href="#contact">문의</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div>
+    <div class="eyebrow">GAUSIN SAENGHWAL ENTERTAINMENT</div>
+    <h1>무대와 사람을 잇는<br>문화예술 동반자</h1>
+    <p>공연기획, 가수 매니지먼트, 무료공연, 문화예술교육과 지역상생을 함께 만들어갑니다.</p>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-head">
+    <div class="eyebrow">ABOUT</div>
+    <h2>문화예술로 성장하고<br>사회와 나누겠습니다</h2>
+    <p>전문적인 공연기획과 문화예술사업을 통해 성장하고, 수익의 일부를 사회에 환원하는 장기적인 목표를 지향합니다.</p>
+  </div>
+  <div class="card">
+    <h3>가수인생활 엔터테인먼트</h3>
+    <p>장애인, 아동, 어르신, 문화소외계층과 일반 시민을 위한 노래교실, 무료공연, 문화나눔 행사를 꾸준히 추진합니다.</p>
+  </div>
+</section>
+
+<section id="partners">
+  <div class="section-head">
+    <div class="eyebrow">PARTNERS</div>
+    <h2>함께하는 단체</h2>
+    <p>각 단체는 운영 형태가 다르며 문화예술사업을 위해 상호 협력합니다.</p>
+  </div>
+  <div class="grid">
+    <article class="card"><h3>한국가수인생활협회</h3><p>고유번호증을 보유한 비영리단체로 문화예술인의 활동 지원과 지역 문화예술 발전을 위해 활동합니다.</p></article>
+    <article class="card"><h3>나가수공연단</h3><p>지역축제, 문화행사, 전통시장과 복지시설 등 다양한 현장에서 공연을 펼칩니다.</p></article>
+    <article class="card"><h3>나가수봉사단</h3><p>재능기부 공연과 문화예술 봉사활동으로 지역사회에 희망과 나눔을 전합니다.</p></article>
+  </div>
+</section>
+
+<section id="notice">
+  <div class="section-head">
+    <div class="eyebrow">NOTICE</div>
+    <h2>공지사항</h2>
+    <p>엔터테인먼트와 협회 공지를 구분해 확인할 수 있습니다.</p>
+  </div>
+  <div class="notice-item">
+    <div class="tag">엔터테인먼트</div>
+    <div class="notice-title">공연·행사 기획 및 협력 문의 안내</div>
+    <div class="small">2026.07.14</div>
+    <details><summary>내용 펼치기</summary><p>지역축제, 기업행사, 문화공연, 전통시장 행사, 가수 및 출연진 섭외 관련 문의를 받고 있습니다.</p></details>
+  </div>
+  <div class="notice-item">
+    <div class="tag">협회</div>
+    <div class="notice-title">협회 회원 및 문화예술 활동 안내</div>
+    <div class="small">상시 안내</div>
+    <details><summary>내용 펼치기</summary><p>회원 관련 안내, 정기총회, 교육과 공모사업 소식을 협회 공지로 구분해 게시합니다.</p></details>
+  </div>
+</section>
+
+<section id="schedule">
+  <div class="section-head">
+    <div class="eyebrow">SCHEDULE</div>
+    <h2>행사일정</h2>
+    <p>분류별 행사일정과 세부내용을 확인할 수 있습니다.</p>
+  </div>
+  <div class="grid">
+    <article class="card"><div class="tag">엔터테인먼트</div><h3>공연·행사 기획 일정</h3><p>일정 협의 중 / 시간 협의 중</p><details><summary>세부보기</summary><p>장소: 확정 후 등록<br>주최·주관: 가수인생활 엔터테인먼트 또는 협력기관</p></details></article>
+    <article class="card"><div class="tag">협회</div><h3>수성못 나가수 가요제</h3><p>수성못 일원 · 최종 장소 확정 후 등록</p><details><summary>세부보기</summary><p>시민 참여형 생활문화 축제로 준비 중입니다.</p></details></article>
+    <article class="card"><div class="tag">봉사·공익</div><h3>문화나눔 및 공익공연</h3><p>복지시설, 전통시장 및 지역사회 행사장</p><details><summary>세부보기</summary><p>한국가수인생활협회 / 나가수공연단·봉사단</p></details></article>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-head">
+    <div class="eyebrow">PROJECTS</div>
+    <h2>주요 실적 및 프로젝트</h2>
+  </div>
+  <div class="grid">
+    <article class="card"><div class="tag">가요제</div><h3>수성못 나가수 가요제</h3><p>시민 참여형 생활문화 축제로 발전시키기 위한 프로젝트입니다.</p></article>
+    <article class="card"><div class="tag">전통시장</div><h3>희망 음악회</h3><p>전통시장 활성화와 소상공인 상생을 위한 문화공연 프로젝트입니다.</p></article>
+    <article class="card"><div class="tag">문화복지</div><h3>의성 노인복지관 공연</h3><p>어르신과 지역주민을 위한 무료 문화나눔 공연입니다.</p></article>
+  </div>
+</section>
+
+<section id="video">
+  <div class="section-head">
+    <div class="eyebrow">VIDEO CENTER</div>
+    <h2>영상센터</h2>
+    <p>공식 유튜브 채널에서 공연과 창작 음악을 만나보세요.</p>
+  </div>
+  <div class="contact-box">
+    <article class="card"><h3>나가수TV</h3><p>공연, 행사, 문화예술 활동을 전합니다.</p><a class="btn" href="https://www.youtube.com/" target="_blank" rel="noopener">채널 바로가기</a></article>
+    <article class="card"><h3>이명로의 힐링트로트</h3><p>감성 트로트, 힐링음악, 창작곡을 소개합니다.</p><a class="btn" href="https://www.youtube.com/" target="_blank" rel="noopener">채널 바로가기</a></article>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-head">
+    <div class="eyebrow">CONTACT</div>
+    <h2>공연 신청·후원·협력 문의</h2>
+  </div>
+  <div class="contact-box">
+    <article class="card"><h3>공연 신청</h3><p>공연, 축제, 기업행사, 전통시장 행사, 복지시설 공연 의뢰를 받습니다.</p></article>
+    <article class="card"><h3>후원·협력</h3><p>후원기관, 협력기관, 업무협약, 협찬 및 재능봉사 참여를 안내합니다.</p></article>
+  </div>
+  <div class="card" style="margin-top:22px">
+    <h3>연락처</h3>
+    <p>대표: 이명로<br>전화: <a href="tel:01050703175" style="color:var(--gold2)">010-5070-3175</a><br>이메일: <a href="mailto:myung4002@naver.com" style="color:var(--gold2)">myung4002@naver.com</a></p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <img src="logo.png" alt="가수인생활 엔터테인먼트 로고">
+  © 2026 가수인생활 엔터테인먼트. All rights reserved.
+</footer>
+
+<script>
+const btn=document.getElementById('menuBtn');
+const menu=document.getElementById('menu');
+btn.addEventListener('click',()=>menu.classList.toggle('open'));
+document.querySelectorAll('.menu a').forEach(a=>a.addEventListener('click',()=>menu.classList.remove('open')));
+document.addEventListener('click',e=>{
+  if(!menu.contains(e.target) && !btn.contains(e.target)) menu.classList.remove('open');
+});
+</script>
+</body>
+</html>
