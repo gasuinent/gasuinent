@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>홈 | 가수인생활 엔터테인먼트</title>
+<title>문의 | 가수인생활 엔터테인먼트</title>
 <meta content="가수인생활 엔터테인먼트 공식 홈페이지. 공연기획, 가수 매니지먼트, 무료공연, 문화예술교육, 지역상생, 사회환원 활동 안내." name="description"/>
 <!-- V46: 메뉴별 완전 분리 화면 + 강제 숨김 적용 -->
 <style>
@@ -131,45 +131,53 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
 <div class="wrap head">
 <a class="brand" href="index.html"><img alt="가수인생활 엔터테인먼트 로고" src="logo.png"/><span>가수인생활 <b>엔터테인먼트</b></span></a>
 <nav aria-label="PC 주요 메뉴" class="desktop-nav">
-<a class="active" href="index.html">홈</a><a href="about.html">회사소개</a><a href="partners.html">함께하는 단체</a>
+<a href="index.html">홈</a><a href="about.html">회사소개</a><a href="partners.html">함께하는 단체</a>
 <a href="news.html">뉴스</a><a href="notice.html">공지</a><a href="schedule.html">일정</a>
 <a href="projects.html">실적</a><a href="resources.html">자료실</a><a href="video.html">영상센터</a>
-<a href="gallery.html">갤러리</a><a href="contact.html">문의</a>
+<a href="gallery.html">갤러리</a><a class="active" href="contact.html">문의</a>
 </nav>
 <button aria-expanded="false" aria-label="모바일 메뉴 열기" class="menu-btn" id="menuBtn">☰</button>
 </div>
 </header>
 <nav aria-hidden="true" aria-label="모바일 주요 메뉴" class="mobile-nav" id="mobileNav">
-<a class="active" href="index.html">홈</a><a href="about.html">회사소개</a><a href="partners.html">함께하는 단체</a>
+<a href="index.html">홈</a><a href="about.html">회사소개</a><a href="partners.html">함께하는 단체</a>
 <a href="news.html">공식 뉴스</a><a href="notice.html">공지사항</a><a href="schedule.html">행사일정</a>
 <a href="projects.html">주요 실적</a><a href="resources.html">자료실</a><a href="video.html">영상센터</a>
-<a href="gallery.html">갤러리</a><a href="contact.html">문의</a>
+<a href="gallery.html">갤러리</a><a class="active" href="contact.html">문의</a>
 </nav>
 <main>
-<section class="hero" id="home">
+
+
+
+
+
+
+
+
+
+
+<section id="contact">
 <div class="wrap">
-<img alt="가수인생활 엔터테인먼트 GSE 공식 로고" class="hero-logo" src="logo.png"/>
-<div class="eyebrow">GAUSIN SAENGHWAL ENTERTAINMENT</div>
-<h1>무대와 사람을 잇는 문화예술 플랫폼</h1>
-<p class="lead">공연을 통해 지역을 살리고, 예술을 통해 사람을 연결합니다.</p>
-<div class="hero-actions">
-<a class="btn fill" href="contact.html">🎧 공연·행사 문의</a>
-<a class="btn" href="about.html">👥 사업소개</a>
-<a class="btn" href="https://www.youtube.com/@이명로의힐링트로트" rel="noopener" target="_blank">🎙 이명로의 힐링트로트</a>
-<a class="btn" href="partners.html">🤝 함께해요</a>
+<div class="section-head"><div class="eyebrow">CONTACT</div><h2>공연 신청·후원·협력 문의</h2><p class="lead">아래 내용을 입력한 뒤 문의 내용 작성하기를 누르면 이메일 작성창이 열립니다. 마지막으로 이메일의 보내기 버튼을 눌러야 접수가 완료됩니다.</p></div>
+<div class="contact-grid">
+<div class="card">
+<h3>연락처</h3><p><b>대표: 이명로</b></p><p>전화: <a href="tel:01050703175" style="color:var(--gold2)">010-5070-3175</a></p><p>이메일: <a href="mailto:myung4002@naver.com" style="color:var(--gold2)">myung4002@naver.com</a></p>
+</div>
+<form class="card" id="contactForm">
+<label>이름 또는 단체명 *</label><input id="name" placeholder="예: 홍길동 / ○○상인회" required=""/>
+<label>연락처 *</label><input id="phone" placeholder="예: 010-1234-5678" required=""/>
+<label>문의 구분 *</label><select id="type" required=""><option value="">선택하세요</option><option>공연 신청</option><option>후원·협력</option><option>행사 기획</option><option>가수·출연진 섭외</option><option>기타 문의</option></select>
+<label>행사명</label><input id="event" placeholder="예: 전통시장 희망 음악회"/>
+<label>예상 관객 수</label><input id="audience" placeholder="예: 300"/>
+<label>요청사항 *</label><textarea id="request" placeholder="행사 내용, 공연 시간, 필요한 출연진, 예산 또는 요청사항을 적어주세요." required=""></textarea>
+<label style="font-weight:500"><input id="agree" required="" style="width:auto;margin-right:10px" type="checkbox"/>문의 회신을 위한 개인정보 수집·이용에 동의합니다. *</label>
+<p class="notice">수집 항목: 이름 또는 단체명, 연락처, 문의 내용 / 이용 목적: 공연·후원·협력 문의 확인 및 회신 / 목적 달성 후 안전하게 삭제합니다.</p>
+<button class="btn fill" type="submit">문의 내용 작성하기</button>
+<a class="btn" href="tel:01050703175">전화 바로 걸기</a>
+</form>
 </div>
 </div>
 </section>
-
-
-
-
-
-
-
-
-
-
 </main>
 <footer><img alt="가수인생활 엔터테인먼트 로고" src="logo.png"/><div>© 2026 가수인생활 엔터테인먼트. All rights reserved.</div></footer>
 <script>
