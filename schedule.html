@@ -154,11 +154,7 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
 <section id="schedule">
 <div class="wrap">
 <div class="section-head"><div class="eyebrow">SCHEDULE</div><h2>행사일정</h2><p class="lead">분류별 행사일정과 날짜·시간·장소 등 세부내용을 확인할 수 있습니다.</p></div>
-<div class="grid">
-<article class="card project-card"><div class="bar">일정 협의 중<br/><small>시간 협의 중</small></div><span class="tag">엔터테인먼트</span><span class="status">협의 중</span><h3>공연·행사 기획 일정</h3><p>확정 후 등록</p><button class="btn detailBtn" data-label="세부보기">세부보기</button><div class="project-detail"><p><b>진행 상태:</b> 협의 중</p><p><b>장소:</b> 확정 후 등록</p><p><b>주최·주관:</b> 가수인생활 엔터테인먼트 또는 협력기관</p></div></article>
-<article class="card project-card"><div class="bar">일정 협의 중<br/><small>시간 협의 중</small></div><span class="tag">협회</span><span class="status">협의 중</span><h3>수성못 나가수 가요제</h3><p>수성못 일원 · 최종 장소 확정 후 등록</p><button class="btn detailBtn" data-label="세부보기">세부보기</button><div class="project-detail"><p><b>진행 상태:</b> 협의 중</p><p><b>행사명:</b> 수성못 나가수 가요제</p><p><b>날짜·시간:</b> 일정 협의 중 / 시간 협의 중</p></div></article>
-<article class="card project-card"><div class="bar">일정 협의 중<br/><small>시간 협의 중</small></div><span class="tag">봉사·공익</span><span class="status">협의 중</span><h3>문화나눔 및 공익공연</h3><p>복지시설, 전통시장 및 지역사회 행사장</p><button class="btn detailBtn" data-label="세부보기">세부보기</button><div class="project-detail"><p><b>주최·주관:</b> 한국가수인생활협회 / 나가수공연단·봉사단</p><p><b>행사 내용:</b> 복지시설 위문공연, 전통시장 활성화 공연, 문화나눔 활동</p></div></article>
-</div>
+<div class="grid" id="scheduleGrid"></div>
 <p class="notice" style="text-align:center;margin-top:30px">※ 일정은 행사 확정 상황에 따라 변경될 수 있습니다.</p>
 </div>
 </section>
@@ -271,5 +267,6 @@ ${g('request')}`);
     });
   }
 </script>
+<script src="site-data.js"></script>
 </body>
 </html>

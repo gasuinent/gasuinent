@@ -158,8 +158,8 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
 <section id="gallery">
 <div class="wrap">
 <div class="section-head"><div class="eyebrow">GALLERY</div><h2>갤러리</h2><p class="lead">공연, 행사, 봉사활동의 현장 모습을 분야별로 기록해 공개합니다.</p></div>
-<div class="gallery"><div class="photo"><img alt="사랑채주간보호센터 어버이날 공연 현장" src="sarangchae_20260508_01.jpg"/></div><div class="photo"><img alt="사랑채주간보호센터 어버이날 선물 전달" src="sarangchae_20260508_02.jpg"/></div><div class="photo"><img alt="사랑채주간보호센터 어르신들과 함께한 공연" src="sarangchae_20260508_03.jpg"/></div></div>
-<p class="notice" style="text-align:center;margin-top:22px">2026년 5월 8일 · 사랑채주간보호센터 어버이날 감사 공연</p>
+<div class="gallery" id="galleryGrid"></div>
+<p class="notice" id="galleryCaption" style="text-align:center;margin-top:22px"></p>
 </div>
 </section>
 
@@ -267,5 +267,6 @@ ${g('request')}`);
     });
   }
 </script>
+<script src="site-data.js"></script>
 </body>
 </html>
