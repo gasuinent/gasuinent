@@ -259,5 +259,21 @@ ${g('request')}`);
   });
 });
 </script>
+
+<!-- Netlify Identity: 초대·로그인 링크 처리 -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on('init', function(user) {
+      const hasAuthToken = /(?:invite_token|confirmation_token|recovery_token|email_change_token)=/.test(window.location.hash);
+      if (!user && hasAuthToken) {
+        window.netlifyIdentity.open();
+      }
+    });
+    window.netlifyIdentity.on('login', function() {
+      window.netlifyIdentity.close();
+    });
+  }
+</script>
 </body>
 </html>
