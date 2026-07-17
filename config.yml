@@ -1,0 +1,118 @@
+backend:
+  name: git-gateway
+  branch: main
+
+locale: ko
+publish_mode: simple
+media_folder: "uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "news_data"
+    label: "뉴스 관리"
+    files:
+      - name: "news"
+        label: "뉴스 목록"
+        file: "data/news.json"
+        fields:
+          - label: "뉴스 항목"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.date}} · {{fields.title}}"
+            fields:
+              - {label: "제목", name: "title", widget: "string"}
+              - {label: "날짜 또는 표시문구", name: "date", widget: "string"}
+              - {label: "상태", name: "status", widget: "string", required: false}
+              - {label: "대표 분류", name: "category", widget: "select", options: ["행사안내", "무료공연", "봉사활동", "노래교실", "사회환원", "보도자료"]}
+              - label: "표시할 분류(복수 선택 가능)"
+                name: "categories"
+                widget: "select"
+                multiple: true
+                options: ["행사안내", "무료공연", "봉사활동", "노래교실", "사회환원", "보도자료"]
+              - {label: "간단 설명", name: "summary", widget: "text"}
+              - {label: "상세 내용", name: "detail", widget: "text"}
+              - {label: "장소", name: "location", widget: "string", required: false}
+              - label: "사진"
+                name: "images"
+                widget: "list"
+                required: false
+                field: {label: "사진", name: "image", widget: "image"}
+              - {label: "공개", name: "published", widget: "boolean", default: true}
+
+  - name: "notice_data"
+    label: "공지사항 관리"
+    files:
+      - name: "notices"
+        label: "공지사항 목록"
+        file: "data/notices.json"
+        fields:
+          - label: "공지 항목"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.group}} · {{fields.title}}"
+            fields:
+              - {label: "구분", name: "group", widget: "select", options: ["가수인생활 엔터테인먼트 공지", "한국가수인생활협회 공지"]}
+              - {label: "제목", name: "title", widget: "string"}
+              - {label: "내용", name: "content", widget: "text"}
+              - {label: "공개", name: "published", widget: "boolean", default: true}
+
+  - name: "schedule_data"
+    label: "행사일정 관리"
+    files:
+      - name: "schedules"
+        label: "행사일정 목록"
+        file: "data/schedules.json"
+        fields:
+          - label: "일정 항목"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.date}} · {{fields.title}}"
+            fields:
+              - {label: "날짜", name: "date", widget: "string"}
+              - {label: "시간", name: "time", widget: "string"}
+              - {label: "구분", name: "organization", widget: "string"}
+              - {label: "상태", name: "status", widget: "string"}
+              - {label: "행사명", name: "title", widget: "string"}
+              - {label: "장소", name: "place", widget: "string"}
+              - {label: "주최·주관", name: "host", widget: "string"}
+              - {label: "행사 내용", name: "content", widget: "text"}
+              - {label: "공개", name: "published", widget: "boolean", default: true}
+
+  - name: "project_data"
+    label: "주요 실적 관리"
+    files:
+      - name: "projects"
+        label: "실적 목록"
+        file: "data/projects.json"
+        fields:
+          - label: "실적 항목"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.category}} · {{fields.title}}"
+            fields:
+              - {label: "분류", name: "category", widget: "string"}
+              - {label: "제목", name: "title", widget: "string"}
+              - {label: "장소", name: "place", widget: "string"}
+              - {label: "상태", name: "status", widget: "string"}
+              - {label: "간단 설명", name: "summary", widget: "text"}
+              - {label: "상세 내용", name: "detail", widget: "text"}
+              - {label: "공개", name: "published", widget: "boolean", default: true}
+
+  - name: "gallery_data"
+    label: "갤러리 관리"
+    files:
+      - name: "gallery"
+        label: "사진 목록"
+        file: "data/gallery.json"
+        fields:
+          - label: "사진 항목"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.date}} · {{fields.title}}"
+            fields:
+              - {label: "제목", name: "title", widget: "string"}
+              - {label: "날짜", name: "date", widget: "string"}
+              - {label: "분류", name: "category", widget: "string"}
+              - {label: "사진", name: "image", widget: "image"}
+              - {label: "설명", name: "description", widget: "text", required: false}
+              - {label: "공개", name: "published", widget: "boolean", default: true}
