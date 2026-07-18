@@ -1,0 +1,38 @@
+가수인생활 엔터테인먼트 홈페이지 V48 최종 보관·복구본
+
+[이 파일의 목적]
+- 홈페이지에 오류가 생겼을 때 전체를 다시 복구하기 위한 기준 보관본입니다.
+- 홈페이지 화면, 관리자 페이지, 뉴스·공지·일정·실적·갤러리 자료를 함께 보관합니다.
+
+[포함 내용]
+1. 방문자 홈페이지: index.html 및 메뉴별 HTML 파일
+2. 관리자 페이지: admin/index.html, admin/config.yml
+3. 운영자료: data/news.json, notices.json, schedules.json, projects.json, gallery.json
+4. 사진: sarangchae_20260508_01.jpg ~ 03.jpg, uploads 폴더
+5. 공통 자료 표시 프로그램: site-data.js
+
+[복구 방법]
+1. 이 ZIP 파일을 별도 USB 또는 외장하드에 그대로 보관합니다.
+2. 복구할 때 ZIP을 압축 해제합니다.
+3. GitHub gasuinent/gasuinent 저장소에서 Add file → Upload files를 누릅니다.
+4. 압축을 푼 파일과 폴더를 전부 업로드합니다.
+5. 같은 이름 파일은 교체하고 Commit changes를 누릅니다.
+6. Netlify 자동 배포를 2~3분 기다린 뒤 홈페이지를 새로고침합니다.
+
+[절대 삭제하지 말아야 할 항목]
+- admin 폴더
+- data 폴더
+- uploads 폴더
+- site-data.js
+- index.html
+
+[주소]
+- 방문자용: https://gasuinent.netlify.app/
+- 관리자용: https://gasuinent.netlify.app/admin/
+
+[이번 보관본에서 보강한 사항]
+- 뉴스·공지·일정·실적·갤러리 자료를 JSON 파일로 모두 포함
+- 사진 경로를 GitHub Pages와 Netlify 양쪽에서 작동하도록 정리
+- JSON 불러오기에 실패해도 내장 보관자료가 표시되는 복구 기능 추가
+- 문의 폼이 없는 메뉴 페이지에서 발생할 수 있는 자바스크립트 오류 수정
+- 파일 무결성 확인용 SHA-256 목록 포함

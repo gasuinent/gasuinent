@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 
   const form=document.getElementById('contactForm');
-  form.addEventListener('submit',e=>{
+  if(form) form.addEventListener('submit',e=>{
     e.preventDefault();
     const g=id=>document.getElementById(id).value.trim();
     const subject=encodeURIComponent('[홈페이지 문의] '+g('type')+' - '+g('name'));

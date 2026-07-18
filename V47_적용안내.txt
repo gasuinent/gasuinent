@@ -1,0 +1,20 @@
+가수인생활 엔터테인먼트 홈페이지 V47 최종통합본
+
+기준 파일
+- 관리자페이지 완성본을 기준으로 통합
+- 메뉴별 개별 화면 유지
+- Netlify Identity 초대·로그인 처리 유지
+- Decap CMS 관리자 기능 유지
+- 뉴스 복수분류(무료공연·봉사활동) 및 노래교실 데이터 포함
+
+중요 폴더
+- admin/ : 관리자 페이지
+- data/ : 뉴스·공지·일정·실적·갤러리 데이터
+- uploads/ : 관리자 업로드 이미지
+
+업로드 방법
+GitHub 저장소 최상위에 이 폴더 안의 파일과 폴더를 전부 업로드하고 같은 이름 파일을 교체합니다.
+admin, data, uploads 폴더를 빠뜨리지 마세요.
+
+홈페이지: https://gasuinent.netlify.app/
+관리자: https://gasuinent.netlify.app/admin/
