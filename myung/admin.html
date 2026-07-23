@@ -1,67 +1,81 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>관리자 메인</title>
+<title>관리자 시스템</title>
 
 <style>
-
 body{
-margin:0;
-background:#111;
-font-family:Malgun Gothic,sans-serif;
-color:white;
+    margin:0;
+    background:#111;
+    color:#fff;
+    font-family:"Malgun Gothic",sans-serif;
 }
 
 header{
-background:#222;
-padding:20px;
-text-align:center;
-font-size:32px;
-color:#FFD700;
-font-weight:bold;
+    background:#222;
+    text-align:center;
+    padding:30px;
+}
+
+header h1{
+    color:#FFD700;
+    margin:0;
+    font-size:36px;
+}
+
+header p{
+    margin-top:10px;
+    color:#ddd;
+    font-size:18px;
 }
 
 .container{
-width:900px;
-margin:40px auto;
-}
-
-.menu{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:20px;
+    width:90%;
+    max-width:900px;
+    margin:40px auto;
 }
 
 .card{
-
-background:#222;
-padding:30px;
-border-radius:15px;
-text-align:center;
-font-size:26px;
-cursor:pointer;
-transition:0.3s;
-
+    background:#1e1e1e;
+    border:1px solid #444;
+    border-radius:10px;
+    margin-bottom:20px;
+    padding:20px;
 }
 
-.card:hover{
-
-background:#FFD700;
-color:#000;
-
+.card h2{
+    margin:0 0 15px 0;
+    color:#FFD700;
 }
 
-footer{
-
-text-align:center;
-margin-top:50px;
-color:#999;
-
+.menu{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
 }
 
+.menu button{
+    padding:18px;
+    font-size:18px;
+    font-weight:bold;
+    border:none;
+    border-radius:10px;
+    background:#FFD700;
+    cursor:pointer;
+}
+
+.menu button:hover{
+    background:#ffcc00;
+}
+
+.footer{
+    text-align:center;
+    margin-top:40px;
+    color:#aaa;
+    font-size:14px;
+}
 </style>
 
 </head>
@@ -70,47 +84,77 @@ color:#999;
 
 <header>
 
-가수인생활 엔터테인먼트 관리자
+<h1>가수인생활 엔터테인먼트</h1>
+
+<p>관리자 시스템</p>
 
 </header>
 
 <div class="container">
 
+<div class="card">
+
+<h2>관리 메뉴</h2>
+
 <div class="menu">
 
-<div class="card" onclick="location.href='news.html'">📰 뉴스관리</div>
+<button onclick="location.href='news.html'">
+📰 뉴스관리
+</button>
 
-<div class="card">📢 공지사항</div>
+<button>
+📢 공지사항
+</button>
 
-<div class="card">🖼 갤러리관리</div>
+<button>
+🖼 갤러리
+</button>
 
-<div class="card">🎤 공연일정</div>
+<button>
+📅 공연일정
+</button>
 
-<div class="card">📂 자료관리</div>
+<button>
+📁 자료실
+</button>
 
-<div class="card"
-onclick="location.href='https://gasuinent.kr'">
-
+<button onclick="location.href='../index.html'">
 🏠 홈페이지 보기
+</button>
 
 </div>
 
-<div class="card"
-onclick="location.href='index.html'">
+</div>
 
+<div class="card">
+
+<h2>시스템</h2>
+
+<div class="menu">
+
+<button>
+⚙ 환경설정
+</button>
+
+<button>
+💾 백업
+</button>
+
+<button onclick="location.href='index.html'">
 🚪 로그아웃
+</button>
 
 </div>
 
 </div>
 
+<div class="footer">
+
+Copyright © GASUIN LIFE ENTERTAINMENT
+
 </div>
 
-<footer>
-
-Copyright © GASUIN Entertainment
-
-</footer>
+</div>
 
 </body>
 </html>
