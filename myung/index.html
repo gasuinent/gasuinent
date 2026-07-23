@@ -1,61 +1,104 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>가수인생활 엔터테인먼트 관리자</title>
+<title>뉴스관리</title>
 
 <style>
 body{
     margin:0;
     background:#111;
-    font-family:"Malgun Gothic",sans-serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-}
-
-.box{
-    width:420px;
-    background:#222;
-    padding:40px;
-    border-radius:15px;
-    text-align:center;
     color:white;
+    font-family:"Malgun Gothic",sans-serif;
 }
 
-h1{
+header{
+    background:#222;
     color:#FFD700;
-    margin-bottom:30px;
+    text-align:center;
+    padding:20px;
 }
 
-input{
+header h1{
+    margin:0;
+    font-size:32px;
+}
+
+.container{
+    width:90%;
+    max-width:900px;
+    margin:30px auto;
+}
+
+.search{
+    margin-top:20px;
+}
+
+.search input{
+    width:300px;
+    padding:10px;
+    font-size:16px;
+}
+
+.search button{
+    padding:10px 20px;
+    margin-left:10px;
+}
+
+table{
     width:100%;
-    padding:15px;
-    margin:10px 0;
-    border-radius:8px;
-    border:none;
+    border-collapse:collapse;
+    margin-top:30px;
+}
+
+table th,
+table td{
+    border:1px solid #555;
+    padding:12px;
+    text-align:center;
+}
+
+table th{
+    background:#333;
+}
+
+label{
+    display:block;
+    margin-top:20px;
+    margin-bottom:8px;
     font-size:18px;
+}
+
+input[type=text],
+textarea{
+    width:100%;
+    padding:12px;
     box-sizing:border-box;
+    font-size:16px;
+}
+
+textarea{
+    height:220px;
 }
 
 button{
-    width:100%;
-    padding:15px;
     margin-top:20px;
+    padding:12px 25px;
+    font-size:18px;
+    background:#FFD700;
     border:none;
     border-radius:8px;
-    background:#FFD700;
-    color:#000;
-    font-size:20px;
-    font-weight:bold;
     cursor:pointer;
+    font-weight:bold;
 }
 
 button:hover{
     background:#ffcc00;
+}
+
+.back{
+    float:right;
 }
 </style>
 
@@ -63,18 +106,54 @@ button:hover{
 
 <body>
 
-<div class="box">
+<header>
 
-<h1>가수인생활 엔터테인먼트</h1>
+<h1>📰 뉴스관리</h1>
 
-<h2>관리자 로그인</h2>
+<div class="search">
+<input type="text" placeholder="뉴스 검색...">
+<button>검색</button>
+</div>
 
-<input type="text" placeholder="아이디">
+</header>
 
-<input type="password" placeholder="비밀번호">
+<div class="container">
 
-<button onclick="location.href='admin.html'">
-로그인
+<h2>등록된 뉴스</h2>
+
+<table>
+
+<tr>
+<th>번호</th>
+<th>제목</th>
+<th>작성일</th>
+<th>수정</th>
+<th>삭제</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>첫 번째 뉴스</td>
+<td>2026-07-23</td>
+<td><button>수정</button></td>
+<td><button>삭제</button></td>
+</tr>
+
+</table>
+
+<label>뉴스 제목</label>
+<input type="text" placeholder="제목을 입력하세요">
+
+<label>사진 선택</label>
+<input type="file">
+
+<label>뉴스 내용</label>
+<textarea placeholder="내용을 입력하세요"></textarea>
+
+<button>저장</button>
+
+<button class="back" onclick="location.href='admin.html'">
+관리자 메인으로
 </button>
 
 </div>
