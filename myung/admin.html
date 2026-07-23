@@ -1,1 +1,116 @@
 
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>관리자 메인</title>
+
+<style>
+
+body{
+margin:0;
+background:#111;
+font-family:Malgun Gothic,sans-serif;
+color:white;
+}
+
+header{
+background:#222;
+padding:20px;
+text-align:center;
+font-size:32px;
+color:#FFD700;
+font-weight:bold;
+}
+
+.container{
+width:900px;
+margin:40px auto;
+}
+
+.menu{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+}
+
+.card{
+
+background:#222;
+padding:30px;
+border-radius:15px;
+text-align:center;
+font-size:26px;
+cursor:pointer;
+transition:0.3s;
+
+}
+
+.card:hover{
+
+background:#FFD700;
+color:#000;
+
+}
+
+footer{
+
+text-align:center;
+margin-top:50px;
+color:#999;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+가수인생활 엔터테인먼트 관리자
+
+</header>
+
+<div class="container">
+
+<div class="menu">
+
+<div class="card">📰 뉴스관리</div>
+
+<div class="card">📢 공지사항</div>
+
+<div class="card">🖼 갤러리관리</div>
+
+<div class="card">🎤 공연일정</div>
+
+<div class="card">📂 자료관리</div>
+
+<div class="card"
+onclick="location.href='https://gasuinent.kr'">
+
+🏠 홈페이지 보기
+
+</div>
+
+<div class="card"
+onclick="location.href='index.html'">
+
+🚪 로그아웃
+
+</div>
+
+</div>
+
+</div>
+
+<footer>
+
+Copyright © GASUIN Entertainment
+
+</footer>
+
+</body>
+</html>
