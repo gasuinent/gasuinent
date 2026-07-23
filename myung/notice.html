@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>공지사항 관리</title>
+
+<style>
+body{
+    margin:0;
+    background:#111;
+    color:#fff;
+    font-family:"Malgun Gothic",sans-serif;
+}
+
+header{
+    background:#222;
+    color:#FFD700;
+    text-align:center;
+    padding:25px;
+}
+
+.container{
+    width:90%;
+    max-width:900px;
+    margin:30px auto;
+}
+
+.search{
+    margin:20px 0;
+}
+
+.search input{
+    width:300px;
+    padding:10px;
+    font-size:16px;
+}
+
+.search button{
+    padding:10px 20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+th,td{
+    border:1px solid #555;
+    padding:12px;
+    text-align:center;
+}
+
+th{
+    background:#333;
+}
+
+label{
+    display:block;
+    margin-top:20px;
+    margin-bottom:8px;
+}
+
+input[type=text],textarea{
+    width:100%;
+    padding:12px;
+    box-sizing:border-box;
+    font-size:16px;
+}
+
+textarea{
+    height:220px;
+}
+
+button{
+    padding:12px 25px;
+    margin-top:15px;
+    background:#FFD700;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.back{
+    float:right;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>📢 공지사항 관리</h1>
+
+<div class="search">
+<input type="text" placeholder="공지 검색...">
+<button>검색</button>
+</div>
+
+</header>
+
+<div class="container">
+
+<h2>등록된 공지</h2>
+
+<table>
+
+<tr>
+<th>번호</th>
+<th>제목</th>
+<th>작성일</th>
+<th>수정</th>
+<th>삭제</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>첫 번째 공지</td>
+<td>2026-07-23</td>
+<td><button>수정</button></td>
+<td><button>삭제</button></td>
+</tr>
+
+</table>
+
+<label>공지 제목</label>
+<input type="text" placeholder="공지 제목을 입력하세요">
+
+<label>공지 내용</label>
+<textarea placeholder="공지 내용을 입력하세요"></textarea>
+
+<button>저장</button>
+
+<button class="back" onclick="location.href='admin.html'">
+관리자 메인
+</button>
+
+</div>
+
+</body>
+</html>
