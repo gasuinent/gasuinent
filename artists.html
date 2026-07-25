@@ -59,30 +59,73 @@ nav a:hover{
 color:#d4af37;
 }
 
-.hero{
+..hero{
 
-background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.75)),
-url(images/bg.jpg);
+height:360px;
 
-background-size:cover;
-background-position:center;
+display:flex;
 
-padding:120px 20px;
+justify-content:center;
+
+align-items:center;
+
 text-align:center;
+
+background:
+linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.75)),
+radial-gradient(circle at left,#5d4820 0%,transparent 35%),
+radial-gradient(circle at right,#5d4820 0%,transparent 35%),
+#000;
+
+border-bottom:1px solid #8d6b1b;
+
 }
 
-.hero h1{
+.hero-overlay h1{
 
-font-size:58px;
-color:#d4af37;
-margin-bottom:20px;
+font-size:78px;
+
+font-weight:bold;
+
+color:#d8b04b;
+
+margin-bottom:10px;
 
 }
 
-.hero p{
+.hero-overlay h2{
 
-font-size:22px;
-color:#ddd;
+font-size:24px;
+
+font-weight:400;
+
+color:white;
+
+margin-top:12px;
+
+}
+
+.hero-line{
+
+width:520px;
+
+height:2px;
+
+background:#cfa73c;
+
+margin:auto;
+
+margin-top:15px;
+
+}
+
+.hero-mark{
+
+font-size:28px;
+
+color:#cfa73c;
+
+margin-top:10px;
 
 }
 
@@ -296,11 +339,17 @@ GASUIN LIFE ENTERTAINMENT
 
 <section class="hero">
 
-<h1>소속가수</h1>
+    <div class="hero-overlay">
 
-<p>
-가수인생활 엔터테인먼트와 함께하는 아티스트
-</p>
+        <h1>소속가수</h1>
+
+        <div class="hero-line"></div>
+
+        <h2>가수인생활 엔터테인먼트 소속 아티스트</h2>
+
+        <div class="hero-mark">❦</div>
+
+    </div>
 
 </section>
 
