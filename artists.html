@@ -1,83 +1,467 @@
-.<body>
+.<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<header style="background:#111;border-bottom:2px solid #d4af37;padding:20px;text-align:center;">
-    <h1 style="margin:0;color:#d4af37;">가수인생활 엔터테인먼트</h1>
-    <nav style="margin-top:15px;">
-        <a href="index.html" style="color:#fff;text-decoration:none;margin:0 15px;">홈</a>
-        <a href="about.html" style="color:#fff;text-decoration:none;margin:0 15px;">회사소개</a>
-        <a href="artists.html" style="color:#d4af37;text-decoration:none;margin:0 15px;font-weight:bold;">소속가수</a>
-        <a href="news.html" style="color:#fff;text-decoration:none;margin:0 15px;">뉴스</a>
-        <a href="contact.html" style="color:#fff;text-decoration:none;margin:0 15px;">문의</a>
-    </nav>
+<title>소속가수 | 가수인생활 엔터테인먼트</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#090909;
+color:#fff;
+font-family:'Malgun Gothic',sans-serif;
+line-height:1.7;
+}
+
+a{
+text-decoration:none;
+color:white;
+}
+
+header{
+background:#111;
+border-bottom:3px solid #d4af37;
+position:sticky;
+top:0;
+z-index:999;
+}
+
+.header-inner{
+max-width:1300px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 25px;
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+color:#d4af37;
+}
+
+nav a{
+margin-left:25px;
+font-size:17px;
+transition:.3s;
+}
+
+nav a:hover{
+color:#d4af37;
+}
+
+.hero{
+
+background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.75)),
+url(images/bg.jpg);
+
+background-size:cover;
+background-position:center;
+
+padding:120px 20px;
+text-align:center;
+}
+
+.hero h1{
+
+font-size:58px;
+color:#d4af37;
+margin-bottom:20px;
+
+}
+
+.hero p{
+
+font-size:22px;
+color:#ddd;
+
+}
+
+.container{
+
+max-width:1300px;
+margin:auto;
+padding:70px 20px;
+
+}
+
+.artist-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(280px,1fr));
+
+gap:35px;
+
+}
+
+.artist{
+
+background:#181818;
+
+border:1px solid #d4af37;
+
+border-radius:18px;
+
+overflow:hidden;
+
+transition:.35s;
+
+}
+
+.artist:hover{
+
+transform:translateY(-10px);
+
+box-shadow:0 0 25px rgba(212,175,55,.4);
+
+}
+
+.artist img{
+
+width:100%;
+height:330px;
+object-fit:cover;
+
+}
+
+.artist-info{
+
+padding:25px;
+
+text-align:center;
+
+}
+
+.artist-info h2{
+
+color:#d4af37;
+margin-bottom:10px;
+
+}
+
+.artist-info p{
+
+margin:8px 0;
+color:#ddd;
+
+}
+
+.btn{
+
+display:inline-block;
+
+margin-top:18px;
+
+padding:12px 30px;
+
+background:#d4af37;
+
+color:#111;
+
+font-weight:bold;
+
+border-radius:40px;
+
+transition:.3s;
+
+}
+
+.btn:hover{
+
+background:#fff;
+
+}
+
+.recruit{
+
+margin-top:90px;
+
+background:#111;
+
+border:2px solid #d4af37;
+
+border-radius:20px;
+
+padding:60px;
+
+text-align:center;
+
+}
+
+.recruit h2{
+
+font-size:42px;
+
+color:#d4af37;
+
+margin-bottom:15px;
+
+}
+
+.recruit p{
+
+font-size:20px;
+
+margin-bottom:25px;
+
+}
+
+footer{
+
+margin-top:80px;
+
+padding:35px;
+
+text-align:center;
+
+background:#111;
+
+border-top:2px solid #d4af37;
+
+color:#aaa;
+
+}
+
+@media(max-width:768px){
+
+.hero h1{
+
+font-size:40px;
+
+}
+
+.hero p{
+
+font-size:18px;
+
+}
+
+.logo{
+
+font-size:22px;
+
+}
+
+nav{
+
+display:none;
+
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="header-inner">
+
+<div class="logo">
+GASUIN LIFE ENTERTAINMENT
+</div>
+
+<nav>
+
+<a href="index.html">HOME</a>
+
+<a href="about.html">회사소개</a>
+
+<a href="artists.html">소속가수</a>
+
+<a href="news.html">뉴스</a>
+
+<a href="gallery.html">갤러리</a>
+
+<a href="contact.html">문의</a>
+
+</nav>
+
+</div>
+
 </header>
 
-<div class="wrap">
+<section class="hero">
 
 <h1>소속가수</h1>
-<p>가수인생활 엔터테인먼트 소속 아티스트</p>
 
-<div class="grid">
+<p>
+가수인생활 엔터테인먼트와 함께하는 아티스트
+</p>
 
-<div class="card">
-<img src="images/lee.jpg" class="photo" alt="이명로">
-<h3>이명로</h3>
+</section>
+
+<div class="container">
+
+<div class="artist-grid">
+
+<div class="artist">
+
+<img src="images/lee.jpg">
+
+<div class="artist-info">
+
+<h2>이명로</h2>
+
 <p>대표가수</p>
-<p>대표곡 : 준비중</p>
+
+<p>장르 : 트로트</p>
+
 <p>활동지역 : 전국</p>
-<a class="btn" href="#">자세히 보기</a>
+
+<a class="btn" href="#">
+프로필 보기
+</a>
+
 </div>
 
-<div class="card">
-<img src="images/artist01.jpg" class="photo">
-<h3>소속가수 모집중</h3>
+</div>
+
+<div class="artist">
+
+<img src="images/artist01.jpg">
+
+<div class="artist-info">
+
+<h2>소속가수</h2>
+
 <p>트로트</p>
-<p>신인가수 환영</p>
-<p>전국</p>
-<a class="btn" href="#">지원하기</a>
+
+<p>대표곡 준비중</p>
+
+<p>전국 활동</p>
+
+<a class="btn" href="#">
+자세히 보기
+</a>
+
 </div>
 
-<div class="card">
-<img src="images/artist02.jpg" class="photo">
-<h3>소속가수</h3>
+</div>
+
+<div class="artist">
+
+<img src="images/artist02.jpg">
+
+<div class="artist-info">
+
+<h2>소속가수</h2>
+
 <p>트로트</p>
-<p>대표곡 : 준비중</p>
-<p>활동지역 : 전국</p>
-<a class="btn" href="#">자세히 보기</a>
+
+<p>대표곡 준비중</p>
+
+<p>전국 활동</p>
+
+<a class="btn" href="#">
+자세히 보기
+</a>
+
 </div>
 
-<div class="card">
-<img src="images/artist03.jpg" class="photo">
-<h3>소속가수</h3>
+</div>
+
+<div class="artist">
+
+<img src="images/artist03.jpg">
+
+<div class="artist-info">
+
+<h2>소속가수</h2>
+
 <p>트로트</p>
-<p>대표곡 : 준비중</p>
-<p>활동지역 : 전국</p>
-<a class="btn" href="#">자세히 보기</a>
-</div>
 
-<div class="card">
-<img src="images/artist04.jpg" class="photo">
-<h3>소속가수</h3>
-<p>트로트</p>
-<p>대표곡 : 준비중</p>
-<p>활동지역 : 전국</p>
-<a class="btn" href="#">자세히 보기</a>
-</div>
+<p>대표곡 준비중</p>
 
-<div class="card">
-<img src="images/artist05.jpg" class="photo">
-<h3>신인가수 상시모집</h3>
-<p>가수인생활 엔터테인먼트</p>
-<p>오디션 상시 접수</p>
-<p>문의 환영</p>
-<a class="btn" href="contact.html">문의하기</a>
-</div>
+<p>전국 활동</p>
+
+<a class="btn" href="#">
+자세히 보기
+</a>
 
 </div>
 
 </div>
 
-<footer style="margin-top:50px;padding:30px;background:#111;border-top:2px solid #d4af37;text-align:center;color:#aaa;">
-© 2026 GASUIN LIFE ENTERTAINMENT. All Rights Reserved.
+<div class="artist">
+
+<img src="images/artist04.jpg">
+
+<div class="artist-info">
+
+<h2>신인가수 모집</h2>
+
+<p>오디션 상시접수</p>
+
+<p>트로트 · 발라드</p>
+
+<p>전국 지원 가능</p>
+
+<a class="btn" href="#">
+지원하기
+</a>
+
+</div>
+
+</div>
+
+</div>
+<section class="recruit">
+
+<h2>🎤 신인가수 공개모집</h2>
+
+<p>
+가수인생활 엔터테인먼트는 새로운 스타를 기다립니다.
+</p>
+
+<p>
+트로트 · 발라드 · K-POP · 성인가요
+</p>
+
+<p>
+전국 오디션 상시 접수
+</p>
+
+<a class="btn" href="contact.html">
+오디션 지원하기
+</a>
+
+</section>
+
+</div>
+
+<footer>
+
+<h3 style="color:#d4af37;margin-bottom:15px;">
+가수인생활 엔터테인먼트
+</h3>
+
+<p>
+대표 : 이명로
+</p>
+
+<p>
+공식 홈페이지 : GASUINENT.KR
+</p>
+
+<p>
+Copyright © 2026 GASUIN LIFE ENTERTAINMENT
+</p>
+
 </footer>
 
 </body>
+</html>
