@@ -6,7 +6,6 @@
 <title>소속가수 | 가수인생활 엔터테인먼트</title>
 
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -14,21 +13,24 @@ box-sizing:border-box;
 }
 
 body{
-background:#080808;
-color:#f5f5f5;
-font-family:'Noto Sans KR',sans-serif;
-line-height:1.8;
-}
-
-header{
 background:#050505;
-border-bottom:1px solid #333;
+font-family:'Noto Sans KR',sans-serif;
+color:#fff;
+line-height:1.7;
 }
 
 .container{
-width:1200px;
+width:1280px;
 max-width:95%;
 margin:auto;
+}
+
+header{
+background:#000;
+border-bottom:1px solid #c99b2d;
+position:sticky;
+top:0;
+z-index:999;
 }
 
 .topbar{
@@ -46,154 +48,159 @@ gap:15px;
 }
 
 .logo img{
-width:90px;
+width:75px;
 }
 
 .logo h2{
+color:#f0c766;
 font-size:28px;
-color:#f2cf7a;
+font-weight:800;
 }
 
 .logo p{
-color:#bbb;
+color:#ccc;
+font-size:15px;
 }
 
 .menu{
 display:flex;
-gap:15px;
+gap:12px;
 flex-wrap:wrap;
 }
 
 .menu a{
-color:#f2cf7a;
+color:#f0c766;
 text-decoration:none;
-padding:10px 22px;
-border:2px solid #d8a83e;
+padding:10px 20px;
+border:1px solid #c99b2d;
 border-radius:30px;
 transition:.3s;
 }
 
 .menu a:hover{
-background:#d8a83e;
+background:#c99b2d;
 color:#111;
 }
 
-.wrap{
-width:1200px;
-max-width:95%;
-margin:auto;
-padding:60px 0;
-}
-
-.artist-title{
+.title-area{
+padding:70px 20px 50px;
 text-align:center;
-margin-bottom:60px;
 }
 
-.artist-main-title{
+.title-area h1{
 font-size:72px;
 font-weight:900;
-letter-spacing:5px;
-color:#f2cf7a;
+letter-spacing:6px;
+color:#f0c766;
 }
 
-.artist-sub-title{
-font-size:24px;
+.title-area p{
+margin-top:15px;
+font-size:22px;
 color:#ddd;
-margin-top:12px;
 }
 
 .gold-line{
-width:220px;
+width:260px;
 height:2px;
-background:linear-gradient(to right,transparent,#d8a83e,transparent);
-margin:18px auto;
+margin:25px auto;
+background:linear-gradient(to right,transparent,#d9a53a,transparent);
 }
 
-.gold-mark{
-font-size:28px;
-color:#d8a83e;
-}
-
-.hero{
+.artist-grid{
 display:grid;
-grid-template-columns:340px 1fr;
-gap:40px;
-background:#151515;
-border:1px solid #444;
-border-radius:30px;
-padding:35px;
-margin-bottom:50px;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:35px;
+padding-bottom:70px;
 }
 
-.hero img{
+.artist-card{
+background:#111;
+border:1px solid #c99b2d;
+border-radius:24px;
+overflow:hidden;
+transition:.35s;
+box-shadow:0 0 18px rgba(201,155,45,.15);
+}
+
+.artist-card:hover{
+transform:translateY(-8px);
+box-shadow:0 0 28px rgba(201,155,45,.35);
+}
+
+.artist-card img{
 width:100%;
-border-radius:20px;
+height:420px;
+object-fit:cover;
+display:block;
 }
 
-.hero h2{
-font-size:38px;
-color:#f2cf7a;
+.artist-info{
+padding:28px;
 }
 
-.hero .title{
-font-size:22px;
-font-weight:bold;
-color:#d8a83e;
-margin:15px 0 25px;
+.artist-info h2{
+font-size:30px;
+color:#f0c766;
+margin-bottom:10px;
 }
 
-.hero ul{
+.artist-info h3{
+font-size:18px;
+color:#d7a53d;
+margin-bottom:20px;
+}
+
+.artist-info ul{
 list-style:none;
 }
 
-.hero li{
-margin:12px 0;
-font-size:18px;
+.artist-info li{
+margin:10px 0;
+font-size:17px;
 }
 
 .btn{
 display:inline-block;
 margin-top:25px;
-padding:12px 30px;
-border:2px solid #d8a83e;
-border-radius:40px;
+padding:12px 28px;
+border:2px solid #d9a53a;
+border-radius:30px;
+color:#f0c766;
 text-decoration:none;
-color:#f2cf7a;
 transition:.3s;
 }
 
 .btn:hover{
-background:#d8a83e;
+background:#d9a53a;
 color:#111;
 }
 
 footer{
-background:#050505;
-border-top:1px solid #333;
-padding:40px 20px;
+margin-top:60px;
+padding:35px;
 text-align:center;
+border-top:1px solid #333;
 color:#aaa;
+background:#000;
 }
 
 @media(max-width:900px){
 
-.hero{
-grid-template-columns:1fr;
-}
-
-.artist-main-title{
+.title-area h1{
 font-size:48px;
 }
 
-.artist-sub-title{
-font-size:20px;
+.artist-grid{
+grid-template-columns:1fr;
+}
+
+.artist-card img{
+height:360px;
 }
 
 }
-
 </style>
-
 </head>
 
 <body>
@@ -204,7 +211,7 @@ font-size:20px;
 
 <div class="logo">
 
-<img src="hero-logo.png" alt="Logo">
+<img src="hero-logo.png" alt="logo">
 
 <div>
 
@@ -232,35 +239,30 @@ font-size:20px;
 
 </header>
 
-<div class="wrap">
+<div class="container">
 
-<div class="artist-title">
+<div class="title-area">
 
 <div class="gold-line"></div>
 
-<h1 class="artist-main-title">소속가수</h1>
+<h1>소속가수</h1>
 
-<p class="artist-sub-title">
-가수인생활 엔터테인먼트 소속 아티스트
-</p>
-
-<div class="gold-mark">❦</div>
+<p>가수인생활 엔터테인먼트 소속 아티스트</p>
 
 <div class="gold-line"></div>
 
 </div>
 
-<div class="hero">
+<div class="artist-grid">
+  <div class="artist-card">
 
-<img src="lee-myungro-stage.png" alt="이명로">
+<img src="lee-myungro-stage.jpg" alt="이명로">
 
-<div>
+<div class="artist-info">
 
 <h2>이명로</h2>
 
-<p class="title">
-대표 · 가수 · 공연기획자
-</p>
+<h3>대표 · 가수 · 공연기획자</h3>
 
 <ul>
 
@@ -270,9 +272,11 @@ font-size:20px;
 
 <li>📍 활동지역 : 전국</li>
 
-<li>🎭 공연 : 문화행사 · 힐링콘서트 · 봉사공연</li>
+<li>🎭 문화행사 · 힐링콘서트 · 봉사공연</li>
 
-<li>🤝 사회공헌 : 나가수봉사단 공연</li>
+<li>🤝 나가수봉사단 공연활동</li>
+
+<li>🏆 가수인생활 엔터테인먼트 대표</li>
 
 </ul>
 
@@ -287,68 +291,144 @@ target="_blank">
 </div>
 
 </div>
-<div class="hero">
 
-<img src="artist02.png" alt="신규 아티스트">
+<div class="artist-card">
 
-<div>
+<img src="artist02.jpg" alt="신인가수">
 
-<h2>신규 아티스트</h2>
+<div class="artist-info">
 
-<p class="title">
-가수인생활 엔터테인먼트 소속가수
-</p>
+<h2>신인가수 모집</h2>
+
+<h3>가수인생활 엔터테인먼트</h3>
 
 <ul>
 
-<li>🎤 장르 : 준비중</li>
+<li>🎤 트로트</li>
 
-<li>🎵 대표곡 : 준비중</li>
+<li>🎵 발라드</li>
 
-<li>📍 활동지역 : 전국</li>
+<li>🎸 라이브 공연</li>
 
-<li>🎭 공연 : 행사 · 축제 · 콘서트</li>
+<li>🎭 행사 · 축제 공연</li>
 
-<li>🤝 활동 : 방송 및 공연활동</li>
+<li>📺 방송활동 지원</li>
+
+<li>⭐ 전국 활동 가능</li>
 
 </ul>
 
-<a class="btn" href="#">
-프로필 준비중
+<a class="btn" href="contact.html">
+
+지원하기
+
 </a>
 
 </div>
 
 </div>
 
-<div class="hero">
+<div class="artist-card">
 
-<img src="artist03.png" alt="신규 아티스트">
+<img src="artist03.jpg" alt="신인가수">
 
-<div>
+<div class="artist-info">
 
-<h2>신규 아티스트</h2>
+<h2>신인가수 모집</h2>
 
-<p class="title">
-가수인생활 엔터테인먼트 소속가수
-</p>
+<h3>가수인생활 엔터테인먼트</h3>
 
 <ul>
 
-<li>🎤 장르 : 준비중</li>
+<li>🎤 신인가수 모집</li>
 
-<li>🎵 대표곡 : 준비중</li>
+<li>🎵 음원 제작 지원</li>
 
-<li>📍 활동지역 : 전국</li>
+<li>🎭 공연 참여</li>
 
-<li>🎭 공연 : 행사 · 축제 · 콘서트</li>
+<li>📺 방송 활동</li>
 
-<li>🤝 활동 : 방송 및 공연활동</li>
+<li>🤝 공연기획 지원</li>
+
+<li>⭐ 전국 오디션</li>
 
 </ul>
 
-<a class="btn" href="#">
-프로필 준비중
+<a class="btn" href="contact.html">
+
+지원하기
+
+</a>
+
+</div>
+
+</div>
+<div class="artist-card">
+
+<img src="artist04.jpg" alt="신인가수">
+
+<div class="artist-info">
+
+<h2>신인가수 모집</h2>
+
+<h3>가수인생활 엔터테인먼트</h3>
+
+<ul>
+
+<li>🎤 남·여 가수 모집</li>
+
+<li>🎵 음반 제작 지원</li>
+
+<li>🎭 행사 및 축제 출연</li>
+
+<li>📺 방송·유튜브 활동</li>
+
+<li>🤝 공연기획 및 매니지먼트</li>
+
+<li>⭐ 전국 활동 가능</li>
+
+</ul>
+
+<a class="btn" href="contact.html">
+
+지원하기
+
+</a>
+
+</div>
+
+</div>
+
+<div class="artist-card">
+
+<img src="artist05.jpg" alt="신인가수">
+
+<div class="artist-info">
+
+<h2>신인가수 모집</h2>
+
+<h3>가수인생활 엔터테인먼트</h3>
+
+<ul>
+
+<li>🎤 오디션 상시 접수</li>
+
+<li>🎵 신곡 제작</li>
+
+<li>🎭 공연 데뷔 지원</li>
+
+<li>📺 방송 및 행사 출연</li>
+
+<li>🤝 체계적인 매니지먼트</li>
+
+<li>⭐ 꿈을 함께 만들어갑니다</li>
+
+</ul>
+
+<a class="btn" href="contact.html">
+
+오디션 지원
+
 </a>
 
 </div>
@@ -357,13 +437,45 @@ target="_blank">
 
 </div>
 
+<section style="margin:80px 0;padding:50px;border:1px solid #c99b2d;border-radius:25px;background:#111;text-align:center;">
+
+<h2 style="font-size:42px;color:#f0c766;margin-bottom:20px;">
+
+가수인생활 엔터테인먼트
+
+</h2>
+
+<p style="font-size:22px;color:#ddd;line-height:2;">
+
+실력과 열정을 가진 신인가수를 기다립니다.<br>
+
+공연 · 음반 · 방송 · 행사까지 함께 성장하는 엔터테인먼트입니다.
+
+</p>
+
+<a class="btn"
+href="contact.html"
+style="margin-top:35px;font-size:20px;">
+
+오디션 지원하기
+
+</a>
+
+</section>
 <footer>
 
 <p>© 2026 가수인생활 엔터테인먼트 (Gausuin Life Entertainment)</p>
 
 <p>All Rights Reserved.</p>
 
+<p style="margin-top:10px;color:#888;">
+대한민국 문화예술 발전과 신인가수 육성을 위해 함께합니다.
+</p>
+
 </footer>
 
+</div>
+
 </body>
+
 </html>
