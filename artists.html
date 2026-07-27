@@ -1,9 +1,14 @@
-<!DOCTYPE html>
+.<!DOCTYPE html>
 <html lang="ko">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>소속가수 | 가수인생활 엔터테인먼트</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
@@ -15,331 +20,181 @@ padding:0;
 box-sizing:border-box;
 }
 
-body{
-font-family:'Noto Sans KR',sans-serif;
-background:#060606;
-color:#fff;
-overflow-x:hidden;
+html{
+scroll-behavior:smooth;
 }
 
-body::before{
-content:"";
-position:fixed;
-inset:0;
-background:
-radial-gradient(circle at top,#5b4718 0%,transparent 35%),
-radial-gradient(circle at bottom,#2b1f05 0%,transparent 40%);
-opacity:.55;
-z-index:-1;
+body{
+
+font-family:'Noto Sans KR',sans-serif;
+background:#050505;
+color:#ffffff;
+overflow-x:hidden;
+line-height:1.7;
+
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+img{
+max-width:100%;
+display:block;
 }
 
 .container{
-width:1400px;
-max-width:95%;
+
+width:92%;
+max-width:1400px;
 margin:auto;
+
 }
+
+/* ===========================
+   HEADER
+=========================== */
 
 header{
-position:sticky;
+
+position:fixed;
 top:0;
-background:rgba(0,0,0,.95);
-backdrop-filter:blur(10px);
-border-bottom:1px solid #b98a2e;
-z-index:999;
+left:0;
+width:100%;
+background:rgba(0,0,0,.92);
+backdrop-filter:blur(12px);
+border-bottom:1px solid rgba(212,171,72,.35);
+z-index:9999;
+
 }
 
-.topbar{
+.header-wrap{
+
+height:82px;
 display:flex;
-justify-content:space-between;
 align-items:center;
-padding:18px 0;
+justify-content:space-between;
+
 }
 
 .logo{
+
 display:flex;
 align-items:center;
 gap:15px;
+
 }
 
 .logo img{
-width:75px;
-height:75px;
+
+width:56px;
+height:56px;
 object-fit:contain;
+
 }
 
-.logo h2{
-font-size:28px;
+.logo-text h2{
+
+font-size:24px;
 font-weight:900;
-color:#f7d06d;
+color:#ffd76b;
+letter-spacing:1px;
+
 }
 
-.logo span{
-display:block;
-font-size:14px;
-color:#bbb;
-margin-top:5px;
+.logo-text p{
+
+font-size:12px;
+color:#cccccc;
+margin-top:2px;
+
 }
 
-.menu{
+/* ===========================
+   MENU
+=========================== */
+
+nav ul{
+
 display:flex;
-gap:15px;
-flex-wrap:wrap;
+list-style:none;
+gap:14px;
+
 }
 
-.menu a{
-text-decoration:none;
-color:#f6cf72;
-padding:10px 22px;
-border:1px solid #c89a39;
+nav ul li a{
+
+padding:10px 18px;
 border-radius:40px;
-transition:.3s;
+transition:.35s;
+font-size:15px;
+font-weight:600;
+
 }
 
-.menu a:hover,
-.menu .active{
-background:#d6a642;
+nav ul li a:hover{
+
+background:#d5a941;
 color:#111;
+
 }
 
-.hero-title{
+/* ===========================
+   HERO
+=========================== */
+
+.hero{
+
+margin-top:82px;
+height:540px;
+
+background:
+linear-gradient(rgba(0,0,0,.55),
+rgba(0,0,0,.75)),
+url(images/artists-hero.jpg);
+
+background-size:cover;
+background-position:center;
+
+display:flex;
+align-items:center;
+justify-content:center;
 text-align:center;
-padding:70px 0 60px;
+
 }
 
-.hero-title h1{
+.hero h1{
+
 font-size:72px;
 font-weight:900;
-letter-spacing:6px;
-color:#ffd56c;
-text-shadow:0 0 20px rgba(255,205,90,.4);
+color:#ffd86f;
+letter-spacing:5px;
+text-shadow:0 0 30px rgba(255,210,90,.45);
+
 }
 
-.hero-title p{
+.hero p{
+
 margin-top:20px;
 font-size:22px;
-color:#ddd;
+color:#ededed;
+
 }
 
 .gold-line{
-width:240px;
+
+width:180px;
 height:2px;
-background:linear-gradient(to right,transparent,#d8aa42,transparent);
-margin:25px auto;
-}
+margin:28px auto;
 
-.artist-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-gap:35px;
-padding-bottom:80px;
-}
-
-.artist-card{
-position:relative;
-background:#111;
-border:1px solid #d4a742;
-border-radius:25px;
-overflow:hidden;
-transition:.4s;
-box-shadow:0 0 25px rgba(212,167,66,.15);
-}
-
-.artist-card:hover{
-transform:translateY(-10px);
-box-shadow:0 0 40px rgba(212,167,66,.45);
-}
-
-.card-number{
-position:absolute;
-top:15px;
-left:15px;
-background:#d6a642;
-color:#111;
-padding:6px 15px;
-font-weight:900;
-border-radius:30px;
-font-size:18px;
-z-index:20;
-}
-
-.artist-card img{
-width:100%;
-aspect-ratio:3/4;
-object-fit:cover;
-display:block;
-}
-
-.artist-info{
-background:#fff;
-color:#222;
-padding:28px;
-}
-
-.artist-info h2{
-font-size:32px;
-color:#111;
-margin-bottom:8px;
-}
-
-.artist-info h3{
-font-size:18px;
-color:#9d6f12;
-margin-bottom:18px;
-font-weight:700;
-}
-
-.artist-info ul{
-list-style:none;
-}
-
-.artist-info li{
-padding:7px 0;
-border-bottom:1px dashed #ddd;
-font-size:16px;
-}
-
-.youtube-btn{
-display:inline-block;
-margin-top:22px;
-background:#e62117;
-color:#fff;
-padding:12px 28px;
-border-radius:35px;
-text-decoration:none;
-font-weight:700;
-transition:.3s;
-}
-
-.youtube-btn:hover{
-transform:scale(1.05);
-}
-
-.gold-btn{
-display:inline-block;
-margin-top:22px;
-background:#d6a642;
-color:#111;
-padding:12px 28px;
-border-radius:35px;
-text-decoration:none;
-font-weight:700;
-transition:.3s;
-}
-
-.gold-btn:hover{
-background:#f5cf73;
-}
-.info-top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:15px;
-}
-
-.badge{
-background:#111;
-color:#ffd56c;
-padding:5px 12px;
-border-radius:30px;
-font-size:13px;
-font-weight:700;
-}
-
-.recruit{
-background:linear-gradient(135deg,#181818,#0a0a0a);
-border:2px solid #d6a642;
-border-radius:25px;
-padding:50px;
-margin:80px 0;
-text-align:center;
-box-shadow:0 0 35px rgba(214,166,66,.2);
-}
-
-.recruit h2{
-font-size:48px;
-color:#ffd56c;
-margin-bottom:20px;
-}
-
-.recruit p{
-font-size:22px;
-line-height:2;
-color:#ddd;
-margin-bottom:35px;
-}
-
-.apply-btn{
-display:inline-block;
-padding:18px 45px;
-background:#d6a642;
-color:#111;
-text-decoration:none;
-font-size:22px;
-font-weight:800;
-border-radius:50px;
-transition:.35s;
-}
-
-.apply-btn:hover{
-background:#ffd56c;
-transform:translateY(-5px);
-}
-
-footer{
-background:#000;
-border-top:1px solid #b98a2e;
-padding:40px 20px;
-text-align:center;
-color:#aaa;
-}
-
-@media(max-width:1100px){
-
-.hero-title h1{
-font-size:56px;
-}
-
-.artist-grid{
-grid-template-columns:repeat(2,1fr);
-}
-
-}
-
-@media(max-width:768px){
-
-.topbar{
-flex-direction:column;
-gap:20px;
-}
-
-.menu{
-justify-content:center;
-}
-
-.hero-title h1{
-font-size:42px;
-letter-spacing:2px;
-}
-
-.hero-title p{
-font-size:18px;
-}
-
-.artist-grid{
-grid-template-columns:1fr;
-}
-
-.recruit{
-padding:35px 20px;
-}
-
-.recruit h2{
-font-size:34px;
-}
-
-.recruit p{
-font-size:18px;
-}
+background:linear-gradient(
+to right,
+transparent,
+#ffd76a,
+#b98726,
+#ffd76a,
+transparent);
 
 }
 
@@ -351,33 +206,37 @@ font-size:18px;
 
 <header>
 
-<div class="container topbar">
+<div class="container header-wrap">
 
 <div class="logo">
 
-<img src="hero-logo.png" alt="Logo">
+<img src="images/logo.png" alt="logo">
 
-<div>
+<div class="logo-text">
 
 <h2>가수인생활 엔터테인먼트</h2>
 
-<span>Gausuin Life Entertainment</span>
+<p>GASUIN LIFE ENTERTAINMENT</p>
 
 </div>
 
 </div>
 
-<nav class="menu">
+<nav>
 
-<a href="index.html">HOME</a>
+<ul>
 
-<a class="active" href="artists.html">소속가수</a>
+<li><a href="index.html">HOME</a></li>
 
-<a href="news.html">뉴스</a>
+<li><a href="about.html">회사소개</a></li>
 
-<a href="gallery.html">갤러리</a>
+<li><a href="artists.html">소속가수</a></li>
 
-<a href="contact.html">문의하기</a>
+<li><a href="audition.html">오디션</a></li>
+
+<li><a href="contact.html">문의하기</a></li>
+
+</ul>
 
 </nav>
 
@@ -385,330 +244,514 @@ font-size:18px;
 
 </header>
 
+<section class="hero">
+
+<div>
+
+<h1>ARTISTS</h1>
+
+<div class="gold-line"></div>
+
+<p>
+가수인생활 엔터테인먼트와 함께 성장할
+소속가수를 소개합니다.
+</p>
+
+</div>
+
+</section>
+<!-- =========================================
+     대표가수
+========================================= -->
+
+<section class="ceo-section">
+
 <div class="container">
 
-<div class="hero-title">
+<div class="section-title">
 
-<div class="gold-line"></div>
+<h2>대표가수</h2>
 
-<h1>소속가수</h1>
+<p>가수인생활 엔터테인먼트를 이끌어가는 대표 아티스트</p>
 
-<p>가수인생활 엔터테인먼트 소속 아티스트</p>
+</div>
 
-<div class="gold-line"></div>
+<div class="ceo-card">
+
+<div class="ceo-photo">
+
+<img src="images/lee-myungro.jpg" alt="대표가수 이명로">
+
+</div>
+
+<div class="ceo-info">
+
+<span class="badge">대표가수</span>
+
+<h2>이 명 로</h2>
+
+<h3>가수인생활 엔터테인먼트 대표</h3>
+
+<p>
+
+가수와 공연기획자로 활동하며
+다양한 공연과 문화행사를 기획하고 있습니다.
+
+</p>
+
+<p>
+
+한국가수인생활협회 회장으로
+지역 문화예술 발전과 봉사공연 활성화를 위해
+꾸준히 활동하고 있습니다.
+
+</p>
+
+<div class="ceo-buttons">
+
+<a href="contact.html" class="gold-btn">
+
+공연 문의
+
+</a>
+
+<a href="#" class="black-btn">
+
+유튜브 보기
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+<!-- ===========================
+     소속가수
+=========================== -->
+
+<section class="artists-section">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>소속가수</h2>
+
+<p>가수인생활 엔터테인먼트와 함께할 새로운 가족을 기다립니다.</p>
 
 </div>
 
 <div class="artist-grid">
-  <!-- 01 대표가수 -->
 
 <div class="artist-card">
 
-<div class="card-number">01</div>
-
-<img src="lee-myungro-stage.jpg" alt="이명로">
+<img src="images/new-singer.jpg" alt="신인가수">
 
 <div class="artist-info">
 
-<div class="info-top">
-
-<h2>이명로</h2>
-
-<span class="badge">대표가수</span>
-
-</div>
-
-<h3>가수 · 작곡가 · 공연기획자</h3>
-
-<ul>
-
-<li>가수인생활 엔터테인먼트 대표</li>
-
-<li>한국가수인생활협회 회장</li>
-
-<li>나가수공연단 단장</li>
-
-<li>전국 문화예술 공연 및 봉사활동</li>
-
-<li>힐링콘서트 및 특별공연 진행</li>
-
-<li>행사 · 축제 · 방송 출연</li>
-
-</ul>
-
-<a class="youtube-btn"
-href="https://www.youtube.com/@nagasutv"
-target="_blank">
-
-YouTube 보기
-
-</a>
-
-</div>
-
-</div>
-
-
-<!-- 02 신인가수 모집 -->
-
-<div class="artist-card">
-
-<div class="card-number">02</div>
-
-<img src="artist02.jpg" alt="신인가수">
-
-<div class="artist-info">
-
-<div class="info-top">
-
-<h2>신인가수 모집</h2>
-
-<span class="badge">Audition</span>
-
-</div>
-
-<h3>꿈을 함께 펼칠 아티스트</h3>
-
-<ul>
-
-<li>트로트</li>
-
-<li>발라드</li>
-
-<li>댄스</li>
-
-<li>실용음악</li>
-
-<li>싱어송라이터</li>
-
-<li>전국 오디션 상시 접수</li>
-
-</ul>
-
-<a href="#audition" class="gold-btn">
-
-오디션 지원
-
-</a>
-
-</div>
-
-</div>
-<!-- 03 공연가수 모집 -->
-
-<div class="artist-card">
-
-<div class="card-number">03</div>
-
-<img src="artist03.jpg" alt="공연가수">
-
-<div class="artist-info">
-
-<div class="info-top">
-
-<h2>공연가수 모집</h2>
-
-<span class="badge">Recruit</span>
-
-</div>
-
-<h3>행사 · 축제 전문 아티스트</h3>
-
-<ul>
-
-<li>지역축제 공연</li>
-
-<li>기업행사</li>
-
-<li>복지관 공연</li>
-
-<li>요양원 공연</li>
-
-<li>방송 및 행사 출연</li>
-
-<li>전국 공연 활동</li>
-
-</ul>
-
-<a href="#audition" class="gold-btn">
-
-지원하기
-
-</a>
-
-</div>
-
-</div>
-
-
-<!-- 04 전속가수 모집 -->
-
-<div class="artist-card">
-
-<div class="card-number">04</div>
-
-<img src="artist04.jpg" alt="전속가수">
-
-<div class="artist-info">
-
-<div class="info-top">
-
-<h2>전속가수 모집</h2>
-
-<span class="badge">Exclusive</span>
-
-</div>
-
-<h3>가수인생활 엔터테인먼트</h3>
-
-<ul>
-
-<li>전속 계약</li>
-
-<li>음원 제작</li>
-
-<li>앨범 발매</li>
-
-<li>공연 지원</li>
-
-<li>홍보 및 마케팅</li>
-
-<li>유튜브 활동 지원</li>
-
-</ul>
-
-<a href="#audition" class="gold-btn">
-
-상담 신청
-
-</a>
-
-</div>
-
-</div>
-<!-- 05 예비가수 모집 -->
-
-<div class="artist-card">
-
-<div class="card-number">05</div>
-
-<img src="artist05.jpg" alt="예비가수">
-
-<div class="artist-info">
-
-<div class="info-top">
-
-<h2>예비가수 모집</h2>
-
-<span class="badge">New Star</span>
-
-</div>
-
-<h3>새로운 스타를 기다립니다</h3>
-
-<ul>
-
-<li>노래를 좋아하는 누구나</li>
-
-<li>나이 · 경력 제한 없음</li>
-
-<li>1:1 오디션 상담</li>
-
-<li>보컬 트레이닝</li>
-
-<li>무대 데뷔 지원</li>
-
-<li>전속 활동 기회 제공</li>
-
-</ul>
-
-<a href="#audition" class="gold-btn">
-
-오디션 신청
-
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- 오디션 안내 -->
-
-<section id="audition" class="recruit">
-
-<h2>가수인생활 엔터테인먼트 오디션</h2>
+<h3>신인가수 모집</h3>
 
 <p>
-
-실력과 열정을 가진 새로운 아티스트를 기다립니다.<br>
-
-트로트 · 발라드 · 댄스 · 실용음악 등 모든 장르 지원 가능합니다.<br>
-
-전속가수 · 공연가수 · 신인가수 상시 모집
-
+노래에 대한 열정과 꿈이 있다면 누구나 도전할 수 있습니다.
+체계적인 교육과 다양한 무대 경험을 제공합니다.
 </p>
 
-<a href="contact.html" class="apply-btn">
+<a href="audition.html" class="card-btn">지원하기</a>
 
-오디션 지원하기
+</div>
+
+</div>
+
+<div class="artist-card">
+
+<img src="images/performance-singer.jpg" alt="공연가수">
+
+<div class="artist-info">
+
+<h3>공연가수 모집</h3>
+
+<p>
+지역축제, 기업행사, 문화공연 등 다양한 공연 무대에서
+활동할 공연가수를 모집합니다.
+</p>
+
+<a href="audition.html" class="card-btn">지원하기</a>
+
+</div>
+
+</div>
+
+<div class="artist-card">
+
+<img src="images/exclusive-singer.jpg" alt="전속가수">
+
+<div class="artist-info">
+
+<h3>전속가수 모집</h3>
+
+<p>
+전속 계약을 통해 음원 제작, 공연,
+홍보 활동을 함께할 가수를 모집합니다.
+</p>
+
+<a href="audition.html" class="card-btn">지원하기</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+<!-- =========================================
+     오디션 안내
+========================================= -->
+
+<section class="audition-section">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>오디션 안내</h2>
+
+<p>가수의 꿈을 현실로 만들어 드립니다.</p>
+
+</div>
+
+<div class="audition-box">
+
+<div class="audition-left">
+
+<h3>지원 자격</h3>
+
+<ul>
+
+<li>✔ 만 15세 이상 누구나 지원 가능</li>
+
+<li>✔ 장르 제한 없음 (트로트 · 발라드 · K-POP 등)</li>
+
+<li>✔ 신인 및 경력가수 모두 가능</li>
+
+<li>✔ 전국 지원 가능</li>
+
+</ul>
+
+</div>
+
+<div class="audition-right">
+
+<h3>지원 절차</h3>
+
+<div class="step">
+
+<span>01</span>
+
+<div>
+
+<h4>온라인 지원</h4>
+
+<p>지원서와 사진을 제출합니다.</p>
+
+</div>
+
+</div>
+
+<div class="step">
+
+<span>02</span>
+
+<div>
+
+<h4>1차 심사</h4>
+
+<p>서류 및 음원 심사</p>
+
+</div>
+
+</div>
+
+<div class="step">
+
+<span>03</span>
+
+<div>
+
+<h4>2차 오디션</h4>
+
+<p>실기 및 면접 진행</p>
+
+</div>
+
+</div>
+
+<div class="step">
+
+<span>04</span>
+
+<div>
+
+<h4>최종 합격</h4>
+
+<p>전속 계약 및 활동 시작</p>
+
+</div>
+
+</div>
+
+<a href="audition.html" class="apply-btn">
+
+오디션 지원하기 →
 
 </a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+<!-- =========================================
+     공연문의 / 오디션 배너
+========================================= -->
+
+<section class="contact-banner">
+
+<div class="container">
+
+<div class="banner-box">
+
+<div class="banner-item">
+
+<h2>공연 및 행사 문의</h2>
+
+<p>
+축제, 기업행사, 복지행사, 지역축제, 공연기획까지
+전문적으로 진행해 드립니다.
+</p>
+
+<a href="contact.html" class="banner-btn">
+공연 문의하기
+</a>
+
+</div>
+
+<div class="banner-item">
+
+<h2>오디션 참가 신청</h2>
+
+<p>
+가수의 꿈을 함께 이루어 갈
+새로운 가족을 기다립니다.
+</p>
+
+<a href="audition.html" class="banner-btn">
+오디션 지원하기
+</a>
+
+</div>
+
+</div>
+
+</div>
 
 </section>
 
-</div>
+<!-- =========================================
+     FOOTER
+========================================= -->
+
 <footer>
 
 <div class="container">
 
-<h3 style="color:#ffd56c;font-size:28px;margin-bottom:15px;">
-가수인생활 엔터테인먼트
-</h3>
+<div class="footer-logo">
 
-<p style="line-height:2;">
-대표 : 이명로<br>
-문화예술 공연기획 · 가수 매니지먼트 · 공연제작 · 음원제작
-</p>
+<h2>가수인생활 엔터테인먼트</h2>
 
-<p style="margin-top:20px;">
-Copyright © 2026 GASUIN LIFE ENTERTAINMENT.
-All Rights Reserved.
-</p>
+<p>GASUIN LIFE ENTERTAINMENT</p>
+
+</div>
+
+<div class="footer-info">
+
+<p>대표 : 이명로</p>
+
+<p>사업분야 : 공연기획 · 가수매니지먼트 · 문화예술행사</p>
+
+<p>전화 : 010-0000-0000</p>
+
+<p>E-mail : info@gasuinent.kr</p>
+
+<p>Website : www.gasuinent.kr</p>
+
+</div>
+
+<div class="copyright">
+
+© 2026 GASUIN LIFE ENTERTAINMENT.
+ALL RIGHTS RESERVED.
+
+</div>
 
 </div>
 
 </footer>
+<style>
+
+/* ==========================================
+   모바일 반응형
+========================================== */
+
+@media (max-width:1100px){
+
+.hero h1{
+font-size:56px;
+}
+
+.ceo-card{
+grid-template-columns:1fr;
+text-align:center;
+}
+
+.ceo-photo img{
+height:auto;
+max-width:420px;
+margin:auto;
+}
+
+.artist-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.audition-box{
+grid-template-columns:1fr;
+}
+
+.banner-box{
+grid-template-columns:1fr;
+}
+
+}
+
+@media (max-width:768px){
+
+.header-wrap{
+height:auto;
+padding:15px 0;
+flex-direction:column;
+gap:15px;
+}
+
+nav ul{
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.hero{
+height:420px;
+}
+
+.hero h1{
+font-size:42px;
+letter-spacing:2px;
+}
+
+.hero p{
+font-size:18px;
+padding:0 20px;
+}
+
+.section-title h2{
+font-size:34px;
+}
+
+.section-title p{
+font-size:16px;
+}
+
+.artist-grid{
+grid-template-columns:1fr;
+}
+
+.ceo-info h2{
+font-size:40px;
+}
+
+.ceo-info h3{
+font-size:22px;
+}
+
+.ceo-buttons{
+flex-direction:column;
+}
+
+.banner-item{
+padding:35px 25px;
+}
+
+.footer-logo h2{
+font-size:26px;
+}
+
+}
+
+@media (max-width:480px){
+
+.hero h1{
+font-size:34px;
+}
+
+.logo-text h2{
+font-size:18px;
+}
+
+.logo img{
+width:46px;
+height:46px;
+}
+
+nav ul li a{
+padding:8px 12px;
+font-size:13px;
+}
+
+}
+
+.fade-up{
+
+opacity:0;
+transform:translateY(50px);
+transition:all .8s ease;
+
+}
+
+.fade-up.show{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+</style>
 
 <script>
 
-const cards=document.querySelectorAll('.artist-card');
+const observer = new IntersectionObserver((entries)=>{
 
-const observer=new IntersectionObserver((entries)=>{
-
-entries.forEach(entry=>{
+entries.forEach((entry)=>{
 
 if(entry.isIntersecting){
 
-entry.target.animate([
-
-{
-opacity:0,
-transform:'translateY(80px)'
-},
-{
-opacity:1,
-transform:'translateY(0)'
-}
-
-],{
-
-duration:700,
-fill:'forwards',
-easing:'ease-out'
-
-});
+entry.target.classList.add("show");
 
 }
 
@@ -716,10 +759,17 @@ easing:'ease-out'
 
 },{threshold:.15});
 
-cards.forEach(card=>observer.observe(card));
+document.querySelectorAll(
+'.ceo-card,.artist-card,.audition-box,.banner-item,.section-title'
+).forEach((el)=>{
+
+el.classList.add('fade-up');
+
+observer.observe(el);
+
+});
 
 </script>
 
 </body>
-
 </html>
