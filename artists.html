@@ -1,20 +1,27 @@
-<!DOCTYPE html><html lang='ko'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>소속가수 | 가수인생활 엔터테인먼트</title><style>
-*{box-sizing:border-box}body{margin:0;background:#090909;color:#fff;font-family:sans-serif}
-.hero{padding:90px 20px;background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.85)),url('https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1600&q=80') center/cover}
-.hero h1{text-align:center;font-size:52px;color:#d4af37;margin:0}.hero p{text-align:center}
-.wrap{max-width:1200px;margin:auto;padding:50px 20px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px}
-.card{background:#151515;border:1px solid #d4af37;border-radius:16px;overflow:hidden}
-.photo{height:260px;background:#333;display:flex;align-items:center;justify-content:center}
-.info{padding:20px;text-align:center}.btn{display:inline-block;padding:10px 20px;background:#d4af37;color:#000;text-decoration:none;border-radius:30px;font-weight:bold}
-.sec{padding:70px 20px;text-align:center}.gold{color:#d4af37}footer{padding:30px;text-align:center;border-top:1px solid #333}
+<!DOCTYPE html><html lang='ko'><head><meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>소속가수</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080808;color:#fff;font-family:Arial}
+header{position:fixed;top:0;width:100%;background:rgba(0,0,0,.8);padding:18px 40px;border-bottom:1px solid #b9922f}
+nav{display:flex;justify-content:space-between;max-width:1200px;margin:auto}
+.hero{height:560px;background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.85)),url('https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1600&q=80') center/cover;display:flex;align-items:center;justify-content:center;text-align:center}
+.hero h1{font-size:58px;color:#d4af37}
+.wrap{max-width:1200px;margin:auto;padding:60px 20px}
+.feature{display:grid;grid-template-columns:320px 1fr;gap:30px;background:#141414;border:1px solid #d4af37;border-radius:20px;padding:30px}
+.photo{background:#222;height:360px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#d4af37}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:40px}
+.card{background:#141414;border:1px solid #444;border-radius:16px;padding:18px;text-align:center}
+.card .img{height:180px;background:#222;border-radius:10px;margin-bottom:12px}
+.box{margin-top:40px;background:#141414;border-left:5px solid #d4af37;padding:24px;border-radius:12px}
+footer{text-align:center;padding:30px;border-top:1px solid #333;color:#bbb}
+@media(max-width:900px){.feature{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:40px}}
 </style></head><body>
-<section class='hero'><h1>소속가수</h1><p>가수인생활 엔터테인먼트</p></section>
-<div class='wrap'><div class='grid'>
-<div class='card'><div class='photo'>대표가수 사진</div><div class='info'><h2>이명로</h2><p>대표가수 · 공연 · 행사</p><a class='btn'>프로필</a></div></div>
-<div class='card'><div class='photo'>모집중</div><div class='info'><h2>신인가수 모집</h2><p>트로트 / 가요</p></div></div>
-<div class='card'><div class='photo'>모집중</div><div class='info'><h2>신인가수 모집</h2><p>전국 지원 가능</p></div></div>
-<div class='card'><div class='photo'>모집중</div><div class='info'><h2>신인가수 모집</h2><p>오디션 상시접수</p></div></div>
-</div></div>
-<section class='sec'><h2 class='gold'>오디션 안내</h2><p>가수인생활 엔터테인먼트는 신인가수를 모집합니다.</p></section>
-<section class='sec'><h2 class='gold'>공연 문의</h2><p>기업행사 · 축제 · 복지공연 · 문화행사</p></section>
-<footer>© GASUIN Entertainment</footer></body></html>
+<header><nav><div><b style='color:#d4af37'>가수인생활 엔터테인먼트</b></div><div>HOME | 소속가수 | 오디션 | 공연문의</div></nav></header>
+<section class='hero'><div><h1>소속가수</h1><p>GASUIN LIFE ENTERTAINMENT</p></div></section>
+<div class='wrap'>
+<div class='feature'><div class='photo'>대표가수 사진</div><div><h2 style='color:#d4af37'>대표가수 이명로</h2><p>가수인생활 엔터테인먼트 대표가수 소개 영역입니다.</p><ul><li>공연</li><li>행사</li><li>방송</li><li>봉사활동</li></ul></div></div>
+<div class='grid'><div class='card'><div class='img'></div><h3>소속가수 1</h3><p>프로필</p></div><div class='card'><div class='img'></div><h3>소속가수 2</h3><p>프로필</p></div><div class='card'><div class='img'></div><h3>소속가수 3</h3><p>프로필</p></div><div class='card'><div class='img'></div><h3>소속가수 4</h3><p>프로필</p></div><div class='card'><div class='img'></div><h3>소속가수 5</h3><p>프로필</p></div><div class='card'><div class='img'></div><h3>소속가수 6</h3><p>프로필</p></div><div class='card'><div class='img'></div><h3>소속가수 7</h3><p>프로필</p></div><div class='card'><div class='img'></div><h3>소속가수 8</h3><p>프로필</p></div></div>
+<div class='box'><h2 style='color:#d4af37'>신인가수 오디션</h2><p>오디션 지원자를 모집합니다.</p></div>
+<div class='box'><h2 style='color:#d4af37'>공연 문의</h2><p>행사·축제·기업공연 문의</p></div>
+</div><footer>© GASUIN LIFE ENTERTAINMENT</footer></body></html>
