@@ -3,7 +3,47 @@
 <title>소속가수</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#080808;color:#fff;font-family:Arial}
-header{position:fixed;top:0;width:100%;background:rgba(0,0,0,.8);padding:18px 40px;border-bottom:1px solid #b9922f}
+header{
+    position:fixed;
+    top:0;
+    width:100%;
+    background:rgba(0,0,0,.8);
+    padding:18px 40px;
+    border-bottom:1px solid #b9922f;
+    z-index:1000;
+}
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    max-width:1200px;
+    margin:auto;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo span{
+    color:#d4af37;
+    font-size:28px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.menu a{
+    color:#fff;
+    text-decoration:none;
+    margin-left:20px;
+    font-weight:bold;
+}
+
+.menu a:hover{
+    color:#d4af37;
+}
 nav{display:flex;justify-content:space-between;max-width:1200px;margin:auto}
 .hero{
 height:420px;background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.85)),url('https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1600&q=80') center/cover;display:flex;align-items:center;justify-content:center;text-align:center}
@@ -37,18 +77,26 @@ footer{text-align:center;padding:30px;border-top:1px solid #333;color:#bbb}
 @media(max-width:900px){.feature{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:40px}}
 </style></head><body>
 <header><nav><div>
-    <div class="logo">
-    <a href="index.html">
-        <img src="logo.png" alt="가수인생활 엔터테인먼트" style="height:55px;vertical-align:middle;">
-    </a>
+<header>
+    <nav>
 
-    <span style="
-        color:#d4af37;
-        font-size:26px;
-        font-weight:bold;
-        margin-left:12px;">
-        가수인생활 엔터테인먼트
-    </span>
+        <div class="logo">
+            <a href="index.html">
+                <img src="logo.png" alt="가수인생활 엔터테인먼트" style="height:55px;">
+            </a>
+            <span>가수인생활 엔터테인먼트</span>
+        </div>
+
+        <div class="menu">
+            <a href="index.html">HOME</a>
+            <a href="artists.html">소속가수</a>
+            <a href="audition.html">오디션</a>
+            <a href="contact.html">공연문의</a>
+        </div>
+
+    </nav>
+</header>
+
 </div>
 </div><div><a href="index.html">HOME</a> |
 <a href="artists.html">소속가수</a> |
@@ -107,8 +155,6 @@ border-radius:30px;
 font-weight:bold;">
 공연 문의
 </a>
-
-</div>
 
 </div>
 
