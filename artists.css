@@ -1,1 +1,330 @@
+/* ==========================
+   ARTISTS PAGE
+========================== */
 
+body{
+    background:#0b0b0b;
+    color:#fff;
+    font-family:'Noto Sans KR',sans-serif;
+    margin:0;
+    padding:0;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.hero{
+    height:420px;
+    background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.75)),
+    url("images/stage.jpg") center center/cover no-repeat;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:64px;
+    color:#d4af37;
+    margin-bottom:15px;
+    letter-spacing:3px;
+}
+
+.hero p{
+    font-size:22px;
+    color:#eee;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.section-title h2{
+    font-size:42px;
+    color:#d4af37;
+    margin-bottom:15px;
+}
+
+.section-title p{
+    color:#ccc;
+    font-size:18px;
+}
+/* ==========================
+   대표가수
+========================== */
+
+.ceo-section{
+    padding:100px 0;
+    background:#111;
+}
+
+.ceo-card{
+    display:flex;
+    align-items:center;
+    gap:60px;
+    background:#1a1a1a;
+    border:1px solid rgba(212,175,55,.25);
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 40px rgba(0,0,0,.45);
+}
+
+.ceo-photo{
+    flex:1;
+}
+
+.ceo-photo img{
+    width:100%;
+    display:block;
+}
+
+.ceo-info{
+    flex:1;
+    padding:50px;
+}
+
+.ceo-info h3{
+    font-size:42px;
+    color:#d4af37;
+    margin-bottom:10px;
+}
+
+.ceo-info h4{
+    color:#ffffff;
+    font-size:22px;
+    margin-bottom:25px;
+    font-weight:500;
+}
+
+.ceo-info p{
+    color:#cccccc;
+    line-height:1.9;
+    margin-bottom:25px;
+}
+
+.ceo-info ul{
+    list-style:none;
+    padding:0;
+    margin:0 0 35px;
+}
+
+.ceo-info li{
+    color:#eeeeee;
+    padding:10px 0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.gold-btn{
+    display:inline-block;
+    padding:14px 34px;
+    background:#d4af37;
+    color:#111;
+    text-decoration:none;
+    font-weight:bold;
+    border-radius:40px;
+    transition:.3s;
+}
+
+.gold-btn:hover{
+    background:#f3cb55;
+    transform:translateY(-3px);
+}
+/* ==========================
+   소속가수
+========================== */
+
+.artist-list{
+    padding:100px 0;
+    background:#0b0b0b;
+}
+
+.artist-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:30px;
+}
+
+.artist-card{
+    background:#181818;
+    border:1px solid rgba(212,175,55,.18);
+    border-radius:18px;
+    overflow:hidden;
+    transition:.35s;
+    text-align:center;
+}
+
+.artist-card:hover{
+    transform:translateY(-10px);
+    border-color:#d4af37;
+    box-shadow:0 15px 35px rgba(212,175,55,.25);
+}
+
+.artist-card img{
+    width:100%;
+    height:340px;
+    object-fit:cover;
+    display:block;
+}
+
+.artist-card h3{
+    margin:22px 0 8px;
+    color:#d4af37;
+    font-size:24px;
+}
+
+.artist-card p{
+    margin:0 0 25px;
+    color:#cccccc;
+    font-size:16px;
+}
+/* ==========================
+   AUDITION
+========================== */
+
+.audition-section{
+    padding:100px 0;
+    background:#111;
+}
+
+.audition-box{
+    max-width:900px;
+    margin:0 auto;
+    padding:60px;
+    background:#1a1a1a;
+    border:1px solid rgba(212,175,55,.25);
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+.audition-box h3{
+    font-size:36px;
+    color:#d4af37;
+    margin-bottom:25px;
+}
+
+.audition-box p{
+    color:#dddddd;
+    font-size:18px;
+    line-height:1.8;
+    margin-bottom:35px;
+}
+
+/* ==========================
+   CONTACT
+========================== */
+
+.contact-section{
+    padding:100px 0;
+    background:#0b0b0b;
+}
+
+.contact-box{
+    max-width:900px;
+    margin:0 auto;
+    padding:60px;
+    background:#181818;
+    border:1px solid rgba(212,175,55,.25);
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+.contact-box h3{
+    color:#d4af37;
+    font-size:34px;
+    margin-bottom:25px;
+}
+
+.contact-box p{
+    color:#dddddd;
+    font-size:18px;
+    line-height:1.9;
+    margin-bottom:15px;
+}
+/* ==========================
+   반응형 (Responsive)
+========================== */
+
+@media (max-width:1024px){
+
+    .artist-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .ceo-card{
+        flex-direction:column;
+    }
+
+    .ceo-info{
+        padding:40px;
+    }
+
+    .hero h1{
+        font-size:48px;
+    }
+
+}
+
+@media (max-width:768px){
+
+    .hero{
+        height:300px;
+        padding:20px;
+    }
+
+    .hero h1{
+        font-size:36px;
+    }
+
+    .hero p{
+        font-size:18px;
+    }
+
+    .section-title h2{
+        font-size:32px;
+    }
+
+    .artist-grid{
+        grid-template-columns:1fr;
+        gap:25px;
+    }
+
+    .artist-card img{
+        height:320px;
+    }
+
+    .ceo-info{
+        padding:30px;
+    }
+
+    .ceo-info h3{
+        font-size:32px;
+    }
+
+    .ceo-info h4{
+        font-size:20px;
+    }
+
+    .audition-box,
+    .contact-box{
+        padding:35px 25px;
+    }
+
+    .audition-box h3,
+    .contact-box h3{
+        font-size:28px;
+    }
+
+    .gold-btn{
+        width:100%;
+        text-align:center;
+        box-sizing:border-box;
+    }
+
+}
