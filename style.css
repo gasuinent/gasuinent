@@ -55,10 +55,53 @@ header{
 }
 
 .head{
-    height:86px;
+    min-height:86px;
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
+    gap:14px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:20px;
+    font-weight:900;
+    white-space:nowrap;
+    flex:0 0 auto;
+}
+
+.brand img{
+    width:54px;
+    height:54px;
+    object-fit:contain;
+    border-radius:50%;
+}
+
+.desktop-nav{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:1px;
+    flex-wrap:nowrap;
+    flex:1;
+}
+
+.desktop-nav a{
+    padding:10px 7px;
+    border-radius:9px;
+    color:var(--muted);
+    font-size:14px;
+    font-weight:850;
+    white-space:nowrap;
+}
+
+.desktop-nav a:hover,
+.desktop-nav a.active{
+    background:rgba(224,179,84,.13);
+    color:var(--gold2);
+}
 }
 
 .brand{
