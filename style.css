@@ -103,39 +103,6 @@ header{
     color:var(--gold2);
 }
 
-.brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    font-size:22px;
-    font-weight:700;
-}
-
-.brand img{
-    width:55px;
-    height:55px;
-}
-
-.brand b{
-    color:var(--gold);
-}
-
-.desktop-nav{
-    display:flex;
-    gap:20px;
-}
-
-.desktop-nav a{
-    color:#ddd;
-    font-weight:600;
-    transition:.3s;
-}
-
-.desktop-nav a:hover,
-.desktop-nav a.active{
-    color:var(--gold);
-}
-
 /* ==========================
    Footer
 ========================== */
