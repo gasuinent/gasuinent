@@ -124,6 +124,52 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
       footer{padding:48px 20px}
       footer img{width:112px;height:112px}
     }
+   .ceo-wrap{
+display:flex;
+gap:40px;
+align-items:flex-start;
+}
+
+.ceo-photo{
+width:280px;
+flex-shrink:0;
+text-align:center;
+}
+
+.ceo-photo img{
+width:100%;
+border-radius:20px;
+border:3px solid #e0b354;
+box-shadow:0 10px 25px rgba(0,0,0,.4);
+}
+
+.ceo-photo h4{
+margin:15px 0 5px;
+color:#f2cf7a;
+font-size:28px;
+}
+
+.ceo-photo p{
+margin:0;
+color:#ccc;
+}
+
+.ceo-text{
+flex:1;
+}
+
+@media(max-width:900px){
+
+.ceo-wrap{
+display:block;
+}
+
+.ceo-photo{
+width:220px;
+margin:0 auto 30px;
+}
+
+} 
   </style>
 </head>
 <body>
@@ -160,18 +206,27 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
 </div>
 <div class="card" style="margin-bottom:28px">
 <h3 style="color:var(--gold2)">대표 인사말</h3>
+<div class="ceo-wrap">
 
+<div class="ceo-photo">
+<img src="ceo.jpg" alt="대표 이명로">
+<h4>이명로</h4>
+<p>대표 / CEO</p>
+</div>
+
+<div class="ceo-text">
 <p><strong>안녕하십니까.</strong><br>
 가수인생활 엔터테인먼트 대표 이명로입니다.</p>
 
 <p>
-가수인생활 엔터테인먼트는 공연기획, 가수 매니지먼트, 문화예술 콘텐츠 제작을 통해
-사람과 사람을 연결하고 </p>지역사회와 함께 성장하는 문화예술 전문기업입니다.
+가수인생활 엔터테인먼트는 공연기획, 가수 매니지먼트,
+문화예술 콘텐츠 제작을 통해 사람과 사람을 연결하고
+지역사회와 함께 성장하는 문화예술 전문기업입니다.
 </p>
 
 <p>
-지역축제, 기업행사, 전통시장, 복지시설, </p>문화공연 등 다양한 무대에서
-수준 높은 공연을 선보이며,
+지역축제, 기업행사, 전통시장, 복지시설,
+문화공연 등 다양한 무대에서 수준 높은 공연을 선보이며,
 한국가수인생활협회와 나가수공연단·봉사단이 함께하는
 문화나눔 활동도 지속적으로 이어가고 있습니다.
 </p>
@@ -189,8 +244,14 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
 <p style="text-align:right;color:var(--gold2);font-weight:900;margin-bottom:0">
 가수인생활 엔터테인먼트 대표 이명로
 </p>
-</div>
-</div>
+</div>   <!-- ceo-text -->
+
+</div>   <!-- ceo-wrap -->
+
+</div>   <!-- card -->
+
+</div>   <!-- wrap -->
+
 </section>
 
 
