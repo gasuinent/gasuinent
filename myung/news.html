@@ -137,14 +137,23 @@ style="width:300px;padding:10px;border-radius:6px;border:none;">
 <textarea id="newsContent"></textarea>
 
 <button id="saveNews">뉴스 등록</button>
-  <script>
 
-document.getElementById("saveNews").onclick=function(){
+<script>
 
-alert("뉴스 등록 기능은 다음 단계에서 연결합니다.");
+document.getElementById("saveNews").onclick = function () {
+
+    let title = document.getElementById("newsTitle").value;
+
+    if (title == "") {
+        alert("뉴스 제목을 입력하세요.");
+        return;
+    }
+
+    alert("다음 단계에서 저장 기능을 연결합니다.");
 
 };
 
 </script>
+
 </body>
 </html>
