@@ -106,7 +106,7 @@ style="width:300px;padding:10px;border-radius:6px;border:none;">
 
 <h2>등록된 뉴스</h2>
 
-<table style="width:100%;border-collapse:collapse;text-align:center;">
+<table id="newsTable" style="width:100%;border-collapse:collapse;text-align:center;">
 <tr style="background:#333;">
 <th>번호</th>
 <th>제목</th>
@@ -115,7 +115,7 @@ style="width:300px;padding:10px;border-radius:6px;border:none;">
 <th>삭제</th>
 </tr>
 
-<tr>
+<tr id="firstNews">
 <td>1</td>
 <td>첫 번째 뉴스</td>
 <td>2026-07-23</td>
@@ -145,11 +145,13 @@ document.getElementById("saveNews").onclick = function () {
     let title = document.getElementById("newsTitle").value;
 
     if (title == "") {
-        alert("뉴스 제목을 입력하세요.");
-        return;
-    }
+    alert("뉴스 제목을 입력하세요.");
+    return;
+}
 
-    alert("다음 단계에서 저장 기능을 연결합니다.");
+console.log(title);
+
+alert("다음 단계에서 저장 기능을 연결합니다.");
 
 };
 
