@@ -79,7 +79,25 @@ float:right;
 }
 
 </style>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+  authDomain: "gasuinent.firebaseapp.com",
+  projectId: "gasuinent",
+  storageBucket: "gasuinent.firebasestorage.app",
+  messagingSenderId: "122370674182",
+  appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+  measurementId: "G-39M5K1M6K7"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+console.log("Firebase 연결 완료");
+</script>
 </head>
 
 <body>
