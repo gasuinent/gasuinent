@@ -84,7 +84,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/fireba
 import {
   getFirestore,
   collection,
-  addDoc
+  addDoc,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -138,13 +139,8 @@ style="width:300px;padding:10px;border-radius:6px;border:none;">
 <th>삭제</th>
 </tr>
 
-<tr id="firstNews">
-<td>1</td>
-<td>첫 번째 뉴스</td>
-<td>2026-07-23</td>
-<td><button>수정</button></td>
-<td><button>삭제</button></td>
-</tr>
+<tbody id="newsBody"></tbody>
+  
 </table>
 <hr style="margin:40px 0;">
 
@@ -164,7 +160,8 @@ style="width:300px;padding:10px;border-radius:6px;border:none;">
 <script type="module">
 import {
   collection,
-  addDoc
+  addDoc,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 console.log("뉴스 등록 버튼 준비 완료");
 
@@ -197,6 +194,33 @@ document.getElementById("saveNews").onclick = async function () {
     }
 
 };
+async function loadNews(){
+
+const snapshot = await getDocs(collection(window.db, "news"));
+
+let html = "";
+let no = 1;
+
+snapshot.forEach((doc) => {
+
+    const news = doc.data();
+
+    html += `
+<tr>
+<td>${no++}</td>
+<td>${news.title}</td>
+<td>${news.date}</td>
+<td><button>수정</button></td>
+<td><button>삭제</button></td>
+</tr>
+`;
+
+});
+
+document.getElementById("newsBody").innerHTML = html; 
+} 
+  
+loadNews();  
 </script>
 
 </body>
