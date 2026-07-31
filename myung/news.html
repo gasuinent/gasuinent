@@ -139,7 +139,7 @@ style="width:300px;padding:10px;border-radius:6px;border:none;">
 <button id="saveNews">뉴스 등록</button>
 
 <script>
-
+console.log("뉴스 등록 버튼 준비 완료");
 document.getElementById("saveNews").onclick = function () {
 
     let title = document.getElementById("newsTitle").value;
@@ -150,9 +150,9 @@ document.getElementById("saveNews").onclick = function () {
 }
 
 console.log(title);
+console.log("입력한 제목:", title);
 
 alert("다음 단계에서 저장 기능을 연결합니다.");
-
 };
 
 </script>
