@@ -170,7 +170,7 @@ import {
   doc,
   getDoc,
   updateDoc
-} from "...firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 console.log("뉴스 등록 버튼 준비 완료");
 let editId = null;
 document.getElementById("saveNews").onclick = async function () {
@@ -184,15 +184,33 @@ document.getElementById("saveNews").onclick = async function () {
         return;
     }
 
-    try {
+   try {
 
-        await addDoc(collection(window.db, "news"), {
-            title: title,
-            content: content,
-            date: today
+    if(editId){
+
+        await updateDoc(doc(window.db,"news",editId),{
+            title:title,
+            content:content,
+            date:today
+        });
+
+        alert("뉴스가 수정되었습니다.");
+
+        editId = null;
+
+    }else{
+
+        await addDoc(collection(window.db,"news"),{
+            title:title,
+            content:content,
+            date:today
         });
 
         alert("뉴스가 저장되었습니다.");
+
+    }
+
+    loadNews();
 
     } catch (e) {
 
