@@ -161,7 +161,9 @@ style="width:300px;padding:10px;border-radius:6px;border:none;">
 import {
   collection,
   addDoc,
-  getDocs
+  getDocs,
+  deleteDoc,
+  doc
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 console.log("뉴스 등록 버튼 준비 완료");
 
@@ -205,13 +207,14 @@ snapshot.forEach((doc) => {
 
     const news = doc.data();
 
-    html += `
+
+html += `
 <tr>
 <td>${no++}</td>
 <td>${news.title}</td>
 <td>${news.date}</td>
 <td><button>수정</button></td>
-<td><button>삭제</button></td>
+<td><button onclick="deleteNews('${doc.id}')">삭제</button></td>
 </tr>
 `;
 
@@ -219,7 +222,16 @@ snapshot.forEach((doc) => {
 
 document.getElementById("newsBody").innerHTML = html; 
 } 
-  
+async function deleteNews(id){
+
+    if(!confirm("정말 삭제하시겠습니까?")) return;
+
+    await deleteDoc(doc(window.db,"news",id));
+
+    loadNews();
+
+} 
+ window.deleteNews = deleteNews; 
 loadNews();  
 </script>
 
