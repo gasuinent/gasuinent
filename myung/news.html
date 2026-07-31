@@ -98,7 +98,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+
+window.db = getFirestore(app);
 
 console.log("Firebase 연결 완료");
 </script>
@@ -160,36 +161,42 @@ style="width:300px;padding:10px;border-radius:6px;border:none;">
 
 <button id="saveNews">뉴스 등록</button>
 
-<script>
+<script type="module">
+import {
+  collection,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 console.log("뉴스 등록 버튼 준비 완료");
+
 document.getElementById("saveNews").onclick = async function () {
 
     let title = document.getElementById("newsTitle").value;
     let content = document.getElementById("newsContent").value;
     let today = new Date().toISOString().slice(0,10);
+
     if (title == "") {
-    alert("뉴스 제목을 입력하세요.");
-    return;
-}
+        alert("뉴스 제목을 입력하세요.");
+        return;
+    }
 
-try {
+    try {
 
-  await addDoc(collection(db, "news"), {
-    title: title,
-    content: content,
-    date: today
-  });
+        await addDoc(collection(window.db, "news"), {
+            title: title,
+            content: content,
+            date: today
+        });
 
-  alert("뉴스가 저장되었습니다.");
+        alert("뉴스가 저장되었습니다.");
 
-} catch (e) {
+    } catch (e) {
 
-  alert("저장 실패");
-  console.error(e);
+        alert("저장 실패");
+        console.error(e);
 
-}
+    }
+
 };
-
 </script>
 
 </body>
