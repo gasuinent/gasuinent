@@ -85,7 +85,11 @@ import {
   getFirestore,
   collection,
   addDoc,
-  getDocs
+  getDocs,
+  deleteDoc,
+  doc,
+  getDoc,
+  updateDoc
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -163,8 +167,10 @@ import {
   addDoc,
   getDocs,
   deleteDoc,
-  doc
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+  doc,
+  getDoc,
+  updateDoc
+} from "...firebase-firestore.js";
 console.log("뉴스 등록 버튼 준비 완료");
 let editId = null;
 document.getElementById("saveNews").onclick = async function () {
@@ -206,7 +212,7 @@ let no = 1;
 snapshot.forEach((doc) => {
 
     const news = doc.data();
-
+news.id = doc.id;
 
 html += `
 <tr>
@@ -233,11 +239,18 @@ async function deleteNews(id){
 } 
 window.deleteNews = deleteNews;
 
-function editNews(id){
+async function editNews(id){
 
     editId = id;
+const snap = await getDoc(doc(window.db, "news", id));
 
-    alert("수정할 뉴스를 선택했습니다.");
+if (!snap.exists()) return;
+
+const news = snap.data();
+document.getElementById("newsTitle").value = news.title;
+document.getElementById("newsContent").value = news.content;
+
+alert("수정할 뉴스를 선택했습니다.");
 
 }
 
