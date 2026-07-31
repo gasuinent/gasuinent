@@ -166,7 +166,7 @@ import {
   doc
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 console.log("뉴스 등록 버튼 준비 완료");
-
+let editId = null;
 document.getElementById("saveNews").onclick = async function () {
 
     let title = document.getElementById("newsTitle").value;
@@ -213,7 +213,7 @@ html += `
 <td>${no++}</td>
 <td>${news.title}</td>
 <td>${news.date}</td>
-<td><button>수정</button></td>
+<td><button onclick="editNews('${doc.id}')">수정</button></td>
 <td><button onclick="deleteNews('${doc.id}')">삭제</button></td>
 </tr>
 `;
@@ -231,7 +231,18 @@ async function deleteNews(id){
     loadNews();
 
 } 
- window.deleteNews = deleteNews; 
+window.deleteNews = deleteNews;
+
+function editNews(id){
+
+    editId = id;
+
+    alert("수정할 뉴스를 선택했습니다.");
+
+}
+
+window.editNews = editNews;
+
 loadNews();  
 </script>
 
