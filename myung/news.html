@@ -162,19 +162,32 @@ style="width:300px;padding:10px;border-radius:6px;border:none;">
 
 <script>
 console.log("뉴스 등록 버튼 준비 완료");
-document.getElementById("saveNews").onclick = function () {
+document.getElementById("saveNews").onclick = async function () {
 
     let title = document.getElementById("newsTitle").value;
-
+    let content = document.getElementById("newsContent").value;
+    let today = new Date().toISOString().slice(0,10);
     if (title == "") {
     alert("뉴스 제목을 입력하세요.");
     return;
 }
 
-console.log(title);
-console.log("입력한 제목:", title);
+try {
 
-alert("다음 단계에서 저장 기능을 연결합니다.");
+  await addDoc(collection(db, "news"), {
+    title: title,
+    content: content,
+    date: today
+  });
+
+  alert("뉴스가 저장되었습니다.");
+
+} catch (e) {
+
+  alert("저장 실패");
+  console.error(e);
+
+}
 };
 
 </script>
