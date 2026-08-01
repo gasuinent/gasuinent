@@ -378,8 +378,16 @@ async function loadLatestNews(){
         <div class="news-card">
             <img src="${n.image || 'logo.png'}" alt="">
             <div class="info">
-                <h3>${n.title}</h3>
-                <p>${(n.content || "").substring(0,120)}...</p>
+            <div style="display:inline-block;background:#FFD700;color:#111;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold;margin-bottom:10px;">
+문화예술
+</div>
+               <h3>${n.title}</h3>
+
+<div style="color:#bbb;font-size:14px;margin:8px 0 15px;">
+📅 ${n.date} &nbsp;&nbsp; | &nbsp;&nbsp; ✍ 가수인생활 엔터테인먼트
+</div>
+
+<p>${(n.content || "").substring(0,120)}...</p>
                 <a class="btn" href="notice_view.html?id=${doc.id}">
                     자세히 보기
                 </a>
