@@ -156,20 +156,10 @@ background:#ffcc00;
 📰 관련 기사
 </h2>
 
-<div id="relatedNews"
-style="
-display:grid;
-grid-template-columns:1fr;
-gap:15px;
-margin-top:20px;
-margin-bottom:40px;
-">
-</div>
+<div id="relatedNews"></div>
 
 <button onclick="location.href='news.html'">
-
 📰 뉴스 목록
-
 </button>
 
 <script type="module">
@@ -262,36 +252,50 @@ async function loadRelatedNews(){
 
         const n = item.data();
 
-        html += `
-        <div style="
-        border:1px solid #444;
-        border-radius:10px;
-        padding:15px;
-        margin-bottom:10px;
-        background:#1a1a1a;">
+     html += `
+<div style="
+display:flex;
+gap:15px;
+align-items:center;
+border:1px solid #444;
+border-radius:10px;
+padding:15px;
+margin-bottom:15px;
+background:#1a1a1a;">
 
-            <a href="notice_view.html?id=${item.id}"
-            style="
-            color:#FFD700;
-            font-size:20px;
-            font-weight:bold;
-            text-decoration:none;">
+<img src="${n.image || 'logo.png'}"
+style="
+width:140px;
+height:90px;
+object-fit:cover;
+border-radius:8px;">
 
-            ${n.title}
+<div style="flex:1;">
 
-            </a>
+<a href="notice_view.html?id=${item.id}"
+style="
+color:#FFD700;
+font-size:20px;
+font-weight:bold;
+text-decoration:none;">
 
-            <div style="
-            color:#aaa;
-            margin-top:8px;
-            font-size:14px;">
+${n.title}
 
-            📅 ${n.date}
+</a>
 
-            </div>
+<div style="
+color:#aaa;
+margin-top:8px;
+font-size:14px;">
 
-        </div>
-        `;
+📅 ${n.date}
+
+</div>
+
+</div>
+
+</div>
+`;
 
     });
 
