@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>뉴스 보기</title>
+<title>공지 보기</title>
 
 <style>
 
@@ -130,7 +130,7 @@ background:#ffcc00;
 
 <header>
 
-<h1>📰 뉴스 보기</h1>
+<h1>📢 공지 보기</h1>
 
 </header>
 
@@ -178,7 +178,7 @@ const params = new URLSearchParams(window.location.search);
 
 const id = params.get("id");
 
-async function loadNews(){
+async function loadNotice(){
 
     if(!id){
 
@@ -188,7 +188,7 @@ async function loadNews(){
 
     }
 
-    const snap = await getDoc(doc(db,"news",id));
+    const snap = await getDoc(doc(db,"notice",id));
 
     if(!snap.exists()){
 
@@ -198,17 +198,14 @@ async function loadNews(){
 
     }
 
-    const news = snap.data();
+    const notice = snap.data();
 
-    document.getElementById("title").innerHTML = news.title;
+document.getElementById("title").innerHTML = notice.title;
+document.getElementById("date").innerHTML = notice.date;
+document.getElementById("content").innerHTML = notice.content;
 
-    document.getElementById("date").innerHTML = news.date;
-
-    document.getElementById("content").innerHTML = news.content;
-
-    if(news.image){
-
-        document.getElementById("image").src = news.image;
+  if(notice.image){
+    document.getElementById("image").src = notice.image;
         document.getElementById("image").style.display = "block";
 
     }else{
@@ -219,7 +216,7 @@ async function loadNews(){
 
 }
 
-loadNews();
+loadNotice();
 
 </script>
 
