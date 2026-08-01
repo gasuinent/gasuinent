@@ -178,6 +178,12 @@ import {
   getDoc,
   updateDoc
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
 console.log("뉴스 등록 버튼 준비 완료");
 let editId = null;
 document.getElementById("saveNews").onclick = async function () {
