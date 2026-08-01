@@ -330,7 +330,8 @@ if(editId){
 
                     image:imageUrl,
 
-                    date:today
+                   date: today,
+timestamp: Date.now()
 
                 }
 
@@ -354,7 +355,8 @@ if(editId){
 
                     image:imageUrl,
 
-                    date:today
+                    date: today,
+timestamp: Date.now()
 
                 }
 
@@ -386,7 +388,7 @@ async function loadNews(){
 
  const q = query(
     collection(window.db,"news"),
-    orderBy("date","desc")
+   orderBy("timestamp","desc")
 );
 
 const snapshot = await getDocs(q);
