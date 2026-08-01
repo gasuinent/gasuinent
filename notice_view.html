@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>공지 보기</title>
+<title>뉴스</title>
 
 <style>
 
@@ -54,45 +54,49 @@ margin:40px auto;
 }
 
 #title{
-
-font-size:34px;
-
-font-weight:bold;
-
-margin-bottom:20px;
-
+    font-size:42px;
+    font-weight:700;
+    line-height:1.4;
+    color:#ffffff;
+    margin-bottom:25px;
 }
 
 #date{
+    color:#aaa;
+    margin-bottom:10px;
+}
 
-color:#aaa;
-
-margin-bottom:30px;
-
+#reporter{
+    color:#FFD700;
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:25px;
+    border-bottom:1px solid #444;
+    padding-bottom:15px;
 }
 
 #image{
+    width:100%;
+    max-height:600px;
+    object-fit:cover;
+    border-radius:10px;
+    margin-bottom:15px;
+}
 
-width:100%;
-
-max-height:600px;
-
-object-fit:cover;
-
-border-radius:10px;
-
-margin-bottom:30px;
-
+#caption{
+    color:#bbb;
+    font-size:15px;
+    text-align:center;
+    font-style:italic;
+    margin-bottom:30px;
 }
 
 #content{
-
-font-size:22px;
-
-line-height:1.8;
-
-white-space:pre-wrap;
-
+    font-size:21px;
+    line-height:2;
+    color:#f2f2f2;
+    text-align:justify;
+    white-space:pre-wrap;
 }
 
 button{
@@ -130,7 +134,7 @@ background:#ffcc00;
 
 <header>
 
-<h1>📢 공지 보기</h1>
+<h1>📰 뉴스</h1>
 
 </header>
 
@@ -138,15 +142,19 @@ background:#ffcc00;
 
 <div id="title"></div>
 
-<div id="date"></div>
-
+<div id="reporter">
+📅 2026-08-01   |   ✍ 가수인생활 엔터테인먼트
+────────────────────────────────
+</div>
 <img id="image">
+
+<div id="caption"></div>
 
 <div id="content"></div>
 
-<button onclick="history.back()">
+<button onclick="location.href='news.html'">
 
-목록으로 돌아가기
+📰 뉴스 목록
 
 </button>
 
@@ -201,18 +209,18 @@ async function loadNotice(){
     const notice = snap.data();
 
 document.getElementById("title").innerHTML = notice.title;
-document.getElementById("date").innerHTML = notice.date;
+document.getElementById("reporter").innerHTML =
+`📅 ${notice.date} &nbsp;&nbsp; | &nbsp;&nbsp; ✍ 가수인생활 엔터테인먼트`;
 document.getElementById("content").innerHTML = notice.content;
 
-  if(notice.image){
+if(notice.image){
     document.getElementById("image").src = notice.image;
-        document.getElementById("image").style.display = "block";
-
-    }else{
-
-        document.getElementById("image").style.display = "none";
-
-    }
+    document.getElementById("image").style.display = "block";
+    document.getElementById("caption").innerHTML = "▲ 기사 관련 사진";
+}else{
+    document.getElementById("image").style.display = "none";
+    document.getElementById("caption").innerHTML = "";
+}
 
 }
 
