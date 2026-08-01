@@ -91,7 +91,12 @@ import {
   getDoc,
   updateDoc
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
 const firebaseConfig = {
   apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
   authDomain: "gasuinent.firebaseapp.com",
@@ -106,6 +111,7 @@ const app = initializeApp(firebaseConfig);
 
 window.db = getFirestore(app);
 
+window.storage = getStorage(app);
 console.log("Firebase 연결 완료");
 </script>
 </head>
@@ -175,7 +181,17 @@ import {
 console.log("뉴스 등록 버튼 준비 완료");
 let editId = null;
 document.getElementById("saveNews").onclick = async function () {
+let file = document.getElementById("newsImage").files[0];
+let imageUrl = "";
 
+if(file){
+  const storageRef = ref(window.storage, "news/" + Date.now() + "_" + file.name);
+
+await uploadBytes(storageRef, file);
+
+imageUrl = await getDownloadURL(storageRef);
+
+}
     let title = document.getElementById("newsTitle").value;
     let content = document.getElementById("newsContent").value;
     let today = new Date().toISOString().slice(0,10);
@@ -191,9 +207,10 @@ document.getElementById("saveNews").onclick = async function () {
 console.log("수정 모드:", editId);
        await updateDoc(doc(window.db,"news",editId),{
           
-            title:title,
-            content:content,
-            date:today
+title: title,
+content: content,
+image: imageUrl,
+date: today
         });
 
         alert("뉴스가 수정되었습니다.");
@@ -203,9 +220,10 @@ console.log("수정 모드:", editId);
     }else{
 
         await addDoc(collection(window.db,"news"),{
-            title:title,
-            content:content,
-            date:today
+title: title,
+content: content,
+image: imageUrl,
+date: today
         });
 
         alert("뉴스가 저장되었습니다.");
