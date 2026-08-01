@@ -324,11 +324,17 @@ async function loadNews(){
 
             <h3>${notice.title}</h3>
 
-            <p>${notice.content.substring(0,150)}...</p>
+<div style="color:#bbb;margin-bottom:15px;">
+📅 ${notice.date}
+</div>
 
-            <a class="btn" href="notice_view.html?id=${docItem.id}">
-                자세히 보기
-            </a>
+<p style="font-size:17px;line-height:1.7;color:#ddd;">
+${notice.content.substring(0,150)}...
+</p>
+
+<a class="btn" href="notice_view.html?id=${docItem.id}">
+    자세히 보기
+</a>
 
         </div>
         `;
