@@ -52,8 +52,7 @@
     h2{font-size:clamp(40px,6vw,66px);line-height:1.2;margin:12px 0 20px}
     h3{font-size:32px;line-height:1.35;margin:0 0 26px}
     .lead{font-size:clamp(20px,3vw,31px);color:var(--muted);max-width:900px;margin:auto}
-section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108px}
-    .section-head{text-align:center;margin-bottom:56px}
+head{text-align:center;margin-bottom:56px}
     .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
     .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
     .card{background:var(--panel);border:1px solid var(--line);border-radius:34px;padding:44px}
@@ -126,6 +125,49 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
       footer{padding:48px 20px}
       footer img{width:112px;height:112px}
     }
+   #latest-news{
+    background:#111;
+    padding:80px 0;
+}
+
+#latestNews{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:25px;
+}
+
+.news-card{
+    background:#1a1a1a;
+    border:1px solid #333;
+    border-radius:15px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.news-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 35px rgba(224,179,84,.25);
+}
+
+.news-card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.news-card .info{
+    padding:20px;
+}
+
+.news-card h3{
+    margin:0 0 10px;
+    color:#FFD700;
+}
+
+.news-card p{
+    color:#ddd;
+    line-height:1.7;
+} 
   </style>
 </head>
 <body>
@@ -163,17 +205,31 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
 </div>
 </section>
 
+<section id="latest-news">
 
+<div class="wrap">
 
+<h2>📰 최신 뉴스</h2>
 
+<div id="latestNews"></div>
 
+</div>
 
-
-
-
+</section>
 
 </main>
-<footer><img alt="가수인생활 엔터테인먼트 로고" src="logo.png"/><div>© 2026 가수인생활 엔터테인먼트. All rights reserved.</div></footer>
+
+<section id="v55-intro" style="padding:40px;background:#111;color:#fff;border-top:4px solid #c9a227;">
+<h2>가수인생활 엔터테인먼트</h2>
+<p><strong>문화와 예술로 사람을 잇고, 감동을 전합니다.</strong></p>
+<p>공연기획 · 가수 매니지먼트 · 문화예술 콘텐츠 제작</p>
+<p><a href="about.html">회사소개</a> | <a href="contact.html">공연문의</a></p>
+</section>
+
+<footer>
+<img alt="가수인생활 엔터테인먼트 로고" src="logo.png"/>
+<div>© 2026 가수인생활 엔터테인먼트. All rights reserved.</div>
+</footer>
 <script>
 document.addEventListener('DOMContentLoaded',()=>{
   const menuBtn=document.getElementById('menuBtn');
@@ -277,12 +333,68 @@ ${g('request')}`);
   }
 </script>
 
-<section id="v55-intro" style="padding:40px;background:#111;color:#fff;border-top:4px solid #c9a227;">
-<h2>가수인생활 엔터테인먼트</h2>
-<p><strong>문화와 예술로 사람을 잇고, 감동을 전합니다.</strong></p>
-<p>공연기획 · 가수 매니지먼트 · 문화예술 콘텐츠 제작</p>
-<p><a href="about.html">회사소개</a> | <a href="contact.html">공연문의</a></p>
-</section>
+<script type="module">
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  limit
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+  authDomain: "gasuinent.firebaseapp.com",
+  projectId: "gasuinent",
+  storageBucket: "gasuinent.firebasestorage.app",
+  messagingSenderId: "122370674182",
+  appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+  measurementId: "G-39M5K1M6K7"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function loadLatestNews(){
+
+    const q = query(
+    collection(db,"notice"),
+    orderBy("timestamp","desc"),
+    limit(3)
+);
+
+    const snap = await getDocs(q);
+
+    let html = "";
+
+    snap.forEach(doc=>{
+
+        const n = doc.data();
+
+        html += `
+        <div class="news-card">
+            <img src="${n.image || 'logo.png'}" alt="">
+            <div class="info">
+                <h3>${n.title}</h3>
+                <p>${(n.content || "").substring(0,120)}...</p>
+                <a class="btn" href="notice_view.html?id=${doc.id}">
+                    자세히 보기
+                </a>
+            </div>
+        </div>
+        `;
+
+    });
+
+    document.getElementById("latestNews").innerHTML = html;
+
+}
+
+loadLatestNews();
+
+</script>
 </body>
 </html>
