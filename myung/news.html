@@ -163,6 +163,7 @@ style="width:300px;padding:10px;border-radius:6px;border:none;">
 
 <script type="module">
 import {
+  getFirestore,
   collection,
   addDoc,
   getDocs,
@@ -188,7 +189,8 @@ document.getElementById("saveNews").onclick = async function () {
 
     if(editId){
 console.log("수정 모드:", editId);
-        await updateDoc(doc(window.db,"news",editId),{
+       await updateDoc(doc(window.db,"news",editId),{
+          
             title:title,
             content:content,
             date:today
