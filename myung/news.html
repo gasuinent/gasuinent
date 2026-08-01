@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,102 +8,152 @@
 <style>
 
 body{
-margin:0;
-background:#111;
-font-family:Malgun Gothic,sans-serif;
-color:white;
+    margin:0;
+    background:#111;
+    color:white;
+    font-family:Malgun Gothic,sans-serif;
 }
 
 header{
-background:#222;
-padding:20px;
-text-align:center;
-font-size:32px;
-color:#FFD700;
-font-weight:bold;
+    background:#222;
+    padding:20px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+    color:#FFD700;
+    font-size:34px;
 }
 
 .container{
-width:900px;
-margin:30px auto;
+    width:95%;
+    max-width:1200px;
+    margin:30px auto;
 }
 
-label{
-display:block;
-margin-top:20px;
-margin-bottom:8px;
-font-size:20px;
-}
+input,
+textarea,
+select{
 
-input,textarea{
-
-width:100%;
-padding:12px;
-font-size:18px;
-border-radius:8px;
-border:none;
-box-sizing:border-box;
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    font-size:18px;
+    box-sizing:border-box;
 
 }
 
 textarea{
 
-height:250px;
+    height:250px;
+    resize:vertical;
+
+}
+
+label{
+
+    display:block;
+    margin-top:20px;
+    margin-bottom:8px;
+    font-size:18px;
+    font-weight:bold;
 
 }
 
 button{
 
-margin-top:20px;
-padding:15px 30px;
-font-size:20px;
-background:#FFD700;
-border:none;
-border-radius:10px;
-cursor:pointer;
-font-weight:bold;
+    background:#FFD700;
+    color:#000;
+    border:none;
+    border-radius:8px;
+    padding:12px 25px;
+    cursor:pointer;
+    font-size:17px;
+    font-weight:bold;
 
 }
 
 button:hover{
 
-background:#ffcc00;
+    background:#ffcc00;
 
 }
 
-.back{
+table{
 
-float:right;
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+
+}
+
+th{
+
+    background:#333;
+    padding:12px;
+
+}
+
+td{
+
+    padding:10px;
+    border-bottom:1px solid #444;
+    text-align:center;
+
+}
+
+img.thumb{
+
+    width:80px;
+    border-radius:5px;
+
+}
+
+hr{
+
+    margin:40px 0;
 
 }
 
 </style>
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  doc,
-  getDoc,
-  updateDoc
+
+getFirestore,
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc,
+getDoc,
+updateDoc
+
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
 import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL
+
+getStorage,
+ref,
+uploadBytes,
+getDownloadURL
+
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
-  authDomain: "gasuinent.firebaseapp.com",
-  projectId: "gasuinent",
-  storageBucket: "gasuinent.firebasestorage.app",
-  messagingSenderId: "122370674182",
-  appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
-  measurementId: "G-39M5K1M6K7"
+
+apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+authDomain: "gasuinent.firebaseapp.com",
+projectId: "gasuinent",
+storageBucket: "gasuinent.firebasestorage.app",
+messagingSenderId: "122370674182",
+appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+measurementId: "G-39M5K1M6K7"
+
 };
 
 const app = initializeApp(firebaseConfig);
@@ -112,196 +161,439 @@ const app = initializeApp(firebaseConfig);
 window.db = getFirestore(app);
 
 window.storage = getStorage(app);
-console.log("Firebase 연결 완료");
+
 </script>
+
 </head>
 
 <body>
 
 <header>
 
-📰 뉴스관리
+<h1>📰 뉴스관리</h1>
 
-<div style="margin-top:15px;">
+<div style="margin-top:20px;">
 
 <input
+id="searchText"
 type="text"
 placeholder="뉴스 검색..."
 style="width:300px;padding:10px;border-radius:6px;border:none;">
 
-<button style="padding:10px 20px;margin-left:10px;">
+<button id="searchBtn">
+
 검색
+
 </button>
 
 </div>
 
 </header>
-<hr style="margin:30px 0;">
+
+<div class="container">
 
 <h2>등록된 뉴스</h2>
 
-<table id="newsTable" style="width:100%;border-collapse:collapse;text-align:center;">
-<tr style="background:#333;">
+<table>
+
+<tr>
+
 <th>번호</th>
+<th>사진</th>
 <th>제목</th>
 <th>작성일</th>
+<th>보기</th>
 <th>수정</th>
 <th>삭제</th>
+
 </tr>
 
 <tbody id="newsBody"></tbody>
-  
+
 </table>
-<hr style="margin:40px 0;">
+
+<hr>
 
 <h2>뉴스 등록</h2>
 
 <label>뉴스 제목</label>
-<input type="text" id="newsTitle">
+
+<input
+type="text"
+id="newsTitle">
 
 <label>사진 선택</label>
-<input type="file" id="newsImage">
+
+<input
+type="file"
+id="newsImage">
 
 <label>뉴스 내용</label>
-<textarea id="newsContent"></textarea>
 
-<button id="saveNews">뉴스 등록</button>
+<textarea
+id="newsContent"></textarea>
+
+<button id="saveNews">
+
+뉴스 등록
+
+</button>
 
 <script type="module">
+
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  doc,
-  getDoc,
-  updateDoc
+getFirestore,
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc,
+getDoc,
+updateDoc
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 import {
-  ref,
-  uploadBytes,
-  getDownloadURL
+ref,
+uploadBytes,
+getDownloadURL
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
-console.log("뉴스 등록 버튼 준비 완료");
+
+console.log("뉴스 등록 준비 완료");
+
 let editId = null;
+
 document.getElementById("saveNews").onclick = async function () {
-let file = document.getElementById("newsImage").files[0];
-let imageUrl = "";
 
-if(file){
-  const storageRef = ref(window.storage, "news/" + Date.now() + "_" + file.name);
+    let file = document.getElementById("newsImage").files[0];
 
-await uploadBytes(storageRef, file);
+    let imageUrl = "";
 
-imageUrl = await getDownloadURL(storageRef);
+if(editId){
+
+    const snap = await getDoc(
+        doc(window.db,"news",editId)
+    );
+
+    if(snap.exists()){
+
+        imageUrl = snap.data().image || "";
+
+    }
 
 }
+
+    if(file){
+
+        const storageRef = ref(
+
+            window.storage,
+
+            "news/" + Date.now() + "_" + file.name
+
+        );
+
+        await uploadBytes(storageRef,file);
+
+        imageUrl = await getDownloadURL(storageRef);
+
+    }
+
     let title = document.getElementById("newsTitle").value;
+
     let content = document.getElementById("newsContent").value;
+
     let today = new Date().toISOString().slice(0,10);
 
-    if (title == "") {
+    if(title==""){
+
         alert("뉴스 제목을 입력하세요.");
+
         return;
-    }
-
-   try {
-
-    if(editId){
-console.log("수정 모드:", editId);
-       await updateDoc(doc(window.db,"news",editId),{
-          
-title: title,
-content: content,
-image: imageUrl,
-date: today
-        });
-
-        alert("뉴스가 수정되었습니다.");
-
-        editId = null;
-
-    }else{
-
-        await addDoc(collection(window.db,"news"),{
-title: title,
-content: content,
-image: imageUrl,
-date: today
-        });
-
-        alert("뉴스가 저장되었습니다.");
 
     }
 
-    loadNews();
+    try{
 
-    } catch (e) {
+        if(editId){
+
+            await updateDoc(
+
+                doc(window.db,"news",editId),
+
+                {
+
+                    title:title,
+
+                    content:content,
+
+                    image:imageUrl,
+
+                    date:today
+
+                }
+
+            );
+
+            alert("뉴스가 수정되었습니다.");
+
+            editId = null;
+
+        }else{
+
+            await addDoc(
+
+                collection(window.db,"news"),
+
+                {
+
+                    title:title,
+
+                    content:content,
+
+                    image:imageUrl,
+
+                    date:today
+
+                }
+
+            );
+
+            alert("뉴스가 등록되었습니다.");
+
+        }
+
+        document.getElementById("newsTitle").value="";
+
+        document.getElementById("newsContent").value="";
+
+        document.getElementById("newsImage").value="";
+
+        loadNews();
+
+    }catch(e){
+
+        console.log(e);
 
         alert("저장 실패");
-        console.error(e);
 
     }
 
 };
+
 async function loadNews(){
 
-const snapshot = await getDocs(collection(window.db, "news"));
+    const snapshot = await getDocs(
 
-let html = "";
-let no = 1;
+        collection(window.db,"news")
 
-snapshot.forEach((doc) => {
+    );
 
-    const news = doc.data();
-news.id = doc.id;
+    let html="";
 
-html += `
-<tr>
-<td>${no++}</td>
-<td>${news.title}</td>
-<td>${news.date}</td>
-<td><button onclick="editNews('${doc.id}')">수정</button></td>
-<td><button onclick="deleteNews('${doc.id}')">삭제</button></td>
-</tr>
-`;
+    let no=1;
+      snapshot.forEach((docItem)=>{
 
-});
+        const news = docItem.data();
 
-document.getElementById("newsBody").innerHTML = html; 
-} 
+        html += `
+
+        <tr>
+
+        <td>${no++}</td>
+
+        <td>
+
+        ${news.image ?
+
+        `<img src="${news.image}" class="thumb">`
+
+        :
+
+        "-"}
+
+        </td>
+
+        <td>${news.title}</td>
+
+        <td>${news.date}</td>
+
+        <td>
+
+        <button onclick="viewNews('${docItem.id}')">
+
+        보기
+
+        </button>
+
+        </td>
+
+        <td>
+
+        <button onclick="editNews('${docItem.id}')">
+
+        수정
+
+        </button>
+
+        </td>
+
+        <td>
+
+        <button onclick="deleteNews('${docItem.id}')">
+
+        삭제
+
+        </button>
+
+        </td>
+
+        </tr>
+
+        `;
+
+    });
+
+    document.getElementById("newsBody").innerHTML = html;
+
+}
+
 async function deleteNews(id){
 
-    if(!confirm("정말 삭제하시겠습니까?")) return;
+    if(!confirm("정말 삭제하시겠습니까?"))
 
-    await deleteDoc(doc(window.db,"news",id));
+        return;
+
+    await deleteDoc(
+
+        doc(window.db,"news",id)
+
+    );
 
     loadNews();
 
-} 
+}
+
 window.deleteNews = deleteNews;
 
 async function editNews(id){
 
     editId = id;
-const snap = await getDoc(doc(window.db, "news", id));
 
-if (!snap.exists()) return;
+    const snap = await getDoc(
 
-const news = snap.data();
-document.getElementById("newsTitle").value = news.title;
-document.getElementById("newsContent").value = news.content;
+        doc(window.db,"news",id)
 
-alert("수정할 뉴스를 선택했습니다.");
+    );
+
+    if(!snap.exists()) return;
+
+    const news = snap.data();
+
+    document.getElementById("newsTitle").value = news.title;
+
+    document.getElementById("newsContent").value = news.content;
+
+    alert("수정할 뉴스를 불러왔습니다.");
 
 }
 
 window.editNews = editNews;
+ async function viewNews(id){
 
-loadNews();  
+    window.location.href = "news_view.html?id=" + id;
+
+}
+
+window.viewNews = viewNews;
+
+document.getElementById("searchBtn").onclick = async function(){
+
+    const keyword = document.getElementById("searchText").value.toLowerCase();
+
+    const snapshot = await getDocs(collection(window.db,"news"));
+
+    let html = "";
+
+    let no = 1;
+
+    snapshot.forEach((docItem)=>{
+
+        const news = docItem.data();
+
+        if(news.title.toLowerCase().includes(keyword) ||
+
+           news.content.toLowerCase().includes(keyword)){
+
+            html += `
+
+            <tr>
+
+            <td>${no++}</td>
+
+            <td>
+
+            ${news.image ?
+
+            `<img src="${news.image}" class="thumb">`
+
+            :
+
+            "-"}
+
+            </td>
+
+            <td>${news.title}</td>
+
+            <td>${news.date}</td>
+
+            <td>
+
+            <button onclick="viewNews('${docItem.id}')">
+
+            보기
+
+            </button>
+
+            </td>
+
+            <td>
+
+            <button onclick="editNews('${docItem.id}')">
+
+            수정
+
+            </button>
+
+            </td>
+
+            <td>
+
+            <button onclick="deleteNews('${docItem.id}')">
+
+            삭제
+
+            </button>
+
+            </td>
+
+            </tr>
+
+            `;
+
+        }
+
+    });
+
+    document.getElementById("newsBody").innerHTML = html;
+
+};
+
+loadNews();
+
 </script>
 
+</div>
+
 </body>
-</html>
+
+</html> 
