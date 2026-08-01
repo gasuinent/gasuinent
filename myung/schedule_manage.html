@@ -1,1 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>공지사항 관리</title>
 
+<style>
+body{
+    margin:0;
+    background:#111;
+    color:#fff;
+    font-family:"Malgun Gothic",sans-serif;
+}
+
+header{
+    background:#222;
+    color:#FFD700;
+    text-align:center;
+    padding:25px;
+}
+
+.container{
+    width:90%;
+    max-width:900px;
+    margin:30px auto;
+}
+
+.search{
+    margin:20px 0;
+}
+
+.search input{
+    width:300px;
+    padding:10px;
+    font-size:16px;
+}
+
+.search button{
+    padding:10px 20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+th,td{
+    border:1px solid #555;
+    padding:12px;
+    text-align:center;
+}
+
+th{
+    background:#333;
+}
+
+label{
+    display:block;
+    margin-top:20px;
+    margin-bottom:8px;
+}
+
+input[type=text],textarea{
+    width:100%;
+    padding:12px;
+    box-sizing:border-box;
+    font-size:16px;
+}
+
+textarea{
+    height:220px;
+}
+
+button{
+    padding:12px 25px;
+    margin-top:15px;
+    background:#FFD700;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.back{
+    float:right;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>📢 공지사항 관리</h1>
+
+<div class="search">
+<input type="text" placeholder="공지 검색...">
+<button>검색</button>
+</div>
+
+</header>
+
+<div class="container">
+
+<h2>등록된 공지</h2>
+
+<table>
+
+<tr>
+<th>번호</th>
+<th>제목</th>
+<th>작성일</th>
+<th>수정</th>
+<th>삭제</th>
+</tr>
+
+<tbody id="eventBody"></tbody>
+
+</table>
+
+<label>행사 제목</label>
+<input
+type="text"
+id="eventTitle"
+placeholder="행사 제목을 입력하세요">
+
+<label>행사 내용</label>
+<textarea
+id="eventContent"
+placeholder="행사 내용을 입력하세요"></textarea>
+
+<label>행사 날짜</label>
+<input
+type="text"
+id="eventDate"
+placeholder="예 : 2026-08-15 오후 2시">
+
+<label>행사 장소</label>
+<input
+type="text"
+id="eventPlace"
+placeholder="행사 장소를 입력하세요">
+
+<button id="saveEvent">
+행사 저장
+</button>
+
+<button class="back" onclick="location.href='admin.html'">
+관리자 메인
+</button>
+
+</div>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+query,
+orderBy,
+deleteDoc,
+updateDoc,
+doc,
+getDoc
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+authDomain: "gasuinent.firebaseapp.com",
+projectId: "gasuinent",
+storageBucket: "gasuinent.firebasestorage.app",
+messagingSenderId: "122370674182",
+appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+measurementId: "G-39M5K1M6K7"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let editId = null;
+document.getElementById("saveEvent").onclick = async function(){
+
+    const title = document.getElementById("eventTitle").value;
+    const content = document.getElementById("eventContent").value;
+    const date = document.getElementById("eventDate").value;
+    const place = document.getElementById("eventPlace").value;
+
+    if(title==""){
+        alert("행사 제목을 입력하세요.");
+        return;
+    }
+
+    try{
+
+        if(editId){
+
+            await updateDoc(doc(db,"schedule",editId),{
+
+                title:title,
+                content:content,
+                date:date,
+                place:place,
+                timestamp:Date.now()
+
+            });
+
+            alert("행사가 수정되었습니다.");
+            editId = null;
+
+        }else{
+
+            await addDoc(collection(db,"schedule"),{
+
+                title:title,
+                content:content,
+                date:date,
+                place:place,
+                timestamp:Date.now()
+
+            });
+
+            alert("행사가 등록되었습니다.");
+
+        }
+
+        document.getElementById("eventTitle").value="";
+        document.getElementById("eventContent").value="";
+        document.getElementById("eventDate").value="";
+        document.getElementById("eventPlace").value="";
+
+        loadEvent();
+
+    }catch(e){
+
+        console.log(e);
+        alert("저장 실패");
+
+    }
+
+};
+async function loadEvent(){
+
+    const q = query(
+        collection(db,"schedule"),
+        orderBy("timestamp","desc")
+    );
+
+    const snapshot = await getDocs(q);
+
+    let html = "";
+    let no = 1;
+
+    snapshot.forEach((docItem)=>{
+
+        const event = docItem.data();
+
+        html += `
+        <tr>
+            <td>${no++}</td>
+            <td>${event.title}</td>
+            <td>${event.date}</td>
+
+            <td>
+                <button onclick="editEvent('${docItem.id}')">
+                수정
+                </button>
+            </td>
+
+            <td>
+                <button onclick="deleteEvent('${docItem.id}')">
+                삭제
+                </button>
+            </td>
+
+        </tr>
+        `;
+
+    });
+
+    document.getElementById("eventBody").innerHTML = html;
+
+}
+async function deleteEvent(id){
+
+    if(!confirm("정말 삭제하시겠습니까?")) return;
+
+    await deleteDoc(doc(db,"schedule",id));
+
+    loadEvent();
+
+}
+
+window.deleteEvent = deleteEvent;
+async function editEvent(id){
+
+    editId = id;
+
+    const snap = await getDoc(doc(db,"schedule",id));
+
+    if(!snap.exists()) return;
+
+    const event = snap.data();
+
+    document.getElementById("eventTitle").value = event.title;
+    document.getElementById("eventContent").value = event.content;
+    document.getElementById("eventDate").value = event.date;
+    document.getElementById("eventPlace").value = event.place;
+
+    alert("수정할 행사를 불러왔습니다.");
+
+}
+
+window.editEvent = editEvent;
+loadEvent();
+
+</script>
+
+</body>
+</html>
