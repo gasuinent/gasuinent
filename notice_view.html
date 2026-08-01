@@ -152,6 +152,20 @@ background:#ffcc00;
 
 <div id="content"></div>
 
+<h2 style="margin-top:70px;color:#FFD700;">
+📰 관련 기사
+</h2>
+
+<div id="relatedNews"
+style="
+display:grid;
+grid-template-columns:1fr;
+gap:15px;
+margin-top:20px;
+margin-bottom:40px;
+">
+</div>
+
 <button onclick="location.href='news.html'">
 
 📰 뉴스 목록
@@ -165,7 +179,12 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/fireba
 import {
 getFirestore,
 doc,
-getDoc
+getDoc,
+collection,
+getDocs,
+query,
+orderBy,
+limit
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -225,7 +244,62 @@ if(notice.image){
 }
 
 loadNotice();
+async function loadRelatedNews(){
 
+    const q = query(
+        collection(db,"notice"),
+        orderBy("timestamp","desc"),
+        limit(3)
+    );
+
+    const snap = await getDocs(q);
+
+    let html = "";
+
+    snap.forEach(item=>{
+
+        if(item.id===id) return;
+
+        const n = item.data();
+
+        html += `
+        <div style="
+        border:1px solid #444;
+        border-radius:10px;
+        padding:15px;
+        margin-bottom:10px;
+        background:#1a1a1a;">
+
+            <a href="notice_view.html?id=${item.id}"
+            style="
+            color:#FFD700;
+            font-size:20px;
+            font-weight:bold;
+            text-decoration:none;">
+
+            ${n.title}
+
+            </a>
+
+            <div style="
+            color:#aaa;
+            margin-top:8px;
+            font-size:14px;">
+
+            📅 ${n.date}
+
+            </div>
+
+        </div>
+        `;
+
+    });
+
+    document.getElementById("relatedNews").innerHTML = html;
+
+}
+
+loadRelatedNews();
 </script>
 
 </div>
