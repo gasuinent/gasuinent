@@ -382,18 +382,29 @@ if(editId){
 
 async function loadNews(){
 
-    const snapshot = await getDocs(
+   const snapshot = await getDocs(
 
-        collection(window.db,"news")
+    collection(window.db,"news")
 
-    );
+);
+
+const docs = [];
+
+snapshot.forEach((docItem)=>{
+
+    docs.push(docItem);
+
+});
+
+docs.reverse();
+
 
     let html="";
 
     let no=1;
-      snapshot.forEach((docItem)=>{
+     docs.forEach((docItem)=>{
 
-        const news = docItem.data();
+    const news = docItem.data();
 
         html += `
 
@@ -510,13 +521,25 @@ document.getElementById("searchBtn").onclick = async function(){
 
     const keyword = document.getElementById("searchText").value.toLowerCase();
 
-    const snapshot = await getDocs(collection(window.db,"news"));
+    const snapshot = await getDocs(
+        collection(window.db,"news")
+    );
 
     let html = "";
 
     let no = 1;
 
+    const docs = [];
+
     snapshot.forEach((docItem)=>{
+
+        docs.push(docItem);
+
+    });
+
+    docs.reverse();
+
+    docs.forEach((docItem)=>{
 
         const news = docItem.data();
 
