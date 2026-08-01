@@ -154,48 +154,8 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
 <section id="schedule">
 <div class="wrap">
 <div class="section-head"><div class="eyebrow">SCHEDULE</div><h2>행사일정</h2><p class="lead">분류별 행사일정과 날짜·시간·장소 등 세부내용을 확인할 수 있습니다.</p></div>
+
 <div class="grid" id="scheduleGrid">
-
-<div class="card">
-
-<span class="tag">공연</span>
-
-<h3>나가수 힐링콘서트</h3>
-
-<p>
-<strong>일시</strong><br>
-2026년 8월 예정
-<br><br>
-
-<strong>장소</strong><br>
-대구광역시
-<br><br>
-
-<strong>내용</strong><br>
-지역 주민과 함께하는 힐링 콘서트 및 문화공연
-</p>
-
-</div>
-<div class="card">
-
-<span class="tag">봉사공연</span>
-
-<h3>나가수 봉사단 무료공연</h3>
-
-<p>
-<strong>일시</strong><br>
-2026년 9월 예정
-<br><br>
-
-<strong>장소</strong><br>
-대구·경북 복지시설
-<br><br>
-
-<strong>내용</strong><br>
-어르신과 지역 주민을 위한 문화나눔 무료공연
-</p>
-
-</div>
 </div>
 <p class="notice" style="text-align:center;margin-top:30px">※ 일정은 행사 확정 상황에 따라 변경될 수 있습니다.</p>
 </div>
@@ -293,7 +253,67 @@ ${g('request')}`);
   });
 });
 </script>
+<script type="module">
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    query,
+    orderBy
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+    authDomain: "gasuinent.firebaseapp.com",
+    projectId: "gasuinent",
+    storageBucket: "gasuinent.firebasestorage.app",
+    messagingSenderId: "122370674182",
+    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+    measurementId: "G-39M5K1M6K7"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function loadSchedule(){
+
+    const q = query(
+        collection(db,"schedule"),
+        orderBy("timestamp","desc")
+    );
+
+    const snapshot = await getDocs(q);
+
+    let html = "";
+
+    snapshot.forEach((docItem)=>{
+
+        const event = docItem.data();
+
+        html += `
+        <div class="card">
+            <h3>${event.title}</h3>
+            <p><b>📅 날짜</b> ${event.date}</p>
+            <p><b>📍 장소</b> ${event.place}</p>
+
+            <a class="btn fill"
+               href="schedule_view.html?id=${docItem.id}">
+               자세히 보기
+            </a>
+        </div>
+        `;
+
+    });
+
+    document.getElementById("scheduleGrid").innerHTML = html;
+
+}
+
+loadSchedule();
+
+</script>
 <!-- Netlify Identity: 초대·로그인 링크 처리 -->
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
