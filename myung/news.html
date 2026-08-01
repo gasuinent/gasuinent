@@ -208,7 +208,7 @@ style="width:300px;padding:10px;border-radius:6px;border:none;">
 
 </tr>
 
-<tbody id="newsBody"></tbody>
+<tbody id="noticeBody"></tbody>
 
 </table>
 
@@ -220,23 +220,21 @@ style="width:300px;padding:10px;border-radius:6px;border:none;">
 
 <input
 type="text"
-id="newsTitle">
+id="noticeTitle">
 
 <label>사진 선택</label>
 
 <input
 type="file"
-id="newsImage">
+id="noticeImage">
 
 <label>뉴스 내용</label>
 
 <textarea
-id="newsContent"></textarea>
+id="noticeContent"></textarea>
 
-<button id="saveNews">
-
-뉴스 등록
-
+<button id="saveNotice">
+공지 등록
 </button>
 
 <script type="module">
@@ -260,20 +258,20 @@ uploadBytes,
 getDownloadURL
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
 
-console.log("뉴스 등록 준비 완료");
+console.log("공지 등록 준비 완료");
 
 let editId = null;
 
-document.getElementById("saveNews").onclick = async function () {
+document.getElementById("saveNotice").onclick = async function () {
 
-    let file = document.getElementById("newsImage").files[0];
+    let file = document.getElementById("noticeImage").files[0];
 
     let imageUrl = "";
 
 if(editId){
 
     const snap = await getDoc(
-        doc(window.db,"news",editId)
+        doc(window.db,"notice",editId)
     );
 
     if(snap.exists()){
@@ -290,7 +288,7 @@ if(editId){
 
             window.storage,
 
-            "news/" + Date.now() + "_" + file.name
+            "notice/" + Date.now() + "_" + file.name
 
         );
 
@@ -300,15 +298,15 @@ if(editId){
 
     }
 
-    let title = document.getElementById("newsTitle").value;
+    let title = document.getElementById("noticeTitle").value;
 
-    let content = document.getElementById("newsContent").value;
+    let content = document.getElementById("noticeContent").value;
 
     let today = new Date().toISOString().slice(0,10);
 
     if(title==""){
 
-        alert("뉴스 제목을 입력하세요.");
+       alert("공지 제목을 입력하세요.");
 
         return;
 
@@ -320,7 +318,7 @@ if(editId){
 
             await updateDoc(
 
-                doc(window.db,"news",editId),
+                doc(window.db,"notice",editId),
 
                 {
 
@@ -337,7 +335,7 @@ timestamp: Date.now()
 
             );
 
-            alert("뉴스가 수정되었습니다.");
+            alert("공지가 수정되었습니다.");
 
             editId = null;
 
@@ -345,7 +343,7 @@ timestamp: Date.now()
 
             await addDoc(
 
-                collection(window.db,"news"),
+                collection(window.db,"notice"),
 
                 {
 
@@ -362,17 +360,17 @@ timestamp: Date.now()
 
             );
 
-            alert("뉴스가 등록되었습니다.");
+            alert("공지가 등록되었습니다.");
 
         }
 
-        document.getElementById("newsTitle").value="";
+        document.getElementById("noticeTitle").value="";
 
-        document.getElementById("newsContent").value="";
+        document.getElementById("noticeContent").value="";
 
-        document.getElementById("newsImage").value="";
+        document.getElementById("noticeImage").value="";
 
-        loadNews();
+       loadNotice();
 
     }catch(e){
 
@@ -384,10 +382,10 @@ timestamp: Date.now()
 
 };
 
-async function loadNews(){
+async function loadNotice(){
 
  const q = query(
-    collection(window.db,"news"),
+    collection(window.db,"notice"),
    orderBy("timestamp","desc")
 );
 
@@ -405,7 +403,7 @@ let no = 1;
 
 docs.forEach((docItem)=>{
 
-    const news = docItem.data();
+    const notice = docItem.data();
 
         html += `
 
@@ -415,9 +413,9 @@ docs.forEach((docItem)=>{
 
         <td>
 
-        ${news.image ?
+        ${notice.image ?
 
-        `<img src="${news.image}" class="thumb">`
+        `<img src="${notice.image}" class="thumb">`
 
         :
 
@@ -425,13 +423,13 @@ docs.forEach((docItem)=>{
 
         </td>
 
-        <td>${news.title}</td>
+        <td>${notice.title}</td>
 
-        <td>${news.date}</td>
+        <td>${notice.date}</td>
 
         <td>
 
-        <button onclick="viewNews('${docItem.id}')">
+        <button onclick="viewNotice('${docItem.id}')">
 
         보기
 
@@ -441,7 +439,7 @@ docs.forEach((docItem)=>{
 
         <td>
 
-        <button onclick="editNews('${docItem.id}')">
+       <button onclick="editNotice('${docItem.id}')">
 
         수정
 
@@ -451,7 +449,7 @@ docs.forEach((docItem)=>{
 
         <td>
 
-        <button onclick="deleteNews('${docItem.id}')">
+       <button onclick="deleteNotice('${docItem.id}')">
 
         삭제
 
@@ -465,11 +463,11 @@ docs.forEach((docItem)=>{
 
     });
 
-    document.getElementById("newsBody").innerHTML = html;
+    document.getElementById("noticeBody").innerHTML = html;
 
 }
 
-async function deleteNews(id){
+async function deleteNotice(id){
 
     if(!confirm("정말 삭제하시겠습니까?"))
 
@@ -477,53 +475,53 @@ async function deleteNews(id){
 
     await deleteDoc(
 
-        doc(window.db,"news",id)
+        doc(window.db,"notice",id)
 
     );
 
-    loadNews();
+    loadNotice();
 
 }
 
-window.deleteNews = deleteNews;
+window.deleteNotice = deleteNotice;
 
-async function editNews(id){
+async function editNotice(id){
 
     editId = id;
 
     const snap = await getDoc(
 
-        doc(window.db,"news",id)
+        doc(window.db,"notice",id)
 
     );
 
     if(!snap.exists()) return;
 
-    const news = snap.data();
+    const notice = snap.data();
 
-    document.getElementById("newsTitle").value = news.title;
+    document.getElementById("noticeTitle").value = notice.title;
 
-    document.getElementById("newsContent").value = news.content;
+    document.getElementById("noticeContent").value = notice.content;
 
     alert("수정할 뉴스를 불러왔습니다.");
 
 }
 
-window.editNews = editNews;
- async function viewNews(id){
+window.editNotice = editNotice;
+ async function viewNotice(id){
 
-    window.location.href = "news_view.html?id=" + id;
+    window.location.href = "notice_view.html?id=" + id;
 
 }
 
-window.viewNews = viewNews;
+window.viewNotice = viewNotice;
 
 document.getElementById("searchBtn").onclick = async function(){
 
     const keyword = document.getElementById("searchText").value.toLowerCase();
 
     const snapshot = await getDocs(
-        collection(window.db,"news")
+        collection(window.db,"notice")
     );
 
     let html = "";
@@ -542,11 +540,11 @@ document.getElementById("searchBtn").onclick = async function(){
 
     docs.forEach((docItem)=>{
 
-        const news = docItem.data();
+        const notice = docItem.data();
 
-        if(news.title.toLowerCase().includes(keyword) ||
+        if(notice.title.toLowerCase().includes(keyword) ||
 
-           news.content.toLowerCase().includes(keyword)){
+           notice.content.toLowerCase().includes(keyword)){
 
             html += `
 
@@ -556,9 +554,9 @@ document.getElementById("searchBtn").onclick = async function(){
 
             <td>
 
-            ${news.image ?
+            ${notice.image ?
 
-            `<img src="${news.image}" class="thumb">`
+            `<img src="${notice.image}" class="thumb">`
 
             :
 
@@ -566,13 +564,13 @@ document.getElementById("searchBtn").onclick = async function(){
 
             </td>
 
-            <td>${news.title}</td>
+            <td>${notice.title}</td>
 
-            <td>${news.date}</td>
+            <td>${notice.date}</td>
 
             <td>
 
-            <button onclick="viewNews('${docItem.id}')">
+            <button onclick="viewNotice('${docItem.id}')">
 
             보기
 
@@ -582,7 +580,7 @@ document.getElementById("searchBtn").onclick = async function(){
 
             <td>
 
-            <button onclick="editNews('${docItem.id}')">
+            <button onclick="editNotice('${docItem.id}')">
 
             수정
 
@@ -592,7 +590,7 @@ document.getElementById("searchBtn").onclick = async function(){
 
             <td>
 
-            <button onclick="deleteNews('${docItem.id}')">
+            <button onclick="deleteNotice('${docItem.id}')">
 
             삭제
 
@@ -608,11 +606,11 @@ document.getElementById("searchBtn").onclick = async function(){
 
     });
 
-    document.getElementById("newsBody").innerHTML = html;
+    document.getElementById("noticeBody").innerHTML = html;
 
 };
 
-loadNews();
+loadNotice();
 
 </script>
 
