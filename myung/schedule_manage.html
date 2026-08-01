@@ -113,6 +113,7 @@ button{
 <th>번호</th>
 <th>제목</th>
 <th>작성일</th>
+<th>보기</th>
 <th>수정</th>
 <th>삭제</th>
 </tr>
@@ -261,28 +262,31 @@ async function loadEvent(){
     snapshot.forEach((docItem)=>{
 
         const event = docItem.data();
+html += `
+<tr>
+    <td>${no++}</td>
+    <td>${event.title}</td>
+    <td>${event.date}</td>
 
-        html += `
-        <tr>
-            <td>${no++}</td>
-            <td>${event.title}</td>
-            <td>${event.date}</td>
+    <td>
+        <button onclick="viewEvent('${docItem.id}')">
+            보기
+        </button>
+    </td>
 
-            <td>
-                <button onclick="editEvent('${docItem.id}')">
-                수정
-                </button>
-            </td>
+    <td>
+        <button onclick="editEvent('${docItem.id}')">
+            수정
+        </button>
+    </td>
 
-            <td>
-                <button onclick="deleteEvent('${docItem.id}')">
-                삭제
-                </button>
-            </td>
-
-        </tr>
-        `;
-
+    <td>
+        <button onclick="deleteEvent('${docItem.id}')">
+            삭제
+        </button>
+    </td>
+</tr>
+`;
     });
 
     document.getElementById("eventBody").innerHTML = html;
@@ -299,6 +303,15 @@ async function deleteEvent(id){
 }
 
 window.deleteEvent = deleteEvent;
+
+function viewEvent(id){
+
+    window.location.href = "schedule_view.html?id=" + id;
+
+}
+
+window.viewEvent = viewEvent;
+
 async function editEvent(id){
 
     editId = id;
@@ -319,6 +332,7 @@ async function editEvent(id){
 }
 
 window.editEvent = editEvent;
+
 loadEvent();
 
 </script>
