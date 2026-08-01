@@ -249,7 +249,9 @@ getDocs,
 deleteDoc,
 doc,
 getDoc,
-updateDoc
+updateDoc,
+query,
+orderBy
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 import {
@@ -382,27 +384,24 @@ if(editId){
 
 async function loadNews(){
 
-   const snapshot = await getDocs(
-
-    collection(window.db,"news")
-
+ const q = query(
+    collection(window.db,"news"),
+    orderBy("date","desc")
 );
+
+const snapshot = await getDocs(q);
 
 const docs = [];
 
 snapshot.forEach((docItem)=>{
-
     docs.push(docItem);
-
 });
 
-docs.reverse();
+let html = "";
 
+let no = 1;
 
-    let html="";
-
-    let no=1;
-     docs.forEach((docItem)=>{
+docs.forEach((docItem)=>{
 
     const news = docItem.data();
 
