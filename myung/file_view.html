@@ -1,1 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>자료 보기</title>
+
+<style>
+
+body{
+margin:0;
+background:#111;
+color:#fff;
+font-family:Malgun Gothic,sans-serif;
+}
+
+header{
+background:#222;
+padding:20px;
+text-align:center;
+}
+
+header h1{
+margin:0;
+color:#FFD700;
+font-size:34px;
+}
+
+.container{
+width:90%;
+max-width:1000px;
+margin:30px auto;
+}
+
+.title{
+font-size:30px;
+font-weight:bold;
+margin-bottom:20px;
+}
+
+.date{
+color:#aaa;
+margin-bottom:30px;
+}
+
+.content{
+line-height:1.8;
+font-size:18px;
+white-space:pre-wrap;
+margin-bottom:40px;
+}
+
+.download{
+
+display:inline-block;
+
+background:#FFD700;
+color:#000;
+padding:12px 25px;
+border-radius:8px;
+font-weight:bold;
+text-decoration:none;
+
+}
+
+.back{
+
+display:inline-block;
+
+margin-left:20px;
+
+background:#555;
+color:#fff;
+padding:12px 25px;
+border-radius:8px;
+text-decoration:none;
+
+}
+
+</style>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+import {
+
+getFirestore,
+doc,
+getDoc
+
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+authDomain:"gasuinent.firebaseapp.com",
+projectId:"gasuinent",
+storageBucket:"gasuinent.firebasestorage.app",
+messagingSenderId:"122370674182",
+appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",
+measurementId:"G-39M5K1M6K7"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const db=getFirestore(app);
+
+const params=new URLSearchParams(location.search);
+
+const id=params.get("id");
+async function loadFile(){
+
+const snap=await getDoc(doc(db,"files",id));
+
+if(!snap.exists()){
+
+document.body.innerHTML="<h2 style='text-align:center;margin-top:100px;'>자료가 없습니다.</h2>";
+
+return;
+
+}
+
+const f=snap.data();
+
+document.getElementById("title").innerText=f.title;
+
+document.getElementById("date").innerText=f.date;
+
+document.getElementById("content").innerText=f.content;
+
+document.getElementById("download").href=f.fileUrl;
+
+document.getElementById("download").download=f.fileName;
+
+}
+
+loadFile();
+
+</script>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>📁 자료 보기</h1>
+
+</header>
+
+<div class="container">
+
+<div
+id="title"
+class="title">
+</div>
+
+<div
+id="date"
+class="date">
+</div>
+
+<div
+id="content"
+class="content">
+</div>
+
+<a
+id="download"
+class="download"
+target="_blank">
+
+파일 다운로드
+
+</a>
+
+<a
+href="myung/files.html"
+class="back">
+
+목록으로
+
+</a>
+
+</div>
+
+</body>
+
+</html>
