@@ -236,4 +236,149 @@ alert("자료가 등록되었습니다.");
 };
 
 </script>
+async function loadFiles(){
+
+const q=query(
+    collection(db,"files"),
+    orderBy("timestamp","desc")
+);
+
+const snapshot=await getDocs(q);
+
+let html="";
+let no=1;
+
+snapshot.forEach(docItem=>{
+
+const f=docItem.data();
+
+html+=`
+
+<tr>
+
+<td>${no++}</td>
+
+<td>${f.title}</td>
+
+<td>${f.date}</td>
+
+<td>
+<button onclick="viewFile('${docItem.id}')">
+보기
+</button>
+</td>
+
+<td>
+<button onclick="editFile('${docItem.id}')">
+수정
+</button>
+</td>
+
+<td>
+<button onclick="deleteFile('${docItem.id}')">
+삭제
+</button>
+</td>
+
+</tr>
+
+`;
+
+});
+
+document.getElementById("fileBody").innerHTML=html;
+
+}
+async function deleteFile(id){
+
+if(!confirm("정말 삭제하시겠습니까?")) return;
+
+await deleteDoc(doc(db,"files",id));
+
+loadFiles();
+
+}
+
+window.deleteFile=deleteFile;
+async function editFile(id){
+
+window.editId=id;
+
+const snap=await getDoc(doc(db,"files",id));
+
+if(!snap.exists()) return;
+
+const f=snap.data();
+
+document.getElementById("fileTitle").value=f.title;
+document.getElementById("fileContent").value=f.content;
+
+window.scrollTo({
+top:document.body.scrollHeight,
+behavior:"smooth"
+});
+
+}
+
+window.editFile=editFile;
+window.viewFile=function(id){
+
+location.href="file_view.html?id="+id;
+
+};  
+document.getElementById("searchBtn").onclick=async()=>{
+
+const keyword=document.getElementById("searchText").value.toLowerCase();
+
+const snapshot=await getDocs(collection(db,"files"));
+
+let html="";
+let no=1;
+
+snapshot.forEach(docItem=>{
+
+const f=docItem.data();
+
+if(
+f.title.toLowerCase().includes(keyword) ||
+f.content.toLowerCase().includes(keyword)
+){
+
+html+=`
+
+<tr>
+
+<td>${no++}</td>
+
+<td>${f.title}</td>
+
+<td>${f.date}</td>
+
+<td><button onclick="viewFile('${docItem.id}')">보기</button></td>
+
+<td><button onclick="editFile('${docItem.id}')">수정</button></td>
+
+<td><button onclick="deleteFile('${docItem.id}')">삭제</button></td>
+
+</tr>
+
+`;
+
+}
+
+});
+
+document.getElementById("fileBody").innerHTML=html;
+
+};
+
+loadFiles();
+
+</script>
+
+</div>
+
+</body>
+</html>
+
     
