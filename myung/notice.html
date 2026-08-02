@@ -1,92 +1,137 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>공지사항 관리</title>
 
 <style>
+
 body{
     margin:0;
     background:#111;
     color:#fff;
-    font-family:"Malgun Gothic",sans-serif;
+    font-family:Malgun Gothic,sans-serif;
 }
 
 header{
     background:#222;
-    color:#FFD700;
+    padding:20px;
     text-align:center;
-    padding:25px;
+}
+
+header h1{
+    margin:0;
+    color:#FFD700;
+    font-size:34px;
 }
 
 .container{
-    width:90%;
-    max-width:900px;
+    width:95%;
+    max-width:1200px;
     margin:30px auto;
 }
 
-.search{
-    margin:20px 0;
-}
-
-.search input{
-    width:300px;
-    padding:10px;
-    font-size:16px;
-}
-
-.search button{
-    padding:10px 20px;
-}
-
-table{
+input,textarea{
     width:100%;
-    border-collapse:collapse;
-    margin:20px 0;
-}
-
-th,td{
-    border:1px solid #555;
     padding:12px;
-    text-align:center;
+    border:none;
+    border-radius:8px;
+    font-size:18px;
+    box-sizing:border-box;
 }
 
-th{
-    background:#333;
+textarea{
+    height:250px;
+    resize:vertical;
 }
 
 label{
     display:block;
     margin-top:20px;
     margin-bottom:8px;
-}
-
-input[type=text],textarea{
-    width:100%;
-    padding:12px;
-    box-sizing:border-box;
-    font-size:16px;
-}
-
-textarea{
-    height:220px;
-}
-
-button{
-    padding:12px 25px;
-    margin-top:15px;
-    background:#FFD700;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
     font-weight:bold;
 }
 
-.back{
-    float:right;
+button{
+    background:#FFD700;
+    color:#000;
+    border:none;
+    border-radius:8px;
+    padding:12px 25px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
 }
+
+button:hover{
+    background:#ffcc00;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th{
+    background:#333;
+    padding:12px;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #444;
+    text-align:center;
+}
+
 </style>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc,
+getDoc,
+updateDoc,
+query,
+orderBy
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+import {
+getStorage,
+ref,
+uploadBytes,
+getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+    authDomain: "gasuinent.firebaseapp.com",
+    projectId: "gasuinent",
+    storageBucket: "gasuinent.firebasestorage.app",
+    messagingSenderId: "122370674182",
+    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+    measurementId: "G-39M5K1M6K7"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+window.db = db;
+window.storage = storage;
+window.editId = null;
+
+</script>
 
 </head>
 
@@ -96,9 +141,16 @@ button{
 
 <h1>📢 공지사항 관리</h1>
 
-<div class="search">
-<input type="text" placeholder="공지 검색...">
-<button>검색</button>
+<div style="margin-top:20px">
+
+<input
+id="searchText"
+type="text"
+placeholder="공지 검색..."
+style="width:320px;padding:10px;border-radius:6px;border:none;">
+
+<button id="searchBtn">검색</button>
+
 </div>
 
 </header>
@@ -113,33 +165,232 @@ button{
 <th>번호</th>
 <th>제목</th>
 <th>작성일</th>
+<th>보기</th>
 <th>수정</th>
 <th>삭제</th>
 </tr>
 
-<tr>
-<td>1</td>
-<td>첫 번째 공지</td>
-<td>2026-07-23</td>
-<td><button>수정</button></td>
-<td><button>삭제</button></td>
-</tr>
+<tbody id="noticeBody"></tbody>
 
 </table>
 
+<hr>
+
+<h2>공지 등록</h2>
+
 <label>공지 제목</label>
-<input type="text" placeholder="공지 제목을 입력하세요">
+<input type="text" id="noticeTitle">
 
 <label>공지 내용</label>
-<textarea placeholder="공지 내용을 입력하세요"></textarea>
+<textarea id="noticeContent"></textarea>
 
-<button>저장</button>
+<button id="saveNotice">공지 저장</button>
+<script type="module">
 
-<button class="back" onclick="location.href='admin.html'">
-관리자 메인
+import {
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc,
+getDoc,
+updateDoc,
+query,
+orderBy
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+const db = window.db;
+
+document.getElementById("saveNotice").onclick = async () => {
+
+let title = document.getElementById("noticeTitle").value.trim();
+let content = document.getElementById("noticeContent").value.trim();
+
+if(title==""){
+    alert("제목을 입력하세요.");
+    return;
+}
+
+const data = {
+    title:title,
+    content:content,
+    date:new Date().toISOString().slice(0,10),
+    timestamp:Date.now()
+};
+
+if(window.editId){
+
+    await updateDoc(
+        doc(db,"notice",window.editId),
+        data
+    );
+
+    alert("공지가 수정되었습니다.");
+
+    window.editId = null;
+
+}else{
+
+    await addDoc(
+        collection(db,"notice"),
+        data
+    );
+
+    alert("공지가 등록되었습니다.");
+
+}
+
+document.getElementById("noticeTitle").value="";
+document.getElementById("noticeContent").value="";
+
+loadNotice();
+
+};
+async function loadNotice(){
+
+const q = query(
+    collection(db,"notice"),
+    orderBy("timestamp","desc")
+);
+
+const snapshot = await getDocs(q);
+
+let html = "";
+let no = 1;
+
+snapshot.forEach(docItem=>{
+
+const n = docItem.data();
+
+html += `
+
+<tr>
+
+<td>${no++}</td>
+
+<td>${n.title}</td>
+
+<td>${n.date}</td>
+
+<td>
+<button onclick="viewNotice('${docItem.id}')">
+보기
 </button>
+</td>
+
+<td>
+<button onclick="editNotice('${docItem.id}')">
+수정
+</button>
+</td>
+
+<td>
+<button onclick="deleteNotice('${docItem.id}')">
+삭제
+</button>
+</td>
+
+</tr>
+
+`;
+
+});
+
+document.getElementById("noticeBody").innerHTML = html;
+
+}
+async function deleteNotice(id){
+
+if(!confirm("정말 삭제하시겠습니까?")) return;
+
+await deleteDoc(
+    doc(db,"notice",id)
+);
+
+loadNotice();
+
+}
+
+window.deleteNotice = deleteNotice;
+async function editNotice(id){
+
+    window.editId = id;
+
+    const snap = await getDoc(doc(db,"notice",id));
+
+    if(!snap.exists()) return;
+
+    const n = snap.data();
+
+    document.getElementById("noticeTitle").value = n.title;
+    document.getElementById("noticeContent").value = n.content;
+
+    window.scrollTo({
+        top:document.body.scrollHeight,
+        behavior:"smooth"
+    });
+
+}
+
+window.editNotice = editNotice;
+
+window.viewNotice = function(id){
+
+    location.href="../notice_view.html?id="+id;
+
+};
+document.getElementById("searchBtn").onclick = async ()=>{
+
+const keyword = document.getElementById("searchText").value.toLowerCase();
+
+const snapshot = await getDocs(collection(db,"notice"));
+
+let html = "";
+let no = 1;
+
+snapshot.forEach(docItem=>{
+
+const n = docItem.data();
+
+if(
+    n.title.toLowerCase().includes(keyword) ||
+    n.content.toLowerCase().includes(keyword)
+){
+
+html += `
+
+<tr>
+
+<td>${no++}</td>
+
+<td>${n.title}</td>
+
+<td>${n.date}</td>
+
+<td><button onclick="viewNotice('${docItem.id}')">보기</button></td>
+
+<td><button onclick="editNotice('${docItem.id}')">수정</button></td>
+
+<td><button onclick="deleteNotice('${docItem.id}')">삭제</button></td>
+
+</tr>
+
+`;
+
+}
+
+});
+
+document.getElementById("noticeBody").innerHTML = html;
+
+};
+
+loadNotice();
+
+</script>
 
 </div>
 
 </body>
-</html>
+
+</html>    
