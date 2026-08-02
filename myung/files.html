@@ -186,7 +186,14 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 
 import {
 collection,
-addDoc
+addDoc,
+getDocs,
+deleteDoc,
+doc,
+getDoc,
+updateDoc,
+query,
+orderBy
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 import {
@@ -235,7 +242,6 @@ alert("자료가 등록되었습니다.");
 
 };
 
-</script>
 async function loadFiles(){
 
 const q=query(
