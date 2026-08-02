@@ -6,124 +6,81 @@
 <title>뉴스관리</title>
 
 <style>
-
 body{
     margin:0;
     background:#111;
-    color:white;
+    color:#fff;
     font-family:Malgun Gothic,sans-serif;
 }
-
 header{
     background:#222;
     padding:20px;
     text-align:center;
 }
-
 header h1{
     margin:0;
     color:#FFD700;
     font-size:34px;
 }
-
 .container{
     width:95%;
     max-width:1200px;
     margin:30px auto;
 }
-
-input,
-textarea,
-select{
-
+input,textarea{
     width:100%;
     padding:12px;
     border:none;
     border-radius:8px;
     font-size:18px;
     box-sizing:border-box;
-
 }
-
 textarea{
-
     height:250px;
     resize:vertical;
-
 }
-
 label{
-
     display:block;
     margin-top:20px;
     margin-bottom:8px;
-    font-size:18px;
     font-weight:bold;
-
 }
-
 button{
-
     background:#FFD700;
     color:#000;
     border:none;
     border-radius:8px;
     padding:12px 25px;
-    cursor:pointer;
     font-size:17px;
     font-weight:bold;
-
+    cursor:pointer;
 }
-
 button:hover{
-
     background:#ffcc00;
-
 }
-
 table{
-
     width:100%;
     border-collapse:collapse;
     margin-top:20px;
-
 }
-
 th{
-
     background:#333;
     padding:12px;
-
 }
-
 td{
-
     padding:10px;
     border-bottom:1px solid #444;
     text-align:center;
-
 }
-
-img.thumb{
-
+.thumb{
     width:80px;
     border-radius:5px;
-
 }
-
-hr{
-
-    margin:40px 0;
-
-}
-
 </style>
+
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-
 import {
-
 getFirestore,
 collection,
 addDoc,
@@ -131,37 +88,33 @@ getDocs,
 deleteDoc,
 doc,
 getDoc,
-updateDoc
-
+updateDoc,
+query,
+orderBy
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 import {
-
 getStorage,
 ref,
 uploadBytes,
 getDownloadURL
-
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
-
 const firebaseConfig = {
-
-apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
-authDomain: "gasuinent.firebaseapp.com",
-projectId: "gasuinent",
-storageBucket: "gasuinent.firebasestorage.app",
-messagingSenderId: "122370674182",
-appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
-measurementId: "G-39M5K1M6K7"
-
+    apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+    authDomain: "gasuinent.firebaseapp.com",
+    projectId: "gasuinent",
+    storageBucket: "gasuinent.firebasestorage.app",
+    messagingSenderId: "122370674182",
+    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+    measurementId: "G-39M5K1M6K7"
 };
 
 const app = initializeApp(firebaseConfig);
 
 window.db = getFirestore(app);
-
 window.storage = getStorage(app);
 
+let editId = null;
 </script>
 
 </head>
@@ -172,19 +125,15 @@ window.storage = getStorage(app);
 
 <h1>📰 뉴스관리</h1>
 
-<div style="margin-top:20px;">
+<div style="margin-top:20px">
 
 <input
 id="searchText"
 type="text"
 placeholder="뉴스 검색..."
-style="width:300px;padding:10px;border-radius:6px;border:none;">
+style="width:320px;padding:10px;border-radius:6px;border:none;">
 
-<button id="searchBtn">
-
-검색
-
-</button>
+<button id="searchBtn">검색</button>
 
 </div>
 
@@ -197,7 +146,6 @@ style="width:300px;padding:10px;border-radius:6px;border:none;">
 <table>
 
 <tr>
-
 <th>번호</th>
 <th>사진</th>
 <th>제목</th>
@@ -205,7 +153,6 @@ style="width:300px;padding:10px;border-radius:6px;border:none;">
 <th>보기</th>
 <th>수정</th>
 <th>삭제</th>
-
 </tr>
 
 <tbody id="noticeBody"></tbody>
@@ -217,30 +164,18 @@ style="width:300px;padding:10px;border-radius:6px;border:none;">
 <h2>뉴스 등록</h2>
 
 <label>뉴스 제목</label>
-
-<input
-type="text"
-id="noticeTitle">
+<input type="text" id="noticeTitle">
 
 <label>사진 선택</label>
-
-<input
-type="file"
-id="noticeImage">
+<input type="file" id="noticeImage">
 
 <label>뉴스 내용</label>
+<textarea id="noticeContent"></textarea>
 
-<textarea
-id="noticeContent"></textarea>
-
-<button id="saveNotice">
-공지 등록
-</button>
+<button id="saveNotice">뉴스 저장</button>
 
 <script type="module">
-
 import {
-getFirestore,
 collection,
 addDoc,
 getDocs,
@@ -258,355 +193,228 @@ uploadBytes,
 getDownloadURL
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
 
-console.log("공지 등록 준비 완료");
+const db = window.db;
+const storage = window.storage;
 
-let editId = null;
+document.getElementById("saveNotice").onclick = async () => {
 
-document.getElementById("saveNotice").onclick = async function () {
+let title = document.getElementById("noticeTitle").value.trim();
+let content = document.getElementById("noticeContent").value.trim();
+let file = document.getElementById("noticeImage").files[0];
 
-    let file = document.getElementById("noticeImage").files[0];
+if(title==""){
+    alert("제목을 입력하세요.");
+    return;
+}
 
-    let imageUrl = "";
+let imageUrl="";
 
 if(editId){
 
-    const snap = await getDoc(
-        doc(window.db,"notice",editId)
-    );
+    const snap = await getDoc(doc(db,"notice",editId));
 
     if(snap.exists()){
-
         imageUrl = snap.data().image || "";
-
     }
 
 }
 
-    if(file){
+if(file){
 
-        const storageRef = ref(
+    const storageRef = ref(
+        storage,
+        "notice/"+Date.now()+"_"+file.name
+    );
 
-            window.storage,
+    await uploadBytes(storageRef,file);
 
-            "notice/" + Date.now() + "_" + file.name
+    imageUrl = await getDownloadURL(storageRef);
 
-        );
+}
 
-        await uploadBytes(storageRef,file);
+const data = {
+    title:title,
+    content:content,
+    image:imageUrl,
+    date:new Date().toISOString().slice(0,10),
+    timestamp:Date.now()
+};
+if(editId){
 
-        imageUrl = await getDownloadURL(storageRef);
+    await updateDoc(
+        doc(db,"notice",editId),
+        data
+    );
 
-    }
+    alert("뉴스가 수정되었습니다.");
 
-    let title = document.getElementById("noticeTitle").value;
+    editId = null;
 
-    let content = document.getElementById("noticeContent").value;
+}else{
 
-    let today = new Date().toISOString().slice(0,10);
+    await addDoc(
+        collection(db,"notice"),
+        data
+    );
 
-    if(title==""){
+    alert("뉴스가 등록되었습니다.");
 
-       alert("공지 제목을 입력하세요.");
+}
 
-        return;
+document.getElementById("noticeTitle").value="";
+document.getElementById("noticeContent").value="";
+document.getElementById("noticeImage").value="";
 
-    }
-
-    try{
-
-        if(editId){
-
-            await updateDoc(
-
-                doc(window.db,"notice",editId),
-
-                {
-
-                    title:title,
-
-                    content:content,
-
-                    image:imageUrl,
-
-                   date: today,
-timestamp: Date.now()
-
-                }
-
-            );
-
-            alert("공지가 수정되었습니다.");
-
-            editId = null;
-
-        }else{
-
-            await addDoc(
-
-                collection(window.db,"notice"),
-
-                {
-
-                    title:title,
-
-                    content:content,
-
-                    image:imageUrl,
-
-                    date: today,
-timestamp: Date.now()
-
-                }
-
-            );
-
-            alert("공지가 등록되었습니다.");
-
-        }
-
-        document.getElementById("noticeTitle").value="";
-
-        document.getElementById("noticeContent").value="";
-
-        document.getElementById("noticeImage").value="";
-
-       loadNotice();
-
-    }catch(e){
-
-        console.log(e);
-
-        alert("저장 실패");
-
-    }
+loadNotice();
 
 };
 
 async function loadNotice(){
 
- const q = query(
-    collection(window.db,"notice"),
-   orderBy("timestamp","desc")
+const q=query(
+    collection(db,"notice"),
+    orderBy("timestamp","desc")
 );
 
-const snapshot = await getDocs(q);
+const snapshot=await getDocs(q);
 
-const docs = [];
+let html="";
+let no=1;
 
-snapshot.forEach((docItem)=>{
-    docs.push(docItem);
+snapshot.forEach(docItem=>{
+
+const n=docItem.data();
+
+html+=`
+
+<tr>
+
+<td>${no++}</td>
+
+<td>
+${n.image?
+`<img src="${n.image}" class="thumb">`
+:"-"}
+</td>
+
+<td>${n.title}</td>
+
+<td>${n.date}</td>
+
+<td>
+<button onclick="viewNotice('${docItem.id}')">
+보기
+</button>
+</td>
+
+<td>
+<button onclick="editNotice('${docItem.id}')">
+수정
+</button>
+</td>
+
+<td>
+<button onclick="deleteNotice('${docItem.id}')">
+삭제
+</button>
+</td>
+
+</tr>
+
+`;
+
 });
 
-let html = "";
-
-let no = 1;
-
-docs.forEach((docItem)=>{
-
-    const notice = docItem.data();
-
-        html += `
-
-        <tr>
-
-        <td>${no++}</td>
-
-        <td>
-
-        ${notice.image ?
-
-        `<img src="${notice.image}" class="thumb">`
-
-        :
-
-        "-"}
-
-        </td>
-
-        <td>${notice.title}</td>
-
-        <td>${notice.date}</td>
-
-        <td>
-
-        <button onclick="viewNotice('${docItem.id}')">
-
-        보기
-
-        </button>
-
-        </td>
-
-        <td>
-
-       <button onclick="editNotice('${docItem.id}')">
-
-        수정
-
-        </button>
-
-        </td>
-
-        <td>
-
-       <button onclick="deleteNotice('${docItem.id}')">
-
-        삭제
-
-        </button>
-
-        </td>
-
-        </tr>
-
-        `;
-
-    });
-
-    document.getElementById("noticeBody").innerHTML = html;
+document.getElementById("noticeBody").innerHTML=html;
 
 }
-
 async function deleteNotice(id){
 
-    if(!confirm("정말 삭제하시겠습니까?"))
+if(!confirm("정말 삭제하시겠습니까?")) return;
 
-        return;
+await deleteDoc(doc(db,"notice",id));
 
-    await deleteDoc(
-
-        doc(window.db,"notice",id)
-
-    );
-
-    loadNotice();
+loadNotice();
 
 }
 
-window.deleteNotice = deleteNotice;
+window.deleteNotice=deleteNotice;
 
 async function editNotice(id){
 
-    editId = id;
+editId=id;
 
-    const snap = await getDoc(
+const snap=await getDoc(doc(db,"notice",id));
 
-        doc(window.db,"notice",id)
+if(!snap.exists()) return;
 
-    );
+const n=snap.data();
 
-    if(!snap.exists()) return;
+document.getElementById("noticeTitle").value=n.title;
+document.getElementById("noticeContent").value=n.content;
 
-    const notice = snap.data();
-
-    document.getElementById("noticeTitle").value = notice.title;
-
-    document.getElementById("noticeContent").value = notice.content;
-
-    alert("수정할 뉴스를 불러왔습니다.");
+window.scrollTo({
+top:document.body.scrollHeight,
+behavior:"smooth"
+});
 
 }
 
-window.editNotice = editNotice;
- async function viewNotice(id){
+window.editNotice=editNotice;
 
-    window.location.href = "notice_view.html?id=" + id;
+window.viewNotice=function(id){
+
+location.href="../notice_view.html?id="+id;
+
+};
+
+document.getElementById("searchBtn").onclick=async()=>{
+
+const keyword=document.getElementById("searchText").value.toLowerCase();
+
+const snapshot=await getDocs(collection(db,"notice"));
+
+let html="";
+let no=1;
+
+snapshot.forEach(docItem=>{
+
+const n=docItem.data();
+
+if(
+n.title.toLowerCase().includes(keyword) ||
+n.content.toLowerCase().includes(keyword)
+){
+
+html+=`
+
+<tr>
+
+<td>${no++}</td>
+
+<td>${n.image?
+`<img src="${n.image}" class="thumb">`
+:"-"}</td>
+
+<td>${n.title}</td>
+
+<td>${n.date}</td>
+
+<td><button onclick="viewNotice('${docItem.id}')">보기</button></td>
+
+<td><button onclick="editNotice('${docItem.id}')">수정</button></td>
+
+<td><button onclick="deleteNotice('${docItem.id}')">삭제</button></td>
+
+</tr>
+
+`;
 
 }
 
-window.viewNotice = viewNotice;
+});
 
-document.getElementById("searchBtn").onclick = async function(){
-
-    const keyword = document.getElementById("searchText").value.toLowerCase();
-
-    const snapshot = await getDocs(
-        collection(window.db,"notice")
-    );
-
-    let html = "";
-
-    let no = 1;
-
-    const docs = [];
-
-    snapshot.forEach((docItem)=>{
-
-        docs.push(docItem);
-
-    });
-
-    docs.reverse();
-
-    docs.forEach((docItem)=>{
-
-        const notice = docItem.data();
-
-        if(notice.title.toLowerCase().includes(keyword) ||
-
-           notice.content.toLowerCase().includes(keyword)){
-
-            html += `
-
-            <tr>
-
-            <td>${no++}</td>
-
-            <td>
-
-            ${notice.image ?
-
-            `<img src="${notice.image}" class="thumb">`
-
-            :
-
-            "-"}
-
-            </td>
-
-            <td>${notice.title}</td>
-
-            <td>${notice.date}</td>
-
-            <td>
-
-            <button onclick="viewNotice('${docItem.id}')">
-
-            보기
-
-            </button>
-
-            </td>
-
-            <td>
-
-            <button onclick="editNotice('${docItem.id}')">
-
-            수정
-
-            </button>
-
-            </td>
-
-            <td>
-
-            <button onclick="deleteNotice('${docItem.id}')">
-
-            삭제
-
-            </button>
-
-            </td>
-
-            </tr>
-
-            `;
-
-        }
-
-    });
-
-    document.getElementById("noticeBody").innerHTML = html;
+document.getElementById("noticeBody").innerHTML=html;
 
 };
 
@@ -618,4 +426,4 @@ loadNotice();
 
 </body>
 
-</html> 
+</html>    
