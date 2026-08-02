@@ -178,6 +178,24 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 
 <script type="module">
 
+import {
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc,
+getDoc,
+updateDoc,
+query,
+orderBy
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+import {
+ref,
+uploadBytes,
+getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
+
 const db = window.db;
 const storage = window.storage;
 
