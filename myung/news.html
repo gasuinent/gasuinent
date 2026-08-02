@@ -170,7 +170,14 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 
 <label>사진 선택</label>
 <input type="file" id="noticeImage">
-
+<img
+id="previewImage"
+style="
+max-width:250px;
+margin-top:10px;
+display:none;
+border-radius:8px;
+">
 <label>뉴스 내용</label>
 <textarea id="noticeContent"></textarea>
 
@@ -267,7 +274,27 @@ if(window.editId){
 document.getElementById("noticeTitle").value="";
 document.getElementById("noticeContent").value="";
 document.getElementById("noticeImage").value="";
+document.getElementById("noticeImage").onchange = function () {
 
+    const file = this.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+
+        const img = document.getElementById("previewImage");
+
+        img.src = e.target.result;
+
+        img.style.display = "block";
+
+    };
+
+    reader.readAsDataURL(file);
+
+};
 loadNotice();
 
 };
@@ -345,7 +372,7 @@ window.deleteNotice=deleteNotice;
 
 async function editNotice(id){
 
-editId=id;
+window.editId = id;
 
 const snap=await getDoc(doc(db,"notice",id));
 
@@ -355,7 +382,14 @@ const n=snap.data();
 
 document.getElementById("noticeTitle").value=n.title;
 document.getElementById("noticeContent").value=n.content;
+const img = document.getElementById("previewImage");
 
+if (n.image) {
+    img.src = n.image;
+    img.style.display = "block";
+} else {
+    img.style.display = "none";
+}
 window.scrollTo({
 top:document.body.scrollHeight,
 behavior:"smooth"
