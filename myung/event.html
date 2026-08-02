@@ -1,1 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>행사일정 관리</title>
+
+<style>
+
+body{
+    margin:0;
+    background:#111;
+    color:#fff;
+    font-family:Malgun Gothic,sans-serif;
+}
+
+header{
+    background:#222;
+    padding:20px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+    color:#FFD700;
+    font-size:34px;
+}
+
+.container{
+    width:95%;
+    max-width:1200px;
+    margin:30px auto;
+}
+
+input,textarea{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    font-size:18px;
+    box-sizing:border-box;
+}
+
+textarea{
+    height:220px;
+    resize:vertical;
+}
+
+label{
+    display:block;
+    margin-top:20px;
+    margin-bottom:8px;
+    font-weight:bold;
+}
+
+button{
+    background:#FFD700;
+    color:#000;
+    border:none;
+    border-radius:8px;
+    padding:12px 25px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#ffcc00;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th{
+    background:#333;
+    padding:12px;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #444;
+    text-align:center;
+}
+
+</style>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc,
+getDoc,
+updateDoc,
+query,
+orderBy
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+    authDomain: "gasuinent.firebaseapp.com",
+    projectId: "gasuinent",
+    storageBucket: "gasuinent.firebasestorage.app",
+    messagingSenderId: "122370674182",
+    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+    measurementId: "G-39M5K1M6K7"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+window.db = db;
+window.editId = null;
+
+</script>
+
+</head>
+<body>
+
+<header>
+
+<h1>📅 행사일정 관리</h1>
+
+<div style="margin-top:20px">
+
+<input
+id="searchText"
+type="text"
+placeholder="행사 검색..."
+style="width:320px;padding:10px;border-radius:6px;border:none;">
+
+<button id="searchBtn">검색</button>
+
+</div>
+
+</header>
+
+<div class="container">
+
+<h2>등록된 행사</h2>
+
+<table>
+
+<tr>
+<th>번호</th>
+<th>행사명</th>
+<th>행사일</th>
+<th>보기</th>
+<th>수정</th>
+<th>삭제</th>
+</tr>
+
+<tbody id="eventBody"></tbody>
+
+</table>
+
+<hr>
+
+<h2>행사 등록</h2>
+
+<label>행사명</label>
+<input type="text" id="eventTitle">
+
+<label>행사일</label>
+<input type="date" id="eventDate">
+
+<label>행사 내용</label>
+<textarea id="eventContent"></textarea>
+
+<button id="saveEvent">행사 저장</button>
+<script type="module">
+
+import {
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc,
+getDoc,
+updateDoc,
+query,
+orderBy
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+const db = window.db;
+
+document.getElementById("saveEvent").onclick = async ()=>{
+
+let title=document.getElementById("eventTitle").value.trim();
+let eventDate=document.getElementById("eventDate").value;
+let content=document.getElementById("eventContent").value.trim();
+
+if(title==""){
+    alert("행사명을 입력하세요.");
+    return;
+}
+
+const data={
+    title:title,
+    eventDate:eventDate,
+    content:content,
+    date:new Date().toISOString().slice(0,10),
+    timestamp:Date.now()
+};
+
+if(window.editId){
+
+    await updateDoc(doc(db,"event",window.editId),data);
+
+    alert("행사가 수정되었습니다.");
+
+    window.editId=null;
+
+}else{
+
+    await addDoc(collection(db,"event"),data);
+
+    alert("행사가 등록되었습니다.");
+
+}
+
+document.getElementById("eventTitle").value="";
+document.getElementById("eventDate").value="";
+document.getElementById("eventContent").value="";
+
+loadEvent();
+
+};
+
+async function loadEvent(){
+
+const q=query(
+collection(db,"event"),
+orderBy("timestamp","desc")
+);
+
+const snapshot=await getDocs(q);
+
+let html="";
+let no=1;
+
+snapshot.forEach(docItem=>{
+
+const e=docItem.data();
+
+html+=`
+<tr>
+<td>${no++}</td>
+<td>${e.title}</td>
+<td>${e.eventDate||""}</td>
+<td><button onclick="viewEvent('${docItem.id}')">보기</button></td>
+<td><button onclick="editEvent('${docItem.id}')">수정</button></td>
+<td><button onclick="deleteEvent('${docItem.id}')">삭제</button></td>
+</tr>
+`;
+
+});
+
+document.getElementById("eventBody").innerHTML=html;
+
+}
+
+async function deleteEvent(id){
+
+if(!confirm("정말 삭제하시겠습니까?")) return;
+
+await deleteDoc(doc(db,"event",id));
+
+loadEvent();
+
+}
+
+window.deleteEvent=deleteEvent;
+
+async function editEvent(id){
+
+window.editId=id;
+
+const snap=await getDoc(doc(db,"event",id));
+
+if(!snap.exists()) return;
+
+const e=snap.data();
+
+document.getElementById("eventTitle").value=e.title;
+document.getElementById("eventDate").value=e.eventDate||"";
+document.getElementById("eventContent").value=e.content;
+
+window.scrollTo({
+top:document.body.scrollHeight,
+behavior:"smooth"
+});
+
+}
+
+window.editEvent=editEvent;
+
+window.viewEvent=function(id){
+
+location.href="schedule_view.html?id="+id;
+
+};
+
+document.getElementById("searchBtn").onclick=async()=>{
+
+const keyword=document.getElementById("searchText").value.toLowerCase();
+
+const snapshot=await getDocs(collection(db,"event"));
+
+let html="";
+let no=1;
+
+snapshot.forEach(docItem=>{
+
+const e=docItem.data();
+
+if(
+e.title.toLowerCase().includes(keyword) ||
+e.content.toLowerCase().includes(keyword)
+){
+
+html+=`
+<tr>
+<td>${no++}</td>
+<td>${e.title}</td>
+<td>${e.eventDate||""}</td>
+<td><button onclick="viewEvent('${docItem.id}')">보기</button></td>
+<td><button onclick="editEvent('${docItem.id}')">수정</button></td>
+<td><button onclick="deleteEvent('${docItem.id}')">삭제</button></td>
+</tr>
+`;
+
+}
+
+});
+
+document.getElementById("eventBody").innerHTML=html;
+
+};
+
+loadEvent();
+
+</script>
+
+</div>
+
+</body>
+</html>
