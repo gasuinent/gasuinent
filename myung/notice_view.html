@@ -1,88 +1,56 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>공지 보기</title>
+
+<title>공지사항</title>
 
 <style>
+
 body{
     margin:0;
     background:#111;
-    color:white;
+    color:#fff;
     font-family:Malgun Gothic,sans-serif;
 }
-header{
-    background:#222;
-    padding:20px;
-    text-align:center;
-}
-header h1{
-    margin:0;
-    color:#FFD700;
-    font-size:34px;
-}
+
 .container{
-    width:90%;
-    max-width:1000px;
+    width:95%;
+    max-width:900px;
     margin:40px auto;
 }
-#title{
-    font-size:34px;
-    font-weight:bold;
-    margin-bottom:20px;
+
+h1{
+    color:#FFD700;
+    font-size:42px;
+    margin-bottom:15px;
 }
-#date{
-    color:#aaa;
+
+.meta{
+    color:#ccc;
     margin-bottom:30px;
 }
-#image{
-    width:100%;
-    max-height:600px;
-    object-fit:cover;
-    border-radius:10px;
-    margin-bottom:30px;
-}
+
 #content{
     font-size:22px;
-    line-height:1.8;
+    line-height:1.9;
     white-space:pre-wrap;
 }
+
 button{
     margin-top:40px;
-    padding:15px 35px;
+    padding:12px 25px;
     background:#FFD700;
+    color:#000;
     border:none;
     border-radius:8px;
-    font-size:18px;
-    font-weight:bold;
     cursor:pointer;
+    font-weight:bold;
 }
+
 </style>
-
-</head>
-
-<body>
-
-<header>
-<h1>📢 공지 보기</h1>
-</header>
-
-<div class="container">
-
-<div id="title"></div>
-<div id="date"></div>
-
-<img id="image">
-
-<div id="content"></div>
-
-<button onclick="history.back()">
-목록으로 돌아가기
-</button>
-
-</div>
-
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
@@ -94,55 +62,64 @@ getDoc
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 const firebaseConfig = {
-
-apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
-authDomain: "gasuinent.firebaseapp.com",
-projectId: "gasuinent",
-storageBucket: "gasuinent.firebasestorage.app",
-messagingSenderId: "122370674182",
-appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
-measurementId: "G-39M5K1M6K7"
-
+    apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+    authDomain: "gasuinent.firebaseapp.com",
+    projectId: "gasuinent",
+    storageBucket: "gasuinent.firebasestorage.app",
+    messagingSenderId: "122370674182",
+    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+    measurementId: "G-39M5K1M6K7"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-const params = new URLSearchParams(window.location.search);
+const params = new URLSearchParams(location.search);
 const id = params.get("id");
 
-async function loadNotice(){
-
-    if(!id){
-        document.getElementById("title").innerHTML="공지를 찾을 수 없습니다.";
-        return;
-    }
+if(id){
 
     const snap = await getDoc(doc(db,"notice",id));
 
-    if(!snap.exists()){
-        document.getElementById("title").innerHTML="공지가 존재하지 않습니다.";
-        return;
-    }
+    if(snap.exists()){
 
-    const notice = snap.data();
+        const n = snap.data();
 
-    document.getElementById("title").innerHTML = notice.title;
-    document.getElementById("date").innerHTML = notice.date;
-    document.getElementById("content").innerHTML = notice.content;
+        document.body.insertAdjacentHTML("beforeend",`
 
-    if(notice.image){
-        document.getElementById("image").src = notice.image;
-        document.getElementById("image").style.display = "block";
+<div class="container">
+
+<h1>${n.title}</h1>
+
+<div class="meta">
+작성일 : ${n.date}
+</div>
+
+<div id="content">
+${n.content}
+</div>
+
+<button onclick="history.back()">
+← 목록으로
+</button>
+
+</div>
+
+`);
+
     }else{
-        document.getElementById("image").style.display = "none";
+
+        document.body.innerHTML="<h2 style='text-align:center;margin-top:80px;'>공지를 찾을 수 없습니다.</h2>";
+
     }
 
 }
 
-loadNotice();
-
 </script>
 
+</head>
+
+<body>
+
 </body>
+
 </html>
