@@ -79,7 +79,7 @@ td{
 </style>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";    
 import {
 getFirestore,
 collection,
@@ -111,10 +111,12 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-window.db = getFirestore(app);
-window.storage = getStorage(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-let editId = null;
+window.db = db;
+window.storage = storage;
+window.editId = null;
 </script>
 
 </head>
@@ -175,23 +177,6 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 <button id="saveNotice">뉴스 저장</button>
 
 <script type="module">
-import {
-collection,
-addDoc,
-getDocs,
-deleteDoc,
-doc,
-getDoc,
-updateDoc,
-query,
-orderBy
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-
-import {
-ref,
-uploadBytes,
-getDownloadURL
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
 
 const db = window.db;
 const storage = window.storage;
@@ -209,9 +194,9 @@ if(title==""){
 
 let imageUrl="";
 
-if(editId){
+if(window.editId){
 
-    const snap = await getDoc(doc(db,"notice",editId));
+    const snap = await getDoc(doc(db,"notice",window.editId));
 
     if(snap.exists()){
         imageUrl = snap.data().image || "";
@@ -239,16 +224,16 @@ const data = {
     date:new Date().toISOString().slice(0,10),
     timestamp:Date.now()
 };
-if(editId){
+if(window.editId){
 
     await updateDoc(
-        doc(db,"notice",editId),
+        doc(db,"notice",window.editId),
         data
     );
 
     alert("뉴스가 수정되었습니다.");
 
-    editId = null;
+  window.editId = null;
 
 }else{
 
