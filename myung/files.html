@@ -125,7 +125,19 @@ const storage = getStorage(app);
 window.db = db;
 window.storage = storage;
 window.editId = null;
+window.collection = collection;
+window.addDoc = addDoc;
+window.getDocs = getDocs;
+window.deleteDoc = deleteDoc;
+window.doc = doc;
+window.getDoc = getDoc;
+window.updateDoc = updateDoc;
+window.query = query;
+window.orderBy = orderBy;
 
+window.ref = ref;
+window.uploadBytes = uploadBytes;
+window.getDownloadURL = getDownloadURL;    
 </script>
 
 </head>
@@ -184,17 +196,6 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 <button id="saveFile">자료 저장</button>
 <script type="module">
 
-import {
-collection,
-addDoc,
-getDocs,
-deleteDoc,
-doc,
-getDoc,
-updateDoc,
-query,
-orderBy
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 import {
 ref,
@@ -202,10 +203,22 @@ uploadBytes,
 getDownloadURL
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
 
-const db = window.db;
-const storage = window.storage;
 
 document.getElementById("saveFile").onclick = async ()=>{
+const collection = window.collection;
+const addDoc = window.addDoc;
+const getDocs = window.getDocs;
+const deleteDoc = window.deleteDoc;
+const doc = window.doc;
+const getDoc = window.getDoc;
+const updateDoc = window.updateDoc;
+const query = window.query;
+const orderBy = window.orderBy;
+
+const ref = window.ref;
+const uploadBytes = window.uploadBytes;
+const getDownloadURL = window.getDownloadURL;
+try{
 
 let title=document.getElementById("fileTitle").value.trim();
 let content=document.getElementById("fileContent").value.trim();
@@ -221,24 +234,60 @@ if(!file){
     return;
 }
 
-const storageRef=ref(storage,"files/"+Date.now()+"_"+file.name);
+const storageRef=ref(
+    storage,
+    "files/"+Date.now()+"_"+file.name
+);
 
 await uploadBytes(storageRef,file);
 
 const fileUrl=await getDownloadURL(storageRef);
 
 const data={
+
     title:title,
     content:content,
     fileName:file.name,
     fileUrl:fileUrl,
     date:new Date().toISOString().slice(0,10),
     timestamp:Date.now()
+
 };
 
-await addDoc(collection(db,"files"),data);
+if(window.editId){
 
-alert("자료가 등록되었습니다.");
+    await updateDoc(
+        doc(db,"files",window.editId),
+        data
+    );
+
+    alert("자료가 수정되었습니다.");
+
+    window.editId=null;
+
+}else{
+
+    await addDoc(
+        collection(db,"files"),
+        data
+    );
+
+    alert("자료가 등록되었습니다.");
+
+}
+
+document.getElementById("fileTitle").value="";
+document.getElementById("fileContent").value="";
+document.getElementById("fileUpload").value="";
+
+loadFiles();
+
+}catch(e){
+
+console.error(e);
+alert(e.message);
+
+}
 
 };
 
