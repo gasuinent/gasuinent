@@ -158,6 +158,23 @@ background:#ffcc00;
 
 <div id="relatedNews"></div>
 
+<div id="articleNav"
+style="
+display:flex;
+justify-content:space-between;
+margin:40px 0;
+">
+
+<button id="prevBtn">
+◀ 이전 기사
+</button>
+
+<button id="nextBtn">
+다음 기사 ▶
+</button>
+
+</div>
+
 <button onclick="location.href='news.html'">
 📰 뉴스 목록
 </button>
@@ -175,7 +192,8 @@ getDocs,
 query,
 orderBy,
 limit
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 const firebaseConfig = {
 apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
@@ -304,6 +322,55 @@ font-size:14px;">
 }
 
 loadRelatedNews();
+async function loadPrevNext(){
+
+    const q = query(
+        collection(db,"notice"),
+        orderBy("timestamp","desc")
+    );
+
+    const snap = await getDocs(q);
+
+    const list = [];
+
+    snap.forEach(item=>{
+        list.push({
+            id:item.id,
+            ...item.data()
+        });
+    });
+
+    const index = list.findIndex(n=>n.id===id);
+
+    const prev = list[index+1];
+    const next = list[index-1];
+
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    if(prev){
+        prevBtn.innerHTML = "◀ 이전 기사";
+        prevBtn.onclick = ()=>{
+            location.href="notice_view.html?id="+prev.id;
+        };
+    }else{
+        prevBtn.disabled=true;
+        prevBtn.innerHTML="첫 기사";
+    }
+
+    if(next){
+        nextBtn.innerHTML = "다음 기사 ▶";
+        nextBtn.onclick = ()=>{
+            location.href="notice_view.html?id="+next.id;
+        };
+    }else{
+        nextBtn.disabled=true;
+        nextBtn.innerHTML="마지막 기사";
+    }
+
+}
+
+loadPrevNext();    
 </script>
 
 </div>
