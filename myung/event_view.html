@@ -1,1 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>행사 보기</title>
 
+<style>
+body{
+    margin:0;
+    background:#111;
+    color:#fff;
+    font-family:Malgun Gothic,sans-serif;
+}
+.container{
+    width:90%;
+    max-width:900px;
+    margin:50px auto;
+}
+h1{
+    color:#FFD700;
+}
+.date{
+    color:#ccc;
+    margin:20px 0;
+}
+.content{
+    line-height:1.8;
+    white-space:pre-wrap;
+    font-size:18px;
+}
+button{
+    margin-top:40px;
+    background:#FFD700;
+    color:#000;
+    border:none;
+    padding:12px 30px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+</style>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+import {
+getFirestore,
+doc,
+getDoc
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+authDomain:"gasuinent.firebaseapp.com",
+projectId:"gasuinent",
+storageBucket:"gasuinent.firebasestorage.app",
+messagingSenderId:"122370674182",
+appId:"1:122370674182:web:3bb831917d8d6ed36d7d87"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+
+const id=new URLSearchParams(location.search).get("id");
+
+const snap=await getDoc(doc(db,"event",id));
+
+if(snap.exists()){
+
+const e=snap.data();
+
+document.getElementById("title").innerText=e.title||"";
+document.getElementById("date").innerText=e.eventDate||"";
+document.getElementById("content").innerText=e.content||"";
+
+}else{
+
+document.getElementById("title").innerText="행사가 존재하지 않습니다.";
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 id="title"></h1>
+
+<div id="date" class="date"></div>
+
+<div id="content" class="content"></div>
+
+<button onclick="history.back()">
+목록으로 돌아가기
+</button>
+
+</div>
+
+</body>
+</html>
