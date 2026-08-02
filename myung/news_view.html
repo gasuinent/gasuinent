@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>공지 보기</title>
@@ -12,144 +10,68 @@
 <style>
 
 body{
-
-margin:0;
-
-background:#111;
-
-color:white;
-
-font-family:Malgun Gothic,sans-serif;
-
-}
-
-header{
-
-background:#222;
-
-padding:20px;
-
-text-align:center;
-
-}
-
-header h1{
-
-margin:0;
-
-color:#FFD700;
-
-font-size:34px;
-
+    margin:0;
+    background:#111;
+    color:#fff;
+    font-family:Malgun Gothic,sans-serif;
 }
 
 .container{
-
-width:90%;
-
-max-width:1000px;
-
-margin:40px auto;
-
+    width:90%;
+    max-width:900px;
+    margin:60px auto;
 }
 
-#title{
-
-font-size:34px;
-
-font-weight:bold;
-
-margin-bottom:20px;
-
+h1{
+    color:#FFD700;
+    font-size:42px;
+    margin-bottom:15px;
 }
 
-#date{
-
-color:#aaa;
-
-margin-bottom:30px;
-
-}
-
-#image{
-
-width:100%;
-
-max-height:600px;
-
-object-fit:cover;
-
-border-radius:10px;
-
-margin-bottom:30px;
-
+.info{
+    color:#bbb;
+    margin-bottom:30px;
 }
 
 #content{
-
-font-size:22px;
-
-line-height:1.8;
-
-white-space:pre-wrap;
-
+    font-size:20px;
+    line-height:1.9;
+    white-space:pre-wrap;
 }
 
 button{
-
-margin-top:40px;
-
-padding:15px 35px;
-
-background:#FFD700;
-
-border:none;
-
-border-radius:8px;
-
-font-size:18px;
-
-font-weight:bold;
-
-cursor:pointer;
-
+    margin-top:40px;
+    padding:12px 25px;
+    border:none;
+    border-radius:8px;
+    background:#FFD700;
+    color:#000;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 button:hover{
-
-background:#ffcc00;
-
+    background:#ffcc00;
 }
 
 </style>
-
 
 </head>
 
 <body>
 
-<header>
-
-<h1>📢 공지 보기</h1>
-
-</header>
-
 <div class="container">
 
-<div id="title"></div>
+<h1 id="title">불러오는 중...</h1>
 
-<div id="date"></div>
-
-<img id="image">
+<div class="info" id="date"></div>
 
 <div id="content"></div>
 
 <button onclick="history.back()">
-
-목록으로 돌아가기
-
+목록으로
 </button>
-
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
@@ -161,67 +83,38 @@ getDoc
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 const firebaseConfig = {
-apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
-authDomain: "gasuinent.firebaseapp.com",
-projectId: "gasuinent",
-storageBucket: "gasuinent.firebasestorage.app",
-messagingSenderId: "122370674182",
-appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
-measurementId: "G-39M5K1M6K7"
+    apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+    authDomain: "gasuinent.firebaseapp.com",
+    projectId: "gasuinent",
+    storageBucket: "gasuinent.firebasestorage.app",
+    messagingSenderId: "122370674182",
+    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+    measurementId: "G-39M5K1M6K7"
 };
 
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
-const params = new URLSearchParams(window.location.search);
-
+const params = new URLSearchParams(location.search);
 const id = params.get("id");
 
-async function loadNotice(){
+if(id){
 
-    if(!id){
+const snap = await getDoc(doc(db,"notice",id));
 
-        document.getElementById("title").innerHTML="기사를 찾을 수 없습니다.";
+if(snap.exists()){
 
-        return;
+const n = snap.data();
 
-    }
-
-    const snap = await getDoc(doc(db,"notice",id));
-
-    if(!snap.exists()){
-
-        document.getElementById("title").innerHTML="기사가 존재하지 않습니다.";
-
-        return;
-
-    }
-
-    const notice = snap.data();
-
-document.getElementById("title").innerHTML = notice.title;
-document.getElementById("date").innerHTML = notice.date;
-document.getElementById("content").innerHTML = notice.content;
-
-  if(notice.image){
-    document.getElementById("image").src = notice.image;
-        document.getElementById("image").style.display = "block";
-
-    }else{
-
-        document.getElementById("image").style.display = "none";
-
-    }
+document.getElementById("title").textContent = n.title;
+document.getElementById("date").textContent = n.date;
+document.getElementById("content").textContent = n.content;
 
 }
 
-loadNotice();
+}
 
 </script>
 
-</div>
-
 </body>
-
 </html>
