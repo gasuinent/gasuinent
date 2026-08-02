@@ -1,76 +1,152 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>자료실 관리</title>
 
 <style>
+
 body{
     margin:0;
     background:#111;
     color:#fff;
-    font-family:"Malgun Gothic",sans-serif;
+    font-family:Malgun Gothic,sans-serif;
 }
+
 header{
     background:#222;
-    color:#FFD700;
+    padding:20px;
     text-align:center;
-    padding:25px;
 }
+
+header h1{
+    margin:0;
+    color:#FFD700;
+    font-size:34px;
+}
+
 .container{
-    width:90%;
-    max-width:900px;
+    width:95%;
+    max-width:1200px;
     margin:30px auto;
 }
+
+input,textarea{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    font-size:18px;
+    box-sizing:border-box;
+}
+
+textarea{
+    height:220px;
+}
+
+label{
+    display:block;
+    margin-top:20px;
+    margin-bottom:8px;
+    font-weight:bold;
+}
+
+button{
+    background:#FFD700;
+    color:#000;
+    border:none;
+    border-radius:8px;
+    padding:12px 25px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
 table{
     width:100%;
     border-collapse:collapse;
     margin-top:20px;
 }
-th,td{
-    border:1px solid #555;
-    padding:12px;
-    text-align:center;
-}
+
 th{
     background:#333;
-}
-label{
-    display:block;
-    margin-top:20px;
-    margin-bottom:8px;
-}
-input[type=text],
-input[type=file],
-textarea{
-    width:100%;
     padding:12px;
-    box-sizing:border-box;
-    font-size:16px;
 }
-textarea{
-    height:120px;
+
+td{
+    padding:10px;
+    border-bottom:1px solid #444;
+    text-align:center;
 }
-button{
-    padding:12px 25px;
-    margin-top:15px;
-    background:#FFD700;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:bold;
-}
-.back{
-    float:right;
-}
+
 </style>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc,
+getDoc,
+updateDoc,
+query,
+orderBy
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+import {
+getStorage,
+ref,
+uploadBytes,
+getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+    authDomain: "gasuinent.firebaseapp.com",
+    projectId: "gasuinent",
+    storageBucket: "gasuinent.firebasestorage.app",
+    messagingSenderId: "122370674182",
+    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+    measurementId: "G-39M5K1M6K7"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+window.db = db;
+window.storage = storage;
+window.editId = null;
+
+</script>
 
 </head>
-<body>
 
+<body>
 <header>
+
 <h1>📁 자료실 관리</h1>
+
+<div style="margin-top:20px">
+
+<input
+id="searchText"
+type="text"
+placeholder="자료 검색..."
+style="width:320px;padding:10px;border-radius:6px;border:none;">
+
+<button id="searchBtn">검색</button>
+
+</div>
+
 </header>
 
 <div class="container">
@@ -78,40 +154,86 @@ button{
 <h2>등록된 자료</h2>
 
 <table>
+
 <tr>
 <th>번호</th>
 <th>자료명</th>
 <th>등록일</th>
+<th>보기</th>
 <th>수정</th>
 <th>삭제</th>
 </tr>
 
-<tr>
-<td>1</td>
-<td>샘플 자료</td>
-<td>2026-07-23</td>
-<td><button>수정</button></td>
-<td><button>삭제</button></td>
-</tr>
+<tbody id="fileBody"></tbody>
 
 </table>
 
+<hr>
+
+<h2>자료 등록</h2>
+
 <label>자료 제목</label>
-<input type="text" placeholder="자료 제목을 입력하세요">
+<input type="text" id="fileTitle">
 
 <label>파일 선택</label>
-<input type="file">
+<input type="file" id="fileUpload">
 
 <label>자료 설명</label>
-<textarea placeholder="자료 설명을 입력하세요"></textarea>
+<textarea id="fileContent"></textarea>
 
-<button>자료 등록</button>
+<button id="saveFile">자료 저장</button>
+<script type="module">
 
-<button class="back" onclick="location.href='admin.html'">
-관리자 메인
-</button>
+import {
+collection,
+addDoc
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
-</div>
+import {
+ref,
+uploadBytes,
+getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
 
-</body>
-</html>
+const db = window.db;
+const storage = window.storage;
+
+document.getElementById("saveFile").onclick = async ()=>{
+
+let title=document.getElementById("fileTitle").value.trim();
+let content=document.getElementById("fileContent").value.trim();
+let file=document.getElementById("fileUpload").files[0];
+
+if(title==""){
+    alert("자료 제목을 입력하세요.");
+    return;
+}
+
+if(!file){
+    alert("파일을 선택하세요.");
+    return;
+}
+
+const storageRef=ref(storage,"files/"+Date.now()+"_"+file.name);
+
+await uploadBytes(storageRef,file);
+
+const fileUrl=await getDownloadURL(storageRef);
+
+const data={
+    title:title,
+    content:content,
+    fileName:file.name,
+    fileUrl:fileUrl,
+    date:new Date().toISOString().slice(0,10),
+    timestamp:Date.now()
+};
+
+await addDoc(collection(db,"files"),data);
+
+alert("자료가 등록되었습니다.");
+
+};
+
+</script>
+    
