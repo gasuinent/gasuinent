@@ -279,10 +279,10 @@ const db = getFirestore(app);
 
 async function loadSchedule(){
 
-    const q = query(
-        collection(db,"schedule"),
-        orderBy("timestamp","desc")
-    );
+   const q = query(
+    collection(db,"event"),
+    orderBy("timestamp","desc")
+);
 
     const snapshot = await getDocs(q);
 
