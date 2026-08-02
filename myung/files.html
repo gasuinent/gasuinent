@@ -45,6 +45,7 @@ input,textarea{
 
 textarea{
     height:220px;
+    resize:vertical;
 }
 
 label{
@@ -65,6 +66,10 @@ button{
     cursor:pointer;
 }
 
+button:hover{
+    background:#ffcc00;
+}
+
 table{
     width:100%;
     border-collapse:collapse;
@@ -83,11 +88,12 @@ td{
 }
 
 </style>
+
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
-import {
+import{
 getFirestore,
 collection,
 addDoc,
@@ -98,51 +104,43 @@ getDoc,
 updateDoc,
 query,
 orderBy
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
-import {
+import{
 getStorage,
 ref,
 uploadBytes,
 getDownloadURL
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
+}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
-    authDomain: "gasuinent.firebaseapp.com",
-    projectId: "gasuinent",
-    storageBucket: "gasuinent.firebasestorage.app",
-    messagingSenderId: "122370674182",
-    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
-    measurementId: "G-39M5K1M6K7"
+const firebaseConfig={
+
+apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+authDomain:"gasuinent.firebaseapp.com",
+projectId:"gasuinent",
+storageBucket:"gasuinent.firebasestorage.app",
+messagingSenderId:"122370674182",
+appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",
+measurementId:"G-39M5K1M6K7"
+
 };
 
-const app = initializeApp(firebaseConfig);
+const app=initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
-const storage = getStorage(app);
+const db=getFirestore(app);
 
-window.db = db;
-window.storage = storage;
-window.editId = null;
-window.collection = collection;
-window.addDoc = addDoc;
-window.getDocs = getDocs;
-window.deleteDoc = deleteDoc;
-window.doc = doc;
-window.getDoc = getDoc;
-window.updateDoc = updateDoc;
-window.query = query;
-window.orderBy = orderBy;
+const storage=getStorage(app);
 
-window.ref = ref;
-window.uploadBytes = uploadBytes;
-window.getDownloadURL = getDownloadURL;    
+window.db=db;
+window.storage=storage;
+window.editId=null;
+
 </script>
 
 </head>
 
 <body>
+
 <header>
 
 <h1>📁 자료실 관리</h1>
@@ -168,12 +166,14 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 <table>
 
 <tr>
+
 <th>번호</th>
 <th>자료명</th>
 <th>등록일</th>
 <th>보기</th>
 <th>수정</th>
 <th>삭제</th>
+
 </tr>
 
 <tbody id="fileBody"></tbody>
@@ -185,40 +185,51 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 <h2>자료 등록</h2>
 
 <label>자료 제목</label>
-<input type="text" id="fileTitle">
+
+<input
+type="text"
+id="fileTitle">
 
 <label>파일 선택</label>
-<input type="file" id="fileUpload">
+
+<input
+type="file"
+id="fileUpload">
 
 <label>자료 설명</label>
-<textarea id="fileContent"></textarea>
 
-<button id="saveFile">자료 저장</button>
+<textarea
+id="fileContent"></textarea>
+
+<button id="saveFile">
+
+자료 저장
+
+</button>
+
 <script type="module">
+import{
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc,
+getDoc,
+updateDoc,
+query,
+orderBy
+}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
-
-import {
+import{
 ref,
 uploadBytes,
 getDownloadURL
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
+}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
 
+const db=window.db;
+const storage=window.storage;
 
-document.getElementById("saveFile").onclick = async ()=>{
-const collection = window.collection;
-const addDoc = window.addDoc;
-const getDocs = window.getDocs;
-const deleteDoc = window.deleteDoc;
-const doc = window.doc;
-const getDoc = window.getDoc;
-const updateDoc = window.updateDoc;
-const query = window.query;
-const orderBy = window.orderBy;
-
-const ref = window.ref;
-const uploadBytes = window.uploadBytes;
-const getDownloadURL = window.getDownloadURL;
-try{
+document.getElementById("saveFile").onclick=async()=>{
 
 let title=document.getElementById("fileTitle").value.trim();
 let content=document.getElementById("fileContent").value.trim();
@@ -229,28 +240,45 @@ if(title==""){
     return;
 }
 
-if(!file){
-    alert("파일을 선택하세요.");
-    return;
+let fileUrl="";
+let fileName="";
+
+if(window.editId){
+
+    const snap=await getDoc(doc(db,"files",window.editId));
+
+    if(snap.exists()){
+
+        fileUrl=snap.data().fileUrl||"";
+        fileName=snap.data().fileName||"";
+
+    }
+
 }
 
-const storageRef=ref(
-    storage,
-    "files/"+Date.now()+"_"+file.name
-);
+if(file){
 
-await uploadBytes(storageRef,file);
+    const storageRef=ref(
+        storage,
+        "files/"+Date.now()+"_"+file.name
+    );
 
-const fileUrl=await getDownloadURL(storageRef);
+    await uploadBytes(storageRef,file);
+
+    fileUrl=await getDownloadURL(storageRef);
+
+    fileName=file.name;
+
+}
 
 const data={
 
-    title:title,
-    content:content,
-    fileName:file.name,
-    fileUrl:fileUrl,
-    date:new Date().toISOString().slice(0,10),
-    timestamp:Date.now()
+title:title,
+content:content,
+fileUrl:fileUrl,
+fileName:fileName,
+date:new Date().toISOString().slice(0,10),
+timestamp:Date.now()
 
 };
 
@@ -282,28 +310,20 @@ document.getElementById("fileUpload").value="";
 
 loadFiles();
 
-}catch(e){
-
-console.error(e);
-alert(e.message);
-
-}
-
 };
 
 async function loadFiles(){
 
 const q=query(
-    collection(db,"files"),
-    orderBy("timestamp","desc")
+collection(db,"files"),
+orderBy("timestamp","desc")
 );
 
 const snapshot=await getDocs(q);
 
 let html="";
 let no=1;
-
-snapshot.forEach(docItem=>{
+ snapshot.forEach(docItem=>{
 
 const f=docItem.data();
 
@@ -344,6 +364,7 @@ html+=`
 document.getElementById("fileBody").innerHTML=html;
 
 }
+
 async function deleteFile(id){
 
 if(!confirm("정말 삭제하시겠습니까?")) return;
@@ -355,6 +376,7 @@ loadFiles();
 }
 
 window.deleteFile=deleteFile;
+
 async function editFile(id){
 
 window.editId=id;
@@ -369,18 +391,23 @@ document.getElementById("fileTitle").value=f.title;
 document.getElementById("fileContent").value=f.content;
 
 window.scrollTo({
+
 top:document.body.scrollHeight,
+
 behavior:"smooth"
+
 });
 
 }
 
 window.editFile=editFile;
+
 window.viewFile=function(id){
 
-location.href="file_view.html?id="+id;
+location.href="../file_view.html?id="+id;
 
-};  
+};
+
 document.getElementById("searchBtn").onclick=async()=>{
 
 const keyword=document.getElementById("searchText").value.toLowerCase();
@@ -395,8 +422,11 @@ snapshot.forEach(docItem=>{
 const f=docItem.data();
 
 if(
+
 f.title.toLowerCase().includes(keyword) ||
+
 f.content.toLowerCase().includes(keyword)
+
 ){
 
 html+=`
@@ -422,7 +452,6 @@ html+=`
 }
 
 });
-
 document.getElementById("fileBody").innerHTML=html;
 
 };
@@ -434,6 +463,5 @@ loadFiles();
 </div>
 
 </body>
-</html>
 
-    
+</html>
