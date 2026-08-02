@@ -1,59 +1,99 @@
-<script type="module">
+<!DOCTYPE html>
+<html lang="ko">
+<head>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-import {
-getFirestore,
-doc,
-getDoc
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+<title>행사 상세보기</title>
 
-const firebaseConfig = {
-apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
-authDomain:"gasuinent.firebaseapp.com",
-projectId:"gasuinent",
-storageBucket:"gasuinent.firebasestorage.app",
-messagingSenderId:"122370674182",
-appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",
-measurementId:"G-39M5K1M6K7"
-};
+<style>
 
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app);
+body{
+    margin:0;
+    background:#111;
+    color:#fff;
+    font-family:Malgun Gothic,sans-serif;
+}
 
-window.db=db;
+header{
+    background:#222;
+    border-bottom:2px solid #FFD700;
+    padding:20px;
+    text-align:center;
+}
 
-</script>
+header h1{
+    margin:0;
+    color:#FFD700;
+    font-size:34px;
+}
+
+.container{
+    width:95%;
+    max-width:1000px;
+    margin:40px auto;
+}
+
+.card{
+    background:#1b1b1b;
+    border:1px solid #444;
+    border-radius:12px;
+    padding:30px;
+}
+
+.card h2{
+    color:#FFD700;
+}
+
+.info{
+    margin:20px 0;
+    color:#ccc;
+}
+
+.content{
+    line-height:1.9;
+    white-space:pre-wrap;
+}
+
+.backBtn{
+    display:inline-block;
+    margin-top:30px;
+    background:#FFD700;
+    color:#000;
+    padding:12px 28px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
 <header>
-<h1 style="text-align:center;color:#FFD700;">📅 행사 상세보기</h1>
+    <h1>📅 행사 상세보기</h1>
 </header>
 
-<div style="max-width:900px;margin:40px auto;padding:20px;">
+<div class="container">
 
-<h2 id="title"></h2>
+    <div class="card">
 
-<p>
-<b>행사일 :</b>
-<span id="eventDate"></span>
-</p>
+        <h2 id="title"></h2>
 
-<div id="content"
-style="margin-top:30px;
-line-height:1.8;
-white-space:pre-wrap;">
-</div>
+        <div class="info">
+            📅 행사일 :
+            <span id="eventDate"></span>
+        </div>
 
-<br><br>
+        <div id="content" class="content"></div>
 
-<a href="schedule.html"
-style="background:#FFD700;
-color:#000;
-padding:12px 25px;
-border-radius:8px;
-text-decoration:none;
-font-weight:bold;">
-목록으로
-</a>
+        <a href="schedule.html" class="backBtn">
+            목록으로
+        </a>
+
+    </div>
 
 </div>
 <script type="module">
@@ -86,21 +126,20 @@ async function loadEvent(){
 const snap=await getDoc(doc(db,"event",id));
 
 if(!snap.exists()){
-document.body.innerHTML="<h2 style='text-align:center;margin-top:100px;'>행사를 찾을 수 없습니다.</h2>";
+document.getElementById("title").innerText="행사를 찾을 수 없습니다.";
 return;
 }
 
 const e=snap.data();
 
-document.getElementById("title").innerText=e.title;
-document.getElementById("eventDate").innerText=e.eventDate||"";
-document.getElementById("content").innerText=e.content;
+document.getElementById("title").innerText=e.title || "";
+document.getElementById("eventDate").innerText=e.eventDate || "";
+document.getElementById("content").innerText=e.content || "";
 
 }
 
 loadEvent();
 
 </script>
-
 </body>
-</html>
+</html>  
