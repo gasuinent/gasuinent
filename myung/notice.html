@@ -208,9 +208,14 @@ let content = document.getElementById("noticeContent").value.trim();
 
 if(title==""){
     alert("제목을 입력하세요.");
+document.getElementById("noticeTitle").focus();
+return;
+}
+if(content==""){
+    alert("공지 내용을 입력하세요.");
+    document.getElementById("noticeContent").focus();
     return;
 }
-
 const data = {
     title:title,
     content:content,
