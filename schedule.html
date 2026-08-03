@@ -295,7 +295,7 @@ async function loadSchedule(){
         html += `
         <div class="card">
             <h3>${event.title}</h3>
-            <p><b>📅 날짜</b> ${event.date}</p>
+            <p><b>📅 날짜</b> ${event.eventDate || ""}</p>
             <p><b>📍 장소</b> ${event.place}</p>
 
             <a class="btn fill"
