@@ -52,8 +52,20 @@
     h3{font-size:32px;line-height:1.35;margin:0 0 26px}
     .lead{font-size:clamp(20px,3vw,31px);color:var(--muted);max-width:900px;margin:auto}
 section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108px}
-    .section-head{text-align:center;margin-bottom:56px}
-    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+   .section-head{
+    text-align:center;
+    margin-bottom:56px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:28px;
+}
+
+.grid:first-of-type{
+    grid-template-columns:1fr;
+}
     .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
     .card{background:var(--panel);border:1px solid var(--line);border-radius:34px;padding:44px}
     .card p{font-size:19px;color:var(--muted);line-height:1.78}
@@ -234,61 +246,87 @@ GAUSIN SAENGHWAL ENTERTAINMENT
 </p>
 
 </div>
+
+ </div>
+
 <div class="grid">
-    
-<div class="card">
-    <h3>한국가수인생활협회 (KSLA)</h3>
 
-    <div class="ceo-wrap">
+    <div class="card">
+        <h3>한국가수인생활협회 (KSLA)</h3>
 
-        <div class="ceo-photo">
-           <img src="협회로그.png" alt="한국가수인생활협회 로고">
-        </div>
+        <div class="ceo-wrap">
 
-        <div class="ceo-text">
+            <div class="ceo-photo">
+                <img src="협회로그.png" alt="한국가수인생활협회 로고">
+            </div>
 
-            <p>
-                <strong>비영리 문화예술단체</strong><br><br>
+            <div class="ceo-text">
 
-                • 문화예술인의 권익 증진<br>
-                • 공연 및 문화행사 지원<br>
-                • 지역사회 문화예술 발전<br>
-                • 재능기부 및 봉사활동
-            </p>
+                <p>
+                    <strong>비영리 문화예술단체</strong><br><br>
 
-            <p>
-                한국가수인생활협회는 문화예술인의 권익 향상과
-                지역사회 문화발전을 위해 설립된 비영리 문화예술단체입니다.
+                    • 문화예술인의 권익 증진<br>
+                    • 공연 및 문화행사 지원<br>
+                    • 지역사회 문화예술 발전<br>
+                    • 재능기부 및 봉사활동
+                </p>
 
-                문화공연, 재능기부, 복지공연, 전통시장 활성화,
-                문화나눔 사업 등을 지속적으로 추진하며
-                지역사회와 함께 성장하는 문화예술 활동을 이어가고 있습니다.
-            </p>
+                <p>
+                    한국가수인생활협회는 문화예술인의 권익 향상과
+                    지역사회 문화발전을 위해 설립된 비영리 문화예술단체입니다.
 
-        </div>
+                    문화공연, 재능기부, 복지공연,
+                    전통시장 활성화,
+                    문화나눔 사업 등을 지속적으로 추진하며
+                    지역사회와 함께 성장하는 문화예술 활동을 이어가고 있습니다.
+                </p>
+
+            </div>
+
+              </div>
 
     </div>
+
 </div>
-<div class="card"><h3>나가수공연단</h3>
 
-<p>
-전문 공연예술단체<br><br>
+<div class="grid">
 
-✔ 지역축제 공연<br>
-✔ 기업 및 기관 행사<br>
-✔ 전통시장 희망음악회<br>
-✔ 복지시설·문화공연
-</p></div>
-<div class="card"><h3>나가수봉사단</h3>
+    <div class="card">
+        <h3>나가수공연단</h3>
 
-<p>
-문화예술 봉사단체<br><br>
+        <p>
+            <strong>전문 공연예술단체</strong><br><br>
 
-✔ 요양원·복지시설 공연<br>
-✔ 장애인 문화행사 지원<br>
-✔ 지역사회 재능기부 공연<br>
-✔ 사랑과 나눔 실천
-</p></div>
+            ✔ 지역축제 공연<br>
+            ✔ 기업 및 기관 행사<br>
+            ✔ 전통시장 희망음악회<br>
+            ✔ 복지시설 문화공연
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>나가수봉사단</h3>
+
+        <p>
+            <strong>문화예술 봉사단체</strong><br><br>
+
+            ✔ 요양원 공연<br>
+            ✔ 장애인 문화행사 지원<br>
+            ✔ 지역사회 재능기부 공연<br>
+            ✔ 사랑과 나눔 실천
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>협력업체</h3>
+        <p>준비중</p>
+    </div>
+
+    <div class="card">
+        <h3>제휴기관</h3>
+        <p>준비중</p>
+    </div>
+
 </div>
 </div>
 </section>
