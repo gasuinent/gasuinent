@@ -198,15 +198,28 @@ document.getElementById("saveEvent").onclick = async ()=>{
 
 let title=document.getElementById("eventTitle").value.trim();
 let eventDate=document.getElementById("eventDate").value;
-alert(eventDate);    
 let content=document.getElementById("eventContent").value.trim();
 
-if(title==""){
+if (!title) {
     alert("행사명을 입력하세요.");
+    document.getElementById("eventTitle").focus();
+    return;
+}
+
+if (!eventDate) {
+    alert("행사일을 선택하세요.");
+    document.getElementById("eventDate").focus();
+    return;
+}
+
+if (!content) {
+    alert("행사 내용을 입력하세요.");
+    document.getElementById("eventContent").focus();
     return;
 }
 
 const data={
+
     title:title,
     eventDate:eventDate,
     content:content,
