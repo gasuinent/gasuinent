@@ -73,6 +73,7 @@ const e=snap.data();
 
 document.getElementById("title").innerText=e.title||"";
 document.getElementById("date").innerText=e.eventDate||"";
+document.getElementById("place").innerText="📍 행사장소 : " + (e.place || "");    
 document.getElementById("content").innerText=e.content||"";
 
 }else{
@@ -92,7 +93,7 @@ document.getElementById("title").innerText="행사가 존재하지 않습니다.
 <h1 id="title"></h1>
 
 <div id="date" class="date"></div>
-
+<div id="place" class="date"></div>
 <div id="content" class="content"></div>
 
 <button onclick="history.back()">
