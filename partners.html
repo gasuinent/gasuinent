@@ -1,134 +1,174 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>함께하는 단체 | 가수인생활 엔터테인먼트</title>
 
 <style>
 
 :root{
---bg:#090909;
---card:#171717;
+
+--bg:#080808;
+--card:#181818;
 --gold:#d4af37;
 --gold2:#f2cf7a;
---text:#f5f5f5;
+--text:#ffffff;
 --line:#393939;
+
 }
 
 *{
+
 margin:0;
 padding:0;
 box-sizing:border-box;
+
 }
 
 body{
+
 background:var(--bg);
 color:var(--text);
-font-family:Pretendard,Noto Sans KR,sans-serif;
-line-height:1.8;
+font-family:Pretendard,"Noto Sans KR",sans-serif;
+line-height:1.7;
+
 }
 
 a{
+
 text-decoration:none;
 color:inherit;
+
 }
 
 .wrap{
+
 width:92%;
-max-width:1400px;
+max-width:1500px;
 margin:auto;
+
 }
 
 header{
+
 background:#050505;
-border-bottom:1px solid var(--line);
+border-bottom:1px solid #2b2b2b;
 position:sticky;
 top:0;
 z-index:999;
+
 }
 
 .head{
+
+height:88px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-height:86px;
+
 }
 
 .brand{
+
 display:flex;
 align-items:center;
 gap:15px;
 font-size:22px;
 font-weight:800;
+
 }
 
 .brand img{
+
 width:58px;
-height:58px;
+
 }
 
 .desktop-nav{
+
 display:flex;
 gap:18px;
+
 }
 
 .desktop-nav a{
-padding:10px 15px;
+
+padding:11px 16px;
 border-radius:10px;
 font-weight:700;
+transition:.25s;
+
 }
 
 .desktop-nav a:hover,
 .desktop-nav .active{
-background:#2d2413;
+
+background:#2b2212;
 color:var(--gold2);
+
 }
 
 section{
-padding:80px 0;
+
+padding:70px 0;
+
 }
 
 .section-head{
+
 text-align:center;
-margin-bottom:60px;
+margin-bottom:55px;
+
 }
 
 .section-head img{
-width:180px;
+
+width:110px;
+margin-bottom:18px;
+
+}
+
+.section-head .eng{
+
+color:var(--gold);
+font-size:18px;
+font-weight:bold;
+letter-spacing:1px;
 margin-bottom:15px;
+
 }
 
 .section-head h2{
-font-size:52px;
-margin:15px 0;
-color:white;
+
+font-size:74px;
+font-weight:900;
+margin-bottom:20px;
+
 }
 
 .section-head p{
-font-size:22px;
-color:#d5d5d5;
-max-width:900px;
-margin:auto;
+
+font-size:25px;
+color:#d8d8d8;
+line-height:1.9;
+
 }
 
 .partner-main{
 
-display:grid;
-
-grid-template-columns:220px 1fr;
-
-gap:45px;
-
 background:#181818;
-
-border:1px solid #4c4128;
-
+border:2px solid #c89c2d;
 border-radius:30px;
-
-padding:45px;
-
-margin-bottom:35px;
+padding:48px;
+display:grid;
+grid-template-columns:230px 1fr 340px;
+gap:40px;
+align-items:center;
+margin-bottom:38px;
 
 }
 
@@ -141,172 +181,178 @@ text-align:center;
 .partner-logo img{
 
 width:180px;
-
-background:white;
-
+background:#fff;
 padding:12px;
-
-border-radius:20px;
-
+border-radius:22px;
 border:2px solid var(--gold);
+
+}
+.partner-info{
+
+display:flex;
+flex-direction:column;
+justify-content:center;
 
 }
 
 .partner-info h2{
 
-font-size:42px;
-
+font-size:60px;
+font-weight:900;
 color:var(--gold2);
-
-margin-bottom:5px;
-
 text-align:center;
+margin-bottom:10px;
 
 }
 
 .partner-info h4{
 
 text-align:center;
-
-font-size:20px;
-
+font-size:21px;
 font-weight:400;
-
-color:#d8c18d;
-
-margin-bottom:30px;
-
 letter-spacing:2px;
+color:#d7be82;
+margin-bottom:35px;
 
 }
+
 .partner-table{
 
 width:100%;
-
 border-collapse:collapse;
-
-margin-bottom:35px;
+margin-bottom:30px;
 
 }
 
 .partner-table td{
 
-padding:15px;
+padding:14px 18px;
+border-right:1px solid #6b5523;
+vertical-align:top;
 
-border-bottom:1px solid #404040;
+}
 
-font-size:18px;
+.partner-table td:last-child{
+
+border-right:none;
 
 }
 
 .partner-table strong{
 
 display:block;
-
+font-size:22px;
 color:var(--gold2);
-
-margin-bottom:5px;
-
-font-size:17px;
+margin-bottom:8px;
 
 }
 
-.partner-bottom{
+.partner-table span{
 
-display:grid;
-
-grid-template-columns:1fr 1fr;
-
-gap:35px;
-
-margin-top:20px;
+font-size:21px;
+color:#fff;
 
 }
 
-.partner-box{
+.partner-desc{
 
-background:#101010;
-
-border:1px solid #393939;
-
-border-radius:18px;
-
-padding:25px;
+text-align:center;
+font-size:22px;
+line-height:2;
+margin-top:25px;
+color:#ececec;
 
 }
 
-.partner-box h3{
+.partner-side{
 
-color:var(--gold2);
-
-margin-bottom:18px;
-
-font-size:28px;
+border-left:1px solid #6b5523;
+padding-left:35px;
 
 }
 
-.partner-box ul{
+.partner-side ul{
 
-padding-left:20px;
-
-}
-
-.partner-box li{
-
-margin-bottom:12px;
+list-style:none;
 
 }
 
+.partner-side li{
+
+font-size:22px;
+margin-bottom:22px;
+
+}
+
+.partner-side li::before{
+
+content:"◉";
+color:var(--gold);
+margin-right:10px;
+
+}
 .cards{
 
 display:grid;
-
 grid-template-columns:repeat(2,1fr);
-
 gap:30px;
-
 margin-top:40px;
 
 }
 
 .card{
 
-background:#171717;
-
-border:1px solid #3b3b3b;
-
+background:#181818;
+border:1px solid #4a4a4a;
 border-radius:25px;
-
 padding:35px;
-
 transition:.3s;
 
 }
 
 .card:hover{
 
-border-color:var(--gold);
+border-color:#d4af37;
+transform:translateY(-6px);
 
-transform:translateY(-5px);
+}
+
+.card-icon{
+
+width:70px;
+height:70px;
+border-radius:50%;
+background:#2b2212;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:34px;
+margin-bottom:22px;
+color:#f2cf7a;
 
 }
 
 .card h3{
 
-font-size:30px;
+font-size:32px;
+color:#f2cf7a;
+margin-bottom:15px;
 
-color:var(--gold2);
+}
 
+.card h5{
+
+font-size:18px;
+color:#bfbfbf;
 margin-bottom:20px;
 
 }
 
 .card p{
 
-font-size:18px;
-
-color:#d0d0d0;
-
+font-size:19px;
+line-height:1.9;
+color:#e7e7e7;
 margin-bottom:25px;
 
 }
@@ -314,81 +360,85 @@ margin-bottom:25px;
 .more-btn{
 
 display:inline-block;
-
 padding:12px 28px;
-
-background:transparent;
-
-border:2px solid var(--gold);
-
-border-radius:50px;
-
-color:var(--gold2);
-
+border:2px solid #d4af37;
+border-radius:40px;
+color:#f2cf7a;
 font-weight:bold;
-
 transition:.3s;
 
 }
 
 .more-btn:hover{
 
-background:var(--gold);
-
+background:#d4af37;
 color:#111;
 
 }
 
 footer{
 
-padding:70px 0;
-
-text-align:center;
-
-border-top:1px solid #333;
-
 margin-top:80px;
+padding:70px 0;
+text-align:center;
+border-top:1px solid #333;
 
 }
 
 footer img{
 
-width:130px;
-
+width:120px;
 margin-bottom:20px;
 
 }
-
-@media(max-width:900px){
+@media (max-width:1024px){
 
 .partner-main{
-
 grid-template-columns:1fr;
-
 text-align:center;
-
 }
 
-.partner-bottom{
-
-grid-template-columns:1fr;
-
+.partner-side{
+border-left:none;
+border-top:1px solid #555;
+padding-left:0;
+padding-top:30px;
+margin-top:30px;
 }
 
 .cards{
-
 grid-template-columns:1fr;
+}
 
+.partner-table tr{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.partner-table td{
+border-right:none;
+border-bottom:1px solid #444;
+padding:18px 0;
+}
+
+.section-head h2{
+font-size:46px;
 }
 
 .partner-info h2{
+font-size:42px;
+}
 
-font-size:32px;
+.section-head p{
+font-size:20px;
+}
 
+.desktop-nav{
+display:none;
 }
 
 }
-
 </style>
 
 </head>
@@ -401,7 +451,7 @@ font-size:32px;
 
 <a class="brand" href="index.html">
 
-<img src="logo.png">
+<img src="logo.png" alt="GSE">
 
 <span>가수인생활 <b style="color:#f2cf7a;">엔터테인먼트</b></span>
 
@@ -410,13 +460,9 @@ font-size:32px;
 <nav class="desktop-nav">
 
 <a href="index.html">홈</a>
-
 <a href="about.html">회사소개</a>
-
 <a class="active" href="partners.html">함께하는 단체</a>
-
 <a href="artists.html">소속가수</a>
-
 <a href="contact.html">문의</a>
 
 </nav>
@@ -424,6 +470,7 @@ font-size:32px;
 </div>
 
 </header>
+
 <main>
 
 <section>
@@ -434,219 +481,170 @@ font-size:32px;
 
 <img src="logo.png" alt="GSE">
 
-<p style="color:#d4af37;font-size:22px;font-weight:bold;">
-
+<div class="eng">
 GAUSIN SAENGHWAL ENTERTAINMENT
-
-</p>
+</div>
 
 <h2>
-
 함께하는 단체
-
 </h2>
 
 <p>
-
 문화예술을 통해 지역사회와 함께 성장하는 협력 네트워크입니다.<br>
-
-가수인생활 엔터테인먼트와 함께
-
-다양한 공연과 문화예술 사업을 추진하고 있습니다.
-
+가수인생활 엔터테인먼트와 함께 다양한 공연과 문화예술 사업을 추진하고 있습니다.
 </p>
 
 </div>
-
 <div class="partner-main">
 
-<div class="partner-logo">
+    <div class="partner-logo">
+        <img src="협회로그.png" alt="한국가수인생활협회 로고">
+    </div>
 
-<img src="협회로그.png" alt="협회로고">
+    <div class="partner-info">
 
-</div>
+        <h2>한국가수인생활협회</h2>
 
-<div class="partner-info">
+        <h4>KOREA SINGERS LIFE ASSOCIATION (KSLA)</h4>
 
-<h2>
+        <table class="partner-table">
 
-한국가수인생활협회
+            <tr>
 
-</h2>
+                <td>
+                    <strong>품목</strong>
+                    <span>비영리 문화예술단체</span>
+                </td>
 
-<h4>
+                <td>
+                    <strong>협회장</strong>
+                    <span>이명로</span>
+                </td>
 
-KOREA SINGERS LIFE ASSOCIATION (KSLA)
+                <td>
+                    <strong>설립일</strong>
+                    <span>2016년 2월</span>
+                </td>
 
-</h4>
+                <td>
+                    <strong>소재지</strong>
+                    <span>대구광역시 수성구</span>
+                </td>
 
-<table class="partner-table">
+            </tr>
 
-<tr>
+        </table>
 
-<td>
+        <div class="partner-desc">
 
-<strong>구분</strong>
+            한국가수인생활협회는 문화예술인의 권익 향상과 지역사회 문화발전을 위해
+            설립된 비영리 문화예술단체입니다.<br>
 
-비영리 문화예술단체
+            문화공연, 재능기부, 복지공연, 전통시장 활성화,
+            문화나눔 사업 등을 지속적으로 추진하며
+            지역사회와 함께 성장하는 문화예술 활동을 이어가고 있습니다.
 
-</td>
+        </div>
 
-<td>
+    </div>
 
-<strong>협회장</strong>
+    <div class="partner-side">
 
-이명로
+        <ul>
 
-</td>
+            <li>문화예술인의 권익 증진</li>
 
-<td>
+            <li>공연 및 문화행사 지원</li>
 
-<strong>설립</strong>
+            <li>지역사회 문화예술 발전</li>
 
-2016년
+            <li>재능기부 및 봉사활동</li>
 
-</td>
+        </ul>
 
-<td>
-
-<strong>소재지</strong>
-
-대구광역시
-
-</td>
-
-</tr>
-
-</table>
-
-<div class="partner-bottom">
-
-<div class="partner-box">
-
-<h3>주요 활동</h3>
-
-<ul>
-
-<li>문화예술인 권익 증진</li>
-
-<li>공연 및 문화행사 지원</li>
-
-<li>복지공연 및 재능기부</li>
-
-<li>전통시장 문화공연</li>
-
-<li>지역사회 문화예술 발전</li>
-
-</ul>
+    </div>
 
 </div>
+<div class="cards">
 
-<div class="partner-box">
+    <div class="card">
 
-<h3>협회 소개</h3>
+        <div class="card-icon">🎤</div>
 
-<p>
+        <h3>나가수공연단</h3>
 
-한국가수인생활협회는 문화예술인의 권익 향상과
+        <h5>Professional Performance Group</h5>
 
-지역사회 문화발전을 위해 설립된
+        <p>
+        지역축제 공연<br>
+        기업 및 기관 행사<br>
+        전통시장 희망음악회<br>
+        복지시설 문화공연
+        </p>
 
-비영리 문화예술단체입니다.
+        <a href="#" class="more-btn">자세히 보기</a>
 
-문화공연, 재능기부, 복지공연,
+    </div>
 
-문화나눔 사업 등을 지속적으로 추진하며
+    <div class="card">
 
-지역사회와 함께 성장하고 있습니다.
+        <div class="card-icon">❤️</div>
 
-</p>
+        <h3>나가수봉사단</h3>
 
-</div>
+        <h5>Volunteer Performance Team</h5>
 
-</div>
+        <p>
+        요양원 공연<br>
+        장애인 문화행사 지원<br>
+        지역사회 재능기부 공연<br>
+        사랑과 나눔 실천
+        </p>
 
-</div>
+        <a href="#" class="more-btn">자세히 보기</a>
 
-</div>
- <div class="cards">
+    </div>
 
-<div class="card">
+    <div class="card">
 
-<h3>나가수공연단</h3>
+        <div class="card-icon">🤝</div>
 
-<p>
+        <h3>협력업체</h3>
 
-✔ 지역축제 공연<br>
-✔ 기업 및 기관 행사<br>
-✔ 전통시장 희망음악회<br>
-✔ 복지시설 문화공연<br>
-✔ 대형 콘서트 기획
+        <h5>Business Partners</h5>
 
-</p>
+        <p>
+        공연기획<br>
+        음향 · 조명<br>
+        영상제작<br>
+        행사운영
+        </p>
 
-<a href="#" class="more-btn">자세히 보기</a>
+        <a href="#" class="more-btn">자세히 보기</a>
 
-</div>
+    </div>
 
-<div class="card">
+    <div class="card">
 
-<h3>나가수봉사단</h3>
+        <div class="card-icon">🏛️</div>
 
-<p>
+        <h3>제휴기관</h3>
 
-✔ 요양원 공연<br>
-✔ 장애인 문화행사 지원<br>
-✔ 지역사회 재능기부<br>
-✔ 사랑과 나눔 실천<br>
-✔ 문화봉사 활동
+        <h5>Affiliated Organizations</h5>
 
-</p>
+        <p>
+        문화기관<br>
+        복지기관<br>
+        공공기관<br>
+        지역단체
+        </p>
 
-<a href="#" class="more-btn">자세히 보기</a>
+        <a href="#" class="more-btn">자세히 보기</a>
 
-</div>
-
-<div class="card">
-
-<h3>협력업체</h3>
-
-<p>
-
-공연기획<br>
-음향·조명<br>
-영상촬영<br>
-행사운영<br>
-
-준비중
-
-</p>
-
-<a href="#" class="more-btn">자세히 보기</a>
+    </div>
 
 </div>
-
-<div class="card">
-
-<h3>제휴기관</h3>
-
-<p>
-
-문화기관<br>
-복지기관<br>
-공공기관<br>
-지역단체<br>
-
-준비중
-
-</p>
-
-<a href="#" class="more-btn">자세히 보기</a>
-
-</div>
-
-</div>
-</section>
+ </section>
 
 </main>
 
@@ -654,49 +652,39 @@ KOREA SINGERS LIFE ASSOCIATION (KSLA)
 
 <div class="wrap">
 
-<img src="logo.png" alt="GSE 로고">
+<img src="logo.png" alt="GSE">
 
-<h3 style="color:#f2cf7a;margin-bottom:15px;">
+<h3 style="color:#f2cf7a;font-size:34px;margin-bottom:18px;">
 
 가수인생활 엔터테인먼트
 
 </h3>
 
-<p>
+<p style="font-size:20px;line-height:2;">
 
-대한민국 문화예술 발전과
+대한민국 문화예술 발전과<br>
 
 가수인의 권익증진을 위해 함께합니다.
 
 </p>
 
-<br>
+<div style="margin-top:30px;line-height:2;font-size:18px;color:#cfcfcf;">
 
-<p>
+대구광역시 수성구<br>
 
-주소 : 대구광역시
+대표 : 이명로<br>
 
-<br>
+E-mail : myung4002@naver.com
 
-대표 : 이명로
+</div>
 
-<br>
+<div style="margin-top:35px;color:#999;">
 
-이메일 : myung4002@naver.com
-
-</p>
-
-<br>
-
-<p>
-
-© 2026 GASUIN SAENGHWAL ENTERTAINMENT
-
-<br>
+© 2026 GASUIN SAENGHWAL ENTERTAINMENT<br>
 
 All Rights Reserved.
 
-</p>
+</div>
 
 </div>
 
@@ -704,11 +692,9 @@ All Rights Reserved.
 
 <script>
 
-const btn=document.querySelectorAll(".more-btn");
+document.querySelectorAll(".more-btn").forEach(function(btn){
 
-btn.forEach(function(item){
-
-item.addEventListener("click",function(e){
+btn.addEventListener("click",function(e){
 
 e.preventDefault();
 
@@ -718,8 +704,8 @@ alert("준비중입니다.");
 
 });
 
+
 </script>
 
 </body>
-
-</html>
+</html> 
