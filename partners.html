@@ -88,31 +88,57 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
       .head{min-height:86px}
       .mobile-nav{inset:86px 0 0}
     }
-    .ceo-wrap{
+.ceo-wrap{
     display:flex;
     gap:30px;
     align-items:flex-start;
+    flex-wrap:nowrap;
 }
 
 .ceo-photo{
-    flex:0 0 230px;
+    flex:0 0 120px;
 }
 
 .ceo-photo img{
-    width:100%;
+    width:120px;
+    display:block;
+    margin:0 auto;
     border-radius:18px;
     border:2px solid #d4af37;
     background:#fff;
-    padding:10px;
+padding:8px;
 }
 
 .ceo-text{
     flex:1;
+    min-width:0;
 }
 
 .ceo-text p{
-    margin-top:0;
+    margin:0 0 18px;
     line-height:1.8;
+}
+
+@media(max-width:760px){
+
+    .ceo-wrap{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .ceo-photo{
+        flex:0 0 auto;
+      width:120px;
+        margin-bottom:20px;
+    }
+
+    .ceo-photo img{
+        width:180px;
+    }
+
+    .ceo-text{
+        width:100%;
+    }
 }
     @media(max-width:760px){
       .wrap{padding:0 21px}
@@ -208,7 +234,7 @@ GAUSIN SAENGHWAL ENTERTAINMENT
 </p>
 
 </div>
-<div class="grid3">
+<div class="grid">
     
 <div class="card">
     <h3>한국가수인생활협회 (KSLA)</h3>
