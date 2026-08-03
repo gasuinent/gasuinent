@@ -151,9 +151,18 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
 
 
 <section id="notice">
+
 <div class="wrap">
-<div class="section-head"><div class="eyebrow">NOTICE</div><h2>공지사항</h2><p class="lead">엔터테인먼트와 한국가수인생활협회 공지를 구분해 확인할 수 있습니다.</p></div>
-<div class="grid" id="noticeGrid">
+
+<div class="section-head">
+<div class="eyebrow">NOTICE</div>
+<h2>공지사항</h2>
+<p class="lead">
+엔터테인먼트와 한국가수인생활협회 공지를 구분해 확인할 수 있습니다.
+</p>
+</div>
+
+<div class="grid" id="noticeList"></div>
 
 </div>
 
@@ -315,10 +324,12 @@ html+=`
 
 <h3>${n.title}</h3>
 
+<p style="color:#999;font-size:15px;margin-top:-10px;">
+작성일 : ${n.date}
+</p>
+
 <p>
-
-${(n.content||"").replace(/\n/g,"<br>")}
-
+${((n.content||"").substring(0,150)).replace(/\n/g,"<br>")}...
 </p>
 
 <a class="btn" href="notice_view.html?id=${doc.id}">
@@ -331,7 +342,19 @@ ${(n.content||"").replace(/\n/g,"<br>")}
 
 });
 
-document.getElementById("noticeGrid").innerHTML=html;
+if(html==""){
+
+html=`
+<div class="card">
+<h3 style="text-align:center;">
+등록된 공지사항이 없습니다.
+</h3>
+</div>
+`;
+
+}
+
+document.getElementById("noticeList").innerHTML=html;
 
 }
 
