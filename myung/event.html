@@ -155,6 +155,7 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 <th>번호</th>
 <th>행사명</th>
 <th>행사일</th>
+<th>장소</th>
 <th>보기</th>
 <th>수정</th>
 <th>삭제</th>
@@ -173,7 +174,8 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 
 <label>행사일</label>
 <input type="date" id="eventDate">
-
+<label>행사장소</label>
+<input type="text" id="eventPlace">
 <label>행사 내용</label>
 <textarea id="eventContent"></textarea>
 
@@ -199,7 +201,7 @@ document.getElementById("saveEvent").onclick = async ()=>{
 let title=document.getElementById("eventTitle").value.trim();
 let eventDate=document.getElementById("eventDate").value;
 let content=document.getElementById("eventContent").value.trim();
-
+let place=document.getElementById("eventPlace").value.trim();
 if (!title) {
     alert("행사명을 입력하세요.");
     document.getElementById("eventTitle").focus();
@@ -222,6 +224,7 @@ const data={
 
     title:title,
     eventDate:eventDate,
+    place:place,
     content:content,
     date:new Date().toISOString().slice(0,10),
     timestamp:Date.now()
@@ -245,6 +248,7 @@ if(window.editId){
 
 document.getElementById("eventTitle").value="";
 document.getElementById("eventDate").value="";
+document.getElementById("eventPlace").value="";    
 document.getElementById("eventContent").value="";
 
 loadEvent();
@@ -272,6 +276,7 @@ html+=`
 <td>${no++}</td>
 <td>${e.title}</td>
 <td>${(e.eventDate||"").substring(0,10)}</td>
+<td>${e.place || ""}</td>
 <td><button onclick="viewEvent('${docItem.id}')">보기</button></td>
 <td><button onclick="editEvent('${docItem.id}')">수정</button></td>
 <td><button onclick="deleteEvent('${docItem.id}')">삭제</button></td>
@@ -308,6 +313,7 @@ const e=snap.data();
 
 document.getElementById("eventTitle").value=e.title;
 document.getElementById("eventDate").value=e.eventDate||"";
+document.getElementById("eventPlace").value=e.place||"";    
 document.getElementById("eventContent").value=e.content;
 
 window.scrollTo({
