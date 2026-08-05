@@ -204,6 +204,9 @@ head{text-align:center;margin-bottom:56px}
 
 .news-card .info{
     padding:20px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
 }
 
 .news-card h3{
@@ -453,9 +456,11 @@ async function loadLatestNews(){
 </div>
 
 <p>${(n.content || "").substring(0,120)}...</p>
-                <a class="btn" href="notice_view.html?id=${doc.id}">
-                    자세히 보기
-                </a>
+                <a class="btn"
+   style="margin-top:auto;"
+   href="notice_view.html?id=${doc.id}">
+    자세히 보기
+</a>
             </div>
         </div>
         `;
