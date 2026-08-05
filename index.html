@@ -88,11 +88,17 @@ head{text-align:center;margin-bottom:56px}
       .head{min-height:86px}
       .mobile-nav{inset:86px 0 0}
     }
-   @media(max-width:760px){
+ @media(max-width:760px){
 
-    #latestNews{
-        grid-template-columns:1fr;
-    }
+#latestNews{
+    grid-template-columns:1fr;
+}
+
+.news-card{
+    width:100%;
+    max-width:420px;
+    margin:0 auto 25px;
+}
 
     .wrap{padding:0 21px}
     .head{min-height:78px}
@@ -145,10 +151,11 @@ head{text-align:center;margin-bottom:56px}
 
 .news-card{
     background:#1a1a1a;
-    border:1px solid #333;
     border-radius:15px;
     overflow:hidden;
-    transition:.3s;
+
+    display:flex;
+    flex-direction:column;
 }
 
 .news-card:hover{
