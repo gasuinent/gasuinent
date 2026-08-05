@@ -223,21 +223,9 @@ document.addEventListener('DOMContentLoaded',()=>{
       if(!group) return;
       group.querySelectorAll('details[open]').forEach(other=>{
         if(other!==detail) other.open=false;
-      });
+      }
     });
-  });
-
-  const filterButtons=document.querySelectorAll('.filters button[data-filter]');
-  const newsCards=document.querySelectorAll('.news-card');
-  filterButtons.forEach(button=>{
-    button.addEventListener('click',()=>{
-      filterButtons.forEach(b=>b.classList.remove('active'));
-      button.classList.add('active');
-      const filter=button.dataset.filter;
-      newsCards.forEach(card=>{
-        card.style.display=(filter==='전체'||card.dataset.category===filter)?'block':'none';
-      });
-    });
+ 
   });
 
   const form=document.getElementById('contactForm');
@@ -316,7 +304,8 @@ async function loadNews(){
         const notice = docItem.data();
 
         html += `
-        <div class="card news-card">
+        <div class="card news-card"
+     data-category="${notice.category || '행사안내'}">
 
             ${notice.image ?
             `<img src="${notice.image}" style="width:100%;border-radius:15px;margin-bottom:20px;">`
@@ -332,7 +321,7 @@ async function loadNews(){
 ${notice.content.substring(0,150)}...
 </p>
 
-<a class="btn" href="notice_view.html?id=${docItem.id}">
+<a class="btn" href="myung/notice_view.html?id=${docItem.id}">
     자세히 보기
 </a>
 
@@ -342,9 +331,39 @@ ${notice.content.substring(0,150)}...
     });
 
     document.getElementById("newsGrid").innerHTML = html;
+bindCategoryButtons();
+}
+function bindCategoryButtons(){
+
+    const filterButtons =
+        document.querySelectorAll('.filters button[data-filter]');
+
+    const newsCards =
+        document.querySelectorAll('.news-card');
+
+    filterButtons.forEach(button=>{
+
+        button.onclick=function(){
+
+            filterButtons.forEach(b=>b.classList.remove("active"));
+
+            this.classList.add("active");
+
+            const filter=this.dataset.filter;
+
+            newsCards.forEach(card=>{
+
+                card.style.display=
+                (filter==="전체" || card.dataset.category===filter)
+                ? "block" : "none";
+
+            });
+
+        };
+
+    });
 
 }
-
 loadNews();
 
 </script>
