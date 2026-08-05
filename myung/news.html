@@ -178,6 +178,23 @@ margin-top:10px;
 display:none;
 border-radius:8px;
 ">
+ <label>뉴스 분류</label>
+
+<select id="category">
+
+<option value="행사안내">행사안내</option>
+
+<option value="무료공연">무료공연</option>
+
+<option value="봉사활동">봉사활동</option>
+
+<option value="노래교실">노래교실</option>
+
+<option value="사회환원">사회환원</option>
+
+<option value="보도자료">보도자료</option>
+
+</select>   
 <label>뉴스 내용</label>
 <textarea id="noticeContent"></textarea>
 
@@ -205,6 +222,27 @@ getDownloadURL
 
 const db = window.db;
 const storage = window.storage;
+document.getElementById("noticeImage").onchange = function () {
+
+    const file = this.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+
+        const img = document.getElementById("previewImage");
+
+        img.src = e.target.result;
+
+        img.style.display = "block";
+
+    };
+
+    reader.readAsDataURL(file);
+
+};
 
 document.getElementById("saveNotice").onclick = async () => {
 
@@ -246,6 +284,9 @@ const data = {
     title:title,
     content:content,
     image:imageUrl,
+
+    category:document.getElementById("category").value,
+
     date:new Date().toISOString().slice(0,10),
     timestamp:Date.now()
 };
@@ -273,28 +314,10 @@ if(window.editId){
 
 document.getElementById("noticeTitle").value="";
 document.getElementById("noticeContent").value="";
+document.getElementById("category").value="행사안내";
 document.getElementById("noticeImage").value="";
-document.getElementById("noticeImage").onchange = function () {
+document.getElementById("previewImage").style.display="none";
 
-    const file = this.files[0];
-
-    if (!file) return;
-
-    const reader = new FileReader();
-
-    reader.onload = function (e) {
-
-        const img = document.getElementById("previewImage");
-
-        img.src = e.target.result;
-
-        img.style.display = "block";
-
-    };
-
-    reader.readAsDataURL(file);
-
-};
 loadNotice();
 
 };
@@ -382,6 +405,8 @@ const n=snap.data();
 
 document.getElementById("noticeTitle").value=n.title;
 document.getElementById("noticeContent").value=n.content;
+document.getElementById("category").value =
+    n.category || "행사안내";   
 const img = document.getElementById("previewImage");
 
 if (n.image) {
