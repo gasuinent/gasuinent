@@ -345,10 +345,12 @@ html+=`
 
 <td>${no++}</td>
 
+<td>${n.category || "행사안내"}</td>
+
 <td>
-${n.image?
+${n.image ?
 `<img src="${n.image}" class="thumb">`
-:"-"}
+: "-"}
 </td>
 
 <td>${n.title}</td>
