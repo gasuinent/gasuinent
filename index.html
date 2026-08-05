@@ -88,9 +88,14 @@ head{text-align:center;margin-bottom:56px}
       .head{min-height:86px}
       .mobile-nav{inset:86px 0 0}
     }
-    @media(max-width:760px){
-      .wrap{padding:0 21px}
-      .head{min-height:78px}
+   @media(max-width:760px){
+
+    #latestNews{
+        grid-template-columns:1fr;
+    }
+
+    .wrap{padding:0 21px}
+    .head{min-height:78px}
       .brand{font-size:18px;gap:9px;min-width:0}
       .brand img{width:50px;height:50px}
       .brand span{overflow:hidden;text-overflow:ellipsis}
@@ -132,8 +137,10 @@ head{text-align:center;margin-bottom:56px}
 
 #latestNews{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    grid-template-columns:repeat(3,1fr);
     gap:25px;
+    max-width:1400px;
+    margin:0 auto;
 }
 
 .news-card{
@@ -209,7 +216,7 @@ head{text-align:center;margin-bottom:56px}
 
 <div class="wrap">
 
-<h2 style="display:flex;align-items:center;gap:15px;">
+<h2 style="display:flex;justify-content:center;align-items:center;gap:15px;">
     <img src="logo.png"
          alt="GSE"
          style="width:90px;height:auto;">
