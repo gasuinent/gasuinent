@@ -89,7 +89,40 @@ head{text-align:center;margin-bottom:56px}
       .mobile-nav{inset:86px 0 0}
     }
  @media(max-width:760px){
+/* 최신뉴스 */
+#latestNews{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+}
 
+/* 카드 */
+.news-card{
+    width:100%;
+    max-width:420px;
+    margin:0 auto;
+}
+
+/* 로고 */
+.news-card img{
+    width:180px;
+    height:auto;
+    display:block;
+    margin:20px auto;
+}
+
+/* 제목 */
+.news-card h3{
+    font-size:30px;
+    line-height:1.4;
+    white-space:normal;
+    word-break:keep-all;
+}
+
+/* 버튼 */
+.news-card .btn{
+    margin-top:auto;
+}
 #latestNews{
     grid-template-columns:1fr;
 }
