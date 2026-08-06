@@ -88,59 +88,9 @@ head{text-align:center;margin-bottom:56px}
       .head{min-height:86px}
       .mobile-nav{inset:86px 0 0}
     }
- @media(max-width:760px){
-/* 최신뉴스 */
-#latestNews{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:20px;
-}
-.news-card .info{
-    text-align:center;
-}
-
-.news-card .btn{
-    margin:25px auto 0;
-}
-/* 카드 */
-.news-card{
-    width:100%;
-    max-width:420px;
-    margin:0 auto;
-}
-
-/* 로고 */
-.news-card img{
-    width:180px;
-    height:auto;
-    display:block;
-    margin:20px auto;
-}
-
-/* 제목 */
-.news-card h3{
-    font-size:30px;
-    line-height:1.4;
-    white-space:normal;
-    word-break:keep-all;
-}
-
-/* 버튼 */
-.news-card .btn{
-    margin-top:auto;
-}
-#latestNews{
-    grid-template-columns:1fr;
-}
-
-.news-card{
-    width:100%;
-    max-width:420px;
-    margin:0 auto 25px;
-}
-
-    .wrap{padding:0 21px}
-    .head{min-height:78px}
+    @media(max-width:760px){
+      .wrap{padding:0 21px}
+      .head{min-height:78px}
       .brand{font-size:18px;gap:9px;min-width:0}
       .brand img{width:50px;height:50px}
       .brand span{overflow:hidden;text-overflow:ellipsis}
@@ -182,30 +132,16 @@ head{text-align:center;margin-bottom:56px}
 
 #latestNews{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
     gap:25px;
-    max-width:1400px;
-    margin:0 auto;
 }
-@media (max-width:760px){
 
-    #latestNews{
-        grid-template-columns:1fr !important;
-    }
-
-    .news-card{
-        max-width:100%;
-        margin:0 0 25px 0;
-    }
-
-}
 .news-card{
     background:#1a1a1a;
+    border:1px solid #333;
     border-radius:15px;
     overflow:hidden;
-
-    display:flex;
-    flex-direction:column;
+    transition:.3s;
 }
 
 .news-card:hover{
@@ -221,18 +157,6 @@ head{text-align:center;margin-bottom:56px}
 
 .news-card .info{
     padding:20px;
-    display:flex;
-    flex-direction:column;
-    flex:1;
-}
-
-.news-card p{
-    flex:1;
-}
-
-.news-card .btn{
-    margin-top:auto;
-    align-self:flex-start;
 }
 
 .news-card h3{
@@ -285,17 +209,12 @@ head{text-align:center;margin-bottom:56px}
 
 <div class="wrap">
 
-<div style="text-align:center;margin-bottom:35px;">
-
+<h2 style="display:flex;align-items:center;gap:15px;">
     <img src="logo.png"
          alt="GSE"
-         style="width:90px;height:auto;display:block;margin:0 auto 15px;">
-
-    <h2 style="margin:0;">
-        최신 뉴스
-    </h2>
-
-</div>
+         style="width:90px;height:auto;">
+    <span>최신 뉴스</span>
+</h2>
 
 <div id="latestNews"></div>
 
@@ -487,11 +406,9 @@ async function loadLatestNews(){
 </div>
 
 <p>${(n.content || "").substring(0,120)}...</p>
-                <a class="btn"
-   style="margin-top:auto;"
-   href="notice_view.html?id=${doc.id}">
-    자세히 보기
-</a>
+                <a class="btn" href="notice_view.html?id=${doc.id}">
+                    자세히 보기
+                </a>
             </div>
         </div>
         `;
