@@ -96,9 +96,7 @@ head{text-align:center;margin-bottom:56px}
     gap:20px;
 }
 .news-card .info{
-  display:flex;
-flex-direction:column;
-flex:1;
+    text-align:center;
 }
 
 .news-card .btn{
@@ -233,7 +231,8 @@ flex:1;
 }
 
 .news-card .btn{
-    margin:25px auto 0;
+    margin-top:auto;
+    align-self:flex-start;
 }
 
 .news-card h3{
@@ -478,21 +477,19 @@ async function loadLatestNews(){
         <div class="news-card">
             <img src="${n.image || 'logo.png'}" alt="">
             <div class="info">
-<div class="news-category">
-    문화예술
+            <div style="display:inline-block;background:#FFD700;color:#111;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold;margin-bottom:10px;">
+문화예술
 </div>
-
-<h3>${n.title}</h3>
+               <h3>${n.title}</h3>
 
 <div style="color:#bbb;font-size:14px;margin:8px 0 15px;">
-    🗓 ${n.date} &nbsp;&nbsp; | &nbsp;&nbsp; ✍️ 가수인생활 엔터테인먼트
+📅 ${n.date} &nbsp;&nbsp; | &nbsp;&nbsp; ✍ 가수인생활 엔터테인먼트
 </div>
 
-<div style="flex:1;">
-    <p>${(n.content || "").substring(0,120)}...</p>
-</div>
-
-<a class="btn" href="notice_view.html?id=${doc.id}">
+<p>${(n.content || "").substring(0,120)}...</p>
+                <a class="btn"
+   style="margin-top:auto;"
+   href="notice_view.html?id=${doc.id}">
     자세히 보기
 </a>
             </div>
