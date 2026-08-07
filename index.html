@@ -243,7 +243,19 @@ head{text-align:center;margin-bottom:56px}
 .news-card p{
     color:#ddd;
     line-height:1.7;
-} 
+}
+ .news-category{
+    display:inline-block;
+    width:auto;
+    align-self:flex-start;
+    padding:4px 10px;
+    background:#FFD700;
+    color:#111;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:10px;
+}   
   </style>
 </head>
 <body>
@@ -477,9 +489,7 @@ async function loadLatestNews(){
         <div class="news-card">
             <img src="${n.image || 'logo.png'}" alt="">
             <div class="info">
-            <div style="display:inline-block;background:#FFD700;color:#111;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold;margin-bottom:10px;">
-문화예술
-</div>
+<div class="news-category">문화예술</div>
                <h3>${n.title}</h3>
 
 <div style="color:#bbb;font-size:14px;margin:8px 0 15px;">
