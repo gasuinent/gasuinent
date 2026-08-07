@@ -655,27 +655,10 @@ line-height:1.9;
 @media(max-width:1200px){
 
 .main-company{
-    grid-template-columns:1fr;
-    text-align:center;
-}
 
-.partner-info{
-    grid-template-columns:1fr;
-    gap:15px;
-}
+grid-template-columns:1fr;
+text-align:center;
 
-.partner-table{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-}
-
-.partner-table div{
-    min-width:0;
-    word-break:keep-all;
-    white-space:normal;
-    text-align:center;
-}
 }
 
 .company-service{
@@ -712,6 +695,7 @@ grid-template-columns:repeat(2,1fr);
 grid-template-columns:1fr;
 
 }
+
 }
 @media(max-width:768px){
 
@@ -833,29 +817,18 @@ font-size:18px;
 }
 
 .partner-table tr{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
+
+display:flex;
+flex-direction:column;
+
 }
 
 .partner-table td{
-    width:auto;
-    border-right:none;
-    border-bottom:1px solid #444;
-    padding:14px 10px;
-    text-align:center;
-}
 
-.partner-table strong{
-    display:block;
-    font-size:18px;
-    margin-bottom:6px;
-}
+width:100%;
+border-right:none;
+border-bottom:1px solid #444;
 
-.partner-table span{
-    display:block;
-    font-size:16px;
-    word-break:keep-all;
 }
 
 .cards{
