@@ -44,7 +44,7 @@
     .hero h1{font-size:clamp(40px,4.6vw,68px);line-height:1.08;margin:4px 0 10px;text-shadow:0 4px 20px rgba(0,0,0,.75);white-space:nowrap;letter-spacing:-.035em}
     .hero-title-break{display:none}
     .hero .lead{font-size:clamp(18px,1.6vw,25px);max-width:920px}
-    .hero-actions{justify-content:center;gap:12px;flex-wrap:wrap;margin-top:20px}
+    .hero-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:20px}
     .hero-actions .btn{min-width:190px;margin-top:0;padding:12px 20px;background:rgba(8,8,8,.72);backdrop-filter:blur(4px)}
     .hero-actions .btn.fill{box-shadow:0 8px 28px rgba(224,179,84,.25)}
     .eyebrow{color:var(--gold);font-weight:900;letter-spacing:.18em;font-size:22px}
@@ -61,7 +61,7 @@ head{text-align:center;margin-bottom:56px}
     .status{display:inline-block;padding:9px 16px;border:1px solid #594a2c;border-radius:999px;color:var(--gold2);font-weight:900}
     .btn{display:inline-block;margin-top:22px;padding:16px 28px;border:2px solid var(--gold);border-radius:999px;color:var(--gold2);font-size:21px;font-weight:900;background:transparent;cursor:pointer}
     .btn.fill{background:var(--gold);color:#16120b}
-    .filters{flex-wrap:wrap;justify-content:center;gap:14px;margin:30px 0 46px}
+    .filters{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:30px 0 46px}
     .filters button{padding:14px 24px;border-radius:999px;border:1px solid var(--line);background:#090909;color:var(--muted);font-weight:900;font-size:20px}
     .filters button.active{background:var(--gold);color:#111}
     details{border:1px solid #594a2c;border-radius:24px;padding:26px 30px;margin:18px 0;background:var(--panel2)}
@@ -88,9 +88,59 @@ head{text-align:center;margin-bottom:56px}
       .head{min-height:86px}
       .mobile-nav{inset:86px 0 0}
     }
-    @media(max-width:760px){
-      .wrap{padding:0 21px}
-      .head{min-height:78px}
+ @media(max-width:760px){
+/* 최신뉴스 */
+#latestNews{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+}
+.news-card .info{
+    text-align:center;
+}
+
+.news-card .btn{
+    margin:25px auto 0;
+}
+/* 카드 */
+.news-card{
+    width:100%;
+    max-width:420px;
+    margin:0 auto;
+}
+
+/* 로고 */
+.news-card img{
+    width:180px;
+    height:auto;
+    display:block;
+    margin:20px auto;
+}
+
+/* 제목 */
+.news-card h3{
+    font-size:30px;
+    line-height:1.4;
+    white-space:normal;
+    word-break:keep-all;
+}
+
+/* 버튼 */
+.news-card .btn{
+    margin-top:auto;
+}
+#latestNews{
+    grid-template-columns:1fr;
+}
+
+.news-card{
+    width:100%;
+    max-width:420px;
+    margin:0 auto 25px;
+}
+
+    .wrap{padding:0 21px}
+    .head{min-height:78px}
       .brand{font-size:18px;gap:9px;min-width:0}
       .brand img{width:50px;height:50px}
       .brand span{overflow:hidden;text-overflow:ellipsis}
@@ -132,16 +182,27 @@ head{text-align:center;margin-bottom:56px}
 
 #latestNews{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    grid-template-columns:repeat(3,1fr);
     gap:25px;
+    max-width:1400px;
+    margin:0 auto;
 }
+@media (max-width:760px){
 
+    #latestNews{
+        grid-template-columns:1fr !important;
+    }
+
+    .news-card{
+        max-width:100%;
+        margin:0 0 25px 0;
+    }
+
+}
 .news-card{
     background:#1a1a1a;
-    border:1px solid #333;
     border-radius:15px;
     overflow:hidden;
-    transition:.3s;
 
     display:flex;
     flex-direction:column;
@@ -160,10 +221,18 @@ head{text-align:center;margin-bottom:56px}
 
 .news-card .info{
     padding:20px;
-
     display:flex;
     flex-direction:column;
     flex:1;
+}
+
+.news-card p{
+    flex:1;
+}
+
+.news-card .btn{
+    margin-top:auto;
+    align-self:flex-start;
 }
 
 .news-card h3{
@@ -175,7 +244,6 @@ head{text-align:center;margin-bottom:56px}
     color:#ddd;
     line-height:1.7;
 } 
-   
   </style>
 </head>
 <body>
@@ -217,12 +285,17 @@ head{text-align:center;margin-bottom:56px}
 
 <div class="wrap">
 
-<h2 style="display:flex;align-items:center;gap:15px;">
+<div style="text-align:center;margin-bottom:35px;">
+
     <img src="logo.png"
          alt="GSE"
-         style="width:90px;height:auto;">
-    <span>최신 뉴스</span>
-</h2>
+         style="width:90px;height:auto;display:block;margin:0 auto 15px;">
+
+    <h2 style="margin:0;">
+        최신 뉴스
+    </h2>
+
+</div>
 
 <div id="latestNews"></div>
 
@@ -404,14 +477,7 @@ async function loadLatestNews(){
         <div class="news-card">
             <img src="${n.image || 'logo.png'}" alt="">
             <div class="info">
-<div style="display:inline-block;
-background:#FFD700;
-color:#111;
-padding:4px 10px;
-border-radius:20px;
-font-size:12px;
-font-weight:bold;
-margin-bottom:10px;">
+            <div style="display:inline-block;background:#FFD700;color:#111;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold;margin-bottom:10px;">
 문화예술
 </div>
                <h3>${n.title}</h3>
@@ -421,6 +487,10 @@ margin-bottom:10px;">
 </div>
 
 <p>${(n.content || "").substring(0,120)}...</p>
+                <a class="btn"
+   style="margin-top:auto;"
+   href="notice_view.html?id=${doc.id}">
+    자세히 보기
 </a>
             </div>
         </div>
