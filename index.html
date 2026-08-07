@@ -175,9 +175,7 @@ head{text-align:center;margin-bottom:56px}
     color:#ddd;
     line-height:1.7;
 } 
-.news-card .btn{
-    margin-top:auto;
-}    
+   
   </style>
 </head>
 <body>
@@ -409,9 +407,9 @@ async function loadLatestNews(){
 <div style="display:inline-block;
 background:#FFD700;
 color:#111;
-padding:6px 13px;
+padding:4px 10px;
 border-radius:20px;
-font-size:14px;
+font-size:12px;
 font-weight:bold;
 margin-bottom:10px;">
 문화예술
@@ -422,12 +420,7 @@ margin-bottom:10px;">
 📅 ${n.date} &nbsp;&nbsp; | &nbsp;&nbsp; ✍ 가수인생활 엔터테인먼트
 </div>
 
-<div style="flex:1;">
-    <p>${(n.content || "").substring(0,120)}...</p>
-</div>
-
-<a class="btn" href="notice_view.html?id=${doc.id}">
-    자세히 보기
+<p>${(n.content || "").substring(0,120)}...</p>
 </a>
             </div>
         </div>
