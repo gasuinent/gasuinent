@@ -264,7 +264,7 @@ const data = {
 if(window.editId){
 
     await updateDoc(
-        doc(db,"notice",window.editId),
+        doc(db,"announcements",window.editId),
         data
     );
 
@@ -275,7 +275,7 @@ if(window.editId){
 }else{
 
     await addDoc(
-        collection(db,"notice"),
+        collection(db,"notices"),
         data
     );
 
@@ -293,7 +293,7 @@ loadNotice();
 async function loadNotice(){
 
 const q = query(
-    collection(db,"notice"),
+    collection(db,"notices"),
     orderBy("timestamp","desc")
 );
 
@@ -351,7 +351,7 @@ async function deleteNotice(id){
 if(!confirm("정말 삭제하시겠습니까?")) return;
 
 await deleteDoc(
-    doc(db,"notice",id)
+   doc(db,"announcements",id)
 );
 
 loadNotice();
@@ -363,7 +363,7 @@ async function editNotice(id){
 
     window.editId = id;
 
-    const snap = await getDoc(doc(db,"notice",id));
+    const snap = await getDoc(doc(db,"announcements",id));
 
     if(!snap.exists()) return;
 
@@ -392,7 +392,7 @@ document.getElementById("searchBtn").onclick = async ()=>{
 
 const keyword = document.getElementById("searchText").value.toLowerCase();
 
-const snapshot = await getDocs(collection(db,"notice"));
+const snapshot = await getDocs(collection(db,"notices"));
 
 let html = "";
 let no = 1;
