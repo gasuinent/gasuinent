@@ -181,6 +181,28 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 <label>공지 제목</label>
 <input type="text" id="noticeTitle">
 
+<label>대표 사진</label>
+<input type="file" id="noticeImage" accept="image/*">
+
+<img
+    id="previewImage"
+    style="
+        max-width:300px;
+        margin-top:10px;
+        display:none;
+        border-radius:8px;
+    "
+>
+<label>공지 설정</label>
+
+<label style="display:flex;align-items:center;gap:10px;margin-top:10px;">
+    <input
+        type="checkbox"
+        id="pinned"
+        style="width:22px;height:22px;"
+    >
+    📌 상단 고정
+</label>
 <label>공지 내용</label>
 <textarea id="noticeContent"></textarea>
 
@@ -234,6 +256,7 @@ if(content==""){
 const data = {
     title:title,
     content:content,
+    pinned:document.getElementById("pinned").checked,
     date:new Date().toISOString().slice(0,10),
     timestamp:Date.now()
 };
@@ -262,6 +285,7 @@ if(window.editId){
 
 document.getElementById("noticeTitle").value="";
 document.getElementById("noticeContent").value="";
+document.getElementById("pinned").checked=false;
 
 loadNotice();
 
@@ -288,7 +312,10 @@ html += `
 
 <td>${no++}</td>
 
-<td>${n.title}</td>
+<td>
+    ${n.pinned ? "📌 " : ""}
+    ${n.title}
+</td>
 
 <td>${n.date}</td>
 
@@ -343,7 +370,8 @@ async function editNotice(id){
     const n = snap.data();
 
     document.getElementById("noticeTitle").value = n.title;
-    document.getElementById("noticeContent").value = n.content;
+document.getElementById("noticeContent").value = n.content;
+document.getElementById("pinned").checked = n.pinned || false;
 
     window.scrollTo({
         top:document.body.scrollHeight,
