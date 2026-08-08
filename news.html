@@ -277,10 +277,10 @@ ${g('request')}`);
       window.netlifyIdentity.close();
     });
   }
-</script>
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
 import {
     getFirestore,
@@ -288,7 +288,9 @@ import {
     getDocs,
     query,
     orderBy
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
 
 const firebaseConfig = {
 
@@ -301,14 +303,16 @@ const firebaseConfig = {
 
 };
 
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
 
 async function loadNews(){
 
     const q = query(
-        collection(db,"notice"),
-        orderBy("timestamp","desc")
+        collection(db, "notice"),
+        orderBy("timestamp", "desc")
     );
 
     const snapshot = await getDocs(q);
@@ -316,99 +320,69 @@ async function loadNews(){
     const notices = [];
 
     snapshot.forEach(docItem => {
+
         notices.push({
             id: docItem.id,
             ...docItem.data()
         });
+
     });
 
-    /* ==========================
-       전체 뉴스
-       공지/고정 최대 2개
-       최신 뉴스 포함 총 6개
-       ========================== */
 
+    /*
+    ==========================================
+    전체 뉴스 표시 규칙
+
+    ① 공지/고정 선택이 없으면
+       → 최신 뉴스 6개
+
+    ② 공지/고정 1개이면
+       → 공지 1개 + 최신 뉴스 5개
+
+    ③ 공지/고정 2개이면
+       → 공지 2개 + 최신 뉴스 4개
+
+    ④ 항상 총 6개
+
+    ⑤ 공지/고정은 위쪽에 먼저 표시
+    ==========================================
+    */
+
+
+    // 관리자에서 pinned=true로 지정한 뉴스
     const pinnedNews = notices
         .filter(notice => notice.pinned === true)
         .slice(0, 2);
 
+
+    // 공지/고정 뉴스의 ID
     const pinnedIds = new Set(
         pinnedNews.map(notice => notice.id)
     );
 
+
+    // 공지/고정을 제외한 최신 뉴스
     const latestNews = notices
         .filter(notice => !pinnedIds.has(notice.id));
 
-    /* 공지 0~2개 + 최신뉴스로 총 6개 구성 */
 
+    // 최종적으로 항상 6개
     const displayNews = [
         ...pinnedNews,
         ...latestNews
     ].slice(0, 6);
 
+
     let html = "";
+
 
     displayNews.forEach(notice => {
 
         html += `
+
         <div class="card news-card"
              data-category="${notice.category || ''}">
 
-            ${
-                notice.pinned === true
-                ? `
-                <div style="
-                    color:#FFD700;
-                    font-size:15px;
-                    font-weight:bold;
-                    margin-bottom:10px;
-                ">
-                    📌 공지
-                </div>
-                `
-                : ""
-            }
-
-            <h3>${notice.title || ""}</h3>
-
-            <div style="
-                color:#aaa;
-                font-size:14px;
-                margin:12px 0;
-            ">
-                📅 ${notice.date || ""}
-            </div>
-
-            <p style="
-                font-size:17px;
-                line-height:1.7;
-                color:#ddd;
-            ">
-                ${(notice.content || "").substring(0,150)}...
-            </p>
-
-            <a class="btn"
-               href="notice_view.html?id=${notice.id}">
-                자세히 보기
-            </a>
-
-        </div>
-        `;
-
-    });
-
-    document.getElementById("newsGrid").innerHTML = html;
-}
-
-loadNews();
-
-    let html = "";
-
-    displayNews.forEach(notice => {
-
-        html += `
-        <div class="card news-card"
-             data-category="${notice.category || ''}">
 
             ${
                 notice.pinned === true
@@ -419,21 +393,26 @@ loadNews();
                     font-weight:bold;
                     margin-bottom:12px;
                 ">
-                    📌 공지
+                    📌 공지 / 고정
                 </div>
                 `
                 : ""
             }
 
-            <h3>${notice.title}</h3>
+
+            <h3>
+                ${notice.title || ""}
+            </h3>
+
 
             <div style="
                 color:#aaa;
                 font-size:14px;
                 margin:12px 0;
             ">
-                📅 ${notice.date}
+                📅 ${notice.date || ""}
             </div>
+
 
             <p style="
                 font-size:17px;
@@ -443,19 +422,24 @@ loadNews();
                 ${(notice.content || "").substring(0,150)}...
             </p>
 
+
             <a class="btn"
                href="notice_view.html?id=${notice.id}">
                 자세히 보기
             </a>
 
+
         </div>
+
         `;
 
     });
 
+
     document.getElementById("newsGrid").innerHTML = html;
 
 }
+
 
 loadNews();
 
