@@ -231,8 +231,7 @@ id:d.id,
 });
 
 
-/* 최신순 */
-
+/* 전체 최신순 정렬 */
 rows.sort(
 (a,b)=>
 (b.timestamp||0)-
@@ -240,40 +239,49 @@ rows.sort(
 );
 
 
-/*
-상단 3개:
-관리자가 고정한 사진만 사용
+/* 
+1. 상단 3개: 관리자 고정(pinned === true)된 항목을 최신순으로 최대 3개 추출 
+*/
+const pinnedItems = rows
+.filter(g => g.pinned === true)
+.slice(0, 3);
+
+const pinnedIds = new Set(pinnedItems.map(g => g.id));
+
+
+/* 
+2. 하단 3개 및 목록을 위해 상단에 들어간 고정 항목을 제외한 나머지 전체 준비 
+*/
+const remainingRows = rows.filter(g => !pinnedIds.has(g.id));
+
+
+/* 
+하단 3개: 남은 항목 중 최신 3개 추출
+(만약 고정 글이 3개보다 적어서 상단 빈자리가 생기면, 남은 최신 글이 위로 올라오지 않도록 
+ 상단/하단을 정확히 분리하기 위해 고정 글 개수와 상관없이 하단은 최신순 3개를 고정 확보합니다)
 */
 
-const pinned=rows
-.filter(g=>g.pinned===true)
-.slice(0,3);
+// 상단 고정 영역 채우기 (정확히 3개가 되도록 부족하면 최신 일반 글로 채움)
+const topSection = [...pinnedItems];
+let normalPool = [...remainingRows];
 
-
-/*
-하단 3개:
-고정 사진을 제외한 자료 중 최신 3개
-*/
-
-const normal=rows
-.filter(g=>g.pinned!==true);
-
-const latest=normal.slice(0,3);
-
-
-/*
-항상 6칸을 만든다.
-사진이 부족해도 새 박스를 만들지 않는다.
-*/
-
-const main=[...pinned,...latest];
-
-while(main.length<6){
-
-main.push(null);
-
+while(topSection.length < 3 && normalPool.length > 0) {
+    topSection.push(normalPool.shift());
 }
 
+const topIds = new Set(topSection.map(g => g.id));
+const afterTopRows = rows.filter(g => !topIds.has(g.id));
+
+// 하단 영역 채우기 (최신순 3개)
+const bottomSection = afterTopRows.slice(0, 3);
+const bottomIds = new Set(bottomSection.map(g => g.id));
+
+/* 최종 상단 그리드 6개 구성 (상단 3개 + 하단 3개) */
+const main = [...topSection, ...bottomSection];
+
+while(main.length < 6){
+    main.push(null);
+}
 
 document.getElementById(
 "galleryGrid"
@@ -289,21 +297,12 @@ makeCard(g):
 
 
 /*
-메인 6개에 들어간 자료는 목록에서 제외.
-나머지 7번째부터 목록으로 표시.
+메인 6개(상단 3개 + 하단 3개)에 들어간 자료는 목록에서 제외.
+나머지 7번째 데이터부터 목록으로 표시.
 */
 
-const mainIds=new Set(
-
-main
-.filter(g=>g)
-.map(g=>g.id)
-
-);
-
-const list=rows.filter(
-g=>!mainIds.has(g.id)
-);
+const mainIds = new Set(main.filter(g => g).map(g => g.id));
+const list = rows.filter(g => !mainIds.has(g.id));
 
 
 if(list.length===0){
