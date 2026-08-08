@@ -288,8 +288,7 @@ import {
     getDocs,
     query,
     orderBy
-}
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
 const firebaseConfig = {
@@ -299,7 +298,8 @@ const firebaseConfig = {
     projectId: "gasuinent",
     storageBucket: "gasuinent.firebasestorage.app",
     messagingSenderId: "122370674182",
-    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87"
+    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+    measurementId: "G-39M5K1M6K7"
 
 };
 
@@ -310,133 +310,118 @@ const db = getFirestore(app);
 
 async function loadNews(){
 
-    const q = query(
-        collection(db, "notice"),
-        orderBy("timestamp", "desc")
-    );
+    try {
 
-    const snapshot = await getDocs(q);
+        const q = query(
+            collection(db, "notice"),
+            orderBy("timestamp", "desc")
+        );
 
-    const notices = [];
+        const snapshot = await getDocs(q);
 
-    snapshot.forEach(docItem => {
+        const notices = [];
 
-        notices.push({
-            id: docItem.id,
-            ...docItem.data()
+        snapshot.forEach(docItem => {
+
+            notices.push({
+                id: docItem.id,
+                ...docItem.data()
+            });
+
         });
 
-    });
+
+        /* 공지/고정 최대 2개 */
+
+        const pinnedNews = notices
+            .filter(notice => notice.pinned === true)
+            .slice(0, 2);
 
 
-    /*
-    ==========================================
-    전체 뉴스 표시 규칙
-
-    ① 공지/고정 선택이 없으면
-       → 최신 뉴스 6개
-
-    ② 공지/고정 1개이면
-       → 공지 1개 + 최신 뉴스 5개
-
-    ③ 공지/고정 2개이면
-       → 공지 2개 + 최신 뉴스 4개
-
-    ④ 항상 총 6개
-
-    ⑤ 공지/고정은 위쪽에 먼저 표시
-    ==========================================
-    */
+        const pinnedIds = new Set(
+            pinnedNews.map(notice => notice.id)
+        );
 
 
-    // 관리자에서 pinned=true로 지정한 뉴스
-    const pinnedNews = notices
-        .filter(notice => notice.pinned === true)
-        .slice(0, 2);
+        /* 공지를 제외한 최신 뉴스 */
+
+        const latestNews = notices
+            .filter(notice => !pinnedIds.has(notice.id));
 
 
-    // 공지/고정 뉴스의 ID
-    const pinnedIds = new Set(
-        pinnedNews.map(notice => notice.id)
-    );
+        /* 항상 총 6개 */
+
+        const displayNews = [
+            ...pinnedNews,
+            ...latestNews
+        ].slice(0, 6);
 
 
-    // 공지/고정을 제외한 최신 뉴스
-    const latestNews = notices
-        .filter(notice => !pinnedIds.has(notice.id));
+        let html = "";
 
 
-    // 최종적으로 항상 6개
-    const displayNews = [
-        ...pinnedNews,
-        ...latestNews
-    ].slice(0, 6);
+        displayNews.forEach(notice => {
 
+            html += `
 
-    let html = "";
+            <div class="card news-card"
+                 data-category="${notice.category || ''}">
 
+                ${
+                    notice.pinned === true
+                    ? `
+                    <div style="
+                        color:#FFD700;
+                        font-size:15px;
+                        font-weight:bold;
+                        margin-bottom:10px;
+                    ">
+                        📌 공지 / 고정
+                    </div>
+                    `
+                    : ""
+                }
 
-    displayNews.forEach(notice => {
+                <h3>
+                    ${notice.title || ""}
+                </h3>
 
-        html += `
-
-        <div class="card news-card"
-             data-category="${notice.category || ''}">
-
-
-            ${
-                notice.pinned === true
-                ? `
                 <div style="
-                    color:#FFD700;
-                    font-size:16px;
-                    font-weight:bold;
-                    margin-bottom:12px;
+                    color:#aaa;
+                    font-size:14px;
+                    margin:12px 0;
                 ">
-                    📌 공지 / 고정
+                    📅 ${notice.date || ""}
                 </div>
-                `
-                : ""
-            }
 
+                <p style="
+                    font-size:17px;
+                    line-height:1.7;
+                    color:#ddd;
+                ">
+                    ${(notice.content || "").substring(0,150)}...
+                </p>
 
-            <h3>
-                ${notice.title || ""}
-            </h3>
+                <a class="btn"
+                   href="notice_view.html?id=${notice.id}">
+                    자세히 보기
+                </a>
 
-
-            <div style="
-                color:#aaa;
-                font-size:14px;
-                margin:12px 0;
-            ">
-                📅 ${notice.date || ""}
             </div>
 
+            `;
 
-            <p style="
-                font-size:17px;
-                line-height:1.7;
-                color:#ddd;
-            ">
-                ${(notice.content || "").substring(0,150)}...
-            </p>
+        });
 
 
-            <a class="btn"
-               href="notice_view.html?id=${notice.id}">
-                자세히 보기
-            </a>
+        document.getElementById("newsGrid").innerHTML = html;
 
 
-        </div>
+    } catch(error) {
 
-        `;
+        console.error("뉴스 불러오기 오류:", error);
 
-    });
-
-
-    document.getElementById("newsGrid").innerHTML = html;
+    }
 
 }
 
