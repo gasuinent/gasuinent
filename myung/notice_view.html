@@ -78,7 +78,9 @@ const id = params.get("id");
 
 if(id){
 
-    const snap = await getDoc(doc(db,"notices",id));
+   <button onclick="location.href='notice.html'">
+← 공지 목록
+</button>
 
     if(snap.exists()){
 
@@ -90,8 +92,8 @@ if(id){
 
 <h1>${n.title}</h1>
 
-<div class="meta">
-작성일 : ${n.date}
+<div id="content">
+${n.content}
 </div>
 
 <div id="content">
