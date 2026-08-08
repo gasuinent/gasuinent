@@ -316,38 +316,91 @@ async function loadNews(){
     const notices = [];
 
     snapshot.forEach(docItem => {
-
         notices.push({
             id: docItem.id,
             ...docItem.data()
         });
-
     });
 
-    /*
-     * 전체 뉴스 화면
-     *
-     * 1. 고정 공지 최대 2개
-     * 2. 최신 뉴스 4개
-     * 3. 총 6개
-     */
+    /* ==========================
+       전체 뉴스
+       공지/고정 최대 2개
+       최신 뉴스 포함 총 6개
+       ========================== */
 
     const pinnedNews = notices
         .filter(notice => notice.pinned === true)
-        .slice(0,2);
+        .slice(0, 2);
 
     const pinnedIds = new Set(
         pinnedNews.map(notice => notice.id)
     );
 
     const latestNews = notices
-        .filter(notice => !pinnedIds.has(notice.id))
-        .slice(0,4);
+        .filter(notice => !pinnedIds.has(notice.id));
+
+    /* 공지 0~2개 + 최신뉴스로 총 6개 구성 */
 
     const displayNews = [
         ...pinnedNews,
         ...latestNews
-    ];
+    ].slice(0, 6);
+
+    let html = "";
+
+    displayNews.forEach(notice => {
+
+        html += `
+        <div class="card news-card"
+             data-category="${notice.category || ''}">
+
+            ${
+                notice.pinned === true
+                ? `
+                <div style="
+                    color:#FFD700;
+                    font-size:15px;
+                    font-weight:bold;
+                    margin-bottom:10px;
+                ">
+                    📌 공지
+                </div>
+                `
+                : ""
+            }
+
+            <h3>${notice.title || ""}</h3>
+
+            <div style="
+                color:#aaa;
+                font-size:14px;
+                margin:12px 0;
+            ">
+                📅 ${notice.date || ""}
+            </div>
+
+            <p style="
+                font-size:17px;
+                line-height:1.7;
+                color:#ddd;
+            ">
+                ${(notice.content || "").substring(0,150)}...
+            </p>
+
+            <a class="btn"
+               href="notice_view.html?id=${notice.id}">
+                자세히 보기
+            </a>
+
+        </div>
+        `;
+
+    });
+
+    document.getElementById("newsGrid").innerHTML = html;
+}
+
+loadNews();
 
     let html = "";
 
