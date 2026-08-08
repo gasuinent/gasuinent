@@ -218,11 +218,11 @@ document.getElementById("saveEvent").onclick = async function(){
 
         }else{
 
-            await addDoc(collection(db,"schedule"),{
+            await addDoc(collection(db,"event"),{
 
                 title:title,
                 content:content,
-                date:date,
+              collection(db,"event"),
                 place:place,
                 timestamp:Date.now()
 
@@ -266,7 +266,7 @@ html += `
 <tr>
     <td>${no++}</td>
     <td>${event.title}</td>
-    <td>${event.date}</td>
+    <td>${${event.date}}</td>
 
     <td>
         <button onclick="viewEvent('${docItem.id}')">
