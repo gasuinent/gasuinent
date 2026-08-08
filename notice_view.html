@@ -204,75 +204,97 @@ async function loadNotice(){
 }
 
 loadNotice();
- async function loadRelatedNews(){
+async function loadRelatedNews(){
 
+    // 현재 기사 정보 확인
+    const currentSnap = await getDoc(doc(db,"notice",id));
+
+    if(!currentSnap.exists()){
+        return;
+    }
+
+    const currentNotice = currentSnap.data();
+    const currentCategory = currentNotice.category || "";
+
+    // 최신순으로 전체 뉴스 가져오기
     const q = query(
         collection(db,"notice"),
-        orderBy("timestamp","desc"),
-        limit(3)
+        orderBy("timestamp","desc")
     );
 
     const snap = await getDocs(q);
 
     let html = "";
+    let count = 0;
 
     snap.forEach(item=>{
 
+        // 현재 보고 있는 기사는 제외
         if(item.id === id) return;
 
         const n = item.data();
 
+        // 현재 기사와 같은 카테고리만 표시
+        if((n.category || "") !== currentCategory) return;
+
+        // 관련뉴스는 최대 3개
+        if(count >= 3) return;
+
         html += `
-<div style="
-display:flex;
-gap:15px;
-align-items:center;
-background:#1a1a1a;
-border:1px solid #444;
-border-radius:10px;
-padding:15px;
-margin-bottom:15px;
-">
+        <div style="
+        display:flex;
+        gap:15px;
+        align-items:center;
+        background:#1a1a1a;
+        border:1px solid #444;
+        border-radius:10px;
+        padding:15px;
+        margin-bottom:15px;
+        ">
 
-<img src="${n.image || 'logo.png'}"
-style="
-width:140px;
-height:90px;
-object-fit:cover;
-border-radius:8px;
-">
+        <img src="${n.image || 'logo.png'}"
+        style="
+        width:140px;
+        height:90px;
+        object-fit:cover;
+        border-radius:8px;
+        ">
 
-<div style="flex:1;">
+        <div style="flex:1;">
 
-<a href="notice_view.html?id=${item.id}"
-style="
-color:#FFD700;
-font-size:20px;
-font-weight:bold;
-text-decoration:none;
-">
+        <a href="notice_view.html?id=${item.id}"
+        style="
+        color:#FFD700;
+        font-size:20px;
+        font-weight:bold;
+        text-decoration:none;
+        ">
 
-${n.title}
+        ${n.title}
 
-</a>
+        </a>
 
-<div style="
-margin-top:8px;
-color:#aaa;
-font-size:14px;
-">
+        <div style="
+        margin-top:8px;
+        color:#aaa;
+        font-size:14px;
+        ">
 
-📅 ${n.date}
+        📅 ${n.date}
 
-</div>
+        </div>
 
-</div>
+        </div>
 
-</div>
-`;
+        </div>
+        `;
+
+        count++;
+
     });
 
-    document.getElementById("relatedNews").innerHTML = html;
+    document.getElementById("relatedNews").innerHTML =
+        html || "<p style='color:#aaa;'>관련 기사가 없습니다.</p>";
 
 }
 
