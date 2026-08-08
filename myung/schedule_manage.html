@@ -218,15 +218,15 @@ document.getElementById("saveEvent").onclick = async function(){
 
         }else{
 
-            await addDoc(collection(db,"event"),{
+            await addDoc(collection(db,"schedule"),{
 
-                title:title,
-                content:content,
-              collection(db,"event"),
-                place:place,
-                timestamp:Date.now()
+    title:title,
+    content:content,
+    date:date,
+    place:place,
+    timestamp:Date.now()
 
-            });
+});
 
             alert("행사가 등록되었습니다.");
 
