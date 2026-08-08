@@ -1,122 +1,162 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>갤러리 관리</title>
-
+<title>갤러리</title>
 <style>
-
 body{
-    margin:0;
-    background:#111;
-    color:#fff;
-    font-family:Malgun Gothic,sans-serif;
+margin:0;
+background:#111;
+color:#fff;
+font-family:Malgun Gothic,sans-serif;
 }
-
 header{
-    background:#222;
-    padding:20px;
-    text-align:center;
+background:#222;
+padding:20px;
+text-align:center;
 }
-
 header h1{
-    margin:0;
-    color:#FFD700;
-    font-size:34px;
+margin:0;
+color:#FFD700;
+font-size:34px;
 }
-
 .container{
-    width:95%;
-    max-width:1200px;
-    margin:30px auto;
+width:90%;
+max-width:1200px;
+margin:30px auto;
 }
 
-input,textarea{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:8px;
-    font-size:18px;
-    box-sizing:border-box;
+/* 항상 6개 고정 - 3열 x 2행 */
+.gallery-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
 }
 
-textarea{
-    height:220px;
-    resize:vertical;
+.gallery-box{
+background:#1b1b1b;
+border:1px solid #333;
+border-radius:10px;
+overflow:hidden;
+min-height:300px;
 }
 
-label{
-    display:block;
-    margin-top:20px;
-    margin-bottom:8px;
-    font-weight:bold;
+.gallery-box.empty{
+visibility:hidden;
 }
 
-button{
-    background:#FFD700;
-    color:#000;
-    border:none;
-    border-radius:8px;
-    padding:12px 25px;
-    font-size:17px;
-    font-weight:bold;
-    cursor:pointer;
+.gallery-box a{
+display:block;
+color:#fff;
+text-decoration:none;
 }
 
-button:hover{
-    background:#ffcc00;
+.gallery-box img{
+width:100%;
+height:210px;
+object-fit:cover;
+display:block;
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:20px;
+.gallery-info{
+padding:16px;
 }
 
-th{
-    background:#333;
-    padding:12px;
+.gallery-title{
+font-size:20px;
+font-weight:bold;
+margin-bottom:8px;
 }
 
-td{
-    padding:10px;
-    border-bottom:1px solid #444;
-    text-align:center;
+.gallery-date{
+color:#999;
+font-size:13px;
 }
 
-.thumb{
-    width:90px;
-    border-radius:6px;
+.gallery-content{
+color:#ccc;
+font-size:14px;
+line-height:1.5;
+margin-top:10px;
 }
 
+.section-title{
+margin-top:45px;
+border-left:4px solid #FFD700;
+padding-left:12px;
+}
+
+.gallery-list{
+border-top:1px solid #333;
+}
+
+.list-item{
+display:flex;
+gap:15px;
+padding:15px 5px;
+border-bottom:1px solid #333;
+}
+
+.list-item img{
+width:110px;
+height:75px;
+object-fit:cover;
+border-radius:6px;
+}
+
+.list-title{
+font-size:17px;
+font-weight:bold;
+}
+
+.list-date{
+color:#999;
+font-size:13px;
+margin-top:7px;
+}
+
+@media(max-width:800px){
+.gallery-grid{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:520px){
+.gallery-grid{
+grid-template-columns:1fr;
+}
+}
 </style>
+</head>
+
+<body>
+
+<header>
+<h1>🖼 갤러리</h1>
+</header>
+
+<div class="container">
+
+<div id="galleryGrid" class="gallery-grid"></div>
+
+<h2 class="section-title">갤러리 목록</h2>
+
+<div id="galleryList" class="gallery-list"></div>
+
+</div>
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
-import{
+import {
 getFirestore,
 collection,
-addDoc,
-getDocs,
-deleteDoc,
-doc,
-getDoc,
-updateDoc,
-query,
-orderBy
-}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-
-import{
-getStorage,
-ref,
-uploadBytes,
-getDownloadURL
-}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
+getDocs
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 const firebaseConfig={
 
@@ -131,450 +171,198 @@ measurementId:"G-39M5K1M6K7"
 };
 
 const app=initializeApp(firebaseConfig);
-
 const db=getFirestore(app);
 
-const storage=getStorage(app);
 
-window.db=db;
-window.storage=storage;
-window.editId=null;
+function makeCard(g){
 
-</script>
+return `
 
-</head>
+<div class="gallery-box">
 
-<body>
+<a href="gallery_view.html?id=${g.id}">
 
-<header>
+${g.image?
+`<img src="${g.image}" alt="${g.title||"갤러리 사진"}">`
+:
+`<div style="height:210px;background:#222;"></div>`
+}
 
-<h1>🖼 갤러리 관리</h1>
+<div class="gallery-info">
 
-<div style="margin-top:20px">
+<div class="gallery-title">
+${g.title||""}
+</div>
 
-<input
-id="searchText"
-type="text"
-placeholder="사진 검색..."
-style="width:320px;padding:10px;border-radius:6px;border:none;">
+<div class="gallery-date">
+${g.date||""}
+</div>
 
-<button id="searchBtn">검색</button>
+<div class="gallery-content">
+${g.content||""}
+</div>
 
 </div>
 
-</header>
+</a>
 
-<div class="container">
+</div>
 
-<h2>등록된 사진</h2>
+`;
 
-<table>
+}
 
-<tr>
 
-<th>번호</th>
-<th>사진</th>
-<th>제목</th>
-<th>등록일</th>
-<th>보기</th>
-<th>수정</th>
-<th>삭제</th>
+async function loadGallery(){
 
-</tr>
+const snapshot=await getDocs(
+collection(db,"gallery")
+);
 
-<tbody id="galleryBody"></tbody>
+const rows=[];
 
-</table>
+snapshot.forEach(d=>{
 
-<hr>
+rows.push({
+id:d.id,
+...d.data()
+});
 
-<h2>사진 등록</h2>
+});
 
-<label>사진 제목</label>
 
-<input type="text" id="galleryTitle">
+/* 최신순 */
 
-<label>사진 선택</label>
+rows.sort(
+(a,b)=>
+(b.timestamp||0)-
+(a.timestamp||0)
+);
 
-<input type="file" id="galleryImage">
 
-<img
-id="previewImage"
-style="max-width:250px;margin-top:10px;display:none;border-radius:8px;">
+/*
+상단 3개:
+관리자가 고정한 사진만 사용
+*/
 
-<label>사진 설명</label>
+const pinned=rows
+.filter(g=>g.pinned===true)
+.slice(0,3);
 
-<textarea id="galleryContent"></textarea>
 
-<label>사진 설명</label>
+/*
+하단 3개:
+고정 사진을 제외한 자료 중 최신 3개
+*/
 
-<textarea id="galleryContent"></textarea>
+const normal=rows
+.filter(g=>g.pinned!==true);
 
-<button id="saveGallery">
-사진 저장
-</button>
+const latest=normal.slice(0,3);
 
-<button
-onclick="location.href='admin.html'"
-style="
-margin-left:15px;
-background:#555;
-color:#fff;
-border:none;
-border-radius:8px;
-padding:12px 25px;
-font-size:17px;
-font-weight:bold;
-cursor:pointer;
-">
-🏠 관리 메인
-</button>
 
-<script type="module">
- import{
-collection,
-addDoc,
-getDocs,
-deleteDoc,
-doc,
-getDoc,
-updateDoc,
-query,
-orderBy
-}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+/*
+항상 6칸을 만든다.
+사진이 부족해도 새 박스를 만들지 않는다.
+*/
 
-import{
-ref,
-uploadBytes,
-getDownloadURL
-}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
+const main=[...pinned,...latest];
 
-const db=window.db;
-const storage=window.storage;
+while(main.length<6){
 
-document.getElementById("galleryImage").onchange=function(){
+main.push(null);
 
-const file=this.files[0];
+}
 
-if(!file) return;
 
-const reader=new FileReader();
+document.getElementById(
+"galleryGrid"
+).innerHTML=
 
-reader.onload=function(e){
+main.map(g=>
 
-const img=document.getElementById("previewImage");
+g?
+makeCard(g):
+`<div class="gallery-box empty"></div>`
 
-img.src=e.target.result;
+).join("");
 
-img.style.display="block";
 
-};
+/*
+메인 6개에 들어간 자료는 목록에서 제외.
+나머지 7번째부터 목록으로 표시.
+*/
 
-reader.readAsDataURL(file);
+const mainIds=new Set(
 
-};
+main
+.filter(g=>g)
+.map(g=>g.id)
 
-document.getElementById("saveGallery").onclick=async()=>{
+);
 
-let title=document.getElementById("galleryTitle").value.trim();
-let content=document.getElementById("galleryContent").value.trim();
-let file=document.getElementById("galleryImage").files[0];
+const list=rows.filter(
+g=>!mainIds.has(g.id)
+);
 
-if(title==""){
 
-alert("사진 제목을 입력하세요.");
+if(list.length===0){
+
+document.getElementById(
+"galleryList"
+).innerHTML=
+
+`<div style="padding:20px 5px;color:#999;">
+등록된 추가 갤러리가 없습니다.
+</div>`;
 
 return;
 
 }
 
-let imageUrl="";
 
-if(window.editId){
+document.getElementById(
+"galleryList"
+).innerHTML=
 
-const snap=await getDoc(doc(db,"gallery",window.editId));
+list.map(g=>`
 
-if(snap.exists()){
+<a
+href="gallery_view.html?id=${g.id}"
+style="color:inherit;text-decoration:none;">
 
-imageUrl=snap.data().image||"";
-
-}
-
-}
-
-if(file){
-
-const storageRef=ref(
-
-storage,
-
-"gallery/"+Date.now()+"_"+file.name
-
-);
-
-await uploadBytes(storageRef,file);
-
-imageUrl=await getDownloadURL(storageRef);
-
-}
-
-const data={
-
-title:title,
-content:content,
-image:imageUrl,
-date:new Date().toISOString().slice(0,10),
-timestamp:Date.now()
-
-};
-
-if(window.editId){
-
-await updateDoc(
-
-doc(db,"gallery",window.editId),
-
-data
-
-);
-
-alert("사진이 수정되었습니다.");
-
-window.editId=null;
-
-}else{
-
-await addDoc(
-
-collection(db,"gallery"),
-
-data
-
-);
-
-alert("사진이 등록되었습니다.");
-
-}
-
-document.getElementById("galleryTitle").value="";
-document.getElementById("galleryContent").value="";
-document.getElementById("galleryImage").value="";
-document.getElementById("previewImage").style.display="none";
-
-loadGallery();
-
-};
-
-async function loadGallery(){
-
-const q=query(
-
-collection(db,"gallery"),
-
-orderBy("timestamp","desc")
-
-);
-
-const snapshot=await getDocs(q);
-
-let html="";
-let no=1;
-snapshot.forEach(docItem=>{
-
-const g=docItem.data();
-
-html+=`
-
-<tr>
-
-<td>${no++}</td>
-
-<td>
+<div class="list-item">
 
 ${g.image?
+`<img src="${g.image}" alt="${g.title||"갤러리 사진"}">`
+:
+""
+}
 
-`<img src="${g.image}" class="thumb">`
+<div>
 
-:"-"}
+<div class="list-title">
+${g.title||""}
+</div>
 
-</td>
+<div class="list-date">
+${g.date||""}
+</div>
 
-<td>${g.title}</td>
+</div>
 
-<td>${g.date}</td>
+</div>
 
-<td>
+</a>
 
-<button onclick="viewGallery('${docItem.id}')">
-
-보기
-
-</button>
-
-</td>
-
-<td>
-
-<button onclick="editGallery('${docItem.id}')">
-
-수정
-
-</button>
-
-</td>
-
-<td>
-
-<button onclick="deleteGallery('${docItem.id}')">
-
-삭제
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-document.getElementById("galleryBody").innerHTML=html;
+`).join("");
 
 }
 
-async function deleteGallery(id){
-
-if(!confirm("정말 삭제하시겠습니까?")) return;
-
-await deleteDoc(doc(db,"gallery",id));
-
-loadGallery();
-
-}
-
-window.deleteGallery=deleteGallery;
-
-async function editGallery(id){
-
-window.editId=id;
-
-const snap=await getDoc(doc(db,"gallery",id));
-
-if(!snap.exists()) return;
-
-const g=snap.data();
-
-document.getElementById("galleryTitle").value=g.title;
-document.getElementById("galleryContent").value=g.content;
-
-const img=document.getElementById("previewImage");
-
-if(g.image){
-
-img.src=g.image;
-img.style.display="block";
-
-}else{
-
-img.style.display="none";
-
-}
-
-window.scrollTo({
-
-top:document.body.scrollHeight,
-
-behavior:"smooth"
-
-});
-
-}
-
-window.editGallery=editGallery;
-
-window.viewGallery=function(id){
-
-location.href="gallery_view.html?id="+id;
-
-};
-
-document.getElementById("searchBtn").onclick=async()=>{
-
-const keyword=document.getElementById("searchText").value.toLowerCase();
-
-const snapshot=await getDocs(collection(db,"gallery"));
-
-let html="";
-let no=1;
-
-snapshot.forEach(docItem=>{
-
-const g=docItem.data();
-
-if(
-
-g.title.toLowerCase().includes(keyword) ||
-
-g.content.toLowerCase().includes(keyword)
-
-){
-
-html+=`
-<tr>
-
-<td>${no++}</td>
-
-<td>
-
-${g.image?
-
-`<img src="${g.image}" class="thumb">`
-
-:"-"}
-
-</td>
-
-<td>${g.title}</td>
-
-<td>${g.date}</td>
-
-<td>
-<button onclick="viewGallery('${docItem.id}')">
-보기
-</button>
-</td>
-
-<td>
-<button onclick="editGallery('${docItem.id}')">
-수정
-</button>
-</td>
-
-<td>
-<button onclick="deleteGallery('${docItem.id}')">
-삭제
-</button>
-</td>
-
-</tr>
-
-`;
-
-}
-
-});
-
-document.getElementById("galleryBody").innerHTML=html;
-
-};
 
 loadGallery();
 
 </script>
 
-</div>
-
 </body>
-
 </html>
