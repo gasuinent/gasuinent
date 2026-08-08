@@ -156,6 +156,19 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
 <div class="section-head"><div class="eyebrow">SCHEDULE</div><h2>행사일정</h2><p class="lead">분류별 행사일정과 날짜·시간·장소 등 세부내용을 확인할 수 있습니다.</p></div>
 
 <div class="grid" id="scheduleGrid">
+
+    <div class="card schedule-box" id="scheduleBox1"></div>
+
+    <div class="card schedule-box" id="scheduleBox2"></div>
+
+    <div class="card schedule-box" id="scheduleBox3"></div>
+
+    <div class="card schedule-box" id="scheduleBox4"></div>
+
+    <div class="card schedule-box" id="scheduleBox5"></div>
+
+    <div class="card schedule-box" id="scheduleBox6"></div>
+
 </div>
 <p class="notice" style="text-align:center;margin-top:30px">※ 일정은 행사 확정 상황에 따라 변경될 수 있습니다.</p>
 </div>
@@ -264,10 +277,6 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-/* ================================
-   Firebase 연결
-================================ */
-
 const firebaseConfig = {
 
     apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
@@ -288,32 +297,11 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
 
 /* ================================
-   HTML 문자 안전 처리
-================================ */
-
-function safeText(value){
-
-    if(value === undefined || value === null){
-        return "";
-    }
-
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-/* ================================
-   행사 일정 불러오기
+   일정 불러오기
 ================================ */
 
 async function loadSchedule(){
@@ -324,14 +312,12 @@ async function loadSchedule(){
             collection(db,"schedule")
         );
 
-
         let events = [];
 
 
         snapshot.forEach((docItem)=>{
 
             const event = docItem.data();
-
 
             events.push({
 
@@ -355,32 +341,12 @@ async function loadSchedule(){
 
 
         /* ================================
-           정렬
-
-           1. 고정 일정 우선
-           2. 고정 일정끼리는 최신순
-           3. 일반 일정도 최신순
-        ================================= */
-
-        events.sort((a,b)=>{
-
-            if(a.pinned !== b.pinned){
-
-                return b.pinned ? 1 : -1;
-
-            }
-
-            return b.timestamp - a.timestamp;
-
-        });
-
-
-        /* ================================
-           고정 일정 최대 2개
+           고정 일정과 일반 일정 분리
         ================================= */
 
         const pinnedEvents = events
-            .filter(event => event.pinned)
+            .filter(event => event.pinned === true)
+            .sort((a,b) => b.timestamp - a.timestamp)
             .slice(0,2);
 
 
@@ -389,19 +355,16 @@ async function loadSchedule(){
         );
 
 
-        /* ================================
-           일반 일정
-        ================================= */
-
         const normalEvents = events
-            .filter(event => !pinnedIds.has(event.id));
+            .filter(event => !pinnedIds.has(event.id))
+            .sort((a,b) => b.timestamp - a.timestamp);
 
 
         /* ================================
-           화면 상단 6개
+           상단 6개
 
            고정 최대 2개
-           + 일반 일정으로 6개까지 채움
+           나머지는 최신순
         ================================= */
 
         const topEvents = [
@@ -417,7 +380,7 @@ async function loadSchedule(){
 
 
         /* ================================
-           7번째 이후 목록
+           7번째 이후
         ================================= */
 
         const topIds = new Set(
@@ -425,13 +388,13 @@ async function loadSchedule(){
         );
 
 
-        const listEvents = events.filter(
+        const listEvents = normalEvents.filter(
             event => !topIds.has(event.id)
         );
 
 
         /* ================================
-           카드 생성
+           상단 카드 6개
         ================================= */
 
         let topHtml = "";
@@ -462,7 +425,7 @@ async function loadSchedule(){
                         font-size:13px;
                         font-weight:900;
                     ">
-                        📌 고정 일정
+                        📌 일정 고정
                     </div>
                     `
                     :
@@ -471,19 +434,19 @@ async function loadSchedule(){
 
 
                 <h3>
-                    ${safeText(event.title)}
+                    ${event.title}
                 </h3>
 
 
                 <p>
                     <b>📅 날짜</b>
-                    ${safeText(event.date)}
+                    ${event.date}
                 </p>
 
 
                 <p>
                     <b>📍 장소</b>
-                    ${safeText(event.place)}
+                    ${event.place}
                 </p>
 
 
@@ -500,10 +463,6 @@ async function loadSchedule(){
 
         });
 
-
-        /* ================================
-           화면에 6개 표시
-        ================================= */
 
         document.getElementById(
             "scheduleGrid"
@@ -522,7 +481,7 @@ async function loadSchedule(){
 
 
         /* ================================
-           전체 일정 목록 영역
+           아래 전체 일정 목록
         ================================= */
 
         let listArea =
@@ -531,34 +490,22 @@ async function loadSchedule(){
 
         if(!listArea){
 
-            listArea =
-                document.createElement("div");
+            listArea = document.createElement("div");
 
             listArea.id = "scheduleList";
 
             listArea.style.marginTop = "40px";
 
 
-            document.getElementById(
-                "scheduleGrid"
-            )
-            .parentNode
-            .insertBefore(
-
-                listArea,
-
-                document.getElementById(
-                    "scheduleGrid"
-                ).nextSibling
-
-            );
+            document.getElementById("scheduleGrid")
+                .parentNode
+                .insertBefore(
+                    listArea,
+                    document.getElementById("scheduleGrid").nextSibling
+                );
 
         }
 
-
-        /* ================================
-           7번째 이후 일정 표시
-        ================================= */
 
         if(listEvents.length > 0){
 
@@ -589,7 +536,7 @@ async function loadSchedule(){
                             font-weight:900;
                             margin-bottom:6px;
                         ">
-                            ${safeText(event.title)}
+                            ${event.title}
                         </div>
 
 
@@ -598,11 +545,11 @@ async function loadSchedule(){
                             font-size:16px;
                         ">
 
-                            📅 ${safeText(event.date)}
+                            📅 ${event.date}
 
                             &nbsp;&nbsp; | &nbsp;&nbsp;
 
-                            📍 ${safeText(event.place)}
+                            📍 ${event.place}
 
                         </div>
 
@@ -647,15 +594,14 @@ async function loadSchedule(){
 
         }
 
-
     }
+
     catch(error){
 
         console.error(
             "행사일정 불러오기 오류:",
             error
         );
-
 
         document.getElementById(
             "scheduleGrid"
@@ -667,7 +613,7 @@ async function loadSchedule(){
                 color:#aaa;
                 font-size:20px;
             ">
-                행사일정을 불러오는 중 오류가 발생했습니다.
+                행사일정을 불러오지 못했습니다.
             </p>
 
         `;
@@ -676,10 +622,6 @@ async function loadSchedule(){
 
 }
 
-
-/* ================================
-   실행
-================================ */
 
 loadSchedule();
 
