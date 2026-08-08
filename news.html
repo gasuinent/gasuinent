@@ -309,39 +309,185 @@ async function loadNews(){
 
     const snapshot = await getDocs(q);
 
-    let html = "";
+    const notices = [];
 
     snapshot.forEach((docItem)=>{
+        notices.push({
+            id: docItem.id,
+            ...docItem.data()
+        });
+    });
 
-        const notice = docItem.data();
+    /*
+      공지/고정 여부 확인
 
-        html += `
-        <div class="card news-card">
+      관리자에서 어떤 이름으로 저장되어 있어도
+      다음 항목 중 하나가 true이면 공지/고정으로 인식합니다.
+    */
+    const isPinned = (notice) => {
+
+        return (
+            notice.pinned === true ||
+            notice.isPinned === true ||
+            notice.fixed === true ||
+            notice.isFixed === true ||
+            notice.notice === true ||
+            notice.isNotice === true
+        );
+
+    };
+
+    /*
+      공지/고정 뉴스
+    */
+    const pinnedNews = notices.filter(isPinned);
+
+    /*
+      일반 최신 뉴스
+      공지/고정 뉴스는 제외
+    */
+    const normalNews = notices.filter(notice => !isPinned(notice));
+
+    /*
+      전체 화면에서는 항상 6개
+
+      공지/고정이 있으면 위쪽부터 배치
+      나머지는 최신뉴스로 채움
+    */
+    const allNews = [
+        ...pinnedNews.slice(0,2),
+        ...normalNews
+    ].slice(0,6);
+
+
+    function makeCard(notice){
+
+        const pinned = isPinned(notice);
+
+        return `
+        <div class="card news-card"
+             data-category="${notice.category || ''}">
 
             ${notice.image ?
-            `<img src="${notice.image}" style="width:100%;border-radius:15px;margin-bottom:20px;">`
+            `<img src="${notice.image}"
+                  style="width:100%;border-radius:15px;margin-bottom:20px;">`
             : ""}
 
-            <h3>${notice.title}</h3>
+            ${pinned ?
+            `<div style="
+                display:inline-block;
+                padding:7px 13px;
+                margin-bottom:14px;
+                border-radius:999px;
+                background:#3a3120;
+                color:#f2cf7a;
+                font-weight:900;
+                font-size:15px;
+            ">📌 공지/고정</div>`
+            : ""}
 
-<div style="color:#bbb;margin-bottom:15px;">
-📅 ${notice.date}
-</div>
+            <h3>${notice.title || ""}</h3>
 
-<p style="font-size:17px;line-height:1.7;color:#ddd;">
-${notice.content.substring(0,150)}...
-</p>
+            <div style="color:#bbb;margin-bottom:15px;">
+                📅 ${notice.date || ""}
+            </div>
 
-<a class="btn" href="notice_view.html?id=${docItem.id}">
-    자세히 보기
-</a>
+            <p style="
+                font-size:17px;
+                line-height:1.7;
+                color:#ddd;
+            ">
+                ${(notice.content || "").substring(0,150)}...
+            </p>
+
+            <a class="btn"
+               href="notice_view.html?id=${notice.id}">
+                자세히 보기
+            </a>
 
         </div>
         `;
+    }
+
+
+    /*
+      전체 화면 표시
+    */
+    function showAllNews(){
+
+        let html = "";
+
+        allNews.forEach(notice=>{
+            html += makeCard(notice);
+        });
+
+        document.getElementById("newsGrid").innerHTML = html;
+    }
+
+
+    /*
+      카테고리 화면
+
+      행사안내 / 무료공연 / 봉사활동 /
+      노래교실 / 사회환원 / 보도자료
+    */
+    function showCategory(category){
+
+        const categoryNews = notices.filter(
+            notice => notice.category === category
+        );
+
+        let html = "";
+
+        categoryNews.forEach(notice=>{
+            html += makeCard(notice);
+        });
+
+        document.getElementById("newsGrid").innerHTML =
+            html || `
+            <div class="card" style="grid-column:1/-1;text-align:center;">
+                <h3>${category}</h3>
+                <p>등록된 뉴스가 없습니다.</p>
+            </div>
+            `;
+
+    }
+
+
+    /*
+      버튼 기능 연결
+    */
+    const filterButtons =
+        document.querySelectorAll(".filters button[data-filter]");
+
+    filterButtons.forEach(button=>{
+
+        button.addEventListener("click",()=>{
+
+            filterButtons.forEach(btn=>{
+                btn.classList.remove("active");
+            });
+
+            button.classList.add("active");
+
+            const filter = button.dataset.filter;
+
+            if(filter === "전체"){
+                showAllNews();
+            }else{
+                showCategory(filter);
+            }
+
+        });
 
     });
 
-    document.getElementById("newsGrid").innerHTML = html;
+
+    /*
+      처음 페이지에 들어왔을 때
+      → 전체 뉴스 6개
+    */
+    showAllNews();
 
 }
 
