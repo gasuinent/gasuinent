@@ -343,14 +343,438 @@ async function loadPrevNext(){
             location.href = "notice_view.html?id=" + list[index - 1].id;
         };
 
+   <!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>공지사항</title>
+
+<style>
+
+body{
+    margin:0;
+    background:#111;
+    color:#fff;
+    font-family:Malgun Gothic,sans-serif;
+}
+
+header{
+    background:#222;
+    padding:20px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+    color:#FFD700;
+    font-size:34px;
+}
+
+.container{
+    width:90%;
+    max-width:1000px;
+    margin:40px auto;
+}
+
+#title{
+    font-size:42px;
+    font-weight:bold;
+    line-height:1.4;
+    margin-bottom:25px;
+}
+
+#reporter{
+    color:#FFD700;
+    font-size:18px;
+    margin-bottom:25px;
+    border-bottom:1px solid #444;
+    padding-bottom:15px;
+}
+
+#image{
+    width:100%;
+    max-height:600px;
+    object-fit:cover;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+#caption{
+    text-align:center;
+    color:#aaa;
+    margin-bottom:30px;
+}
+
+#content{
+    font-size:21px;
+    line-height:2;
+    white-space:pre-wrap;
+}
+
+button{
+    padding:14px 30px;
+    background:#FFD700;
+    color:#000;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:18px;
+    font-weight:bold;
+}
+
+button:hover{
+    background:#ffcc00;
+}
+
+button:disabled{
+    background:#555;
+    color:#aaa;
+    cursor:not-allowed;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>📢 공지사항</h1>
+</header>
+
+<div class="container">
+
+<div id="title"></div>
+
+<div id="reporter">
+가수인생활 엔터테인먼트
+</div>
+
+<img id="image">
+
+<div id="caption"></div>
+
+<div id="content"></div>
+
+<h2 style="margin-top:70px;color:#FFD700;">
+📢 관련 공지
+</h2>
+
+<div id="relatedNews"></div>
+
+<div id="articleNav"
+style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:40px 0;
+gap:20px;
+">
+
+<button id="prevBtn">
+◀ 이전 공지
+</button>
+
+<button onclick="location.href='notice.html'" id="listBtn">
+📢 공지 목록
+</button>
+
+<button id="nextBtn">
+다음 공지 ▶
+</button>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+import {
+getFirestore,
+doc,
+getDoc,
+collection,
+getDocs,
+query,
+orderBy
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+
+authDomain: "gasuinent.firebaseapp.com",
+
+projectId: "gasuinent",
+
+storageBucket: "gasuinent.firebasestorage.app",
+
+messagingSenderId: "122370674182",
+
+appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+
+measurementId: "G-39M5K1M6K7"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+const params = new URLSearchParams(window.location.search);
+
+const id = params.get("id");
+
+
+async function loadNotice(){
+
+    if(!id){
+
+        document.getElementById("title").innerHTML =
+        "공지를 찾을 수 없습니다.";
+
+        return;
+    }
+
+
+    const snap = await getDoc(
+        doc(db,"notice",id)
+    );
+
+
+    if(!snap.exists()){
+
+        document.getElementById("title").innerHTML =
+        "공지가 존재하지 않습니다.";
+
+        return;
+    }
+
+
+    const notice = snap.data();
+
+
+    document.getElementById("title").innerHTML =
+    notice.title;
+
+
+    document.getElementById("content").innerHTML =
+    notice.content;
+
+
+    if(notice.image){
+
+        document.getElementById("image").src =
+        notice.image;
+
+        document.getElementById("image").style.display =
+        "block";
+
+        document.getElementById("caption").innerHTML =
+        "▲ 공지 관련 사진";
+
     }else{
 
-        nextBtn.disabled = true;
-        nextBtn.innerHTML = "마지막 기사";
+        document.getElementById("image").style.display =
+        "none";
+
+        document.getElementById("caption").innerHTML =
+        "";
 
     }
 
 }
+
+
+loadNotice();
+
+
+
+async function loadRelatedNotice(){
+
+    const currentSnap = await getDoc(
+        doc(db,"notice",id)
+    );
+
+
+    if(!currentSnap.exists()){
+        return;
+    }
+
+
+    const currentNotice = currentSnap.data();
+
+    const currentCategory =
+    currentNotice.category || "";
+
+
+    const q = query(
+        collection(db,"notice"),
+        orderBy("timestamp","desc")
+    );
+
+
+    const snap = await getDocs(q);
+
+
+    let html = "";
+
+    let count = 0;
+
+
+    snap.forEach(item=>{
+
+        if(item.id === id){
+            return;
+        }
+
+
+        const n = item.data();
+
+
+        if(
+            (n.category || "") !==
+            currentCategory
+        ){
+            return;
+        }
+
+
+        if(count >= 3){
+            return;
+        }
+
+
+        html += `
+
+        <div style="
+        background:#1a1a1a;
+        border:1px solid #444;
+        border-radius:10px;
+        padding:18px;
+        margin-bottom:15px;
+        ">
+
+        <a href="notice_view.html?id=${item.id}"
+        style="
+        color:#FFD700;
+        font-size:20px;
+        font-weight:bold;
+        text-decoration:none;
+        ">
+
+        ${n.title}
+
+        </a>
+
+        </div>
+
+        `;
+
+
+        count++;
+
+    });
+
+
+    document.getElementById("relatedNews").innerHTML =
+
+        html ||
+        "<p style='color:#aaa;'>관련 공지가 없습니다.</p>";
+
+}
+
+
+loadRelatedNotice();
+
+
+
+async function loadPrevNext(){
+
+    const q = query(
+        collection(db,"notice"),
+        orderBy("timestamp","desc")
+    );
+
+
+    const snap = await getDocs(q);
+
+
+    const list = [];
+
+
+    snap.forEach(item=>{
+
+        list.push({
+
+            id:item.id,
+
+            ...item.data()
+
+        });
+
+    });
+
+
+    const index =
+    list.findIndex(n => n.id === id);
+
+
+    const prevBtn =
+    document.getElementById("prevBtn");
+
+    const nextBtn =
+    document.getElementById("nextBtn");
+
+
+    if(index >= 0 && index < list.length - 1){
+
+        prevBtn.onclick = ()=>{
+
+            location.href =
+            "notice_view.html?id=" +
+            list[index + 1].id;
+
+        };
+
+    }else{
+
+        prevBtn.disabled = true;
+
+        prevBtn.innerHTML =
+        "첫 공지";
+
+    }
+
+
+    if(index > 0){
+
+        nextBtn.onclick = ()=>{
+
+            location.href =
+            "notice_view.html?id=" +
+            list[index - 1].id;
+
+        };
+
+    }else{
+
+        nextBtn.disabled = true;
+
+        nextBtn.innerHTML =
+        "마지막 공지";
+
+    }
+
+}
+
 
 loadPrevNext();
 
@@ -360,4 +784,4 @@ loadPrevNext();
 
 </body>
 
-</html>    
+</html>
