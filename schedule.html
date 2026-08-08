@@ -280,7 +280,7 @@ const db = getFirestore(app);
 async function loadSchedule(){
 
     const q = query(
-        collection(db,"event"),
+        collection(db,"schedule"),
         orderBy("timestamp","desc")
     );
 
@@ -307,7 +307,7 @@ async function loadSchedule(){
 
                 <p>
                     <b>📅 날짜</b>
-                    ${event.eventDate || event.date || ""}
+                    ${event.date || event.date || ""}
                 </p>
 
                 <p>
