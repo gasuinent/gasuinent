@@ -313,32 +313,87 @@ async function loadNews(){
 
     const snapshot = await getDocs(q);
 
+    const notices = [];
+
+    snapshot.forEach(docItem => {
+
+        notices.push({
+            id: docItem.id,
+            ...docItem.data()
+        });
+
+    });
+
+    /*
+     * 전체 뉴스 화면
+     *
+     * 1. 고정 공지 최대 2개
+     * 2. 최신 뉴스 4개
+     * 3. 총 6개
+     */
+
+    const pinnedNews = notices
+        .filter(notice => notice.pinned === true)
+        .slice(0,2);
+
+    const pinnedIds = new Set(
+        pinnedNews.map(notice => notice.id)
+    );
+
+    const latestNews = notices
+        .filter(notice => !pinnedIds.has(notice.id))
+        .slice(0,4);
+
+    const displayNews = [
+        ...pinnedNews,
+        ...latestNews
+    ];
+
     let html = "";
 
-    snapshot.forEach((docItem)=>{
-
-        const notice = docItem.data();
+    displayNews.forEach(notice => {
 
         html += `
-       <div class="card news-card" data-category="${notice.category || ''}">
+        <div class="card news-card"
+             data-category="${notice.category || ''}">
 
-            ${notice.image ?
-            `<img src="${notice.image}" style="width:100%;border-radius:15px;margin-bottom:20px;">`
-            : ""}
+            ${
+                notice.pinned === true
+                ? `
+                <div style="
+                    color:#FFD700;
+                    font-size:16px;
+                    font-weight:bold;
+                    margin-bottom:12px;
+                ">
+                    📌 공지
+                </div>
+                `
+                : ""
+            }
 
             <h3>${notice.title}</h3>
 
-<div style="color:#bbb;margin-bottom:15px;">
-📅 ${notice.date}
-</div>
+            <div style="
+                color:#aaa;
+                font-size:14px;
+                margin:12px 0;
+            ">
+                📅 ${notice.date}
+            </div>
 
-<p style="font-size:17px;line-height:1.7;color:#ddd;">
-${notice.content.substring(0,150)}...
-</p>
+            <p style="
+                font-size:17px;
+                line-height:1.7;
+                color:#ddd;
+            ">
+                ${(notice.content || "").substring(0,150)}...
+            </p>
 
-<a class="btn" href="notice_view.html?id=${docItem.id}">
-    자세히 보기
-</a>
+            <a class="btn"
+               href="notice_view.html?id=${notice.id}">
+                자세히 보기
+            </a>
 
         </div>
         `;
