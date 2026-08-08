@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>공지사항 관리</title>
+
+<title>공연일정 관리</title>
 
 <style>
+
 body{
     margin:0;
     background:#111;
@@ -22,31 +24,22 @@ header{
 
 .container{
     width:90%;
-    max-width:900px;
+    max-width:1000px;
     margin:30px auto;
 }
 
-.search{
-    margin:20px 0;
-}
-
-.search input{
-    width:300px;
-    padding:10px;
-    font-size:16px;
-}
-
-.search button{
-    padding:10px 20px;
+h2{
+    color:#FFD700;
 }
 
 table{
     width:100%;
     border-collapse:collapse;
-    margin:20px 0;
+    margin-top:20px;
 }
 
-th,td{
+th,
+td{
     border:1px solid #555;
     padding:12px;
     text-align:center;
@@ -60,278 +53,777 @@ label{
     display:block;
     margin-top:20px;
     margin-bottom:8px;
+    font-weight:bold;
 }
 
-input[type=text],textarea{
+input,
+textarea{
     width:100%;
     padding:12px;
     box-sizing:border-box;
     font-size:16px;
+    border-radius:5px;
+    border:1px solid #555;
 }
 
 textarea{
-    height:220px;
+    height:140px;
+}
+
+.pin-area{
+    margin-top:20px;
+    padding:15px;
+    background:#1c1c1c;
+    border:1px solid #444;
+    border-radius:8px;
+}
+
+.pin-area label{
+    margin:0;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.pin-area input{
+    width:auto;
+}
+
+.pin-help{
+    color:#aaa;
+    font-size:14px;
+    margin:8px 0 0 25px;
 }
 
 button{
     padding:12px 25px;
     margin-top:15px;
     background:#FFD700;
+    color:#000;
     border:none;
     border-radius:8px;
     cursor:pointer;
     font-weight:bold;
 }
 
+button:hover{
+    opacity:.85;
+}
+
+.edit-btn{
+    background:#FFD700;
+}
+
+.delete-btn{
+    background:#e53935;
+    color:#fff;
+}
+
+.view-btn{
+    background:#555;
+    color:#fff;
+}
+
 .back{
     float:right;
 }
-</style>
 
+.cancel-btn{
+    background:#777;
+    color:#fff;
+    margin-left:8px;
+}
+
+#saveEvent{
+    min-width:120px;
+}
+
+.status{
+    color:#aaa;
+    margin-top:15px;
+}
+
+</style>
 </head>
 
 <body>
 
 <header>
-
-<h1>📢 공지사항 관리</h1>
-
-<div class="search">
-<input type="text" placeholder="공지 검색...">
-<button>검색</button>
-</div>
-
+    <h1>📅 공연일정 관리</h1>
 </header>
 
 <div class="container">
 
-<h2>등록된 공지</h2>
+<h2>등록된 공연</h2>
 
 <table>
 
+<thead>
 <tr>
-<th>번호</th>
-<th>제목</th>
-<th>작성일</th>
-<th>보기</th>
-<th>수정</th>
-<th>삭제</th>
+    <th>번호</th>
+    <th>행사명</th>
+    <th>날짜</th>
+    <th>고정</th>
+    <th>보기</th>
+    <th>수정</th>
+    <th>삭제</th>
+</tr>
+</thead>
+
+<tbody id="eventBody">
+
+<tr>
+    <td colspan="7">
+        등록된 일정이 없습니다.
+    </td>
 </tr>
 
-<tbody id="eventBody"></tbody>
+</tbody>
 
 </table>
 
+
+<h2 style="margin-top:45px;">공연 일정 등록</h2>
+
+
 <label>행사 제목</label>
+
 <input
-type="text"
-id="eventTitle"
-placeholder="행사 제목을 입력하세요">
+    type="text"
+    id="eventTitle"
+    placeholder="행사 제목을 입력하세요"
+>
+
 
 <label>행사 내용</label>
+
 <textarea
-id="eventContent"
-placeholder="행사 내용을 입력하세요"></textarea>
+    id="eventContent"
+    placeholder="행사 내용을 입력하세요"
+></textarea>
+
 
 <label>행사 날짜</label>
+
 <input
-type="text"
-id="eventDate"
-placeholder="예 : 2026-08-15 오후 2시">
+    type="date"
+    id="eventDate"
+>
+
 
 <label>행사 장소</label>
+
 <input
-type="text"
-id="eventPlace"
-placeholder="행사 장소를 입력하세요">
+    type="text"
+    id="eventPlace"
+    placeholder="행사 장소를 입력하세요"
+>
+
+
+<div class="pin-area">
+
+    <label>
+        <input
+            type="checkbox"
+            id="eventPinned"
+        >
+        📌 일정 고정
+    </label>
+
+    <p class="pin-help">
+        고정 일정은 최대 2개까지 사용할 수 있습니다.
+    </p>
+
+</div>
+
 
 <button id="saveEvent">
-행사 저장
+    공연 등록
 </button>
 
-<button class="back" onclick="location.href='admin.html'">
-관리자 메인
+<button
+    id="cancelEdit"
+    class="cancel-btn"
+    style="display:none;">
+    수정 취소
+</button>
+
+
+<button
+    class="back"
+    onclick="location.href='admin.html'">
+    관리자 메인
 </button>
 
 </div>
+
+
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
 import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-query,
-orderBy,
-deleteDoc,
-updateDoc,
-doc,
-getDoc
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    query,
+    orderBy,
+    deleteDoc,
+    updateDoc,
+    doc,
+    getDoc
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
-authDomain: "gasuinent.firebaseapp.com",
-projectId: "gasuinent",
-storageBucket: "gasuinent.firebasestorage.app",
-messagingSenderId: "122370674182",
-appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
-measurementId: "G-39M5K1M6K7"
+    apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+
+    authDomain: "gasuinent.firebaseapp.com",
+
+    projectId: "gasuinent",
+
+    storageBucket: "gasuinent.firebasestorage.app",
+
+    messagingSenderId: "122370674182",
+
+    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+
+    measurementId: "G-39M5K1M6K7"
 
 };
+
 
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
 
+
 let editId = null;
-document.getElementById("saveEvent").onclick = async function(){
 
-    const title = document.getElementById("eventTitle").value;
-    const content = document.getElementById("eventContent").value;
-    const date = document.getElementById("eventDate").value;
-    const place = document.getElementById("eventPlace").value;
 
-    if(title==""){
-        alert("행사 제목을 입력하세요.");
-        return;
-    }
+/* ========================================
+   요소
+======================================== */
 
-    try{
+const saveEvent =
+    document.getElementById("saveEvent");
 
-        if(editId){
+const cancelEdit =
+    document.getElementById("cancelEdit");
 
-            await updateDoc(doc(db,"schedule",editId),{
+const eventTitle =
+    document.getElementById("eventTitle");
 
-                title:title,
-                content:content,
-                date:date,
-                place:place,
-                timestamp:Date.now()
+const eventContent =
+    document.getElementById("eventContent");
 
-            });
+const eventDate =
+    document.getElementById("eventDate");
 
-            alert("행사가 수정되었습니다.");
-            editId = null;
+const eventPlace =
+    document.getElementById("eventPlace");
 
-        }else{
+const eventPinned =
+    document.getElementById("eventPinned");
 
-            await addDoc(collection(db,"schedule"),{
+const eventBody =
+    document.getElementById("eventBody");
 
-    title:title,
-    content:content,
-    date:date,
-    place:place,
-    timestamp:Date.now()
 
-});
+/* ========================================
+   고정 일정 개수 확인
+======================================== */
 
-            alert("행사가 등록되었습니다.");
-
-        }
-
-        document.getElementById("eventTitle").value="";
-        document.getElementById("eventContent").value="";
-        document.getElementById("eventDate").value="";
-        document.getElementById("eventPlace").value="";
-
-        loadEvent();
-
-    }catch(e){
-
-        console.log(e);
-        alert("저장 실패");
-
-    }
-
-};
-async function loadEvent(){
+async function getPinnedCount(excludeId = null){
 
     const q = query(
         collection(db,"schedule"),
         orderBy("timestamp","desc")
     );
 
-    const snapshot = await getDocs(q);
+    const snapshot =
+        await getDocs(q);
 
-    let html = "";
-    let no = 1;
+    let count = 0;
 
-    snapshot.forEach((docItem)=>{
+    snapshot.forEach(item => {
 
-        const event = docItem.data();
-html += `
-<tr>
-    <td>${no++}</td>
-    <td>${event.title}</td>
-    <td>${${event.date}}</td>
+        if(
+            excludeId &&
+            item.id === excludeId
+        ){
+            return;
+        }
 
-    <td>
-        <button onclick="viewEvent('${docItem.id}')">
-            보기
-        </button>
-    </td>
+        const data = item.data();
 
-    <td>
-        <button onclick="editEvent('${docItem.id}')">
-            수정
-        </button>
-    </td>
+        if(data.pinned === true){
+            count++;
+        }
 
-    <td>
-        <button onclick="deleteEvent('${docItem.id}')">
-            삭제
-        </button>
-    </td>
-</tr>
-`;
     });
 
-    document.getElementById("eventBody").innerHTML = html;
+    return count;
+}
+
+
+/* ========================================
+   행사 등록 / 수정
+======================================== */
+
+saveEvent.onclick = async function(){
+
+    const title =
+        eventTitle.value.trim();
+
+    const content =
+        eventContent.value.trim();
+
+    const date =
+        eventDate.value;
+
+    const place =
+        eventPlace.value.trim();
+
+    const pinned =
+        eventPinned.checked;
+
+
+    if(title === ""){
+
+        alert("행사 제목을 입력하세요.");
+
+        return;
+    }
+
+
+    try{
+
+        /* -----------------------------
+           신규 등록
+        ----------------------------- */
+
+        if(!editId){
+
+            if(pinned){
+
+                const pinnedCount =
+                    await getPinnedCount();
+
+                if(pinnedCount >= 2){
+
+                    alert(
+                        "현재 고정 일정이 2개입니다.\n" +
+                        "고정 일정은 최대 2개까지만 가능합니다."
+                    );
+
+                    return;
+                }
+
+            }
+
+
+            await addDoc(
+                collection(db,"schedule"),
+                {
+                    title:title,
+                    content:content,
+                    date:date,
+                    place:place,
+                    pinned:pinned,
+                    timestamp:Date.now()
+                }
+            );
+
+
+            alert("행사가 등록되었습니다.");
+
+        }
+
+
+        /* -----------------------------
+           기존 행사 수정
+        ----------------------------- */
+
+        else{
+
+            if(pinned){
+
+                const pinnedCount =
+                    await getPinnedCount(editId);
+
+                if(pinnedCount >= 2){
+
+                    alert(
+                        "이미 다른 고정 일정이 2개 있습니다."
+                    );
+
+                    return;
+                }
+
+            }
+
+
+            await updateDoc(
+                doc(db,"schedule",editId),
+                {
+                    title:title,
+                    content:content,
+                    date:date,
+                    place:place,
+                    pinned:pinned,
+                    timestamp:Date.now()
+                }
+            );
+
+
+            alert("행사가 수정되었습니다.");
+
+        }
+
+
+        clearForm();
+
+        await loadEvent();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "저장에 실패했습니다.\n\n" +
+            error.message
+        );
+
+    }
+
+};
+
+
+/* ========================================
+   입력창 초기화
+======================================== */
+
+function clearForm(){
+
+    editId = null;
+
+    eventTitle.value = "";
+
+    eventContent.value = "";
+
+    eventDate.value = "";
+
+    eventPlace.value = "";
+
+    eventPinned.checked = false;
+
+    saveEvent.textContent = "공연 등록";
+
+    cancelEdit.style.display = "none";
 
 }
+
+
+/* ========================================
+   행사 목록 불러오기
+======================================== */
+
+async function loadEvent(){
+
+    try{
+
+        const q = query(
+            collection(db,"schedule"),
+            orderBy("timestamp","desc")
+        );
+
+
+        const snapshot =
+            await getDocs(q);
+
+
+        let html = "";
+
+        let no = 1;
+
+
+        snapshot.forEach(item => {
+
+            const event =
+                item.data();
+
+
+            html += `
+
+            <tr>
+
+                <td>
+                    ${no++}
+                </td>
+
+                <td>
+                    ${event.title || ""}
+                </td>
+
+                <td>
+                    ${event.date || ""}
+                </td>
+
+                <td>
+                    ${
+                        event.pinned === true
+                        ? "📌 고정"
+                        : ""
+                    }
+                </td>
+
+                <td>
+
+                    <button
+                        class="view-btn"
+                        onclick="viewEvent('${item.id}')">
+
+                        보기
+
+                    </button>
+
+                </td>
+
+                <td>
+
+                    <button
+                        class="edit-btn"
+                        onclick="editEvent('${item.id}')">
+
+                        수정
+
+                    </button>
+
+                </td>
+
+                <td>
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteEvent('${item.id}')">
+
+                        삭제
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+            `;
+
+        });
+
+
+        if(html === ""){
+
+            html = `
+
+            <tr>
+
+                <td colspan="7">
+
+                    등록된 일정이 없습니다.
+
+                </td>
+
+            </tr>
+
+            `;
+
+        }
+
+
+        eventBody.innerHTML = html;
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        eventBody.innerHTML = `
+
+        <tr>
+
+            <td colspan="7">
+
+                일정을 불러오지 못했습니다.
+
+            </td>
+
+        </tr>
+
+        `;
+
+    }
+
+}
+
+
+/* ========================================
+   삭제
+======================================== */
+
 async function deleteEvent(id){
 
-    if(!confirm("정말 삭제하시겠습니까?")) return;
+    if(
+        !confirm(
+            "정말 이 행사를 삭제하시겠습니까?"
+        )
+    ){
 
-    await deleteDoc(doc(db,"schedule",id));
+        return;
+    }
 
-    loadEvent();
+
+    try{
+
+        await deleteDoc(
+            doc(db,"schedule",id)
+        );
+
+
+        alert("행사가 삭제되었습니다.");
+
+        await loadEvent();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "삭제에 실패했습니다.\n\n" +
+            error.message
+        );
+
+    }
 
 }
+
 
 window.deleteEvent = deleteEvent;
 
+
+/* ========================================
+   보기
+======================================== */
+
 function viewEvent(id){
 
-    window.location.href = "schedule_view.html?id=" + id;
+    window.location.href =
+        "../schedule_view.html?id=" + id;
 
 }
+
 
 window.viewEvent = viewEvent;
 
+
+/* ========================================
+   수정
+======================================== */
+
 async function editEvent(id){
 
-    editId = id;
+    try{
 
-    const snap = await getDoc(doc(db,"schedule",id));
+        const snap =
+            await getDoc(
+                doc(db,"schedule",id)
+            );
 
-    if(!snap.exists()) return;
 
-    const event = snap.data();
+        if(!snap.exists()){
 
-    document.getElementById("eventTitle").value = event.title;
-    document.getElementById("eventContent").value = event.content;
-    document.getElementById("eventDate").value = event.date;
-    document.getElementById("eventPlace").value = event.place;
+            alert("행사를 찾을 수 없습니다.");
 
-    alert("수정할 행사를 불러왔습니다.");
+            return;
+        }
+
+
+        const event =
+            snap.data();
+
+
+        editId = id;
+
+
+        eventTitle.value =
+            event.title || "";
+
+        eventContent.value =
+            event.content || "";
+
+        eventDate.value =
+            event.date || "";
+
+        eventPlace.value =
+            event.place || "";
+
+        eventPinned.checked =
+            event.pinned === true;
+
+
+        saveEvent.textContent =
+            "행사 수정";
+
+        cancelEdit.style.display =
+            "inline-block";
+
+
+        window.scrollTo({
+            top:document.body.scrollHeight,
+            behavior:"smooth"
+        });
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "행사를 불러오지 못했습니다.\n\n" +
+            error.message
+        );
+
+    }
 
 }
 
+
 window.editEvent = editEvent;
+
+
+/* ========================================
+   수정 취소
+======================================== */
+
+cancelEdit.onclick = function(){
+
+    clearForm();
+
+};
+
+
+/* ========================================
+   처음 실행
+======================================== */
 
 loadEvent();
 
