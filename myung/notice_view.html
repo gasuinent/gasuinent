@@ -25,11 +25,6 @@ body{
 h1{
     color:#FFD700;
     font-size:42px;
-    margin-bottom:15px;
-}
-
-.meta{
-    color:#ccc;
     margin-bottom:30px;
 }
 
@@ -37,6 +32,15 @@ h1{
     font-size:22px;
     line-height:1.9;
     white-space:pre-wrap;
+}
+
+#image{
+    width:100%;
+    max-height:600px;
+    object-fit:cover;
+    border-radius:10px;
+    margin:30px 0;
+    display:none;
 }
 
 button{
@@ -48,69 +52,111 @@ button{
     border-radius:8px;
     cursor:pointer;
     font-weight:bold;
+    font-size:17px;
 }
 
 </style>
+
+</head>
+
+<body>
+
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
 import {
 getFirestore,
 doc,
 getDoc
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
-    authDomain: "gasuinent.firebaseapp.com",
-    projectId: "gasuinent",
-    storageBucket: "gasuinent.firebasestorage.app",
-    messagingSenderId: "122370674182",
-    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
-    measurementId: "G-39M5K1M6K7"
+
+apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+
+authDomain: "gasuinent.firebaseapp.com",
+
+projectId: "gasuinent",
+
+storageBucket: "gasuinent.firebasestorage.app",
+
+messagingSenderId: "122370674182",
+
+appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+
+measurementId: "G-39M5K1M6K7"
+
 };
 
+
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
+
 const params = new URLSearchParams(location.search);
+
 const id = params.get("id");
+
 
 if(id){
 
-   <button onclick="location.href='notice.html'">
-← 공지 목록
-</button>
+    const snap = await getDoc(
+        doc(db,"notice",id)
+    );
+
 
     if(snap.exists()){
 
         const n = snap.data();
 
-        document.body.insertAdjacentHTML("beforeend",`
 
-<div class="container">
+        document.body.insertAdjacentHTML(
+            "beforeend",
+            `
 
-<h1>${n.title}</h1>
+            <div class="container">
 
-<div id="content">
-${n.content}
-</div>
+            <h1>
+            ${n.title || ""}
+            </h1>
 
-<div id="content">
-${n.content}
-</div>
 
-<button onclick="location.href='notice.html'">
-← 공지 목록
-</button>
+            <img
+            id="image"
+            src="${n.image || ""}"
+            >
 
-</div>
 
-`);
+            <div id="content">
+            ${n.content || ""}
+            </div>
+
+
+            <button onclick="location.href='notice.html'">
+            ← 공지 목록
+            </button>
+
+            </div>
+
+            `
+        );
+
+
+        if(n.image){
+
+            document.getElementById("image")
+            .style.display="block";
+
+        }
 
     }else{
 
-        document.body.innerHTML="<h2 style='text-align:center;margin-top:80px;'>공지를 찾을 수 없습니다.</h2>";
+        document.body.innerHTML =
+        "<h2 style='text-align:center;margin-top:80px;'>공지를 찾을 수 없습니다.</h2>";
 
     }
 
@@ -118,10 +164,5 @@ ${n.content}
 
 </script>
 
-</head>
-
-<body>
-
 </body>
-
 </html>
