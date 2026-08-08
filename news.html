@@ -228,22 +228,18 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 
   const filterButtons=document.querySelectorAll('.filters button[data-filter]');
-
-filterButtons.forEach(button=>{
-  button.addEventListener('click',()=>{
-    filterButtons.forEach(b=>b.classList.remove('active'));
-    button.classList.add('active');
-
-    const filter=button.dataset.filter;
-
-    document.querySelectorAll('.news-card').forEach(card=>{
-      card.style.display =
-        (filter==='전체' || card.dataset.category===filter)
-        ? 'block'
-        : 'none';
+  const newsCards=document.querySelectorAll('.news-card');
+  filterButtons.forEach(button=>{
+    button.addEventListener('click',()=>{
+      filterButtons.forEach(b=>b.classList.remove('active'));
+      button.classList.add('active');
+      const filter=button.dataset.filter;
+      newsCards.forEach(card=>{
+        card.style.display=(filter==='전체'||card.dataset.category===filter)?'block':'none';
+      });
     });
   });
-});
+
   const form=document.getElementById('contactForm');
   if(form) form.addEventListener('submit',e=>{
     e.preventDefault();
@@ -277,10 +273,10 @@ ${g('request')}`);
       window.netlifyIdentity.close();
     });
   }
+</script>
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
 import {
     getFirestore,
@@ -290,7 +286,6 @@ import {
     orderBy
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
-
 const firebaseConfig = {
 
     apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
@@ -298,133 +293,57 @@ const firebaseConfig = {
     projectId: "gasuinent",
     storageBucket: "gasuinent.firebasestorage.app",
     messagingSenderId: "122370674182",
-    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
-    measurementId: "G-39M5K1M6K7"
+    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87"
 
 };
-
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
 async function loadNews(){
 
-    try {
+    const q = query(
+        collection(db,"notice"),
+        orderBy("timestamp","desc")
+    );
 
-        const q = query(
-            collection(db, "notice"),
-            orderBy("timestamp", "desc")
-        );
+    const snapshot = await getDocs(q);
 
-        const snapshot = await getDocs(q);
+    let html = "";
 
-        const notices = [];
+    snapshot.forEach((docItem)=>{
 
-        snapshot.forEach(docItem => {
+        const notice = docItem.data();
 
-            notices.push({
-                id: docItem.id,
-                ...docItem.data()
-            });
+        html += `
+        <div class="card news-card">
 
-        });
+            ${notice.image ?
+            `<img src="${notice.image}" style="width:100%;border-radius:15px;margin-bottom:20px;">`
+            : ""}
 
+            <h3>${notice.title}</h3>
 
-        /* 공지/고정 최대 2개 */
+<div style="color:#bbb;margin-bottom:15px;">
+📅 ${notice.date}
+</div>
 
-        const pinnedNews = notices
-            .filter(notice => notice.pinned === true)
-            .slice(0, 2);
+<p style="font-size:17px;line-height:1.7;color:#ddd;">
+${notice.content.substring(0,150)}...
+</p>
 
+<a class="btn" href="notice_view.html?id=${docItem.id}">
+    자세히 보기
+</a>
 
-        const pinnedIds = new Set(
-            pinnedNews.map(notice => notice.id)
-        );
+        </div>
+        `;
 
+    });
 
-        /* 공지를 제외한 최신 뉴스 */
-
-        const latestNews = notices
-            .filter(notice => !pinnedIds.has(notice.id));
-
-
-        /* 항상 총 6개 */
-
-        const displayNews = [
-            ...pinnedNews,
-            ...latestNews
-        ].slice(0, 6);
-
-
-        let html = "";
-
-
-        displayNews.forEach(notice => {
-
-            html += `
-
-            <div class="card news-card"
-                 data-category="${notice.category || ''}">
-
-                ${
-                    notice.pinned === true
-                    ? `
-                    <div style="
-                        color:#FFD700;
-                        font-size:15px;
-                        font-weight:bold;
-                        margin-bottom:10px;
-                    ">
-                        📌 공지 / 고정
-                    </div>
-                    `
-                    : ""
-                }
-
-                <h3>
-                    ${notice.title || ""}
-                </h3>
-
-                <div style="
-                    color:#aaa;
-                    font-size:14px;
-                    margin:12px 0;
-                ">
-                    📅 ${notice.date || ""}
-                </div>
-
-                <p style="
-                    font-size:17px;
-                    line-height:1.7;
-                    color:#ddd;
-                ">
-                    ${(notice.content || "").substring(0,150)}...
-                </p>
-
-                <a class="btn"
-                   href="notice_view.html?id=${notice.id}">
-                    자세히 보기
-                </a>
-
-            </div>
-
-            `;
-
-        });
-
-
-        document.getElementById("newsGrid").innerHTML = html;
-
-
-    } catch(error) {
-
-        console.error("뉴스 불러오기 오류:", error);
-
-    }
+    document.getElementById("newsGrid").innerHTML = html;
 
 }
-
 
 loadNews();
 
