@@ -279,35 +279,158 @@ const db = getFirestore(app);
 
 async function loadSchedule(){
 
-   const q = query(
-    collection(db,"event"),
-    orderBy("timestamp","desc")
-);
+    const q = query(
+        collection(db,"event"),
+        orderBy("timestamp","desc")
+    );
 
     const snapshot = await getDocs(q);
 
-    let html = "";
+    let topHtml = "";
+    let listHtml = "";
+
+    let count = 0;
 
     snapshot.forEach((docItem)=>{
 
         const event = docItem.data();
 
-        html += `
-        <div class="card">
-            <h3>${event.title}</h3>
-            <p><b>📅 날짜</b> ${event.eventDate || ""}</p>
-            <p><b>📍 장소</b> ${event.place}</p>
+        count++;
 
-            <a class="btn fill"
-               href="schedule_view.html?id=${docItem.id}">
-               자세히 보기
-            </a>
-        </div>
-        `;
+        /* 최신 4개는 큰 박스로 표시 */
+        if(count <= 4){
+
+            topHtml += `
+            <div class="card">
+
+                <h3>${event.title || ""}</h3>
+
+                <p>
+                    <b>📅 날짜</b>
+                    ${event.eventDate || event.date || ""}
+                </p>
+
+                <p>
+                    <b>📍 장소</b>
+                    ${event.place || ""}
+                </p>
+
+                <a class="btn fill"
+                   href="schedule_view.html?id=${docItem.id}">
+                   자세히 보기
+                </a>
+
+            </div>
+            `;
+
+        }
+
+        /* 5번째부터는 목록으로 표시 */
+        else{
+
+            listHtml += `
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                gap:20px;
+                padding:18px 20px;
+                margin-bottom:10px;
+                background:#151518;
+                border:1px solid #34343a;
+                border-radius:16px;
+            ">
+
+                <div style="flex:1;">
+
+                    <div style="
+                        color:#f2cf7a;
+                        font-size:20px;
+                        font-weight:900;
+                        margin-bottom:6px;
+                    ">
+                        ${event.title || ""}
+                    </div>
+
+                    <div style="
+                        color:#c9c1b5;
+                        font-size:16px;
+                    ">
+                        📅 ${event.eventDate || event.date || ""}
+                        &nbsp;&nbsp; | &nbsp;&nbsp;
+                        📍 ${event.place || ""}
+                    </div>
+
+                </div>
+
+                <a class="btn"
+                   style="margin-top:0; white-space:nowrap;"
+                   href="schedule_view.html?id=${docItem.id}">
+                   자세히 보기
+                </a>
+
+            </div>
+            `;
+
+        }
 
     });
 
-    document.getElementById("scheduleGrid").innerHTML = html;
+
+    /* 최신 4개 박스 */
+    document.getElementById("scheduleGrid").innerHTML =
+        topHtml || `
+        <p style="
+            text-align:center;
+            color:#aaa;
+            font-size:20px;
+        ">
+            등록된 일정이 없습니다.
+        </p>
+        `;
+
+
+    /* 5번째 이후 목록 */
+    let listArea = document.getElementById("scheduleList");
+
+    if(!listArea){
+
+        listArea = document.createElement("div");
+
+        listArea.id = "scheduleList";
+
+        listArea.style.marginTop = "40px";
+
+        document.getElementById("scheduleGrid")
+            .parentNode
+            .insertBefore(
+                listArea,
+                document.getElementById("scheduleGrid").nextSibling
+            );
+
+    }
+
+
+    if(listHtml){
+
+        listArea.innerHTML = `
+
+            <h3 style="
+                color:#f2cf7a;
+                margin:45px 0 20px;
+            ">
+                📋 전체 일정 목록
+            </h3>
+
+            ${listHtml}
+
+        `;
+
+    }else{
+
+        listArea.innerHTML = "";
+
+    }
 
 }
 
