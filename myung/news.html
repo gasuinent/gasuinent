@@ -195,7 +195,14 @@ border-radius:8px;
 
 <option value="보도자료">보도자료</option>
 
-</select>   
+</select> 
+ <label style="margin-top:20px;">
+    <input
+        type="checkbox"
+        id="pinned"
+        style="width:auto;margin-right:8px;">
+    📌 공지 / 상단 고정
+</label>   
 <label>뉴스 내용</label>
 <textarea id="noticeContent"></textarea>
 
@@ -306,6 +313,8 @@ const data = {
 
     category:document.getElementById("category").value,
 
+    pinned:document.getElementById("pinned").checked,
+
     date:new Date().toISOString().slice(0,10),
     timestamp:Date.now()
 };
@@ -334,8 +343,8 @@ if(window.editId){
 document.getElementById("noticeTitle").value="";
 document.getElementById("noticeContent").value="";
 document.getElementById("category").value="행사안내";
+document.getElementById("pinned").checked=false;
 document.getElementById("noticeImage").value="";
-document.getElementById("previewImage").style.display="none";
 
 loadNotice();
 
@@ -427,7 +436,9 @@ const n=snap.data();
 document.getElementById("noticeTitle").value=n.title;
 document.getElementById("noticeContent").value=n.content;
 document.getElementById("category").value =
-    n.category || "행사안내";   
+    n.category || "행사안내"; 
+ document.getElementById("pinned").checked =
+    n.pinned === true;   
 const img = document.getElementById("previewImage");
 
 if (n.image) {
