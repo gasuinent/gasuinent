@@ -316,7 +316,7 @@ async function loadNews(){
         const notice = docItem.data();
 
         html += `
-        <div class="card news-card">
+       <div class="card news-card" data-category="${notice.category || ''}">
 
             ${notice.image ?
             `<img src="${notice.image}" style="width:100%;border-radius:15px;margin-bottom:20px;">`
