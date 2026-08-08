@@ -78,7 +78,7 @@ const id = params.get("id");
 
 if(id){
 
-    const snap = await getDoc(doc(db,"notice",id));
+    const snap = await getDoc(doc(db,"notices",id));
 
     if(snap.exists()){
 
