@@ -228,18 +228,22 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 
   const filterButtons=document.querySelectorAll('.filters button[data-filter]');
-  const newsCards=document.querySelectorAll('.news-card');
-  filterButtons.forEach(button=>{
-    button.addEventListener('click',()=>{
-      filterButtons.forEach(b=>b.classList.remove('active'));
-      button.classList.add('active');
-      const filter=button.dataset.filter;
-      newsCards.forEach(card=>{
-        card.style.display=(filter==='전체'||card.dataset.category===filter)?'block':'none';
-      });
+
+filterButtons.forEach(button=>{
+  button.addEventListener('click',()=>{
+    filterButtons.forEach(b=>b.classList.remove('active'));
+    button.classList.add('active');
+
+    const filter=button.dataset.filter;
+
+    document.querySelectorAll('.news-card').forEach(card=>{
+      card.style.display =
+        (filter==='전체' || card.dataset.category===filter)
+        ? 'block'
+        : 'none';
     });
   });
-
+});
   const form=document.getElementById('contactForm');
   if(form) form.addEventListener('submit',e=>{
     e.preventDefault();
@@ -316,7 +320,7 @@ async function loadNews(){
         const notice = docItem.data();
 
         html += `
-       <div class="card news-card">
+       <div class="card news-card" data-category="${notice.category || ''}">
 
             ${notice.image ?
             `<img src="${notice.image}" style="width:100%;border-radius:15px;margin-bottom:20px;">`
