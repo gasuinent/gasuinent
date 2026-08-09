@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>갤러리 보기</title>
+<style>
+body{margin:0;background:#111;color:#fff;font-family:Malgun Gothic,sans-serif}
+header{background:#222;padding:20px;text-align:center}
+header h1{margin:0;color:#FFD700;font-size:34px}
+.container{width:90%;max-width:1000px;margin:30px auto}
+.image{width:100%;max-width:800px;max-height:70vh;object-fit:contain;display:block;margin:0 auto 30px;border-radius:10px}
+.title{font-size:30px;font-weight:bold;margin-bottom:20px}
+.date{color:#aaa;margin-bottom:25px}
+.content{font-size:18px;line-height:1.8;white-space:pre-wrap;margin-bottom:40px}
+.back{display:inline-block;padding:12px 25px;background:#FFD700;color:#000;text-decoration:none;border-radius:8px;font-weight:bold}
+.message{text-align:center;margin-top:100px;color:#ddd;font-size:20px}
+.error{color:#ff7777}
+</style>
+</head>
+<body>
+<header><h1>🖼 갤러리 보기</h1></header>
+<div class="container">
+<div id="message" class="message">사진 정보를 불러오는 중입니다.</div>
+<div id="galleryContent" style="display:none">
+<img id="image" class="image" alt="갤러리 사진">
+<div id="title" class="title"></div>
+<div id="date" class="date"></div>
+<div id="content" class="content"></div>
+<a href="gallery.html" class="back">목록으로</a>
+</div>
+</div>
 
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import {getFirestore,doc,getDoc} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+authDomain:"gasuinent.firebaseapp.com",
+projectId:"gasuinent",
+storageBucket:"gasuinent.firebasestorage.app",
+messagingSenderId:"122370674182",
+appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",
+measurementId:"G-39M5K1M6K7"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+const id=new URLSearchParams(location.search).get("id");
+const message=document.getElementById("message");
+const galleryContent=document.getElementById("galleryContent");
+
+async function loadGallery(){
+if(!id){
+message.textContent="잘못된 갤러리 주소입니다.";
+message.classList.add("error");
+return;
+}
+try{
+const snap=await getDoc(doc(db,"gallery",id));
+if(!snap.exists()){
+message.textContent="해당 사진을 찾을 수 없습니다.";
+message.classList.add("error");
+return;
+}
+const g=snap.data();
+document.getElementById("title").textContent=g.title||"";
+document.getElementById("date").textContent=g.date||"";
+document.getElementById("content").textContent=g.content||"";
+
+const image=document.getElementById("image");
+if(g.image){
+image.src=g.image;
+image.onerror=function(){
+image.style.display="none";
+message.textContent="사진 파일을 불러오지 못했습니다.";
+message.classList.add("error");
+message.style.display="block";
+};
+}else{
+image.style.display="none";
+}
+message.style.display="none";
+galleryContent.style.display="block";
+}catch(error){
+console.error(error);
+message.textContent="갤러리 정보를 불러오는 중 오류가 발생했습니다.";
+message.classList.add("error");
+}
+}
+loadGallery();
+</script>
+</body>
+</html>
