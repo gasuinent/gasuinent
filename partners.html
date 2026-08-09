@@ -55,13 +55,11 @@ margin:auto;
 }
 
 header{
-
 background:#050505;
 border-bottom:1px solid #2d2d2d;
 position:sticky;
 top:0;
 z-index:999;
-
 }
 
 .head{
@@ -117,9 +115,7 @@ color:var(--gold2);
 }
 
 section{
-
-padding:75px 0;
-
+padding:60px 0;
 }
 
 .section-head{
@@ -147,7 +143,7 @@ color:var(--gold);
 
 .section-head h1{
 
-font-size:76px;
+font-size:64px;
 font-weight:900;
 margin:20px 0;
 
@@ -313,7 +309,7 @@ margin-bottom:60px;
 
 .partner-title h2{
 
-font-size:68px;
+font-size:56px;
 font-weight:900;
 color:var(--gold2);
 margin-bottom:18px;
@@ -400,8 +396,6 @@ border-right:1px solid #6b5523;
 .partner-table td:nth-child(3){width:16%;}
 .partner-table td:nth-child(4){width:20%;}
 .partner-table td:nth-child(5){width:30%;}
-
-}
 
 .partner-table td:last-child{
 
@@ -650,6 +644,103 @@ font-size:17px;
 color:#999;
 line-height:1.9;
 
+}
+
+
+.mobile-menu-btn{
+display:none;
+background:#15161b;
+color:var(--gold2);
+border:1px solid #444;
+border-radius:14px;
+font-size:34px;
+width:58px;
+height:52px;
+line-height:1;
+cursor:pointer;
+}
+
+.mobile-menu{
+display:none;
+}
+
+@media(max-width:768px){
+.mobile-menu-btn{
+display:block;
+}
+.mobile-menu{
+position:absolute;
+left:3%;
+right:3%;
+top:100%;
+background:#111216;
+border:1px solid #444;
+border-radius:20px;
+padding:12px;
+box-shadow:0 15px 35px rgba(0,0,0,.5);
+z-index:1000;
+}
+.mobile-menu.open{
+display:block;
+}
+.mobile-menu a{
+display:block;
+padding:16px 18px;
+margin:5px 0;
+border-radius:12px;
+font-size:21px;
+font-weight:800;
+}
+.mobile-menu a:hover,
+.mobile-menu a.active{
+background:#30240f;
+color:var(--gold2);
+}
+.head{
+position:relative;
+flex-direction:row;
+justify-content:space-between;
+align-items:center;
+}
+.brand{
+font-size:20px;
+}
+.brand img{
+width:48px;
+}
+.wrap{
+width:92%;
+}
+.section-head h1{
+font-size:42px;
+}
+.section-head p{
+font-size:18px;
+}
+.main-company{
+padding:24px 18px;
+}
+.company-info h2{
+font-size:34px;
+}
+.partner-main{
+padding:25px 18px;
+}
+.partner-title h2{
+font-size:38px;
+}
+.partner-title p{
+font-size:18px;
+}
+.partner-info h2{
+font-size:34px;
+}
+.partner-side h3{
+font-size:28px;
+}
+.card h3{
+font-size:28px;
+}
 }
 
 @media(max-width:1200px){
@@ -940,6 +1031,23 @@ font-size:18px;
 
 </nav>
 
+<button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="메뉴 열기">☰</button>
+
+</div>
+
+<div class="mobile-menu" id="mobileMenu">
+<a class="active" href="partners.html">함께하는 단체</a>
+<a href="index.html">홈</a>
+<a href="about.html">회사소개</a>
+<a href="artists.html">소속가수</a>
+<a href="news.html">뉴스</a>
+<a href="notice.html">공지</a>
+<a href="schedule.html">일정</a>
+<a href="performance.html">실적</a>
+<a href="resources.html">자료실</a>
+<a href="video.html">영상센터</a>
+<a href="gallery.html">갤러리</a>
+<a href="contact.html">문의</a>
 </div>
 
 </header>
@@ -1393,6 +1501,26 @@ All Rights Reserved.
 </footer>
 
 <script>
+const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+if(mobileMenuBtn && mobileMenu){
+mobileMenuBtn.addEventListener("click", function(){
+mobileMenu.classList.toggle("open");
+mobileMenuBtn.textContent = mobileMenu.classList.contains("open") ? "×" : "☰";
+mobileMenuBtn.setAttribute(
+"aria-label",
+mobileMenu.classList.contains("open") ? "메뉴 닫기" : "메뉴 열기"
+);
+});
+
+mobileMenu.querySelectorAll("a").forEach(function(link){
+link.addEventListener("click", function(){
+mobileMenu.classList.remove("open");
+mobileMenuBtn.textContent = "☰";
+});
+});
+}
 
 document.querySelectorAll(".more-btn").forEach(function(btn){
 
