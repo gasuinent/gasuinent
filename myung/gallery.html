@@ -131,9 +131,26 @@ return;
 }
 
 if(file){
-const storageRef=ref(storage,"gallery/"+Date.now()+"_"+file.name);
-await uploadBytes(storageRef,file);
-imageUrl=await getDownloadURL(storageRef);
+    try{
+        const storageRef = ref(
+            storage,
+            "gallery/" + Date.now() + "_" + file.name
+        );
+
+        await uploadBytes(storageRef, file);
+
+        imageUrl = await getDownloadURL(storageRef);
+
+    }catch(error){
+        console.error("사진 업로드 오류:", error);
+
+        alert(
+            "사진 업로드에 실패했습니다.\n\n" +
+            "오류 내용: " + (error.message || error)
+        );
+
+        return;
+    }
 }
 
 const data={
