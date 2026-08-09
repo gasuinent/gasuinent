@@ -1117,6 +1117,29 @@ font-size:18px;
 }
 </style>
 
+
+<style>
+/* PC용 회사 정보 표만 추가 축소: 상호명이 두 줄로 내려가지 않도록 */
+@media (min-width:769px){
+  .company-table td{
+    padding:14px 8px !important;
+    vertical-align:middle !important;
+  }
+
+  .company-table strong{
+    font-size:17px !important;
+    margin-bottom:8px !important;
+    white-space:nowrap !important;
+  }
+
+  .company-table span{
+    font-size:16px !important;
+    white-space:nowrap !important;
+    letter-spacing:-0.5px !important;
+  }
+}
+</style>
+
 </head>
 
 <body>
