@@ -162,51 +162,22 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
 
 <section id="gallery">
 <div class="wrap">
-<div class="section-head"><div class="eyebrow">GALLERY</div><h2>갤러리</h2><p class="lead">공연, 행사, 봉사활동의 현장 모습을 분야별로 기록해 공개합니다.</p></div>
-<div class="gallery">
-
-<figure class="gallery-item">
-    <div class="photo">
-        <img src="healingconcert.jpg" alt="나가수 힐링콘서트">
-    </div>
-
-    <figcaption>
-        <strong>나가수 힐링콘서트</strong>
-        전국 문화공연과 힐링콘서트 현장 모습입니다.
-    </figcaption>
-</figure>
-<figure class="gallery-item">
-    <div class="photo">
-        <img src="marketconcert.jpg" alt="전통시장 희망음악회">
-    </div>
-
-    <figcaption>
-        <strong>전통시장 희망음악회</strong>
-        지역 전통시장 활성화를 위한 희망음악회 공연 모습입니다.
-    </figcaption>
-</figure>
- <figure class="gallery-item">
-    <div class="photo">
-        <img src="suseongfestival.jpg" alt="수성못 나가수 가요제">
-    </div>
-
-    <figcaption>
-        <strong>수성못 나가수 가요제</strong>
-        수성못 특설무대에서 열린 나가수 가요제 현장입니다.
-    </figcaption>
-</figure>
-
-<figure class="gallery-item">
-    <div class="photo">
-        <img src="volunteerconcert.jpg" alt="봉사단 문화나눔 공연">
-    </div>
-
-    <figcaption>
-        <strong>봉사단 문화나눔 공연</strong>
-        복지시설과 지역사회를 위한 문화나눔 공연 모습입니다.
-    </figcaption>
-</figure>   
+<div class="section-head">
+<div class="eyebrow">GALLERY</div>
+<h2>갤러리</h2>
+<p class="lead">공연, 행사, 봉사활동의 현장 모습을 분야별로 기록해 공개합니다.</p>
 </div>
+
+<!-- 관리자에서 등록한 사진이 자동으로 표시되는 3열 × 2행 영역 -->
+<div class="gallery" id="galleryGrid"></div>
+
+<div id="galleryListWrap" style="margin-top:46px;display:none">
+    <h3 style="color:var(--gold2);border-left:4px solid var(--gold);padding-left:12px;">
+        갤러리 목록
+    </h3>
+    <div id="galleryList"></div>
+</div>
+
 <p class="notice" id="galleryCaption" style="text-align:center;margin-top:22px"></p>
 </div>
 </section>
@@ -315,5 +286,147 @@ ${g('request')}`);
     });
   }
 </script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import {
+    getFirestore,
+    collection,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+    authDomain:"gasuinent.firebaseapp.com",
+    projectId:"gasuinent",
+    storageBucket:"gasuinent.firebasestorage.app",
+    messagingSenderId:"122370674182",
+    appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",
+    measurementId:"G-39M5K1M6K7"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+function escapeHtml(value){
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+function card(item){
+    if(!item){
+        return `
+        <figure class="gallery-item">
+            <div class="photo" style="display:grid;place-items:center;">
+                <span style="color:#888;font-size:20px;">사진 등록 대기</span>
+            </div>
+            <figcaption>
+                <strong>갤러리</strong>
+                관리자에서 사진을 등록하면 이곳에 표시됩니다.
+            </figcaption>
+        </figure>`;
+    }
+
+    const image = item.image
+        ? `<img src="${item.image}" alt="${escapeHtml(item.title)}">`
+        : `<div class="photo" style="display:grid;place-items:center;color:#888;">사진 없음</div>`;
+
+    return `
+    <figure class="gallery-item">
+        <a href="gallery_view.html?id=${item.id}">
+            <div class="photo">${image}</div>
+            <figcaption>
+                <strong>${escapeHtml(item.title)}</strong>
+                ${escapeHtml(item.content)}
+            </figcaption>
+        </a>
+    </figure>`;
+}
+
+async function loadPublicGallery(){
+    const snapshot = await getDocs(collection(db,"gallery"));
+    const rows = [];
+
+    snapshot.forEach(docItem=>{
+        rows.push({
+            id:docItem.id,
+            ...docItem.data()
+        });
+    });
+
+    rows.sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
+
+    // 고정 사진 최대 3개
+    const pinned = rows.filter(item=>item.pinned===true).slice(0,3);
+
+    // 고정되지 않은 최신 사진으로 6칸을 채움
+    const normal = rows.filter(item=>item.pinned!==true);
+    const latest = normal.slice(0, 6-pinned.length);
+
+    // 메인: 정확히 6칸
+    const display = [...pinned, ...latest];
+
+    while(display.length < 6){
+        display.push(null);
+    }
+
+    document.getElementById("galleryGrid").innerHTML =
+        display.map(card).join("");
+
+    // 메인 6칸에 들어간 자료를 제외하고 7번째부터 목록
+    const mainIds = new Set(
+        display.filter(Boolean).map(item=>item.id)
+    );
+
+    const list = rows.filter(item=>!mainIds.has(item.id));
+
+    const listWrap = document.getElementById("galleryListWrap");
+    const listEl = document.getElementById("galleryList");
+
+    if(list.length){
+        listWrap.style.display = "block";
+        listEl.innerHTML = list.map(item=>`
+            <div style="
+                display:flex;
+                align-items:center;
+                gap:18px;
+                padding:15px 5px;
+                border-bottom:1px solid var(--line);
+            ">
+                <a href="gallery_view.html?id=${item.id}"
+                   style="display:flex;align-items:center;gap:18px;width:100%;">
+                    ${
+                        item.image
+                        ? `<img src="${item.image}"
+                               alt="${escapeHtml(item.title)}"
+                               style="width:120px;height:78px;object-fit:cover;border-radius:10px;">`
+                        : `<div style="width:120px;height:78px;background:#222;border-radius:10px;"></div>`
+                    }
+                    <div>
+                        <strong style="display:block;font-size:18px;">
+                            ${escapeHtml(item.title)}
+                        </strong>
+                        <span style="color:#999;font-size:13px;">
+                            ${escapeHtml(item.date)}
+                        </span>
+                    </div>
+                </a>
+            </div>
+        `).join("");
+    }else{
+        listWrap.style.display = "none";
+    }
+
+    document.getElementById("galleryCaption").textContent =
+        "관리자에서 등록한 사진이 자동으로 갤러리에 표시됩니다.";
+}
+
+loadPublicGallery();
+</script>
+
 </body>
 </html>
