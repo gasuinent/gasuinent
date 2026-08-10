@@ -181,6 +181,13 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 <label>공지 제목</label>
 <input type="text" id="noticeTitle">
 
+<label class="date-label">
+    <span class="date-icon">📅</span>
+    <span>작성 날짜</span>
+</label>
+
+<input type="date" id="noticeDate">
+
 <label>공지 내용</label>
 <textarea id="noticeContent"></textarea>
 
@@ -200,11 +207,20 @@ orderBy
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 const db = window.db;
+function todayString(){
+    const d = new Date();
 
+    return d.getFullYear()+"-"+
+        String(d.getMonth()+1).padStart(2,"0")+"-"+
+        String(d.getDate()).padStart(2,"0");
+}
+
+document.getElementById("noticeDate").value = todayString();
 document.getElementById("saveNotice").onclick = async () => {
 
 let title = document.getElementById("noticeTitle").value.trim();
 let content = document.getElementById("noticeContent").value.trim();
+let selectedDate = document.getElementById("noticeDate").value;
 
 if(title==""){
     alert("제목을 입력하세요.");
@@ -219,7 +235,7 @@ if(content==""){
 const data = {
     title:title,
     content:content,
-    date:new Date().toISOString().slice(0,10),
+    date:selectedDate,
     timestamp:Date.now()
 };
 
@@ -247,6 +263,7 @@ if(window.editId){
 
 document.getElementById("noticeTitle").value="";
 document.getElementById("noticeContent").value="";
+document.getElementById("noticeDate").value=todayString();
 
 loadNotice();
 
@@ -329,7 +346,8 @@ async function editNotice(id){
 
     document.getElementById("noticeTitle").value = n.title;
     document.getElementById("noticeContent").value = n.content;
-
+document.getElementById("noticeDate").value =
+    n.date || todayString();
     window.scrollTo({
         top:document.body.scrollHeight,
         behavior:"smooth"
