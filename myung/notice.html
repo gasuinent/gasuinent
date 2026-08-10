@@ -272,6 +272,7 @@ if(window.editId){
 document.getElementById("noticeTitle").value="";
 document.getElementById("noticeContent").value="";
 document.getElementById("noticeDate").value=todayString();
+document.getElementById("pinned").checked=false;
 
 loadNotice();
 
@@ -356,6 +357,7 @@ async function editNotice(id){
     document.getElementById("noticeContent").value = n.content;
 document.getElementById("noticeDate").value =
     n.date || todayString();
+    document.getElementById("pinned").checked = n.pinned === true;
     window.scrollTo({
         top:document.body.scrollHeight,
         behavior:"smooth"
