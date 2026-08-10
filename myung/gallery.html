@@ -72,6 +72,12 @@ window.editId=null;
 
 <label>사진 선택</label>
 <input type="file" id="galleryImage">
+
+<label style="display:flex;align-items:center;gap:10px;font-size:22px;">
+<span style="font-size:32px;">📅</span>
+<span>작성 날짜</span>
+</label>
+<input type="date" id="galleryDate" style="height:50px;font-size:18px;">
 <img id="previewImage" style="max-width:250px;margin-top:10px;display:none;border-radius:8px;">
 
 <label>사진 설명</label>
@@ -89,6 +95,13 @@ from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
 
 const db=window.db, storage=window.storage;
 
+function todayString(){
+const d=new Date();
+return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+
+document.getElementById("galleryDate").value=todayString();
+
 document.getElementById("galleryImage").onchange=function(){
 const file=this.files[0]; if(!file)return;
 const reader=new FileReader();
@@ -103,9 +116,15 @@ document.getElementById("saveGallery").onclick=async()=>{
 const title=document.getElementById("galleryTitle").value.trim();
 const content=document.getElementById("galleryContent").value.trim();
 const pinned=document.getElementById("galleryPinned").checked;
+const selectedDate=document.getElementById("galleryDate").value;
 const file=document.getElementById("galleryImage").files[0];
 
 if(!title){alert("사진 제목을 입력하세요.");return;}
+if(!selectedDate){
+alert("작성 날짜를 선택하세요.");
+document.getElementById("galleryDate").focus();
+return;
+}
 
 let imageUrl="";
 let oldTimestamp=Date.now();
@@ -155,7 +174,7 @@ if(file){
 
 const data={
 title:title,content:content,image:imageUrl,pinned:pinned,
-date:new Date().toISOString().slice(0,10),timestamp:oldTimestamp
+date:selectedDate,timestamp:oldTimestamp
 };
 
 if(window.editId){
@@ -170,6 +189,7 @@ alert("사진이 등록되었습니다.");
 document.getElementById("galleryTitle").value="";
 document.getElementById("galleryContent").value="";
 document.getElementById("galleryPinned").checked=false;
+document.getElementById("galleryDate").value=todayString();
 document.getElementById("galleryImage").value="";
 document.getElementById("previewImage").style.display="none";
 loadGallery();
@@ -211,6 +231,7 @@ const g=snap.data();
 document.getElementById("galleryTitle").value=g.title||"";
 document.getElementById("galleryContent").value=g.content||"";
 document.getElementById("galleryPinned").checked=g.pinned===true;
+document.getElementById("galleryDate").value=g.date||todayString();
 const img=document.getElementById("previewImage");
 if(g.image){img.src=g.image;img.style.display="block"}else{img.style.display="none"}
 window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});
