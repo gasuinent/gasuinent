@@ -184,11 +184,12 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 
 <h2>자료 등록</h2>
 
-<label>자료 제목</label>
+<label class="date-label">
+    <span class="date-icon">📅</span>
+    <span>작성 날짜</span>
+</label>
 
-<input
-type="text"
-id="fileTitle">
+<input type="date" id="fileDate">
 
 <label>파일 선택</label>
 
@@ -238,11 +239,20 @@ getDownloadURL
 
 const db=window.db;
 const storage=window.storage;
+function todayString(){
+    const d = new Date();
 
+    return d.getFullYear()+"-"+
+        String(d.getMonth()+1).padStart(2,"0")+"-"+
+        String(d.getDate()).padStart(2,"0");
+}
+
+document.getElementById("fileDate").value = todayString();
 document.getElementById("saveFile").onclick=async()=>{
 
 let title=document.getElementById("fileTitle").value.trim();
 let content=document.getElementById("fileContent").value.trim();
+let selectedDate=document.getElementById("fileDate").value;
 let file=document.getElementById("fileUpload").files[0];
 
 if(title==""){
@@ -287,7 +297,7 @@ title:title,
 content:content,
 fileUrl:fileUrl,
 fileName:fileName,
-date:new Date().toISOString().slice(0,10),
+date:selectedDate,
 timestamp:Date.now()
 
 };
