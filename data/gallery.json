@@ -7,6 +7,14 @@
       "category": "무료공연",
       "description": "어르신들과 함께한 어버이날 문화나눔 공연 현장입니다.",
       "image": "/uploads/sarangchae_20260508_01.jpg"
+    },
+    {
+      "published": true,
+      "image": "/uploads/marketconcert.jpg",
+      "title": "ㄷㄱㄹㄷ",
+      "date": "ㅈㄷㄱㄷㅈ",
+      "category": "ㄷㅈㄱㄷ",
+      "description": "ㅈㄷ"
     }
   ]
 }
