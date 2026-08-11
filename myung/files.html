@@ -1,1 +1,88 @@
-
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>자료실 관리</title>
+<style>
+body{margin:0;background:#111;color:#fff;font-family:"Malgun Gothic",sans-serif}
+header{background:#222;padding:20px;text-align:center}
+header h1{margin:0;color:#FFD700;font-size:34px}
+.container{width:95%;max-width:1200px;margin:30px auto}
+input,textarea,select{width:100%;padding:12px;border:none;border-radius:8px;font-size:18px;box-sizing:border-box}
+textarea{height:220px;resize:vertical}
+label{display:block;margin-top:20px;margin-bottom:8px;font-weight:bold}
+button{background:#FFD700;color:#000;border:none;border-radius:8px;padding:12px 25px;font-size:17px;font-weight:bold;cursor:pointer}
+button:hover{background:#ffcc00}
+table{width:100%;border-collapse:collapse;margin-top:20px}
+th{background:#333;padding:12px}
+td{padding:10px;border-bottom:1px solid #444;text-align:center}
+.date-label{display:flex;align-items:center;gap:10px;font-size:22px}
+.date-icon{font-size:28px}
+#fileDate{height:50px;font-size:18px}
+.file-info{margin-top:10px;color:#aaa}
+.empty{padding:30px;color:#aaa;text-align:center}
+</style>
+</head>
+<body>
+<header>
+<h1>📁 자료실 관리</h1>
+<div style="margin-top:20px">
+<input id="searchText" type="text" placeholder="자료 검색..." style="width:320px;padding:10px;border-radius:6px;border:none;">
+<button id="searchBtn">검색</button>
+<button id="allBtn" style="margin-left:8px;background:#555;color:#fff;">전체보기</button>
+</div>
+</header>
+<div class="container">
+<h2>등록된 자료</h2>
+<table><thead><tr><th>번호</th><th>자료명</th><th>분류</th><th>등록일</th><th>보기</th><th>수정</th><th>삭제</th></tr></thead><tbody id="fileBody"></tbody></table>
+<hr>
+<h2 id="formTitle">자료 등록</h2>
+<label>자료 제목</label><input type="text" id="fileTitle">
+<label>자료 분류</label>
+<select id="fileCategory">
+<option value="공식뉴스">공식뉴스</option><option value="행사일정">행사일정</option><option value="공지자료">공지자료</option><option value="행사자료">행사자료</option><option value="신청서·양식">신청서·양식</option><option value="기타자료">기타자료</option>
+</select>
+<label class="date-label"><span class="date-icon">📅</span><span>작성 날짜</span></label>
+<input type="date" id="fileDate">
+<label>파일 선택</label><input type="file" id="fileUpload"><div id="fileInfo" class="file-info"></div>
+<label>자료 설명</label><textarea id="fileContent"></textarea>
+<button id="saveFile">자료 저장</button>
+<button id="cancelEdit" style="display:none;margin-left:15px;background:#777;color:#fff;">수정 취소</button>
+<button onclick="location.href='admin.html'" style="margin-left:15px;background:#555;color:#fff;">🏠 관리 메인</button>
+</div>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import {getFirestore,collection,addDoc,getDocs,deleteDoc,doc,getDoc,updateDoc,query,orderBy} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+import {getStorage,ref,uploadBytes,getDownloadURL} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
+const firebaseConfig={apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",authDomain:"gasuinent.firebaseapp.com",projectId:"gasuinent",storageBucket:"gasuinent.firebasestorage.app",messagingSenderId:"122370674182",appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",measurementId:"G-39M5K1M6K7"};
+const app=initializeApp(firebaseConfig),db=getFirestore(app),storage=getStorage(app);
+let editId=null;
+function todayString(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+document.getElementById("fileDate").value=todayString();
+document.getElementById("fileUpload").addEventListener("change",function(){const f=this.files[0];document.getElementById("fileInfo").textContent=f?"선택된 파일: "+f.name:""});
+document.getElementById("saveFile").addEventListener("click",async()=>{try{
+const title=document.getElementById("fileTitle").value.trim(),category=document.getElementById("fileCategory").value,selectedDate=document.getElementById("fileDate").value,content=document.getElementById("fileContent").value.trim(),file=document.getElementById("fileUpload").files[0];
+if(!title){alert("자료 제목을 입력하세요.");document.getElementById("fileTitle").focus();return}if(!selectedDate){alert("작성 날짜를 선택하세요.");return}
+let fileUrl="",fileName="";
+if(editId){const s=await getDoc(doc(db,"files",editId));if(s.exists()){const o=s.data();fileUrl=o.fileUrl||"";fileName=o.fileName||""}}
+if(file){const r=ref(storage,"files/"+Date.now()+"_"+file.name);await uploadBytes(r,file);fileUrl=await getDownloadURL(r);fileName=file.name}
+const data={title,category,content,fileUrl,fileName,date:selectedDate,timestamp:Date.now()};
+const snap=await getDocs(collection(db,"files"));
+for(const item of snap.docs){if(editId&&item.id===editId)continue;const old=item.data();if((old.category||"기타자료")===category)await deleteDoc(doc(db,"files",item.id))}
+if(editId){await updateDoc(doc(db,"files",editId),data);alert(category+" 자료가 수정되었습니다.\n각 분류별 최신 자료 1개만 유지됩니다.")}else{await addDoc(collection(db,"files"),data);alert(category+"의 최신 자료로 등록되었습니다.")}
+resetForm();await loadFiles();
+}catch(e){console.error(e);alert("자료 저장 중 오류가 발생했습니다.\n\n"+e.message)}});
+function resetForm(){editId=null;document.getElementById("formTitle").textContent="자료 등록";document.getElementById("saveFile").textContent="자료 저장";document.getElementById("cancelEdit").style.display="none";document.getElementById("fileTitle").value="";document.getElementById("fileCategory").value="공식뉴스";document.getElementById("fileDate").value=todayString();document.getElementById("fileUpload").value="";document.getElementById("fileContent").value="";document.getElementById("fileInfo").textContent=""}
+async function loadFiles(){const q=query(collection(db,"files"),orderBy("timestamp","desc")),snap=await getDocs(q);let html="",no=1;if(snap.empty)html='<tr><td colspan="7" class="empty">등록된 자료가 없습니다.</td></tr>';else snap.forEach(item=>{const f=item.data();html+=`<tr><td>${no++}</td><td>${escapeHtml(f.title||"")}</td><td>${escapeHtml(f.category||"기타자료")}</td><td>${escapeHtml(f.date||"")}</td><td><button onclick="viewFile('${item.id}')">보기</button></td><td><button onclick="editFile('${item.id}')">수정</button></td><td><button onclick="deleteFile('${item.id}')">삭제</button></td></tr>`});document.getElementById("fileBody").innerHTML=html}
+document.getElementById("searchBtn").addEventListener("click",async()=>{const k=document.getElementById("searchText").value.toLowerCase().trim();if(!k){await loadFiles();return}const snap=await getDocs(collection(db,"files"));let html="",no=1;snap.forEach(item=>{const f=item.data(),t=(f.title||"").toLowerCase(),c=(f.content||"").toLowerCase(),g=(f.category||"기타자료").toLowerCase();if(t.includes(k)||c.includes(k)||g.includes(k))html+=`<tr><td>${no++}</td><td>${escapeHtml(f.title||"")}</td><td>${escapeHtml(f.category||"기타자료")}</td><td>${escapeHtml(f.date||"")}</td><td><button onclick="viewFile('${item.id}')">보기</button></td><td><button onclick="editFile('${item.id}')">수정</button></td><td><button onclick="deleteFile('${item.id}')">삭제</button></td></tr>`});document.getElementById("fileBody").innerHTML=html||'<tr><td colspan="7" class="empty">검색 결과가 없습니다.</td></tr>'});
+document.getElementById("allBtn").addEventListener("click",async()=>{document.getElementById("searchText").value="";await loadFiles()});
+window.editFile=async id=>{const s=await getDoc(doc(db,"files",id));if(!s.exists()){alert("자료를 찾을 수 없습니다.");return}const f=s.data();editId=id;document.getElementById("formTitle").textContent="자료 수정";document.getElementById("saveFile").textContent="자료 수정 저장";document.getElementById("cancelEdit").style.display="inline-block";document.getElementById("fileTitle").value=f.title||"";document.getElementById("fileCategory").value=f.category||"기타자료";document.getElementById("fileDate").value=f.date||todayString();document.getElementById("fileContent").value=f.content||"";document.getElementById("fileUpload").value="";document.getElementById("fileInfo").textContent=f.fileName?"현재 파일: "+f.fileName+" (새 파일을 선택하면 교체됩니다.)":"현재 첨부 파일 없음";window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"})};
+document.getElementById("cancelEdit").addEventListener("click",()=>{resetForm();window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"})});
+window.deleteFile=async id=>{if(!confirm("정말 삭제하시겠습니까?"))return;try{await deleteDoc(doc(db,"files",id));alert("자료가 삭제되었습니다.");await loadFiles()}catch(e){alert("자료 삭제 중 오류가 발생했습니다.\n\n"+e.message)}};
+window.viewFile=id=>{location.href="file_view.html?id="+encodeURIComponent(id)};
+function escapeHtml(v){return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+loadFiles();
+</script>
+</body>
+</html>
