@@ -184,7 +184,13 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 
 <h2>자료 등록</h2>
 
-<label class="date-label">
+<label>자료 제목</label>
+
+<input
+type="text"
+id="fileTitle">
+
+<label class="date-label">   
     <span class="date-icon">📅</span>
     <span>작성 날짜</span>
 </label>
@@ -201,6 +207,10 @@ id="fileUpload">
 
 <textarea
 id="fileContent"></textarea>
+
+<button id="saveFile">
+자료 저장
+</button>
 
 <button
 onclick="location.href='admin.html'"
@@ -327,7 +337,7 @@ if(window.editId){
 document.getElementById("fileTitle").value="";
 document.getElementById("fileContent").value="";
 document.getElementById("fileUpload").value="";
-
+document.getElementById("fileDate").value=todayString();
 loadFiles();
 
 };
@@ -409,7 +419,8 @@ const f=snap.data();
 
 document.getElementById("fileTitle").value=f.title;
 document.getElementById("fileContent").value=f.content;
-
+document.getElementById("fileDate").value =
+    f.date || todayString();
 window.scrollTo({
 
 top:document.body.scrollHeight,
