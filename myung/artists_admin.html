@@ -1,1 +1,767 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>소속가수 관리</title>
+
+<style>
+
+body{
+    margin:0;
+    background:#111;
+    color:#fff;
+    font-family:"Malgun Gothic",sans-serif;
+}
+
+header{
+    background:#222;
+    padding:25px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+    color:#FFD700;
+    font-size:34px;
+}
+
+.container{
+    width:94%;
+    max-width:1200px;
+    margin:30px auto;
+}
+
+.card{
+    background:#1e1e1e;
+    border:1px solid #444;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:25px;
+}
+
+.card h2{
+    color:#FFD700;
+    margin-top:0;
+}
+
+label{
+    display:block;
+    margin-top:18px;
+    margin-bottom:7px;
+    font-weight:bold;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    box-sizing:border-box;
+    padding:13px;
+    border:none;
+    border-radius:8px;
+    font-size:17px;
+    background:#fff;
+    color:#111;
+}
+
+textarea{
+    min-height:150px;
+    resize:vertical;
+}
+
+button{
+    border:none;
+    border-radius:8px;
+    padding:12px 22px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    background:#FFD700;
+    color:#000;
+}
+
+button:hover{
+    background:#ffcc00;
+}
+
+.cancel-btn{
+    background:#555;
+    color:#fff;
+    margin-left:10px;
+}
+
+.cancel-btn:hover{
+    background:#666;
+}
+
+.back-btn{
+    background:#555;
+    color:#fff;
+    margin-left:10px;
+}
+
+.artist-list{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.artist-card{
+    background:#151515;
+    border:1px solid #444;
+    border-radius:12px;
+    padding:20px;
+    text-align:center;
+}
+
+.artist-card img{
+    width:180px;
+    height:180px;
+    object-fit:cover;
+    border-radius:50%;
+    border:3px solid #FFD700;
+    margin-bottom:15px;
+}
+
+.artist-card h3{
+    margin:8px 0;
+    color:#FFD700;
+}
+
+.artist-card p{
+    color:#ccc;
+    line-height:1.6;
+}
+
+.artist-card button{
+    margin:5px;
+}
+
+.empty{
+    text-align:center;
+    color:#aaa;
+    padding:30px;
+}
+
+@media(max-width:800px){
+
+    .artist-list{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        width:92%;
+    }
+
+}
+
+</style>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    deleteDoc,
+    doc,
+    getDoc,
+    updateDoc,
+    query,
+    orderBy
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
+
+
+const firebaseConfig={
+
+    apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+
+    authDomain:"gasuinent.firebaseapp.com",
+
+    projectId:"gasuinent",
+
+    storageBucket:"gasuinent.firebasestorage.app",
+
+    messagingSenderId:"122370674182",
+
+    appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",
+
+    measurementId:"G-39M5K1M6K7"
+
+};
+
+
+const app=initializeApp(firebaseConfig);
+
+const db=getFirestore(app);
+
+const storage=getStorage(app);
+
+let editId=null;
+
+
+function todayString(){
+
+    const d=new Date();
+
+    return d.getFullYear()+"-"+
+        String(d.getMonth()+1).padStart(2,"0")+"-"+
+        String(d.getDate()).padStart(2,"0");
+
+}
+
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    document.getElementById("artistDate").value=todayString();
+
+    document.getElementById("saveArtist").addEventListener(
+        "click",
+        saveArtist
+    );
+
+    document.getElementById("cancelEdit").addEventListener(
+        "click",
+        cancelEdit
+    );
+
+    loadArtists();
+
+});
+
+
+async function saveArtist(){
+
+    try{
+
+        const name=
+            document.getElementById("artistName").value.trim();
+
+        const stageName=
+            document.getElementById("artistStageName").value.trim();
+
+        const genre=
+            document.getElementById("artistGenre").value;
+
+        const shortIntro=
+            document.getElementById("artistShortIntro").value.trim();
+
+        const profile=
+            document.getElementById("artistProfile").value.trim();
+
+        const activities=
+            document.getElementById("artistActivities").value.trim();
+
+        const songs=
+            document.getElementById("artistSongs").value.trim();
+
+        const videoUrl=
+            document.getElementById("artistVideo").value.trim();
+
+        const date=
+            document.getElementById("artistDate").value;
+
+        const photo=
+            document.getElementById("artistPhoto").files[0];
+
+
+        if(name===""){
+
+            alert("가수 이름을 입력하세요.");
+
+            document.getElementById("artistName").focus();
+
+            return;
+
+        }
+
+
+        let photoUrl="";
+
+        if(editId){
+
+            const oldSnap=
+                await getDoc(
+                    doc(db,"artists",editId)
+                );
+
+            if(oldSnap.exists()){
+
+                photoUrl=
+                    oldSnap.data().photoUrl || "";
+
+            }
+
+        }
+
+
+        if(photo){
+
+            const storageRef=
+                ref(
+                    storage,
+                    "artists/"+Date.now()+"_"+photo.name
+                );
+
+            await uploadBytes(storageRef,photo);
+
+            photoUrl=
+                await getDownloadURL(storageRef);
+
+        }
+
+
+        const data={
+
+            name:name,
+
+            stageName:stageName,
+
+            genre:genre,
+
+            shortIntro:shortIntro,
+
+            profile:profile,
+
+            activities:activities,
+
+            songs:songs,
+
+            videoUrl:videoUrl,
+
+            photoUrl:photoUrl,
+
+            date:date,
+
+            timestamp:Date.now()
+
+        };
+
+
+        if(editId){
+
+            await updateDoc(
+                doc(db,"artists",editId),
+                data
+            );
+
+            alert("소속가수 정보가 수정되었습니다.");
+
+        }else{
+
+            await addDoc(
+                collection(db,"artists"),
+                data
+            );
+
+            alert("소속가수가 등록되었습니다.");
+
+        }
+
+
+        cancelEdit();
+
+        loadArtists();
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "저장 중 오류가 발생했습니다.\n"+
+            error.message
+        );
+
+    }
+
+}
+
+
+async function loadArtists(){
+
+    const artistList=
+        document.getElementById("artistList");
+
+    artistList.innerHTML=
+        '<div class="empty">소속가수를 불러오는 중입니다.</div>';
+
+
+    try{
+
+        const q=
+            query(
+                collection(db,"artists"),
+                orderBy("timestamp","desc")
+            );
+
+        const snapshot=
+            await getDocs(q);
+
+
+        if(snapshot.empty){
+
+            artistList.innerHTML=
+                '<div class="empty">등록된 소속가수가 없습니다.</div>';
+
+            return;
+
+        }
+
+
+        let html="";
+
+
+        snapshot.forEach(item=>{
+
+            const a=item.data();
+
+            const photo=
+                a.photoUrl ||
+                "logo.png";
+
+
+            html+=`
+
+                <div class="artist-card">
+
+                    <img
+                        src="${photo}"
+                        alt="${a.name || "소속가수"}"
+                    >
+
+                    <h3>
+                        ${a.stageName || a.name}
+                    </h3>
+
+                    <p>
+                        ${a.genre || "가수"}
+                    </p>
+
+                    <p>
+                        ${a.shortIntro || ""}
+                    </p>
+
+                    <button
+                        onclick="editArtist('${item.id}')">
+                        수정
+                    </button>
+
+                    <button
+                        onclick="deleteArtist('${item.id}')">
+                        삭제
+                    </button>
+
+                </div>
+
+            `;
+
+        });
+
+
+        artistList.innerHTML=html;
+
+
+    }catch(error){
+
+        console.error(error);
+
+        artistList.innerHTML=
+            '<div class="empty">자료를 불러오지 못했습니다.</div>';
+
+    }
+
+}
+
+
+window.editArtist=async function(id){
+
+    const snap=
+        await getDoc(
+            doc(db,"artists",id)
+        );
+
+    if(!snap.exists()){
+
+        alert("가수 정보를 찾을 수 없습니다.");
+
+        return;
+
+    }
+
+
+    const a=snap.data();
+
+    editId=id;
+
+
+    document.getElementById("artistName").value=
+        a.name || "";
+
+    document.getElementById("artistStageName").value=
+        a.stageName || "";
+
+    document.getElementById("artistGenre").value=
+        a.genre || "트로트";
+
+    document.getElementById("artistShortIntro").value=
+        a.shortIntro || "";
+
+    document.getElementById("artistProfile").value=
+        a.profile || "";
+
+    document.getElementById("artistActivities").value=
+        a.activities || "";
+
+    document.getElementById("artistSongs").value=
+        a.songs || "";
+
+    document.getElementById("artistVideo").value=
+        a.videoUrl || "";
+
+    document.getElementById("artistDate").value=
+        a.date || todayString();
+
+
+    document.getElementById("formTitle").innerText=
+        "소속가수 정보 수정";
+
+    document.getElementById("saveArtist").innerText=
+        "수정 저장";
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+};
+
+
+window.deleteArtist=async function(id){
+
+    if(
+        !confirm(
+            "이 가수의 정보를 정말 삭제하시겠습니까?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    await deleteDoc(
+        doc(db,"artists",id)
+    );
+
+
+    alert("삭제되었습니다.");
+
+    loadArtists();
+
+};
+
+
+function cancelEdit(){
+
+    editId=null;
+
+    document.getElementById("artistName").value="";
+    document.getElementById("artistStageName").value="";
+    document.getElementById("artistGenre").value="트로트";
+    document.getElementById("artistShortIntro").value="";
+    document.getElementById("artistProfile").value="";
+    document.getElementById("artistActivities").value="";
+    document.getElementById("artistSongs").value="";
+    document.getElementById("artistVideo").value="";
+    document.getElementById("artistPhoto").value="";
+    document.getElementById("artistDate").value=todayString();
+
+    document.getElementById("formTitle").innerText=
+        "소속가수 등록";
+
+    document.getElementById("saveArtist").innerText=
+        "가수 등록";
+
+}
+
+
+</script>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>🎤 소속가수 관리</h1>
+
+<p style="color:#ddd;">
+가수인생활 엔터테인먼트 소속 및 육성 가수 관리
+</p>
+
+</header>
+
+
+<div class="container">
+
+
+<div class="card">
+
+<h2 id="formTitle">
+소속가수 등록
+</h2>
+
+
+<label>가수 이름</label>
+
+<input
+    type="text"
+    id="artistName"
+    placeholder="예: 이명로">
+
+
+<label>활동명</label>
+
+<input
+    type="text"
+    id="artistStageName"
+    placeholder="예: 이명로">
+
+
+<label>장르</label>
+
+<select id="artistGenre">
+
+    <option value="트로트">
+        트로트
+    </option>
+
+    <option value="발라드">
+        발라드
+    </option>
+
+    <option value="대중가요">
+        대중가요
+    </option>
+
+    <option value="국악">
+        국악
+    </option>
+
+    <option value="기타">
+        기타
+    </option>
+
+</select>
+
+
+<label>한줄 소개</label>
+
+<input
+    type="text"
+    id="artistShortIntro"
+    placeholder="가수를 소개하는 짧은 문장">
+
+
+<label>프로필 사진</label>
+
+<input
+    type="file"
+    id="artistPhoto"
+    accept="image/*">
+
+
+<label>상세 프로필</label>
+
+<textarea
+    id="artistProfile"
+    placeholder="가수의 상세 프로필을 입력하세요."
+></textarea>
+
+
+<label>주요 활동</label>
+
+<textarea
+    id="artistActivities"
+    placeholder="주요 공연, 활동 경력 등을 입력하세요."
+></textarea>
+
+
+<label>대표곡</label>
+
+<textarea
+    id="artistSongs"
+    placeholder="대표곡을 입력하세요."
+></textarea>
+
+
+<label>공연 영상 주소</label>
+
+<input
+    type="text"
+    id="artistVideo"
+    placeholder="유튜브 영상 주소">
+
+
+<label>등록 날짜</label>
+
+<input
+    type="date"
+    id="artistDate"
+>
+
+
+<div style="margin-top:25px;">
+
+<button id="saveArtist">
+가수 등록
+</button>
+
+<button
+    id="cancelEdit"
+    class="cancel-btn">
+취소
+</button>
+
+<button
+    class="back-btn"
+    onclick="location.href='admin.html'">
+🏠 관리자 메인
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>등록된 소속가수</h2>
+
+<div
+    id="artistList"
+    class="artist-list">
+</div>
+
+</div>
+
+
+</div>
+
+</body>
+</html>
