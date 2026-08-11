@@ -980,6 +980,101 @@ font-size:18px;
 
 }
 
+
+
+/* 함께하는 단체 상세소개 */
+.partner-modal{
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.82);
+z-index:9999;
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+box-sizing:border-box;
+}
+.partner-modal.open{display:flex;}
+.partner-modal-box{
+width:100%;
+max-width:900px;
+max-height:88vh;
+overflow-y:auto;
+background:#181818;
+border:2px solid var(--gold);
+border-radius:24px;
+padding:40px;
+box-sizing:border-box;
+position:relative;
+box-shadow:0 20px 60px rgba(0,0,0,.55);
+}
+.partner-modal-close{
+position:absolute;
+right:20px;
+top:15px;
+width:42px;
+height:42px;
+border:1px solid #66521e;
+border-radius:50%;
+background:#222;
+color:#FFD700;
+font-size:28px;
+cursor:pointer;
+}
+.partner-modal-box h2{
+margin:0 55px 8px 0;
+color:#FFD700;
+font-size:38px;
+}
+.partner-modal-box .modal-eng{
+color:#d9bf7d;
+font-weight:700;
+letter-spacing:1px;
+margin-bottom:25px;
+}
+.partner-modal-box .modal-lead{
+font-size:21px;
+font-weight:700;
+line-height:1.8;
+margin-bottom:20px;
+}
+.partner-modal-box p{
+font-size:18px;
+line-height:1.9;
+color:#e7e7e7;
+white-space:pre-line;
+}
+.partner-modal-box h4{
+color:#FFD700;
+font-size:22px;
+margin:28px 0 12px;
+}
+.partner-modal-box ul{
+margin:0;
+padding-left:22px;
+line-height:2;
+color:#eee;
+}
+.partner-modal-quote{
+margin-top:28px;
+padding:20px;
+border-left:4px solid #FFD700;
+background:#222;
+color:#FFD700;
+font-size:20px;
+font-weight:700;
+line-height:1.7;
+}
+@media(max-width:700px){
+.partner-modal-box{padding:28px 22px;}
+.partner-modal-box h2{font-size:30px;}
+.partner-modal-box .modal-lead{font-size:18px;}
+.partner-modal-box p{font-size:16px;}
+}
+
 </style>
 
 
@@ -1367,7 +1462,7 @@ KOREA SINGERS LIFE ASSOCIATION
 
 </p>
 
-<a href="#" class="more-btn">
+<a href="#" class="more-btn" data-detail="performance">
 
 자세히 보기
 
@@ -1397,7 +1492,7 @@ KOREA SINGERS LIFE ASSOCIATION
 
 </p>
 
-<a href="#" class="more-btn">
+<a href="#" class="more-btn" data-detail="volunteer">
 
 자세히 보기
 
@@ -1427,7 +1522,7 @@ KOREA SINGERS LIFE ASSOCIATION
 
 </p>
 
-<a href="#" class="more-btn">
+<a href="#" class="more-btn" data-detail="partners">
 
 자세히 보기
 
@@ -1457,7 +1552,7 @@ KOREA SINGERS LIFE ASSOCIATION
 
 </p>
 
-<a href="#" class="more-btn">
+<a href="#" class="more-btn" data-detail="affiliates">
 
 자세히 보기
 
@@ -1468,6 +1563,21 @@ KOREA SINGERS LIFE ASSOCIATION
 </div>
 
 </div>
+
+
+<div class="partner-modal" id="partnerModal" aria-hidden="true">
+<div class="partner-modal-box" role="dialog" aria-modal="true" aria-labelledby="partnerModalTitle">
+<button type="button" class="partner-modal-close" id="partnerModalClose" aria-label="닫기">×</button>
+<h2 id="partnerModalTitle"></h2>
+<div class="modal-eng" id="partnerModalEng"></div>
+<div class="modal-lead" id="partnerModalLead"></div>
+<p id="partnerModalText"></p>
+<h4 id="partnerModalHeading"></h4>
+<ul id="partnerModalList"></ul>
+<div class="partner-modal-quote" id="partnerModalQuote"></div>
+</div>
+</div>
+
 <footer>
 
 <div class="wrap">
@@ -1571,16 +1681,82 @@ mobileMenuBtn.textContent = "☰";
 });
 }
 
+const partnerDetails = {
+performance: {
+title:"나가수공연단",
+eng:"Professional Performance Group",
+lead:"가수인생활 엔터테인먼트에서 직접 발굴하고 지도한 가수들이 함께 활동하는 공연단입니다.",
+text:"대표가 직접 오디션을 통해 가수를 발굴하고 노래 지도와 트레이닝을 실시하며, 가수들이 실제 무대에 설 수 있도록 공연기회를 만들어가고 있습니다.\n\n공연에 필요한 대형 무대와 음향장비 등을 직접 마련하여 전통시장, 지역축제, 기업·기관 행사, 복지시설 등 공연이 필요한 곳을 직접 찾아가 공연을 기획하고 있습니다.",
+heading:"주요 활동",
+list:["지역축제 공연","기업·기관 행사","전통시장 희망음악회","복지시설 문화공연","대형 콘서트 및 찾아가는 문화공연","소속 가수 무대 활동","신인가수 발굴 및 육성"],
+quote:"가수가 설 무대를 직접 만들어갑니다."
+},
+volunteer: {
+title:"나가수봉사단",
+eng:"Volunteer Performance Team",
+lead:"노래와 음악으로 도움이 필요한 곳을 직접 찾아가는 문화예술 봉사단입니다.",
+text:"요양원, 복지시설, 장애인 단체 등 문화예술의 손길이 필요한 곳을 찾아가 공연과 재능기부를 진행하고 있습니다.\n\n단순히 공연을 보여주는 것에 그치지 않고, 직접 노래를 가르치고 함께 노래하며 나중에는 직접 무대에 설 수 있는 기회까지 만들어가는 것을 목표로 합니다.",
+heading:"주요 활동",
+list:["찾아가는 노래봉사","요양원·복지시설 공연","장애인 문화예술 활동","노래교육 및 재능기부","지역사회 문화봉사","문화소외계층 지원","함께하는 무대 만들기"],
+quote:"필요한 곳이라면 어디든 찾아가겠습니다."
+},
+partners: {
+title:"협력업체",
+eng:"Business Partners",
+lead:"공연과 문화예술행사를 함께 만들어가는 전문 협력 파트너입니다.",
+text:"공연기획과 행사운영을 비롯하여 음향·조명, 영상촬영 등 각 분야의 전문적인 협력을 통해 보다 안정적이고 완성도 높은 무대를 만들어갑니다.",
+heading:"협력 분야",
+list:["공연기획","음향·조명","영상촬영","행사운영","문화콘텐츠 제작"],
+quote:"전문적인 협력으로 더 좋은 무대를 만들어갑니다."
+},
+affiliates: {
+title:"제휴기관",
+eng:"Affiliated Organizations",
+lead:"지역사회와 문화예술 발전을 위해 함께 협력하는 기관 및 단체입니다.",
+text:"공공기관, 문화기관, 복지기관, 지역단체 등과 협력하여 공연과 문화예술 활동, 사회공헌 및 지역사회 사업을 함께 추진합니다.",
+heading:"협력 분야",
+list:["공공기관","문화기관","복지기관","지역단체","문화예술 협력기관"],
+quote:"지역사회와 함께 문화예술의 가치를 만들어갑니다."
+}
+};
+
+const partnerModal=document.getElementById("partnerModal");
+const partnerModalClose=document.getElementById("partnerModalClose");
+
+function openPartnerDetail(type){
+const d=partnerDetails[type];
+if(!d) return;
+document.getElementById("partnerModalTitle").textContent=d.title;
+document.getElementById("partnerModalEng").textContent=d.eng;
+document.getElementById("partnerModalLead").textContent=d.lead;
+document.getElementById("partnerModalText").textContent=d.text;
+document.getElementById("partnerModalHeading").textContent=d.heading;
+document.getElementById("partnerModalList").innerHTML=d.list.map(function(item){return "<li>"+item+"</li>";}).join("");
+document.getElementById("partnerModalQuote").textContent=d.quote;
+partnerModal.classList.add("open");
+partnerModal.setAttribute("aria-hidden","false");
+document.body.style.overflow="hidden";
+}
+
+function closePartnerDetail(){
+partnerModal.classList.remove("open");
+partnerModal.setAttribute("aria-hidden","true");
+document.body.style.overflow="";
+}
+
 document.querySelectorAll(".more-btn").forEach(function(btn){
-
 btn.addEventListener("click",function(e){
-
 e.preventDefault();
-
-alert("준비중입니다.");
-
+openPartnerDetail(btn.dataset.detail);
+});
 });
 
+partnerModalClose.addEventListener("click",closePartnerDetail);
+partnerModal.addEventListener("click",function(e){
+if(e.target===partnerModal) closePartnerDetail();
+});
+document.addEventListener("keydown",function(e){
+if(e.key==="Escape" && partnerModal.classList.contains("open")) closePartnerDetail();
 });
 
 </script>
