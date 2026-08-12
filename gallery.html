@@ -1,431 +1,935 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>갤러리 | 가수인생활 엔터테인먼트</title>
-<meta content="가수인생활 엔터테인먼트 공식 홈페이지. 공연기획, 가수 매니지먼트, 무료공연, 문화예술교육, 지역상생, 사회환원 활동 안내." name="description"/>
-<!-- V46: 메뉴별 완전 분리 화면 + 강제 숨김 적용 -->
+
 <style>
-    :root{
-      --bg:#080808;--panel:#151518;--panel2:#101116;--gold:#e0b354;--gold2:#f2cf7a;
-      --text:#f6f2e9;--muted:#c9c1b5;--line:#34343a;
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:"Pretendard","Noto Sans KR",Arial,sans-serif;line-height:1.72}
-    a{color:inherit;text-decoration:none}
-    button,input,select,textarea{font:inherit}
-    .wrap{max-width:1240px;margin:auto;padding:0 24px}
-    header{position:sticky;top:0;z-index:100;background:#050505;border-bottom:1px solid var(--line);box-shadow:0 8px 28px rgba(0,0,0,.28)}
-    .head{min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:14px}
-    .brand{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;white-space:nowrap;flex:0 0 auto}
-    .brand img{width:54px;height:54px;object-fit:contain;border-radius:50%}
-    .brand b{color:var(--gold2)}
-    .desktop-nav{display:flex;align-items:center;justify-content:flex-end;gap:1px;flex-wrap:nowrap}
-    .desktop-nav a{padding:10px 7px;border-radius:9px;color:var(--muted);font-size:14px;font-weight:850;white-space:nowrap}
-    .desktop-nav a:hover,.desktop-nav a.active{background:rgba(224,179,84,.13);color:var(--gold2)}
-    .menu-btn{display:none;width:58px;height:58px;border:1px solid var(--line);border-radius:18px;background:#141519;color:var(--gold2);font-size:30px;cursor:pointer;flex:0 0 auto}
-    .mobile-nav{display:none;position:fixed;inset:86px 0 0;z-index:1000;background:rgba(0,0,0,.985);padding:22px;overflow-y:auto;overscroll-behavior:contain;border-top:1px solid var(--line);box-shadow:0 18px 40px rgba(0,0,0,.55)}
-    .mobile-nav.open{display:block}
-    .mobile-nav a{display:block;max-width:620px;margin:0 auto 10px;padding:15px 18px;border:1px solid var(--line);border-radius:14px;background:#111217;color:var(--text);font-size:19px;font-weight:800}
-    .mobile-nav a:hover,.mobile-nav a.active{background:var(--gold);color:#111;border-color:var(--gold)}
-    .hero{min-height:calc(100vh - 86px);display:grid;place-items:center;text-align:center;padding:26px 0 24px;position:relative;overflow:hidden;background:
-      radial-gradient(circle at 50% 0%,rgba(255,195,63,.34),transparent 28%),
-      radial-gradient(circle at 50% 78%,rgba(224,179,84,.16),transparent 38%),
-      linear-gradient(180deg,#070604 0%,#080808 56%,#050505 100%)}
-    .hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.78;background-image:
-      radial-gradient(circle,rgba(255,211,102,.95) 0 1px,transparent 1.8px),
-      radial-gradient(circle,rgba(255,184,48,.55) 0 1.4px,transparent 2.1px);background-size:120px 120px,190px 190px;background-position:15px 20px,70px 35px}
-    .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:150px;background:linear-gradient(180deg,transparent,rgba(224,179,84,.06));border-bottom:1px solid rgba(224,179,84,.45)}
-    .hero .wrap{position:relative;z-index:1;max-width:1280px}
-    .hero-logo{display:block;width:min(620px,52vw);max-height:390px;object-fit:contain;margin:0 auto 2px;background:transparent;filter:drop-shadow(0 0 32px rgba(224,179,84,.38))}
-    .hero h1{font-size:clamp(48px,5.5vw,78px);line-height:1.08;margin:4px 0 10px;text-shadow:0 4px 20px rgba(0,0,0,.75)}
-    .hero .lead{font-size:clamp(18px,1.6vw,25px);max-width:920px}
-    .hero-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:20px}
-    .hero-actions .btn{min-width:190px;margin-top:0;padding:12px 20px;background:rgba(8,8,8,.72);backdrop-filter:blur(4px)}
-    .hero-actions .btn.fill{box-shadow:0 8px 28px rgba(224,179,84,.25)}
-    .eyebrow{color:var(--gold);font-weight:900;letter-spacing:.18em;font-size:22px}
-    h1{font-size:clamp(48px,8vw,86px);line-height:1.15;margin:18px 0 24px}
-    h2{font-size:clamp(40px,6vw,66px);line-height:1.2;margin:12px 0 20px}
-    h3{font-size:32px;line-height:1.35;margin:0 0 26px}
-    .lead{font-size:clamp(20px,3vw,31px);color:var(--muted);max-width:900px;margin:auto}
-section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108px}
-    .section-head{text-align:center;margin-bottom:56px}
-    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
-    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
-    .card{background:var(--panel);border:1px solid var(--line);border-radius:34px;padding:44px}
-    .card p{font-size:19px;color:var(--muted);line-height:1.78}
-    .tag{display:inline-block;padding:9px 16px;border-radius:999px;background:#3a3120;color:var(--gold2);font-weight:900;margin-right:8px}
-    .status{display:inline-block;padding:9px 16px;border:1px solid #594a2c;border-radius:999px;color:var(--gold2);font-weight:900}
-    .btn{display:inline-block;margin-top:22px;padding:16px 28px;border:2px solid var(--gold);border-radius:999px;color:var(--gold2);font-size:21px;font-weight:900;background:transparent;cursor:pointer}
-    .btn.fill{background:var(--gold);color:#16120b}
-    .filters{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:30px 0 46px}
-    .filters button{padding:14px 24px;border-radius:999px;border:1px solid var(--line);background:#090909;color:var(--muted);font-weight:900;font-size:20px}
-    .filters button.active{background:var(--gold);color:#111}
-    details{border:1px solid #594a2c;border-radius:24px;padding:26px 30px;margin:18px 0;background:var(--panel2)}
-    summary{cursor:pointer;font-size:24px;font-weight:900}
-    details p{font-size:20px;color:var(--muted)}
-    .project-card .bar{background:#372e20;color:var(--gold2);padding:12px 18px;border-radius:999px;font-weight:900;margin-bottom:26px}
-    .project-detail{display:none;margin-top:26px;border-top:1px solid #4a402d;padding-top:24px}
-    .project-card.open .project-detail{display:block}
-    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-    .photo{min-height:320px;border:1px solid #765e31;border-radius:32px;background:linear-gradient(135deg,#3d3528,#1c1c22);display:grid;place-items:center;text-align:center;color:var(--muted);font-size:24px;overflow:hidden}
-    .photo img{width:100%;height:100%;min-height:320px;object-fit:cover;display:block}
+*{
+    box-sizing:border-box;
+}
 
-    .gallery-item{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:26px;overflow:hidden}
-    .gallery-item .photo{border:0;border-radius:0;min-height:260px}
-    .gallery-item figcaption{padding:18px 20px 22px;color:var(--muted);font-size:16px;line-height:1.65}
-    .gallery-item figcaption strong{display:block;color:var(--text);font-size:19px;margin-bottom:5px}
-    .news-photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
-    .news-photos img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px;border:1px solid #765e31}
-    .contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:28px}
-    label{display:block;font-weight:900;margin:20px 0 8px}
-    input,select,textarea{width:100%;background:#111217;color:#fff;border:1px solid #765e31;border-radius:18px;padding:18px}
-    textarea{min-height:200px;resize:vertical}
-    .notice{font-size:18px;color:var(--muted)}
-    footer{text-align:center;padding:80px 20px;color:#aaa}
-    footer img{width:160px;height:160px;object-fit:contain;border-radius:50%;display:block;margin:0 auto 24px}
-    @media(max-width:1020px){
-      .desktop-nav{display:none}
-      .menu-btn{display:block}
-      .head{min-height:86px}
-      .mobile-nav{inset:86px 0 0}
+body{
+    margin:0;
+    background:#080808;
+    color:#fff;
+    font-family:"Malgun Gothic",sans-serif;
+}
+
+/* =========================
+   상단 메뉴
+========================= */
+
+header{
+    height:70px;
+    background:#050505;
+    border-bottom:1px solid #222;
+    display:flex;
+    align-items:center;
+}
+
+.header-inner{
+    width:92%;
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    color:#FFD700;
+    font-size:18px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+nav{
+    display:flex;
+    gap:22px;
+    align-items:center;
+}
+
+nav a{
+    color:#ddd;
+    text-decoration:none;
+    font-size:14px;
+}
+
+nav a:hover{
+    color:#FFD700;
+}
+
+nav a.active{
+    color:#FFD700;
+    font-weight:bold;
+}
+
+/* =========================
+   제목
+========================= */
+
+.hero{
+    text-align:center;
+    padding:55px 20px 35px;
+}
+
+.hero-small{
+    color:#FFD700;
+    font-size:15px;
+    font-weight:bold;
+    letter-spacing:3px;
+    margin-bottom:10px;
+}
+
+.hero h1{
+    margin:0;
+    font-size:48px;
+    font-weight:800;
+}
+
+.hero p{
+    margin:18px 0 0;
+    color:#cfcfcf;
+    font-size:18px;
+}
+
+/* =========================
+   갤러리
+========================= */
+
+.gallery-wrap{
+    width:92%;
+    max-width:1200px;
+    margin:10px auto 0;
+}
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+/* 카드 */
+
+.gallery-card{
+    background:#151515;
+    border:1px solid #303030;
+    border-radius:18px;
+    overflow:hidden;
+    transition:transform .2s,border-color .2s;
+}
+
+.gallery-card:hover{
+    transform:translateY(-3px);
+    border-color:#8d7315;
+}
+
+/* 사진 */
+
+.gallery-image{
+    width:100%;
+    height:220px;
+    background:#222;
+    position:relative;
+    overflow:hidden;
+}
+
+.gallery-image img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+}
+
+.no-image{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#888;
+    font-size:18px;
+    background:
+        linear-gradient(
+            135deg,
+            #252525,
+            #171717
+        );
+}
+
+/* 번호 */
+
+.number{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:#080808;
+    color:#FFD700;
+    border:1px solid #FFD700;
+    border-radius:8px;
+    padding:6px 10px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+/* 카드 내용 */
+
+.gallery-content{
+    padding:18px 18px 20px;
+}
+
+.gallery-content h2{
+    margin:0 0 12px;
+    font-size:21px;
+    color:#fff;
+    line-height:1.35;
+}
+
+.gallery-content .date{
+    color:#aaa;
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.gallery-content p{
+    margin:0;
+    color:#ccc;
+    font-size:14px;
+    line-height:1.55;
+
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+}
+
+/* 자세히 보기 */
+
+.view-btn{
+    display:inline-block;
+    margin-top:16px;
+    padding:9px 16px;
+    border:1px solid #FFD700;
+    border-radius:20px;
+    color:#FFD700;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.view-btn:hover{
+    background:#FFD700;
+    color:#000;
+}
+
+/* =========================
+   페이지 이동
+========================= */
+
+.pagination{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:18px;
+    margin:35px 0 55px;
+}
+
+.page-arrow{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    border:1px solid #FFD700;
+    background:#111;
+    color:#FFD700;
+    font-size:23px;
+    cursor:pointer;
+}
+
+.page-arrow:hover:not(:disabled){
+    background:#FFD700;
+    color:#000;
+}
+
+.page-arrow:disabled{
+    opacity:.3;
+    cursor:default;
+}
+
+.page-info{
+    color:#fff;
+    font-size:16px;
+    min-width:60px;
+    text-align:center;
+}
+
+.page-dots{
+    display:flex;
+    gap:8px;
+}
+
+.page-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#444;
+}
+
+.page-dot.active{
+    background:#FFD700;
+}
+
+/* =========================
+   없음
+========================= */
+
+.empty{
+    grid-column:1 / -1;
+    padding:80px 20px;
+    text-align:center;
+    color:#888;
+    font-size:18px;
+}
+
+/* =========================
+   모바일
+========================= */
+
+@media(max-width:900px){
+
+    nav{
+        gap:10px;
     }
-    @media(max-width:760px){
-      .wrap{padding:0 21px}
-      .head{min-height:78px}
-      .brand{font-size:18px;gap:9px;min-width:0}
-      .brand img{width:50px;height:50px}
-      .brand span{overflow:hidden;text-overflow:ellipsis}
-      .menu-btn{width:50px;height:50px;font-size:26px;border-radius:15px}
-      .mobile-nav{inset:78px 0 0;padding:15px}
-      .mobile-nav a{font-size:17px;padding:12px 15px}
-      .hero{min-height:calc(100vh - 78px);padding:38px 0 34px}
-      .hero-logo{width:min(300px,76vw);max-height:280px;margin-bottom:8px}
-      .hero h1{font-size:clamp(36px,10vw,52px);margin:8px 0 14px}
-      .hero .lead{font-size:17px;line-height:1.65}
-      .hero-actions{gap:10px;margin-top:24px}
-      .hero-actions .btn{min-width:calc(50% - 8px);font-size:15px;padding:11px 12px}
-      .eyebrow{font-size:14px;letter-spacing:.11em}
-      h1{font-size:clamp(36px,10vw,52px)}
-      h2{font-size:clamp(32px,9vw,45px)}
-      .lead{font-size:18px;line-height:1.7}
-      section{padding:58px 0;scroll-margin-top:88px}
-      .section-head{margin-bottom:32px}
-      .grid,.grid3,.gallery,.contact-grid{grid-template-columns:1fr}
-      .news-photos{grid-template-columns:1fr}
-      .card{padding:27px 23px;border-radius:24px}
-      .card p{font-size:17px;line-height:1.7}
-      h3{font-size:25px;margin-bottom:18px}
-      .filters{gap:8px;margin:20px 0 30px}
-      .filters button{font-size:15px;padding:10px 14px}
-      details{padding:19px 20px;border-radius:18px}
-      summary{font-size:18px}
-      details p{font-size:16px}
-      .btn{font-size:17px;padding:12px 18px}
-      .photo{min-height:210px;font-size:19px}
-      footer{padding:48px 20px}
-      footer img{width:112px;height:112px}
+
+    nav a{
+        font-size:12px;
     }
-  </style>
+
+    .gallery-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    header{
+        height:auto;
+        padding:15px 0;
+    }
+
+    .header-inner{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    nav{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .hero{
+        padding:40px 15px 25px;
+    }
+
+    .hero h1{
+        font-size:36px;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    .gallery-grid{
+        grid-template-columns:1fr;
+    }
+
+    .gallery-image{
+        height:230px;
+    }
+
+}
+</style>
 </head>
+
 <body>
+
 <header>
-<div class="wrap head">
-<a class="brand" href="index.html"><img alt="가수인생활 엔터테인먼트 로고" src="logo.png"/><span>가수인생활 <b>엔터테인먼트</b></span></a>
-<nav aria-label="PC 주요 메뉴" class="desktop-nav">
-<a href="index.html">홈</a><a href="about.html">회사소개</a><a href="partners.html">함께하는 단체</a><a href="artists.html">소속가수</a>
-<a href="news.html">뉴스</a><a href="notice.html">공지</a><a href="schedule.html">일정</a>
-<a href="projects.html">실적</a><a href="resources.html">자료실</a><a href="video.html">영상센터</a>
-<a class="active" href="gallery.html">갤러리</a><a href="contact.html">문의</a>
-</nav>
-<button aria-expanded="false" aria-label="모바일 메뉴 열기" class="menu-btn" id="menuBtn">☰</button>
-</div>
+    <div class="header-inner">
+
+        <div class="logo">
+            가수인생활 엔터테인먼트
+        </div>
+
+        <nav>
+            <a href="index.html">홈</a>
+            <a href="company.html">회사소개</a>
+            <a href="group.html">함께하는 단체</a>
+            <a href="artists.html">소속가수</a>
+            <a href="news.html">뉴스</a>
+            <a href="notice.html">공지</a>
+            <a href="schedule.html">일정</a>
+            <a href="projects.html">실적</a>
+            <a href="files.html">자료실</a>
+            <a href="video.html">영상센터</a>
+            <a href="gallery.html" class="active">갤러리</a>
+            <a href="contact.html">문의</a>
+        </nav>
+
+    </div>
 </header>
-<nav aria-hidden="true" aria-label="모바일 주요 메뉴" class="mobile-nav" id="mobileNav">
-<a href="index.html">홈</a><a href="about.html">회사소개</a><a href="partners.html">함께하는 단체</a><a href="artists.html">소속가수</a>
-<a href="news.html">공식 뉴스</a><a href="notice.html">공지사항</a><a href="schedule.html">행사일정</a>
-<a href="projects.html">주요 실적</a><a href="resources.html">자료실</a><a href="video.html">영상센터</a>
-<a class="active" href="gallery.html">갤러리</a><a href="contact.html">문의</a>
-</nav>
-<main>
 
 
+<section class="hero">
 
+    <div class="hero-small">
+        GALLERY
+    </div>
 
+    <h1>갤러리</h1>
 
+    <p>
+        공연, 행사, 봉사활동 등의 현장 모습을 분야별로 기록해 공개합니다.
+    </p>
 
-
-
-
-<section id="gallery">
-<div class="wrap">
-<div class="section-head">
-<div class="eyebrow">GALLERY</div>
-<h2>갤러리</h2>
-<p class="lead">공연, 행사, 봉사활동의 현장 모습을 분야별로 기록해 공개합니다.</p>
-</div>
-
-<!-- 관리자에서 등록한 사진이 자동으로 표시되는 3열 × 2행 영역 -->
-<div class="gallery" id="galleryGrid"></div>
-
-<div id="galleryListWrap" style="margin-top:46px;display:none">
-    <h3 style="color:var(--gold2);border-left:4px solid var(--gold);padding-left:12px;">
-        갤러리 목록
-    </h3>
-    <div id="galleryList"></div>
-</div>
-
-<p class="notice" id="galleryCaption" style="text-align:center;margin-top:22px"></p>
-</div>
 </section>
 
+
+<main class="gallery-wrap">
+
+    <div id="galleryGrid" class="gallery-grid"></div>
+
+    <div id="pagination" class="pagination" style="display:none;">
+
+        <button
+            id="prevBtn"
+            class="page-arrow"
+            type="button">
+            ←
+        </button>
+
+        <div id="pageDots" class="page-dots"></div>
+
+        <div id="pageInfo" class="page-info">
+            1 / 1
+        </div>
+
+        <button
+            id="nextBtn"
+            class="page-arrow"
+            type="button">
+            →
+        </button>
+
+    </div>
+
 </main>
-<footer><img alt="가수인생활 엔터테인먼트 로고" src="logo.png"/><div>© 2026 가수인생활 엔터테인먼트. All rights reserved.</div></footer>
-<script>
-document.addEventListener('DOMContentLoaded',()=>{
-  const menuBtn=document.getElementById('menuBtn');
-  const mobileNav=document.getElementById('mobileNav');
 
-  function closeMobileMenu(){
-    mobileNav.classList.remove('open');
-    mobileNav.setAttribute('aria-hidden','true');
-    menuBtn.setAttribute('aria-expanded','false');
-    menuBtn.textContent='☰';
-    document.body.style.overflow='';
-  }
-
-  menuBtn.addEventListener('click',()=>{
-    const open=!mobileNav.classList.contains('open');
-    mobileNav.classList.toggle('open',open);
-    mobileNav.setAttribute('aria-hidden',String(!open));
-    menuBtn.setAttribute('aria-expanded',String(open));
-    menuBtn.textContent=open?'×':'☰';
-    document.body.style.overflow=open?'hidden':'';
-  });
-
-  mobileNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMobileMenu));
-
-  window.addEventListener('resize',()=>{
-    if(window.innerWidth>1020) closeMobileMenu();
-  });
-
-  document.querySelectorAll('.detailBtn').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const card=btn.closest('.project-card');
-      const parent=card.parentElement;
-      parent.querySelectorAll('.project-card.open').forEach(other=>{
-        if(other!==card){
-          other.classList.remove('open');
-          const otherBtn=other.querySelector('.detailBtn');
-          if(otherBtn) otherBtn.textContent=otherBtn.dataset.label||'세부보기';
-        }
-      });
-      card.classList.toggle('open');
-      btn.textContent=card.classList.contains('open')?'접기':(btn.dataset.label||'세부보기');
-    });
-  });
-
-  document.querySelectorAll('details').forEach(detail=>{
-    detail.addEventListener('toggle',()=>{
-      if(!detail.open) return;
-      const group=detail.closest('.card');
-      if(!group) return;
-      group.querySelectorAll('details[open]').forEach(other=>{
-        if(other!==detail) other.open=false;
-      });
-    });
-  });
-
-  const filterButtons=document.querySelectorAll('.filters button[data-filter]');
-  const newsCards=document.querySelectorAll('.news-card');
-  filterButtons.forEach(button=>{
-    button.addEventListener('click',()=>{
-      filterButtons.forEach(b=>b.classList.remove('active'));
-      button.classList.add('active');
-      const filter=button.dataset.filter;
-      newsCards.forEach(card=>{
-        card.style.display=(filter==='전체'||card.dataset.category===filter)?'block':'none';
-      });
-    });
-  });
-
-  const form=document.getElementById('contactForm');
-  if(form) form.addEventListener('submit',e=>{
-    e.preventDefault();
-    const g=id=>document.getElementById(id).value.trim();
-    const subject=encodeURIComponent('[홈페이지 문의] '+g('type')+' - '+g('name'));
-    const body=encodeURIComponent(
-`이름 또는 단체명: ${g('name')}
-연락처: ${g('phone')}
-문의 구분: ${g('type')}
-행사명: ${g('event')}
-예상 관객 수: ${g('audience')}
-
-요청사항:
-${g('request')}`);
-    location.href=`mailto:myung4002@naver.com?subject=${subject}&body=${body}`;
-  });
-});
-</script>
-
-<!-- Netlify Identity: 초대·로그인 링크 처리 -->
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on('init', function(user) {
-      const hasAuthToken = /(?:invite_token|confirmation_token|recovery_token|email_change_token)=/.test(window.location.hash);
-      if (!user && hasAuthToken) {
-        window.netlifyIdentity.open();
-      }
-    });
-    window.netlifyIdentity.on('login', function() {
-      window.netlifyIdentity.close();
-    });
-  }
-</script>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+import {
+    initializeApp
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
 import {
     getFirestore,
     collection,
-    getDocs
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+    getDocs,
+    query,
+    orderBy
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+
+/* =========================
+   Firebase
+========================= */
 
 const firebaseConfig = {
-    apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
-    authDomain:"gasuinent.firebaseapp.com",
-    projectId:"gasuinent",
-    storageBucket:"gasuinent.firebasestorage.app",
-    messagingSenderId:"122370674182",
-    appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",
-    measurementId:"G-39M5K1M6K7"
+
+    apiKey:
+        "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+
+    authDomain:
+        "gasuinent.firebaseapp.com",
+
+    projectId:
+        "gasuinent",
+
+    storageBucket:
+        "gasuinent.firebasestorage.app",
+
+    messagingSenderId:
+        "122370674182",
+
+    appId:
+        "1:122370674182:web:3bb831917d8d6ed36d7d87",
+
+    measurementId:
+        "G-39M5K1M6K7"
 };
 
+
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
 
-function escapeHtml(value){
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-}
 
-function card(item){
-    if(!item){
-        return `
-        <figure class="gallery-item">
-            <div class="photo" style="display:grid;place-items:center;">
-                <span style="color:#888;font-size:20px;">사진 등록 대기</span>
+/* =========================
+   설정
+========================= */
+
+const PAGE_SIZE = 6;
+
+let currentPage = 1;
+
+let galleryItems = [];
+
+
+/* =========================
+   갤러리 불러오기
+========================= */
+
+async function loadGallery(){
+
+    const grid =
+        document.getElementById("galleryGrid");
+
+    try{
+
+        const q = query(
+            collection(db,"gallery"),
+            orderBy("timestamp","desc")
+        );
+
+        const snapshot =
+            await getDocs(q);
+
+        galleryItems = [];
+
+        snapshot.forEach(item => {
+
+            galleryItems.push({
+                id:item.id,
+                data:item.data()
+            });
+
+        });
+
+
+        /*
+         * 고정된 사진을 먼저 표시
+         */
+
+        galleryItems.sort((a,b)=>{
+
+            const ap =
+                a.data.pinned === true ? 1 : 0;
+
+            const bp =
+                b.data.pinned === true ? 1 : 0;
+
+            if(ap !== bp){
+                return bp - ap;
+            }
+
+            return (
+                (b.data.timestamp || 0) -
+                (a.data.timestamp || 0)
+            );
+
+        });
+
+
+        currentPage = 1;
+
+        renderGallery();
+
+    }catch(error){
+
+        console.error(
+            "갤러리 불러오기 오류:",
+            error
+        );
+
+        grid.innerHTML = `
+            <div class="empty">
+                갤러리를 불러오지 못했습니다.
             </div>
-            <figcaption>
-                <strong>갤러리</strong>
-                관리자에서 사진을 등록하면 이곳에 표시됩니다.
-            </figcaption>
-        </figure>`;
+        `;
+
     }
 
-    const image = item.image
-        ? `<img src="${item.image}" alt="${escapeHtml(item.title)}">`
-        : `<div class="photo" style="display:grid;place-items:center;color:#888;">사진 없음</div>`;
-
-    return `
-    <figure class="gallery-item">
-        <a href="gallery_view.html?id=${item.id}">
-            <div class="photo">${image}</div>
-            <figcaption>
-                <strong>${escapeHtml(item.title)}</strong>
-                ${escapeHtml(item.content)}
-            </figcaption>
-        </a>
-    </figure>`;
 }
 
-async function loadPublicGallery(){
-    const snapshot = await getDocs(collection(db,"gallery"));
-    const rows = [];
 
-    snapshot.forEach(docItem=>{
-        rows.push({
-            id:docItem.id,
-            ...docItem.data()
-        });
+/* =========================
+   갤러리 표시
+========================= */
+
+function renderGallery(){
+
+    const grid =
+        document.getElementById("galleryGrid");
+
+    const start =
+        (currentPage - 1) * PAGE_SIZE;
+
+    const items =
+        galleryItems.slice(
+            start,
+            start + PAGE_SIZE
+        );
+
+
+    if(items.length === 0){
+
+        grid.innerHTML = `
+            <div class="empty">
+                등록된 사진이 없습니다.
+            </div>
+        `;
+
+        document.getElementById(
+            "pagination"
+        ).style.display = "none";
+
+        return;
+
+    }
+
+
+    let html = "";
+
+
+    items.forEach((item,index)=>{
+
+        const g = item.data;
+
+        const number =
+            start + index + 1;
+
+        const title =
+            escapeHtml(g.title || "");
+
+        const content =
+            escapeHtml(g.content || "");
+
+        const date =
+            escapeHtml(g.date || "");
+
+        let imageHTML = "";
+
+
+        if(g.image){
+
+            imageHTML = `
+                <img
+                    src="${escapeAttribute(g.image)}"
+                    alt="${escapeAttribute(g.title || "갤러리 사진")}"
+                    loading="lazy"
+                    onerror="this.style.display='none';this.parentElement.querySelector('.no-image').style.display='flex';"
+                >
+
+                <div
+                    class="no-image"
+                    style="display:none;">
+                    사진 없음
+                </div>
+            `;
+
+        }else{
+
+            imageHTML = `
+                <div class="no-image">
+                    사진 없음
+                </div>
+            `;
+
+        }
+
+
+        html += `
+
+            <article class="gallery-card">
+
+                <div class="gallery-image">
+
+                    ${imageHTML}
+
+                    <div class="number">
+                        ${number}
+                    </div>
+
+                </div>
+
+
+                <div class="gallery-content">
+
+                    <h2>
+                        ${title}
+                    </h2>
+
+                    ${
+                        date
+                        ?
+                        `<div class="date">
+                            📅 ${date}
+                        </div>`
+                        :
+                        ""
+                    }
+
+
+                    ${
+                        content
+                        ?
+                        `<p>${content}</p>`
+                        :
+                        ""
+                    }
+
+
+                    <a
+                        class="view-btn"
+                        href="gallery_view.html?id=${encodeURIComponent(item.id)}">
+                        자세히 보기 →
+                    </a>
+
+                </div>
+
+            </article>
+
+        `;
+
     });
 
-    rows.sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
 
-    // 고정 사진 최대 3개
-    const pinned = rows.filter(item=>item.pinned===true).slice(0,3);
+    grid.innerHTML = html;
 
-    // 고정되지 않은 최신 사진으로 6칸을 채움
-    const normal = rows.filter(item=>item.pinned!==true);
-    const latest = normal.slice(0, 6-pinned.length);
+    renderPagination();
 
-    // 메인: 정확히 6칸
-    const display = [...pinned, ...latest];
-
-    while(display.length < 6){
-        display.push(null);
-    }
-
-    document.getElementById("galleryGrid").innerHTML =
-        display.map(card).join("");
-
-    // 메인 6칸에 들어간 자료를 제외하고 7번째부터 목록
-    const mainIds = new Set(
-        display.filter(Boolean).map(item=>item.id)
-    );
-
-    const list = rows.filter(item=>!mainIds.has(item.id));
-
-    const listWrap = document.getElementById("galleryListWrap");
-    const listEl = document.getElementById("galleryList");
-
-    if(list.length){
-        listWrap.style.display = "block";
-        listEl.innerHTML = list.map(item=>`
-            <div style="
-                display:flex;
-                align-items:center;
-                gap:18px;
-                padding:15px 5px;
-                border-bottom:1px solid var(--line);
-            ">
-                <a href="gallery_view.html?id=${item.id}"
-                   style="display:flex;align-items:center;gap:18px;width:100%;">
-                    ${
-                        item.image
-                        ? `<img src="${item.image}"
-                               alt="${escapeHtml(item.title)}"
-                               style="width:120px;height:78px;object-fit:cover;border-radius:10px;">`
-                        : `<div style="width:120px;height:78px;background:#222;border-radius:10px;"></div>`
-                    }
-                    <div>
-                        <strong style="display:block;font-size:18px;">
-                            ${escapeHtml(item.title)}
-                        </strong>
-                        <span style="color:#999;font-size:13px;">
-                            ${escapeHtml(item.date)}
-                        </span>
-                    </div>
-                </a>
-            </div>
-        `).join("");
-    }else{
-        listWrap.style.display = "none";
-    }
-
-    document.getElementById("galleryCaption").textContent =
-        "관리자에서 등록한 사진이 자동으로 갤러리에 표시됩니다.";
 }
 
-loadPublicGallery();
+
+/* =========================
+   페이지 버튼
+========================= */
+
+function renderPagination(){
+
+    const pagination =
+        document.getElementById(
+            "pagination"
+        );
+
+    const prevBtn =
+        document.getElementById(
+            "prevBtn"
+        );
+
+    const nextBtn =
+        document.getElementById(
+            "nextBtn"
+        );
+
+    const pageInfo =
+        document.getElementById(
+            "pageInfo"
+        );
+
+    const dots =
+        document.getElementById(
+            "pageDots"
+        );
+
+
+    const totalPages =
+        Math.ceil(
+            galleryItems.length /
+            PAGE_SIZE
+        );
+
+
+    if(totalPages <= 1){
+
+        pagination.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    pagination.style.display =
+        "flex";
+
+
+    pageInfo.textContent =
+        currentPage +
+        " / " +
+        totalPages;
+
+
+    prevBtn.disabled =
+        currentPage <= 1;
+
+    nextBtn.disabled =
+        currentPage >= totalPages;
+
+
+    let dotHTML = "";
+
+
+    for(
+        let i=1;
+        i<=totalPages;
+        i++
+    ){
+
+        dotHTML += `
+            <span
+                class="page-dot ${
+                    i === currentPage
+                    ? "active"
+                    : ""
+                }">
+            </span>
+        `;
+
+    }
+
+
+    dots.innerHTML = dotHTML;
+
+}
+
+
+/* =========================
+   이전
+========================= */
+
+document
+    .getElementById("prevBtn")
+    .onclick = function(){
+
+        if(currentPage <= 1)
+            return;
+
+        currentPage--;
+
+        renderGallery();
+
+        window.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
+
+    };
+
+
+/* =========================
+   다음
+========================= */
+
+document
+    .getElementById("nextBtn")
+    .onclick = function(){
+
+        const totalPages =
+            Math.ceil(
+                galleryItems.length /
+                PAGE_SIZE
+            );
+
+        if(currentPage >= totalPages)
+            return;
+
+        currentPage++;
+
+        renderGallery();
+
+        window.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
+
+    };
+
+
+/* =========================
+   HTML 문자 처리
+========================= */
+
+function escapeHtml(value){
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+function escapeAttribute(value){
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        );
+
+}
+
+
+/* =========================
+   시작
+========================= */
+
+loadGallery();
+
 </script>
 
 </body>
