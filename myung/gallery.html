@@ -92,6 +92,7 @@ window.editId=null;
 <th>번호</th>
 <th>사진</th>
 <th>제목</th>
+<th>장소</th>
 <th>고정여부</th>
 <th>등록일</th>
 <th>보기</th>
@@ -110,6 +111,9 @@ window.editId=null;
 
 <label>사진 제목</label>
 <input type="text" id="galleryTitle">
+
+<label>장소</label>
+<input type="text" id="galleryPlace" placeholder="행사 장소를 입력하세요">
 
 <label style="display:flex;align-items:center;gap:10px;cursor:pointer;margin-top:20px;">
 <input type="checkbox" id="galleryPinned" style="width:20px;height:20px;">
@@ -188,6 +192,8 @@ reader.readAsDataURL(file);
 document.getElementById("saveGallery").onclick=async()=>{
 
 const title=document.getElementById("galleryTitle").value.trim();
+
+const place=document.getElementById("galleryPlace").value.trim();
 
 const content=document.getElementById("galleryContent").value.trim();
 
@@ -305,6 +311,7 @@ return;
 
 const data={
 title:title,
+place:place,
 content:content,
 image:imageUrl,
 pinned:pinned,
@@ -337,6 +344,8 @@ alert("사진이 등록되었습니다.");
 
 
 document.getElementById("galleryTitle").value="";
+
+document.getElementById("galleryPlace").value="";
 
 document.getElementById("galleryContent").value="";
 
@@ -415,7 +424,7 @@ if(pageItems.length===0){
 
 html=`
 <tr>
-<td colspan="8">
+<td colspan="9">
 등록된 사진이 없습니다.
 </td>
 </tr>
@@ -443,6 +452,8 @@ g.image
 </td>
 
 <td>${g.title||""}</td>
+
+<td>${g.place||""}</td>
 
 <td>
 ${
@@ -614,6 +625,9 @@ const g=snap.data();
 document.getElementById("galleryTitle").value=
 g.title||"";
 
+document.getElementById("galleryPlace").value=
+g.place||"";
+
 document.getElementById("galleryContent").value=
 g.content||"";
 
@@ -694,11 +708,15 @@ const g=item.data;
 const title=
 (g.title||"").toLowerCase();
 
+const place=
+(g.place||"").toLowerCase();
+
 const content=
 (g.content||"").toLowerCase();
 
 return(
 title.includes(keyword)||
+place.includes(keyword)||
 content.includes(keyword)
 );
 
