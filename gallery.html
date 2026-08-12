@@ -113,7 +113,7 @@ measurementId:"G-39M5K1M6K7"
 };
 
 const db=getFirestore(initializeApp(firebaseConfig));
-const PAGE_SIZE=6;
+const PAGE_SIZE=5;
 let currentPage=1;
 let galleryItems=[];
 
@@ -123,7 +123,12 @@ return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&g
 
 function card(item){
 const g=item.data||{},title=esc(g.title||""),date=esc(g.date||""),content=esc(g.content||"");
-const image=g.image?`<img src="${esc(g.image)}" alt="${title}" loading="lazy">`:`<div class="no-image">사진 없음</div>`;
+const imageUrl = g.image || g.imageUrl || g.photo || g.photoUrl || g.img || "";
+const image=imageUrl
+? `<img src="${esc(imageUrl)}" alt="${title}" loading="lazy"
+    onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+   <div class="no-image" style="display:none;">사진 없음</div>`
+: `<div class="no-image">사진 없음</div>`;
 return `<article class="gallery-card" data-id="${esc(item.id)}" tabindex="0" role="button">
 <div class="gallery-image">${image}</div>
 <div class="gallery-info">
