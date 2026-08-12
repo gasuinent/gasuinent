@@ -341,13 +341,11 @@ document.addEventListener("DOMContentLoaded", () => {
             <div id="artistProfileActivities"></div>
             <div id="artistProfileSongs"></div>
             <div id="artistProfileVideo"></div>
+        </div>
 
-            <div class="artist-profile-actions">
-                <button type="button" class="artist-profile-main"
-                        onclick="location.href='index.html'">메인으로 돌아가기</button>
-                <button type="button" class="artist-profile-back"
-                        onclick="closeArtistProfile()">프로필 닫기</button>
-            </div>
+        <div class="artist-profile-actions">
+            <button type="button" class="artist-profile-main"
+                    onclick="location.href='artists.html'">소속가수 메인</button>
         </div>
 
     </div>
@@ -383,7 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
     background: #181818;
     border: 1px solid rgba(212,175,55,.55);
     border-radius: 16px;
-    padding: 42px;
+    padding: 42px 42px 72px;
     box-sizing: border-box;
     display: flex;
     gap: 42px;
@@ -446,18 +444,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* 프로필 하단 이동 버튼 */
 .artist-profile-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 32px;
-    flex-wrap: wrap;
+    position: absolute;
+    left: 42px;
+    bottom: 22px;
 }
 
 .artist-profile-main,
 .artist-profile-back {
     border: 1px solid #d4af37;
     border-radius: 6px;
-    padding: 11px 20px;
-    font-size: 15px;
+    padding: 8px 14px;
+    font-size: 13px;
     cursor: pointer;
 }
 
@@ -491,6 +488,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     .artist-profile-info {
         padding: 20px 0 0;
+    }
+
+    .artist-profile-actions {
+        position: static;
+        margin-top: 20px;
+    }
+
+    .artist-profile-box {
+        padding-bottom: 25px;
     }
 }
 </style>
