@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프로젝트 상세보기</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    background:#080808;
+    color:#fff;
+    font-family:"Malgun Gothic",sans-serif;
+}
+
+header{
+    background:#050505;
+    border-bottom:1px solid #292929;
+    padding:20px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+    color:#FFD700;
+    font-size:30px;
+}
+
+.container{
+    width:92%;
+    max-width:1000px;
+    margin:40px auto 80px;
+}
+
+.back{
+    display:inline-block;
+    margin-bottom:20px;
+    padding:10px 18px;
+    border:1px solid #FFD700;
+    border-radius:25px;
+    color:#FFD700;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.detail-card{
+    background:#151515;
+    border:1px solid #333;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.detail-image{
+    width:100%;
+    aspect-ratio:3/2;
+    background:#222;
+}
+
+.detail-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.detail-info{
+    padding:28px;
+}
+
+.badge{
+    display:inline-block;
+    padding:7px 13px;
+    border-radius:20px;
+    background:#40361b;
+    color:#FFD700;
+    font-size:14px;
+    font-weight:bold;
+}
+
+h2{
+    margin:15px 0 25px;
+    font-size:36px;
+}
+
+.info-row{
+    border-top:1px solid #333;
+    padding:15px 0;
+    line-height:1.7;
+    color:#ddd;
+}
+
+.info-row strong{
+    display:inline-block;
+    width:90px;
+    color:#FFD700;
+}
+
+.description{
+    margin-top:25px;
+    padding-top:25px;
+    border-top:1px solid #333;
+    color:#ddd;
+    line-height:1.9;
+    white-space:pre-line;
+}
+
+.error{
+    text-align:center;
+    padding:80px 20px;
+    color:#aaa;
+}
+
+@media(max-width:700px){
+    h2{font-size:28px}
+    .detail-info{padding:20px}
+    .info-row strong{display:block;width:auto}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>프로젝트 상세보기</h1>
+</header>
+
+<div class="container">
+
+<a href="projects.html" class="back">← 실적 목록으로</a>
+
+<div id="content"></div>
+
+</div>
+
+<script>
+
+const projects={
+
+"1":{
+title:"나가수 힐링콘서트",
+category:"대표 공연",
+image:"healingconcert.jpg",
+host:"한국가수인생활협회",
+content:"지역 주민과 함께하는 힐링 공연",
+result:"다양한 지역 공연 및 문화행사 진행",
+detail:"지역 주민과 함께하는 문화예술 공연과 재능기부를 통해 지역사회 문화복지 향상에 기여한 공연 프로젝트입니다."
+},
+
+"2":{
+title:"전통시장 희망음악회",
+category:"문화공연",
+image:"marketconcert.jpg",
+host:"한국가수인생활협회",
+content:"전통시장 활성화를 위한 문화공연과 지역상생 음악회",
+result:"전통시장 문화행사 및 주민 참여 공연 추진",
+detail:"전통시장 상인과 지역주민이 함께 참여하는 문화행사를 통해 전통시장 활성화와 지역상생을 추진했습니다."
+},
+
+"3":{
+title:"수성못 나가수 가요제",
+category:"축제",
+image:"suseongfestival.jpg",
+host:"한국가수인생활협회",
+content:"지역 문화예술 활성화를 위한 가요제 및 시민 참여 공연",
+result:"지역 주민 참여형 문화행사 추진",
+detail:"시민들이 직접 참여하는 가요제와 공연을 통해 지역 문화예술 활성화에 기여하는 프로젝트입니다."
+},
+
+"4":{
+title:"찾아가는 복지공연",
+category:"복지공연",
+image:"volunteerconcert.jpg",
+host:"한국가수인생활협회",
+content:"복지시설 및 취약계층을 위한 찾아가는 문화공연",
+result:"다양한 복지시설 순회 공연 진행",
+detail:"복지시설과 취약계층을 직접 찾아가 문화공연과 재능기부를 진행하는 문화복지 프로젝트입니다."
+},
+
+"5":{
+title:"나가수 봉사단 문화나눔 공연",
+category:"봉사활동",
+image:"healingconcert.jpg",
+host:"한국가수인생활협회",
+content:"복지시설 문화공연 및 재능나눔",
+result:"정기 봉사공연",
+detail:"요양원, 복지관, 장애인시설 등을 찾아 무료 문화공연과 재능나눔을 진행하며 지역사회 문화복지를 실천했습니다."
+},
+
+"6":{
+title:"기타 문화예술 프로젝트",
+category:"기타",
+image:"marketconcert.jpg",
+host:"한국가수인생활협회",
+content:"문화예술 프로젝트 운영",
+result:"다양한 프로젝트 추진",
+detail:"지역사회와 함께하는 다양한 문화예술 활동과 공연 프로젝트를 기획하고 추진했습니다."
+},
+
+"7":{
+title:"동성로 나가수 가요제",
+category:"공연",
+image:"healingconcert.jpg",
+host:"한국가수인생활협회",
+content:"지역상권 활성화를 위한 가요제 및 공연",
+result:"지역 문화행사 추진",
+detail:"지역상권 활성화와 시민 참여를 위한 가요제 및 문화공연 프로젝트입니다."
+},
+
+"8":{
+title:"전통시장 살리기 캠페인",
+category:"캠페인",
+image:"marketconcert.jpg",
+host:"한국가수인생활협회",
+content:"전통시장 이용 활성화를 위한 캠페인",
+result:"지역상권 활성화 활동",
+detail:"전통시장 이용 활성화를 위한 문화공연과 지역상생 캠페인을 추진했습니다."
+},
+
+"9":{
+title:"문화예술 교육 프로그램",
+category:"교육",
+image:"suseongfestival.jpg",
+host:"한국가수인생활협회",
+content:"지역 주민 대상 문화예술 교육",
+result:"문화예술 교육 프로그램 운영",
+detail:"지역 주민들이 문화예술을 접하고 참여할 수 있도록 교육 프로그램을 운영했습니다."
+},
+
+"10":{
+title:"지역상생 협력사업",
+category:"협력",
+image:"volunteerconcert.jpg",
+host:"한국가수인생활협회",
+content:"지역사회와 함께하는 상생 협력 프로그램",
+result:"지역사회 협력사업 추진",
+detail:"지역사회와 문화예술 분야에서 함께 협력하며 지역상생을 추진하는 프로젝트입니다."
+}
+
+};
+
+const params=new URLSearchParams(location.search);
+const id=params.get("id");
+const project=projects[id];
+
+const content=document.getElementById("content");
+
+if(!project){
+
+content.innerHTML=`
+<div class="detail-card">
+    <div class="error">
+        해당 프로젝트를 찾을 수 없습니다.
+    </div>
+</div>`;
+
+}else{
+
+content.innerHTML=`
+
+<div class="detail-card">
+
+    <div class="detail-image">
+        <img src="${project.image}" alt="${project.title}">
+    </div>
+
+    <div class="detail-info">
+
+        <span class="badge">${project.category}</span>
+
+        <h2>${project.title}</h2>
+
+        <div class="info-row">
+            <strong>주최</strong>
+            ${project.host}
+        </div>
+
+        <div class="info-row">
+            <strong>내용</strong>
+            ${project.content}
+        </div>
+
+        <div class="info-row">
+            <strong>실적</strong>
+            ${project.result}
+        </div>
+
+        <div class="description">
+            <strong style="color:#FFD700;">상세 내용</strong><br><br>
+            ${project.detail}
+        </div>
+
+    </div>
+
+</div>
+
+`;
+
+}
+
+</script>
+
+</body>
+</html>
