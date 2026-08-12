@@ -366,115 +366,84 @@ function normalizeArtist(item) {
 
 function renderArtists() {
 
-    const grid =
-        document.getElementById("artistGrid");
+    const grid = document.getElementById("artistGrid");
 
     if (!grid) return;
 
-
     /*
-     * 현재 8개 박스는 항상 고정합니다.
+     * 현재 8칸은 항상 고정합니다.
+     * 1번 = 대표 아티스트 이명로
+     * 2~8번 = 관리자방에 등록된 가수가 순서대로 들어갑니다.
      *
-     * 1번 박스 = 대표 아티스트(이명로) 고정
-     * 2~8번 = 관리자방에서 등록된 가수가 순서대로 들어갑니다.
+     * 등록 가수가 8명 전체를 채우기 전에는
+     * 절대로 9번째 이후의 박스를 만들지 않습니다.
      *
-     * 8개가 모두 차기 전에는 절대로 새 박스를 만들지 않습니다.
-     *
-     * 8개가 모두 차고 9번째 가수가 등록되면
-     * 그때 9~12번 4개 박스를 한 번에 추가합니다.
-     *
-     * 이후에도 13번째, 17번째 가수가 들어올 때마다
-     * 4개 단위로 한 줄씩 추가합니다.
+     * 8칸이 모두 채워진 뒤 9번째 가수가 들어오면
+     * 9~12번의 새 4칸을 한 번에 만듭니다.
+     * 13번째 가수 → 13~16번,
+     * 17번째 가수 → 17~20번 방식입니다.
      */
 
-    const firstFixedArtist =
-        fixedArtists[0];
-
     const visibleArtists = [
-        firstFixedArtist,
+        fixedArtists[0],
         ...firebaseArtists
     ];
 
-    const singerCount =
-        visibleArtists.length;
+    const singerCount = visibleArtists.length;
 
-    let totalCount =
-        FIXED_BOX_COUNT;
+    let totalCount = FIXED_BOX_COUNT;
 
-
-    /*
-     * 8명이 모두 들어온 이후부터만
-     * 4개 단위로 새 줄을 추가합니다.
-     */
     if (singerCount > FIXED_BOX_COUNT) {
-
         totalCount =
             FIXED_BOX_COUNT +
             Math.ceil(
                 (singerCount - FIXED_BOX_COUNT) / ROW_SIZE
             ) * ROW_SIZE;
-
     }
-
 
     let html = "";
 
-
     for (let i = 0; i < totalCount; i++) {
 
-        const artist =
-            visibleArtists[i];
-
+        const artist = visibleArtists[i];
 
         if (artist) {
 
             html += `
-
                 <div class="artist-card"
                      data-artist-index="${i}"
                      role="button"
                      tabindex="0"
-                     aria-label="${artist.title} 프로필 보기">
+                     aria-label="${artist.title || "소속가수"} 프로필 보기">
 
-                    <img
-                        src="${artist.image}"
-                        alt="${artist.alt}">
+                    <img src="${artist.image || "logo.png"}"
+                         alt="${artist.alt || artist.title || "소속가수"}">
 
-                    <h3>${artist.title}</h3>
+                    <h3>${artist.title || "소속가수"}</h3>
 
-                    <p>${artist.text}</p>
+                    <p>${artist.text || ""}</p>
 
                 </div>
-
             `;
 
         } else {
 
             html += `
-
                 <div class="artist-card artist-empty-slot"
                      aria-hidden="true">
 
-                    <img
-                        src="logo.png"
-                        alt="">
+                    <img src="logo.png" alt="">
 
                     <h3>아티스트 준비중</h3>
 
                     <p>새로운 아티스트 영입 진행 중<br>Coming Soon</p>
 
                 </div>
-
             `;
-
         }
-
     }
 
-
-    grid.innerHTML =
-        html;
-
+    grid.innerHTML = html;
 }
 
 /*
@@ -607,9 +576,34 @@ function closeArtistProfile() {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-
     const grid =
         document.getElementById("artistGrid");
+
+    const modal =
+        document.getElementById("artistProfileModal");
+
+    const closeButton =
+        document.getElementById("artistProfileClose");
+
+    /*
+     * 프로필 오른쪽 위 X 버튼
+     * module script 안의 함수를 직접 연결하므로
+     * inline onclick 오류 없이 확실하게 작동합니다.
+     */
+    if (closeButton) {
+        closeButton.addEventListener("click", closeArtistProfile);
+    }
+
+    /*
+     * 프로필 바깥 어두운 영역을 눌러도 닫힙니다.
+     */
+    if (modal) {
+        modal.addEventListener("click", event => {
+            if (event.target === modal) {
+                closeArtistProfile();
+            }
+        });
+    }
 
 
     /*
@@ -662,6 +656,8 @@ document.addEventListener("DOMContentLoaded", () => {
      * 새 가수 박스가 생겨도 별도의 이벤트 등록 없이
      * 자동으로 클릭 기능이 적용됩니다.
      */
+    if (!grid) return;
+
     grid.addEventListener(
         "click",
         event => {
@@ -774,14 +770,13 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- 가수 프로필 표시 영역
      기존 페이지 디자인은 변경하지 않고
      가수 박스를 눌렀을 때만 열립니다. -->
-<div id="artistProfileModal" class="artist-profile-modal"
-     onclick="if(event.target === this) closeArtistProfile()">
+<div id="artistProfileModal" class="artist-profile-modal">
 
     <div class="artist-profile-box">
 
         <button type="button"
+                id="artistProfileClose"
                 class="artist-profile-close"
-                onclick="closeArtistProfile()"
                 aria-label="프로필 닫기">×</button>
 
         <div class="artist-profile-photo">
