@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>이명로 | 가수인생활 엔터테인먼트</title>
+<title>소속가수 | 가수인생활 엔터테인먼트</title>
 
 <meta name="description"
-content="가수인생활 엔터테인먼트 대표 아티스트 이명로의 프로필과 주요 활동을 소개합니다.">
+content="가수인생활 엔터테인먼트 소속 아티스트의 프로필과 주요 활동을 소개합니다.">
 
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="artists.css">
@@ -84,6 +84,48 @@ content="가수인생활 엔터테인먼트 대표 아티스트 이명로의 프
 
 .artist-detail-back{
     margin-top:35px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.artist-detail-extra{
+    max-width:1100px;
+    margin:30px auto 0;
+    background:#181818;
+    border:1px solid rgba(212,175,55,.20);
+    border-radius:20px;
+    padding:40px;
+}
+
+.artist-detail-extra h3{
+    color:#d4af37;
+    margin:0 0 20px;
+}
+
+.artist-detail-extra p{
+    color:#ddd;
+    line-height:1.9;
+    white-space:pre-line;
+}
+
+.artist-video{
+    margin-top:25px;
+}
+
+.artist-video a{
+    color:#d4af37;
+    text-decoration:none;
+}
+
+.artist-social{
+    margin-top:20px;
+}
+
+.artist-social a{
+    color:#d4af37;
+    margin-right:15px;
+    text-decoration:none;
 }
 
 @media(max-width:768px){
@@ -102,6 +144,11 @@ content="가수인생활 엔터테인먼트 대표 아티스트 이명로의 프
 
     .artist-detail-info h2{
         font-size:32px;
+    }
+
+    .artist-detail-extra{
+        margin:20px 15px 0;
+        padding:25px;
     }
 
 }
@@ -128,7 +175,6 @@ content="가수인생활 엔터테인먼트 대표 아티스트 이명로의 프
 </span>
 
 </a>
-
 
 <nav class="desktop-nav">
 
@@ -158,9 +204,7 @@ content="가수인생활 엔터테인먼트 대표 아티스트 이명로의 프
 
 <h1>소속가수</h1>
 
-<p>
-아티스트 상세 프로필
-</p>
+<p>아티스트 상세 프로필</p>
 
 </div>
 
@@ -171,18 +215,16 @@ content="가수인생활 엔터테인먼트 대표 아티스트 이명로의 프
 
 <div class="container">
 
-
 <div class="artist-detail-card">
 
-
 <div class="artist-detail-top">
-
 
 <div class="artist-detail-photo">
 
 <img
-    src="lee-myungro.jpg"
-    alt="이명로"
+    id="artistPhoto"
+    src="logo.png"
+    alt="소속가수"
 >
 
 </div>
@@ -190,58 +232,17 @@ content="가수인생활 엔터테인먼트 대표 아티스트 이명로의 프
 
 <div class="artist-detail-info">
 
-<h2>이명로</h2>
+<h2 id="artistName">소속가수</h2>
 
-<h3>
-대표 아티스트 · CEO
-</h3>
+<h3 id="artistGenre">가수</h3>
 
-
-<p>
-
-대한민국 가수이자 가수인생활 엔터테인먼트 대표입니다.
-
-</p>
+<p id="artistIntro"></p>
 
 
-<ul class="artist-detail-list">
-
-<li>
-대한민국 가수
-</li>
-
-<li>
-가수인생활 엔터테인먼트 대표
-</li>
-
-<li>
-한국가수인생활협회 회장
-</li>
-
-<li>
-나가수공연단 단장
-</li>
-
-<li>
-전국 공연 및 축제 기획
-</li>
-
-<li>
-신인가수 발굴 및 육성
-</li>
-
-</ul>
+<ul class="artist-detail-list" id="artistInfoList"></ul>
 
 
-<p>
-
-공연기획, 아티스트 매니지먼트,
-신인가수 발굴 및 육성,
-문화예술 공연과 지역문화 활성화를 위해
-전국의 다양한 공연과 문화행사를
-기획·운영하고 있습니다.
-
-</p>
+<p id="artistProfile"></p>
 
 
 <div class="artist-detail-back">
@@ -265,6 +266,23 @@ content="가수인생활 엔터테인먼트 대표 아티스트 이명로의 프
 </div>
 
 </div>
+
+</div>
+
+
+<div class="artist-detail-extra" id="artistExtra">
+
+<h3>주요 활동</h3>
+
+<p id="artistCareer"></p>
+
+<h3 id="songTitle">대표곡</h3>
+
+<p id="artistSongs"></p>
+
+<div class="artist-video" id="artistVideo"></div>
+
+<div class="artist-social" id="artistSocial"></div>
 
 </div>
 
@@ -300,6 +318,307 @@ E-mail : myung4002@naver.com
 </div>
 
 </footer>
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+import {
+    getFirestore,
+    doc,
+    getDoc
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+
+    authDomain: "gasuinent.firebaseapp.com",
+
+    projectId: "gasuinent",
+
+    storageBucket: "gasuinent.firebasestorage.app",
+
+    messagingSenderId: "122370674182",
+
+    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+
+    measurementId: "G-39M5K1M6K7"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+/* ==========================
+   기본 대표가수 정보
+   ========================== */
+
+const defaultArtist = {
+
+    photoUrl: "lee-myungro.jpg",
+
+    stageName: "이명로",
+
+    genre: "대표 아티스트 · CEO",
+
+    shortIntro:
+        "대한민국 가수이자 가수인생활 엔터테인먼트 대표입니다.",
+
+    profile:
+        "공연기획, 아티스트 매니지먼트, 신인가수 발굴 및 육성, 문화예술 공연과 지역문화 활성화를 위해 전국의 다양한 공연과 문화행사를 기획·운영하고 있습니다.",
+
+    career: [
+        "대한민국 가수",
+        "가수인생활 엔터테인먼트 대표",
+        "한국가수인생활협회 회장",
+        "나가수공연단 단장",
+        "전국 공연 및 축제 기획",
+        "신인가수 발굴 및 육성"
+    ].join("\n"),
+
+    songs: ""
+
+};
+
+
+/* ==========================
+   화면 표시
+   ========================== */
+
+function showArtist(artist) {
+
+    const photo =
+        artist.photoUrl ||
+        "logo.png";
+
+    const name =
+        artist.stageName ||
+        artist.name ||
+        "소속가수";
+
+    const genre =
+        artist.genre ||
+        "가수";
+
+    const intro =
+        artist.shortIntro ||
+        "";
+
+    const profile =
+        artist.profile ||
+        artist.description ||
+        "";
+
+    const career =
+        artist.career ||
+        artist.history ||
+        "";
+
+    const songs =
+        artist.songs ||
+        artist.representativeSongs ||
+        artist.representativeSong ||
+        "";
+
+    document.title =
+        name + " | 가수인생활 엔터테인먼트";
+
+
+    document.getElementById("artistPhoto").src =
+        photo;
+
+    document.getElementById("artistPhoto").alt =
+        name;
+
+    document.getElementById("artistName").textContent =
+        name;
+
+    document.getElementById("artistGenre").textContent =
+        genre;
+
+    document.getElementById("artistIntro").textContent =
+        intro;
+
+    document.getElementById("artistProfile").textContent =
+        profile;
+
+    document.getElementById("artistCareer").textContent =
+        career;
+
+    document.getElementById("artistSongs").textContent =
+        songs;
+
+
+    const infoList =
+        document.getElementById("artistInfoList");
+
+    infoList.innerHTML = "";
+
+
+    if (artist.realName) {
+
+        infoList.innerHTML +=
+            "<li>본명 : " +
+            artist.realName +
+            "</li>";
+
+    }
+
+    if (artist.genre) {
+
+        infoList.innerHTML +=
+            "<li>장르 : " +
+            artist.genre +
+            "</li>";
+
+    }
+
+    if (artist.agency) {
+
+        infoList.innerHTML +=
+            "<li>소속 : " +
+            artist.agency +
+            "</li>";
+
+    }
+
+    if (artist.phone) {
+
+        infoList.innerHTML +=
+            "<li>연락처 : " +
+            artist.phone +
+            "</li>";
+
+    }
+
+
+    const video =
+        document.getElementById("artistVideo");
+
+    video.innerHTML = "";
+
+    if (artist.videoUrl) {
+
+        video.innerHTML =
+            '<a href="' +
+            artist.videoUrl +
+            '" target="_blank" rel="noopener">' +
+            "▶ 공연 영상 보기" +
+            "</a>";
+
+    }
+
+
+    const social =
+        document.getElementById("artistSocial");
+
+    social.innerHTML = "";
+
+    if (artist.youtubeUrl) {
+
+        social.innerHTML +=
+            '<a href="' +
+            artist.youtubeUrl +
+            '" target="_blank" rel="noopener">' +
+            "YouTube" +
+            "</a>";
+
+    }
+
+    if (artist.instagramUrl) {
+
+        social.innerHTML +=
+            '<a href="' +
+            artist.instagramUrl +
+            '" target="_blank" rel="noopener">' +
+            "Instagram" +
+            "</a>";
+
+    }
+
+}
+
+
+/* ==========================
+   Firebase 가수 상세정보
+   ========================== */
+
+async function loadArtistDetail() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    const artistId =
+        params.get("id");
+
+
+    /* id가 없으면 기존 대표가수 표시 */
+
+    if (!artistId) {
+
+        showArtist(defaultArtist);
+
+        return;
+
+    }
+
+
+    try {
+
+        const artistRef =
+            doc(
+                db,
+                "artists",
+                artistId
+            );
+
+        const artistSnap =
+            await getDoc(artistRef);
+
+
+        if (artistSnap.exists()) {
+
+            showArtist(
+                artistSnap.data()
+            );
+
+        } else {
+
+            showArtist(defaultArtist);
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "가수 상세정보 불러오기 오류:",
+            error
+        );
+
+        showArtist(defaultArtist);
+
+    }
+
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadArtistDetail
+);
+
+</script>
 
 
 </body>
