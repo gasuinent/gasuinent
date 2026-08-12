@@ -553,6 +553,9 @@ const g=item.data || {};
 const title=
 esc(g.title || "");
 
+const place=
+esc(g.place || "");
+
 const date=
 esc(g.date || "");
 
@@ -614,8 +617,20 @@ ${imageHTML}
 <div class="gallery-info">
 
 <div class="gallery-title">
-${title}
+사진 제목 : ${title}
 </div>
+
+${
+place
+?
+`
+<div class="gallery-date">
+📍 ${place}
+</div>
+`
+:
+""
+}
 
 ${
 
