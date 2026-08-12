@@ -92,7 +92,6 @@ window.editId=null;
 <th>번호</th>
 <th>사진</th>
 <th>제목</th>
-<th>장소</th>
 <th>고정여부</th>
 <th>등록일</th>
 <th>보기</th>
@@ -424,7 +423,7 @@ if(pageItems.length===0){
 
 html=`
 <tr>
-<td colspan="9">
+<td colspan="8">
 등록된 사진이 없습니다.
 </td>
 </tr>
@@ -452,8 +451,6 @@ g.image
 </td>
 
 <td>${g.title||""}</td>
-
-<td>${g.place||""}</td>
 
 <td>
 ${
@@ -708,15 +705,11 @@ const g=item.data;
 const title=
 (g.title||"").toLowerCase();
 
-const place=
-(g.place||"").toLowerCase();
-
 const content=
 (g.content||"").toLowerCase();
 
 return(
 title.includes(keyword)||
-place.includes(keyword)||
 content.includes(keyword)
 );
 
