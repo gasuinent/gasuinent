@@ -515,27 +515,73 @@ function openArtistProfile(artist) {
     title.textContent =
         artist.title || "";
 
-    text.innerHTML =
-        artist.profile || artist.text || "";
+    const genre =
+        artist.genre || "";
+
+    const shortIntro =
+        artist.shortIntro || "";
+
+    const profile =
+        artist.profile || "";
+
+    const fallbackText =
+        artist.text || "";
+
+    text.innerHTML = `
+
+        ${genre
+            ? `<div class="artist-profile-meta">
+                    <span>장르</span>
+                    <strong>${genre}</strong>
+               </div>`
+            : ""}
+
+        ${shortIntro
+            ? `<div class="artist-profile-intro">
+                    ${shortIntro}
+               </div>`
+            : ""}
+
+        ${profile
+            ? `<div class="artist-profile-section">
+                    <h3>프로필</h3>
+                    <p>${profile}</p>
+               </div>`
+            : (!shortIntro && fallbackText
+                ? `<div class="artist-profile-section">
+                        <p>${fallbackText}</p>
+                   </div>`
+                : "")}
+
+    `;
 
     activities.innerHTML =
         artist.activities
-            ? `<h3>주요 활동</h3><p>${artist.activities}</p>`
+            ? `<div class="artist-profile-section">
+                    <h3>주요 활동</h3>
+                    <p>${artist.activities}</p>
+               </div>`
             : "";
 
     songs.innerHTML =
         artist.songs
-            ? `<h3>대표곡</h3><p>${artist.songs}</p>`
+            ? `<div class="artist-profile-section">
+                    <h3>대표곡</h3>
+                    <p>${artist.songs}</p>
+               </div>`
             : "";
 
     video.innerHTML =
         artist.videoUrl
-            ? `<a href="${artist.videoUrl}"
-                 target="_blank"
-                 rel="noopener"
-                 class="artist-profile-video">
-                    대표 영상 보기
-               </a>`
+            ? `<div class="artist-profile-section artist-profile-video-section">
+                    <h3>대표 영상</h3>
+                    <a href="${artist.videoUrl}"
+                       target="_blank"
+                       rel="noopener"
+                       class="artist-profile-video">
+                        대표 영상 보기
+                    </a>
+               </div>`
             : "";
 
 
@@ -750,11 +796,6 @@ document.addEventListener("DOMContentLoaded", () => {
             <div id="artistProfileVideo"></div>
         </div>
 
-        <div class="artist-profile-actions">
-            <button type="button" class="artist-profile-main"
-                    onclick="location.href='artists.html'">소속가수 메인</button>
-        </div>
-
     </div>
 </div>
 
@@ -788,7 +829,7 @@ document.addEventListener("DOMContentLoaded", () => {
     background: #181818;
     border: 1px solid rgba(212,175,55,.55);
     border-radius: 16px;
-    padding: 42px 42px 72px;
+    padding: 42px;
     box-sizing: border-box;
     display: flex;
     gap: 42px;
@@ -849,30 +890,59 @@ document.addEventListener("DOMContentLoaded", () => {
     text-decoration: none;
 }
 
-/* 프로필 하단 이동 버튼 */
-.artist-profile-actions {
-    position: absolute;
-    right: 42px;
-    bottom: 22px;
-}
 
-.artist-profile-main,
-.artist-profile-back {
-    border: 1px solid #d4af37;
+/* 가수 프로필 내용 */
+.artist-profile-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 18px;
+    padding: 7px 12px;
+    border: 1px solid rgba(212,175,55,.35);
     border-radius: 6px;
-    padding: 8px 14px;
-    font-size: 13px;
-    cursor: pointer;
+    background: rgba(212,175,55,.06);
+    color: #ddd;
+    font-size: 14px;
 }
 
-.artist-profile-main {
-    background: #d4af37;
-    color: #111;
+.artist-profile-meta span {
+    color: #aaa;
 }
 
-.artist-profile-back {
-    background: transparent;
+.artist-profile-meta strong {
     color: #d4af37;
+    font-weight: 600;
+}
+
+.artist-profile-intro {
+    margin: 0 0 20px;
+    color: #eee;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.artist-profile-section {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.artist-profile-section h3 {
+    margin: 0 0 8px;
+    color: #d4af37;
+    font-size: 19px;
+}
+
+.artist-profile-section p {
+    margin: 0;
+    color: #ddd;
+    font-size: 15px;
+    line-height: 1.9;
+}
+
+.artist-profile-video-section {
+    border-top: 0;
+    padding-top: 8px;
 }
 
 @media (max-width: 700px) {
@@ -895,15 +965,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     .artist-profile-info {
         padding: 20px 0 0;
-    }
-
-    .artist-profile-actions {
-        position: static;
-        margin-top: 20px;
-    }
-
-    .artist-profile-box {
-        padding-bottom: 25px;
     }
 }
 </style>
