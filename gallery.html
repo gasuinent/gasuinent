@@ -145,7 +145,7 @@ header{
 
 .gallery-image{
     width:100%;
-    height:190px;
+    height:250px;
     background:linear-gradient(135deg,#332e26,#19181b);
     display:flex;
     align-items:center;
@@ -166,8 +166,8 @@ header{
 }
 
 .gallery-info{
-    min-height:70px;
-    padding:14px 15px 16px;
+    min-height:58px;
+    padding:11px 15px 12px;
     background:#151515
 }
 
@@ -185,9 +185,29 @@ header{
 
 .gallery-content{
     color:#aaa;
-    font-size:13px;
-    line-height:1.5;
-    margin-top:5px
+    font-size:12px;
+    line-height:1.35;
+    margin-top:4px;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden
+}
+
+.detail-btn{
+    margin-top:10px;
+    padding:7px 12px;
+    border:1px solid #4a4a4a;
+    border-radius:7px;
+    background:#242424;
+    color:#fff;
+    font-size:12px;
+    cursor:pointer
+}
+
+.detail-btn:hover{
+    color:var(--gold2);
+    border-color:#765e31
 }
 
 .gallery-bottom{
@@ -624,6 +644,12 @@ ${content}
 ""
 
 }
+
+<button
+type="button"
+class="detail-btn">
+자세히 보기
+</button>
 
 </div>
 
