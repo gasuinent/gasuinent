@@ -112,7 +112,9 @@ nav a.active{
     gap:16px;
 }
 
-/* 카드 */
+/* =========================
+   카드
+========================= */
 
 .gallery-card{
     background:#151515;
@@ -127,11 +129,13 @@ nav a.active{
     border-color:#8d7315;
 }
 
-/* 사진 */
+/* =========================
+   사진
+========================= */
 
 .gallery-image{
     width:100%;
-    height:220px;
+    height:260px;
     background:#222;
     position:relative;
     overflow:hidden;
@@ -160,29 +164,16 @@ nav a.active{
         );
 }
 
-/* 번호 */
-
-.number{
-    position:absolute;
-    top:10px;
-    left:10px;
-    background:#080808;
-    color:#FFD700;
-    border:1px solid #FFD700;
-    border-radius:8px;
-    padding:6px 10px;
-    font-size:13px;
-    font-weight:bold;
-}
-
-/* 카드 내용 */
+/* =========================
+   카드 내용
+========================= */
 
 .gallery-content{
-    padding:18px 18px 20px;
+    padding:16px 18px 18px;
 }
 
 .gallery-content h2{
-    margin:0 0 12px;
+    margin:0 0 10px;
     font-size:21px;
     color:#fff;
     line-height:1.35;
@@ -191,14 +182,14 @@ nav a.active{
 .gallery-content .date{
     color:#aaa;
     font-size:13px;
-    margin-bottom:10px;
+    margin-bottom:8px;
 }
 
 .gallery-content p{
     margin:0;
     color:#ccc;
     font-size:14px;
-    line-height:1.55;
+    line-height:1.5;
 
     display:-webkit-box;
     -webkit-line-clamp:2;
@@ -206,11 +197,13 @@ nav a.active{
     overflow:hidden;
 }
 
-/* 자세히 보기 */
+/* =========================
+   자세히 보기
+========================= */
 
 .view-btn{
     display:inline-block;
-    margin-top:16px;
+    margin-top:14px;
     padding:9px 16px;
     border:1px solid #FFD700;
     border-radius:20px;
@@ -226,7 +219,7 @@ nav a.active{
 }
 
 /* =========================
-   페이지 이동
+   좌우 페이지 이동
 ========================= */
 
 .pagination{
@@ -265,22 +258,6 @@ nav a.active{
     text-align:center;
 }
 
-.page-dots{
-    display:flex;
-    gap:8px;
-}
-
-.page-dot{
-    width:10px;
-    height:10px;
-    border-radius:50%;
-    background:#444;
-}
-
-.page-dot.active{
-    background:#FFD700;
-}
-
 /* =========================
    없음
 ========================= */
@@ -311,6 +288,9 @@ nav a.active{
         grid-template-columns:repeat(2,1fr);
     }
 
+    .gallery-image{
+        height:230px;
+    }
 }
 
 @media(max-width:600px){
@@ -349,7 +329,6 @@ nav a.active{
     .gallery-image{
         height:230px;
     }
-
 }
 </style>
 </head>
@@ -357,6 +336,7 @@ nav a.active{
 <body>
 
 <header>
+
     <div class="header-inner">
 
         <div class="logo">
@@ -379,6 +359,7 @@ nav a.active{
         </nav>
 
     </div>
+
 </header>
 
 
@@ -401,7 +382,11 @@ nav a.active{
 
     <div id="galleryGrid" class="gallery-grid"></div>
 
-    <div id="pagination" class="pagination" style="display:none;">
+
+    <div
+        id="pagination"
+        class="pagination"
+        style="display:none;">
 
         <button
             id="prevBtn"
@@ -410,9 +395,9 @@ nav a.active{
             ←
         </button>
 
-        <div id="pageDots" class="page-dots"></div>
-
-        <div id="pageInfo" class="page-info">
+        <div
+            id="pageInfo"
+            class="page-info">
             1 / 1
         </div>
 
@@ -514,16 +499,17 @@ async function loadGallery(){
         snapshot.forEach(item => {
 
             galleryItems.push({
+
                 id:item.id,
+
                 data:item.data()
+
             });
 
         });
 
 
-        /*
-         * 고정된 사진을 먼저 표시
-         */
+        /* 고정된 사진을 먼저 표시 */
 
         galleryItems.sort((a,b)=>{
 
@@ -534,7 +520,9 @@ async function loadGallery(){
                 b.data.pinned === true ? 1 : 0;
 
             if(ap !== bp){
+
                 return bp - ap;
+
             }
 
             return (
@@ -549,7 +537,9 @@ async function loadGallery(){
 
         renderGallery();
 
-    }catch(error){
+    }
+
+    catch(error){
 
         console.error(
             "갤러리 불러오기 오류:",
@@ -606,33 +596,53 @@ function renderGallery(){
     let html = "";
 
 
-    items.forEach((item,index)=>{
+    items.forEach(item=>{
 
         const g = item.data;
 
-        const number =
-            start + index + 1;
 
         const title =
-            escapeHtml(g.title || "");
+            escapeHtml(
+                g.title || ""
+            );
+
 
         const content =
-            escapeHtml(g.content || "");
+            escapeHtml(
+                g.content || ""
+            );
+
 
         const date =
-            escapeHtml(g.date || "");
+            escapeHtml(
+                g.date || ""
+            );
+
 
         let imageHTML = "";
 
 
+        /*
+         * 기존 Firebase gallery.image 사용
+         */
+
         if(g.image){
 
             imageHTML = `
+
                 <img
                     src="${escapeAttribute(g.image)}"
-                    alt="${escapeAttribute(g.title || "갤러리 사진")}"
+                    alt="${escapeAttribute(
+                        g.title ||
+                        "갤러리 사진"
+                    )}"
                     loading="lazy"
-                    onerror="this.style.display='none';this.parentElement.querySelector('.no-image').style.display='flex';"
+                    onerror="
+                        this.style.display='none';
+                        this.parentElement
+                            .querySelector('.no-image')
+                            .style.display='flex';
+                    "
                 >
 
                 <div
@@ -640,14 +650,19 @@ function renderGallery(){
                     style="display:none;">
                     사진 없음
                 </div>
+
             `;
 
-        }else{
+        }
+
+        else{
 
             imageHTML = `
+
                 <div class="no-image">
                     사진 없음
                 </div>
+
             `;
 
         }
@@ -661,10 +676,6 @@ function renderGallery(){
 
                     ${imageHTML}
 
-                    <div class="number">
-                        ${number}
-                    </div>
-
                 </div>
 
 
@@ -674,12 +685,15 @@ function renderGallery(){
                         ${title}
                     </h2>
 
+
                     ${
                         date
                         ?
-                        `<div class="date">
+                        `
+                        <div class="date">
                             📅 ${date}
-                        </div>`
+                        </div>
+                        `
                         :
                         ""
                     }
@@ -688,7 +702,11 @@ function renderGallery(){
                     ${
                         content
                         ?
-                        `<p>${content}</p>`
+                        `
+                        <p>
+                            ${content}
+                        </p>
+                        `
                         :
                         ""
                     }
@@ -696,7 +714,9 @@ function renderGallery(){
 
                     <a
                         class="view-btn"
-                        href="gallery_view.html?id=${encodeURIComponent(item.id)}">
+                        href="gallery_view.html?id=${encodeURIComponent(
+                            item.id
+                        )}">
                         자세히 보기 →
                     </a>
 
@@ -742,11 +762,6 @@ function renderPagination(){
             "pageInfo"
         );
 
-    const dots =
-        document.getElementById(
-            "pageDots"
-        );
-
 
     const totalPages =
         Math.ceil(
@@ -781,59 +796,42 @@ function renderPagination(){
     nextBtn.disabled =
         currentPage >= totalPages;
 
-
-    let dotHTML = "";
-
-
-    for(
-        let i=1;
-        i<=totalPages;
-        i++
-    ){
-
-        dotHTML += `
-            <span
-                class="page-dot ${
-                    i === currentPage
-                    ? "active"
-                    : ""
-                }">
-            </span>
-        `;
-
-    }
-
-
-    dots.innerHTML = dotHTML;
-
 }
 
 
 /* =========================
-   이전
+   이전 버튼
 ========================= */
 
 document
     .getElementById("prevBtn")
     .onclick = function(){
 
-        if(currentPage <= 1)
+        if(currentPage <= 1){
+
             return;
+
+        }
+
 
         currentPage--;
 
         renderGallery();
 
+
         window.scrollTo({
+
             top:0,
+
             behavior:"smooth"
+
         });
 
     };
 
 
 /* =========================
-   다음
+   다음 버튼
 ========================= */
 
 document
@@ -846,16 +844,25 @@ document
                 PAGE_SIZE
             );
 
-        if(currentPage >= totalPages)
+
+        if(currentPage >= totalPages){
+
             return;
+
+        }
+
 
         currentPage++;
 
         renderGallery();
 
+
         window.scrollTo({
+
             top:0,
+
             behavior:"smooth"
+
         });
 
     };
