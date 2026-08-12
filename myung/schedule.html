@@ -116,6 +116,39 @@ button{
     float:right;
 }
 
+.pagination{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    margin:25px 0 35px;
+}
+
+.pagination button{
+    min-width:42px;
+    padding:9px 13px;
+    margin-top:0;
+    background:#333;
+    color:#fff;
+    border:1px solid #555;
+}
+
+.pagination button:hover,
+.pagination button.active{
+    background:#FFD700;
+    color:#000;
+    border-color:#FFD700;
+}
+
+.pagination button.arrow{
+    background:#555;
+}
+
+.empty{
+    padding:30px;
+    color:#aaa;
+    text-align:center;
+}
 </style>
 </head>
 
@@ -143,88 +176,48 @@ button{
 </tr>
 </thead>
 
-<tbody id="eventBody">
-<tr>
-    <td colspan="7">등록된 일정이 없습니다.</td>
-</tr>
-</tbody>
+<tbody id="eventBody"></tbody>
 
 </table>
 
+<div id="pagination" class="pagination"></div>
 
 <h2 style="margin-top:45px;">공연 일정 등록</h2>
 
-
 <label>행사명</label>
-
-<input
-    type="text"
-    id="eventTitle"
-    placeholder="행사명을 입력하세요"
->
-
+<input type="text" id="eventTitle" placeholder="행사명을 입력하세요">
 
 <label>공연 내용</label>
-
-<textarea
-    id="eventContent"
-    placeholder="공연 내용을 입력하세요"
-></textarea>
-
+<textarea id="eventContent" placeholder="공연 내용을 입력하세요"></textarea>
 
 <label>공연 날짜</label>
-
-<input
-    type="date"
-    id="eventDate"
->
-
+<input type="date" id="eventDate">
 
 <label>공연 장소</label>
-
-<input
-    type="text"
-    id="eventPlace"
-    placeholder="공연 장소를 입력하세요"
->
-
+<input type="text" id="eventPlace" placeholder="공연 장소를 입력하세요">
 
 <div class="pin-box">
-
     <label>
-        <input
-            type="checkbox"
-            id="eventPinned"
-        >
+        <input type="checkbox" id="eventPinned">
         📌 일정 고정
     </label>
 
     <div style="color:#aaa;margin-top:8px;">
         고정 일정은 최대 2개까지 가능합니다.
     </div>
-
 </div>
 
+<button id="saveEvent">공연 등록</button>
 
-<button id="saveEvent">
-    공연 등록
-</button>
-
-<button
-    id="cancelEdit"
-    class="cancel-btn"
-    style="display:none;">
+<button id="cancelEdit" class="cancel-btn" style="display:none;">
     수정 취소
 </button>
 
-<button
-    class="back"
-    onclick="location.href='admin.html'">
+<button class="back" onclick="location.href='admin.html'">
     관리자 메인
 </button>
 
 </div>
-
 
 <script type="module">
 
@@ -245,7 +238,6 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
-
 const firebaseConfig = {
 
     apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
@@ -261,39 +253,26 @@ const firebaseConfig = {
     appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
 
     measurementId: "G-39M5K1M6K7"
-
 };
-
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 let editId = null;
 
+const PAGE_SIZE = 5;
+let currentPage = 1;
+let allEvents = [];
 
-const titleInput =
-    document.getElementById("eventTitle");
-
-const contentInput =
-    document.getElementById("eventContent");
-
-const dateInput =
-    document.getElementById("eventDate");
-
-const placeInput =
-    document.getElementById("eventPlace");
-
-const pinnedInput =
-    document.getElementById("eventPinned");
-
-const saveButton =
-    document.getElementById("saveEvent");
-
-const cancelButton =
-    document.getElementById("cancelEdit");
-
-const eventBody =
-    document.getElementById("eventBody");
+const titleInput = document.getElementById("eventTitle");
+const contentInput = document.getElementById("eventContent");
+const dateInput = document.getElementById("eventDate");
+const placeInput = document.getElementById("eventPlace");
+const pinnedInput = document.getElementById("eventPinned");
+const saveButton = document.getElementById("saveEvent");
+const cancelButton = document.getElementById("cancelEdit");
+const eventBody = document.getElementById("eventBody");
+const pagination = document.getElementById("pagination");
 
 
 /* 고정 일정 개수 확인 */
@@ -318,7 +297,6 @@ async function getPinnedCount(excludeId = null){
         if(item.data().pinned === true){
             count++;
         }
-
     });
 
     return count;
@@ -329,51 +307,31 @@ async function getPinnedCount(excludeId = null){
 
 saveButton.onclick = async function(){
 
-    const title =
-        titleInput.value.trim();
-
-    const content =
-        contentInput.value.trim();
-
-    const date =
-        dateInput.value;
-
-    const place =
-        placeInput.value.trim();
-
-    const pinned =
-        pinnedInput.checked;
-
+    const title = titleInput.value.trim();
+    const content = contentInput.value.trim();
+    const date = dateInput.value;
+    const place = placeInput.value.trim();
+    const pinned = pinnedInput.checked;
 
     if(title === ""){
-
         alert("행사명을 입력하세요.");
-
+        titleInput.focus();
         return;
     }
 
-
     try{
-
-        /* 신규 등록 */
 
         if(!editId){
 
             if(pinned){
 
-                const count =
-                    await getPinnedCount();
+                const count = await getPinnedCount();
 
                 if(count >= 2){
-
-                    alert(
-                        "고정 일정은 최대 2개까지만 가능합니다."
-                    );
-
+                    alert("고정 일정은 최대 2개까지만 가능합니다.");
                     return;
                 }
             }
-
 
             await addDoc(
                 collection(db,"schedule"),
@@ -389,28 +347,17 @@ saveButton.onclick = async function(){
 
             alert("공연이 등록되었습니다.");
 
-        }
-
-
-        /* 수정 */
-
-        else{
+        }else{
 
             if(pinned){
 
-                const count =
-                    await getPinnedCount(editId);
+                const count = await getPinnedCount(editId);
 
                 if(count >= 2){
-
-                    alert(
-                        "이미 고정 일정이 2개 있습니다."
-                    );
-
+                    alert("이미 고정 일정이 2개 있습니다.");
                     return;
                 }
             }
-
 
             await updateDoc(
                 doc(db,"schedule",editId),
@@ -427,23 +374,18 @@ saveButton.onclick = async function(){
             alert("공연이 수정되었습니다.");
         }
 
-
         clearForm();
+        await loadEvent();
 
-        loadEvent();
-
-    }
-
-    catch(error){
+    }catch(error){
 
         console.error(error);
 
         alert(
             "저장에 실패했습니다.\n\n" +
-            error.message
+            (error.message || error)
         );
     }
-
 };
 
 
@@ -458,27 +400,84 @@ async function loadEvent(){
             orderBy("timestamp","desc")
         );
 
-        const snapshot =
-            await getDocs(q);
+        const snapshot = await getDocs(q);
 
-        let html = "";
-        let no = 1;
-
+        allEvents = [];
 
         snapshot.forEach(item => {
 
-            const event =
-                item.data();
+            allEvents.push({
+                id:item.id,
+                data:item.data()
+            });
+
+        });
+
+        const totalPages = Math.max(
+            1,
+            Math.ceil(allEvents.length / PAGE_SIZE)
+        );
+
+        if(currentPage > totalPages){
+            currentPage = totalPages;
+        }
+
+        renderEvents();
+
+    }catch(error){
+
+        console.error(error);
+
+        eventBody.innerHTML = `
+        <tr>
+            <td colspan="7" class="empty">
+                일정을 불러오지 못했습니다.
+            </td>
+        </tr>
+        `;
+
+        pagination.innerHTML = "";
+    }
+}
+
+
+/* 행사 표시 - 한 페이지 5개 */
+
+function renderEvents(){
+
+    const start = (currentPage - 1) * PAGE_SIZE;
+
+    const pageItems = allEvents.slice(
+        start,
+        start + PAGE_SIZE
+    );
+
+    let html = "";
+
+    if(pageItems.length === 0){
+
+        html = `
+        <tr>
+            <td colspan="7" class="empty">
+                등록된 일정이 없습니다.
+            </td>
+        </tr>
+        `;
+
+    }else{
+
+        pageItems.forEach((item,index) => {
+
+            const event = item.data;
 
             html += `
-
             <tr>
 
-                <td>${no++}</td>
+                <td>${start + index + 1}</td>
 
-                <td>${event.title || ""}</td>
+                <td>${escapeHtml(event.title || "")}</td>
 
-                <td>${event.date || ""}</td>
+                <td>${escapeHtml(event.date || "")}</td>
 
                 <td>
                     ${
@@ -514,38 +513,86 @@ async function loadEvent(){
             </tr>
             `;
         });
-
-
-        if(html === ""){
-
-            html = `
-            <tr>
-                <td colspan="7">
-                    등록된 일정이 없습니다.
-                </td>
-            </tr>
-            `;
-        }
-
-
-        eventBody.innerHTML = html;
-
     }
 
-    catch(error){
+    eventBody.innerHTML = html;
 
-        console.error(error);
+    renderPagination();
+}
 
-        eventBody.innerHTML = `
-        <tr>
-            <td colspan="7">
-                일정을 불러오지 못했습니다.
-            </td>
-        </tr>
+
+/* 페이지 번호 */
+
+function renderPagination(){
+
+    const totalPages = Math.ceil(
+        allEvents.length / PAGE_SIZE
+    );
+
+    if(totalPages <= 1){
+
+        pagination.innerHTML = "";
+        return;
+    }
+
+    let html = "";
+
+    if(currentPage > 1){
+
+        html += `
+        <button
+            class="arrow"
+            onclick="changePage(${currentPage - 1})">
+            ◀
+        </button>
         `;
     }
 
+    for(let i = 1; i <= totalPages; i++){
+
+        html += `
+        <button
+            class="${i === currentPage ? "active" : ""}"
+            onclick="changePage(${i})">
+            ${i}
+        </button>
+        `;
+    }
+
+    if(currentPage < totalPages){
+
+        html += `
+        <button
+            class="arrow"
+            onclick="changePage(${currentPage + 1})">
+            ▶
+        </button>
+        `;
+    }
+
+    pagination.innerHTML = html;
 }
+
+
+window.changePage = function(page){
+
+    const totalPages = Math.ceil(
+        allEvents.length / PAGE_SIZE
+    );
+
+    if(page < 1 || page > totalPages){
+        return;
+    }
+
+    currentPage = page;
+
+    renderEvents();
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+};
 
 
 /* 삭제 */
@@ -564,20 +611,17 @@ async function deleteEvent(id){
 
         alert("삭제되었습니다.");
 
-        loadEvent();
+        await loadEvent();
 
-    }
-
-    catch(error){
+    }catch(error){
 
         console.error(error);
 
         alert(
             "삭제에 실패했습니다.\n\n" +
-            error.message
+            (error.message || error)
         );
     }
-
 }
 
 window.deleteEvent = deleteEvent;
@@ -588,8 +632,8 @@ window.deleteEvent = deleteEvent;
 function viewEvent(id){
 
     window.location.href =
-        "../schedule_view.html?id=" + id;
-
+        "../schedule_view.html?id=" +
+        encodeURIComponent(id);
 }
 
 window.viewEvent = viewEvent;
@@ -601,64 +645,40 @@ async function editEvent(id){
 
     try{
 
-        const snap =
-            await getDoc(
-                doc(db,"schedule",id)
-            );
-
+        const snap = await getDoc(
+            doc(db,"schedule",id)
+        );
 
         if(!snap.exists()){
 
             alert("행사를 찾을 수 없습니다.");
-
             return;
         }
 
-
-        const event =
-            snap.data();
+        const event = snap.data();
 
         editId = id;
 
-        titleInput.value =
-            event.title || "";
+        titleInput.value = event.title || "";
+        contentInput.value = event.content || "";
+        dateInput.value = event.date || "";
+        placeInput.value = event.place || "";
+        pinnedInput.checked = event.pinned === true;
 
-        contentInput.value =
-            event.content || "";
-
-        dateInput.value =
-            event.date || "";
-
-        placeInput.value =
-            event.place || "";
-
-        pinnedInput.checked =
-            event.pinned === true;
-
-
-        saveButton.textContent =
-            "공연 수정";
-
-        cancelButton.style.display =
-            "inline-block";
-
+        saveButton.textContent = "공연 수정";
+        cancelButton.style.display = "inline-block";
 
         window.scrollTo({
             top:document.body.scrollHeight,
             behavior:"smooth"
         });
 
-    }
-
-    catch(error){
+    }catch(error){
 
         console.error(error);
 
-        alert(
-            "행사를 불러오지 못했습니다."
-        );
+        alert("행사를 불러오지 못했습니다.");
     }
-
 }
 
 window.editEvent = editEvent;
@@ -680,20 +700,26 @@ function clearForm(){
     editId = null;
 
     titleInput.value = "";
-
     contentInput.value = "";
-
     dateInput.value = "";
-
     placeInput.value = "";
-
     pinnedInput.checked = false;
 
-    saveButton.textContent =
-        "공연 등록";
+    saveButton.textContent = "공연 등록";
+    cancelButton.style.display = "none";
+}
 
-    cancelButton.style.display =
-        "none";
+
+/* HTML 문자 처리 */
+
+function escapeHtml(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
 }
 
 
