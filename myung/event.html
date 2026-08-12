@@ -1,39 +1,32 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>행사일정 관리</title>
 
 <style>
-
 body{
     margin:0;
     background:#111;
     color:#fff;
-    font-family:Malgun Gothic,sans-serif;
+    font-family:"Malgun Gothic",sans-serif;
 }
-
 header{
     background:#222;
     padding:20px;
     text-align:center;
 }
-
 header h1{
     margin:0;
     color:#FFD700;
     font-size:34px;
 }
-
 .container{
     width:95%;
     max-width:1200px;
     margin:30px auto;
 }
-
 input,textarea{
     width:100%;
     padding:12px;
@@ -42,19 +35,16 @@ input,textarea{
     font-size:18px;
     box-sizing:border-box;
 }
-
 textarea{
     height:220px;
     resize:vertical;
 }
-
 label{
     display:block;
     margin-top:20px;
     margin-bottom:8px;
     font-weight:bold;
 }
-
 button{
     background:#FFD700;
     color:#000;
@@ -65,30 +55,23 @@ button{
     font-weight:bold;
     cursor:pointer;
 }
-
 button:hover{
     background:#ffcc00;
 }
-
 table{
     width:100%;
     border-collapse:collapse;
     margin-top:20px;
 }
-
 th{
     background:#333;
     padding:12px;
 }
-
 td{
     padding:10px;
     border-bottom:1px solid #444;
     text-align:center;
 }
-
-/* 페이지 번호 */
-
 .pagination{
     display:flex;
     justify-content:center;
@@ -96,7 +79,6 @@ td{
     gap:8px;
     margin:25px 0 35px;
 }
-
 .pagination button{
     min-width:42px;
     padding:9px 13px;
@@ -104,22 +86,23 @@ td{
     color:#fff;
     border:1px solid #555;
 }
-
 .pagination button:hover,
 .pagination button.active{
     background:#FFD700;
     color:#000;
     border-color:#FFD700;
 }
-
 .pagination button.arrow{
     background:#555;
 }
-
+.empty{
+    padding:30px;
+    color:#aaa;
+    text-align:center;
+}
 </style>
 
 <script type="module">
-
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
@@ -137,64 +120,41 @@ orderBy
 }
 from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
-const firebaseConfig = {
-
-apiKey:
-"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
-
-authDomain:
-"gasuinent.firebaseapp.com",
-
-projectId:
-"gasuinent",
-
-storageBucket:
-"gasuinent.firebasestorage.app",
-
-messagingSenderId:
-"122370674182",
-
-appId:
-"1:122370674182:web:3bb831917d8d6ed36d7d87",
-
-measurementId:
-"G-39M5K1M6K7"
-
+const firebaseConfig={
+    apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+    authDomain:"gasuinent.firebaseapp.com",
+    projectId:"gasuinent",
+    storageBucket:"gasuinent.firebasestorage.app",
+    messagingSenderId:"122370674182",
+    appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",
+    measurementId:"G-39M5K1M6K7"
 };
 
 const app=initializeApp(firebaseConfig);
-
 const db=getFirestore(app);
 
 window.db=db;
-
 window.editId=null;
-
 </script>
-
 </head>
 
 <body>
 
 <header>
-
 <h1>📅 행사일정 관리</h1>
 
 <div style="margin-top:20px">
-
 <input
 id="searchText"
 type="text"
 placeholder="행사 검색..."
 style="width:320px;padding:10px;border-radius:6px;border:none;"
 >
-
-<button id="searchBtn">
-검색
+<button id="searchBtn">검색</button>
+<button id="allBtn" style="margin-left:8px;background:#555;color:#fff;">
+전체보기
 </button>
-
 </div>
-
 </header>
 
 <div class="container">
@@ -202,7 +162,7 @@ style="width:320px;padding:10px;border-radius:6px;border:none;"
 <h2>등록된 행사</h2>
 
 <table>
-
+<thead>
 <tr>
 <th>번호</th>
 <th>행사명</th>
@@ -212,9 +172,9 @@ style="width:320px;padding:10px;border-radius:6px;border:none;"
 <th>수정</th>
 <th>삭제</th>
 </tr>
+</thead>
 
 <tbody id="eventBody"></tbody>
-
 </table>
 
 <div id="pagination" class="pagination"></div>
@@ -235,23 +195,12 @@ style="width:320px;padding:10px;border-radius:6px;border:none;"
 <label>행사 내용</label>
 <textarea id="eventContent"></textarea>
 
-<button id="saveEvent">
-행사 저장
-</button>
+<button id="saveEvent">행사 저장</button>
 
 <button
 onclick="location.href='admin.html'"
-style="
-margin-left:15px;
-background:#555;
-color:#fff;
-border:none;
-border-radius:8px;
-padding:12px 25px;
-font-size:17px;
-font-weight:bold;
-cursor:pointer;
-">
+style="margin-left:15px;background:#555;color:#fff;"
+>
 🏠 관리 메인
 </button>
 
@@ -274,94 +223,50 @@ from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 const db=window.db;
 
-
-/* =========================
-   페이지 설정
-========================= */
-
 const PAGE_SIZE=5;
 
 let currentPage=1;
-
 let allEvents=[];
-
 let filteredEvents=[];
 
 
-/* =========================
-   행사 저장
-========================= */
+/* 행사 저장 */
 
 document.getElementById("saveEvent").onclick=async()=>{
 
-let title=
-document.getElementById("eventTitle")
-.value.trim();
+try{
 
-let eventDate=
-document.getElementById("eventDate")
-.value;
-
-let content=
-document.getElementById("eventContent")
-.value.trim();
-
-let place=
-document.getElementById("eventPlace")
-.value.trim();
-
+const title=document.getElementById("eventTitle").value.trim();
+const eventDate=document.getElementById("eventDate").value;
+const place=document.getElementById("eventPlace").value.trim();
+const content=document.getElementById("eventContent").value.trim();
 
 if(!title){
-
 alert("행사명을 입력하세요.");
-
 document.getElementById("eventTitle").focus();
-
 return;
-
 }
-
 
 if(!eventDate){
-
 alert("행사일을 선택하세요.");
-
 document.getElementById("eventDate").focus();
-
 return;
-
 }
-
 
 if(!content){
-
 alert("행사 내용을 입력하세요.");
-
 document.getElementById("eventContent").focus();
-
 return;
-
 }
 
-
 const data={
-
 title:title,
-
 eventDate:eventDate,
-
 place:place,
-
 content:content,
-
-date:new Date()
-.toISOString()
-.slice(0,10),
-
+date:new Date().toISOString().slice(0,10),
 timestamp:Date.now()
-
 };
-
 
 if(window.editId){
 
@@ -385,44 +290,47 @@ alert("행사가 등록되었습니다.");
 
 }
 
-
 document.getElementById("eventTitle").value="";
-
 document.getElementById("eventDate").value="";
-
 document.getElementById("eventPlace").value="";
-
 document.getElementById("eventContent").value="";
 
-loadEvent();
+await loadEvent();
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"행사 저장 중 오류가 발생했습니다.\n\n"+
+(error.message||error)
+);
+
+}
 
 };
 
 
-/* =========================
-   행사 목록 불러오기
-========================= */
+/* 행사 목록 */
 
 async function loadEvent(){
+
+try{
 
 const q=query(
 collection(db,"event"),
 orderBy("timestamp","desc")
 );
 
-const snapshot=
-await getDocs(q);
+const snapshot=await getDocs(q);
 
 allEvents=[];
 
-snapshot.forEach(docItem=>{
+snapshot.forEach(item=>{
 
 allEvents.push({
-
-id:docItem.id,
-
-data:docItem.data()
-
+id:item.id,
+data:item.data()
 });
 
 });
@@ -433,32 +341,41 @@ currentPage=1;
 
 renderEvents();
 
+}catch(error){
+
+console.error(error);
+
+document.getElementById("eventBody").innerHTML=`
+<tr>
+<td colspan="7" class="empty">
+행사 목록을 불러오지 못했습니다.
+</td>
+</tr>
+`;
+
+}
+
 }
 
 
-/* =========================
-   행사 표시
-========================= */
+/* 행사 표시 */
 
 function renderEvents(){
 
-const start=
-(currentPage-1)*PAGE_SIZE;
+const start=(currentPage-1)*PAGE_SIZE;
 
-const pageItems=
-filteredEvents.slice(
+const pageItems=filteredEvents.slice(
 start,
 start+PAGE_SIZE
 );
 
 let html="";
 
-
 if(pageItems.length===0){
 
 html=`
 <tr>
-<td colspan="7">
+<td colspan="7" class="empty">
 등록된 행사가 없습니다.
 </td>
 </tr>
@@ -472,41 +389,19 @@ const e=item.data;
 
 html+=`
 <tr>
-
+<td>${start+index+1}</td>
+<td>${escapeHtml(e.title||"")}</td>
+<td>${escapeHtml((e.eventDate||"").substring(0,10))}</td>
+<td>${escapeHtml(e.place||"")}</td>
 <td>
-${start+index+1}
+<button onclick="viewEvent('${item.id}')">보기</button>
 </td>
-
 <td>
-${e.title||""}
+<button onclick="editEvent('${item.id}')">수정</button>
 </td>
-
 <td>
-${(e.eventDate||"").substring(0,10)}
+<button onclick="deleteEvent('${item.id}')">삭제</button>
 </td>
-
-<td>
-${e.place||""}
-</td>
-
-<td>
-<button onclick="viewEvent('${item.id}')">
-보기
-</button>
-</td>
-
-<td>
-<button onclick="editEvent('${item.id}')">
-수정
-</button>
-</td>
-
-<td>
-<button onclick="deleteEvent('${item.id}')">
-삭제
-</button>
-</td>
-
 </tr>
 `;
 
@@ -514,41 +409,31 @@ ${e.place||""}
 
 }
 
-
-document.getElementById("eventBody")
-.innerHTML=html;
+document.getElementById("eventBody").innerHTML=html;
 
 renderPagination();
 
 }
 
 
-/* =========================
-   페이지 번호
-========================= */
+/* 페이지 번호 */
 
 function renderPagination(){
 
-const pagination=
-document.getElementById("pagination");
+const pagination=document.getElementById("pagination");
 
-const totalPages=
-Math.ceil(
+const totalPages=Math.ceil(
 filteredEvents.length/PAGE_SIZE
 );
-
 
 if(totalPages<=1){
 
 pagination.innerHTML="";
-
 return;
 
 }
 
-
 let html="";
-
 
 if(currentPage>1){
 
@@ -562,7 +447,6 @@ onclick="changePage(${currentPage-1})">
 
 }
 
-
 for(let i=1;i<=totalPages;i++){
 
 html+=`
@@ -574,7 +458,6 @@ ${i}
 `;
 
 }
-
 
 if(currentPage<totalPages){
 
@@ -588,7 +471,6 @@ onclick="changePage(${currentPage+1})">
 
 }
 
-
 pagination.innerHTML=html;
 
 }
@@ -601,24 +483,20 @@ currentPage=page;
 renderEvents();
 
 window.scrollTo({
-
 top:0,
-
 behavior:"smooth"
-
 });
 
 };
 
 
-/* =========================
-   삭제
-========================= */
+/* 삭제 */
 
 async function deleteEvent(id){
 
-if(!confirm("정말 삭제하시겠습니까?"))
-return;
+if(!confirm("정말 삭제하시겠습니까?")) return;
+
+try{
 
 await deleteDoc(
 doc(db,"event",id)
@@ -626,47 +504,48 @@ doc(db,"event",id)
 
 await loadEvent();
 
+}catch(error){
+
+alert(
+"행사 삭제 중 오류가 발생했습니다.\n\n"+
+(error.message||error)
+);
+
+}
+
 }
 
 window.deleteEvent=deleteEvent;
 
 
-/* =========================
-   수정
-========================= */
+/* 수정 */
 
 async function editEvent(id){
 
-window.editId=id;
-
-const snap=
-await getDoc(
+const snap=await getDoc(
 doc(db,"event",id)
 );
 
-if(!snap.exists())
+if(!snap.exists()){
+
+alert("행사를 찾을 수 없습니다.");
+
 return;
+
+}
+
+window.editId=id;
 
 const e=snap.data();
 
-document.getElementById("eventTitle")
-.value=e.title||"";
-
-document.getElementById("eventDate")
-.value=e.eventDate||"";
-
-document.getElementById("eventPlace")
-.value=e.place||"";
-
-document.getElementById("eventContent")
-.value=e.content||"";
+document.getElementById("eventTitle").value=e.title||"";
+document.getElementById("eventDate").value=e.eventDate||"";
+document.getElementById("eventPlace").value=e.place||"";
+document.getElementById("eventContent").value=e.content||"";
 
 window.scrollTo({
-
 top:document.body.scrollHeight,
-
 behavior:"smooth"
-
 });
 
 }
@@ -674,9 +553,7 @@ behavior:"smooth"
 window.editEvent=editEvent;
 
 
-/* =========================
-   보기
-========================= */
+/* 보기 */
 
 window.viewEvent=function(id){
 
@@ -687,12 +564,9 @@ encodeURIComponent(id);
 };
 
 
-/* =========================
-   검색
-========================= */
+/* 검색 */
 
-document.getElementById("searchBtn")
-.onclick=async()=>{
+document.getElementById("searchBtn").onclick=()=>{
 
 const keyword=
 document.getElementById("searchText")
@@ -700,26 +574,19 @@ document.getElementById("searchText")
 .toLowerCase()
 .trim();
 
-
 if(keyword===""){
 
 filteredEvents=[...allEvents];
 
 }else{
 
-filteredEvents=
-allEvents.filter(item=>{
+filteredEvents=allEvents.filter(item=>{
 
 const e=item.data;
 
-const title=
-(e.title||"").toLowerCase();
-
-const content=
-(e.content||"").toLowerCase();
-
-const place=
-(e.place||"").toLowerCase();
+const title=(e.title||"").toLowerCase();
+const content=(e.content||"").toLowerCase();
+const place=(e.place||"").toLowerCase();
 
 return(
 title.includes(keyword)||
@@ -731,6 +598,20 @@ place.includes(keyword)
 
 }
 
+currentPage=1;
+
+renderEvents();
+
+};
+
+
+/* 전체보기 */
+
+document.getElementById("allBtn").onclick=()=>{
+
+document.getElementById("searchText").value="";
+
+filteredEvents=[...allEvents];
 
 currentPage=1;
 
@@ -739,9 +620,21 @@ renderEvents();
 };
 
 
-/* =========================
-   시작
-========================= */
+/* HTML 문자 처리 */
+
+function escapeHtml(value){
+
+return String(value)
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+/* 시작 */
 
 loadEvent();
 
