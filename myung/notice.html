@@ -87,30 +87,56 @@ td{
     text-align:center;
 }
 
+/* 페이지 번호 */
+.pagination{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    margin:25px 0 35px;
+}
+
+.pagination button{
+    min-width:42px;
+    padding:9px 13px;
+    background:#333;
+    color:#fff;
+    border:1px solid #555;
+}
+
+.pagination button:hover{
+    background:#FFD700;
+    color:#000;
+}
+
+.pagination button.active{
+    background:#FFD700;
+    color:#000;
+    border-color:#FFD700;
+}
+
+.pagination button.arrow{
+    background:#555;
+}
+
 </style>
+
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
 import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-deleteDoc,
-doc,
-getDoc,
-updateDoc,
-query,
-orderBy
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    deleteDoc,
+    doc,
+    getDoc,
+    updateDoc,
+    query,
+    orderBy
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-
-import {
-getStorage,
-ref,
-uploadBytes,
-getDownloadURL
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
@@ -123,12 +149,9 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
-const storage = getStorage(app);
 
 window.db = db;
-window.storage = storage;
 window.editId = null;
 
 </script>
@@ -161,6 +184,7 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 
 <table>
 
+<thead>
 <tr>
 <th>번호</th>
 <th>제목</th>
@@ -169,10 +193,14 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 <th>수정</th>
 <th>삭제</th>
 </tr>
+</thead>
 
 <tbody id="noticeBody"></tbody>
 
 </table>
+
+<!-- 페이지 번호 -->
+<div id="pagination" class="pagination"></div>
 
 <hr>
 
@@ -180,13 +208,15 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 
 <label>공지 제목</label>
 <input type="text" id="noticeTitle">
+
 <label style="display:flex;align-items:center;gap:10px;margin-top:20px;">
-    <input type="checkbox" id="pinned" style="width:22px;height:22px;">
-    📌 상단 고정
+<input type="checkbox" id="pinned" style="width:22px;height:22px;">
+📌 상단 고정
 </label>
-<label class="date-label">
-    <span class="date-icon">📅</span>
-    <span>작성 날짜</span>
+
+<label>
+<span style="font-size:25px;">📅</span>
+작성 날짜
 </label>
 
 <input type="date" id="noticeDate">
@@ -195,236 +225,544 @@ style="width:320px;padding:10px;border-radius:6px;border:none;">
 <textarea id="noticeContent"></textarea>
 
 <button id="saveNotice">공지 저장</button>
-<button onclick="location.href='admin.html'"
+
+<button
+onclick="location.href='admin.html'"
 style="margin-left:15px;background:#555;color:#fff;border:none;border-radius:8px;padding:12px 25px;font-size:17px;font-weight:bold;cursor:pointer;">
 🏠 관리 메인
-</button>    
+</button>
+
+</div>
+
 <script type="module">
 
 import {
-collection,
-addDoc,
-getDocs,
-deleteDoc,
-doc,
-getDoc,
-updateDoc,
-query,
-orderBy
+    collection,
+    addDoc,
+    getDocs,
+    deleteDoc,
+    doc,
+    getDoc,
+    updateDoc,
+    query,
+    orderBy
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 const db = window.db;
+
+/* =========================
+   페이지 설정
+========================= */
+
+const PAGE_SIZE = 5;
+
+let currentPage = 1;
+
+let allNotices = [];
+
+let filteredNotices = [];
+
+
+/* =========================
+   오늘 날짜
+========================= */
+
 function todayString(){
+
     const d = new Date();
 
     return d.getFullYear()+"-"+
+
         String(d.getMonth()+1).padStart(2,"0")+"-"+
+
         String(d.getDate()).padStart(2,"0");
 }
 
-document.getElementById("noticeDate").value = todayString();
-document.getElementById("saveNotice").onclick = async () => {
 
-let title = document.getElementById("noticeTitle").value.trim();
-let content = document.getElementById("noticeContent").value.trim();
-let selectedDate = document.getElementById("noticeDate").value;
+/* =========================
+   날짜 기본값
+========================= */
 
-if(title==""){
-    alert("제목을 입력하세요.");
-document.getElementById("noticeTitle").focus();
-return;
-}
-if(content==""){
-    alert("공지 내용을 입력하세요.");
-    document.getElementById("noticeContent").focus();
-    return;
-}
-const data = {
-    title:title,
-    content:content,
-    pinned:document.getElementById("pinned").checked,
-    date:selectedDate,
-    timestamp:Date.now()
-};
+document.getElementById("noticeDate").value =
+    todayString();
 
-if(window.editId){
 
-    await updateDoc(
-        doc(db,"notice",window.editId),
-        data
-    );
+/* =========================
+   공지 불러오기
+========================= */
 
-    alert("공지가 수정되었습니다.");
-
-    window.editId = null;
-
-}else{
-
-    await addDoc(
-        collection(db,"notice"),
-        data
-    );
-
-    alert("공지가 등록되었습니다.");
-
-}
-
-document.getElementById("noticeTitle").value="";
-document.getElementById("noticeContent").value="";
-document.getElementById("noticeDate").value=todayString();
-document.getElementById("pinned").checked=false;
-
-loadNotice();
-
-};
 async function loadNotice(){
 
-const q = query(
-    collection(db,"notice"),
-    orderBy("timestamp","desc")
-);
+    const q = query(
+        collection(db,"notice"),
+        orderBy("timestamp","desc")
+    );
 
-const snapshot = await getDocs(q);
+    const snapshot = await getDocs(q);
 
-let html = "";
-let no = 1;
+    allNotices = [];
 
-snapshot.forEach(docItem=>{
+    snapshot.forEach(docItem => {
 
-const n = docItem.data();
+        allNotices.push({
 
-html += `
+            id:docItem.id,
 
-<tr>
+            data:docItem.data()
 
-<td>${no++}</td>
+        });
 
-<td>${n.title}</td>
+    });
 
-<td>${n.date}</td>
+    filteredNotices = [...allNotices];
 
-<td>
-<button onclick="viewNotice('${docItem.id}')">
-보기
-</button>
-</td>
+    currentPage = 1;
 
-<td>
-<button onclick="editNotice('${docItem.id}')">
-수정
-</button>
-</td>
-
-<td>
-<button onclick="deleteNotice('${docItem.id}')">
-삭제
-</button>
-</td>
-
-</tr>
-
-`;
-
-});
-
-document.getElementById("noticeBody").innerHTML = html;
+    renderNotice();
 
 }
+
+
+/* =========================
+   목록 출력
+========================= */
+
+function renderNotice(){
+
+    const body =
+        document.getElementById("noticeBody");
+
+    const start =
+        (currentPage - 1) * PAGE_SIZE;
+
+    const end =
+        start + PAGE_SIZE;
+
+    const pageItems =
+        filteredNotices.slice(start,end);
+
+    let html = "";
+
+    if(pageItems.length === 0){
+
+        html = `
+        <tr>
+        <td colspan="6">
+        등록된 공지가 없습니다.
+        </td>
+        </tr>
+        `;
+
+    }else{
+
+        pageItems.forEach((item,index)=>{
+
+            const n = item.data;
+
+            const number =
+                start + index + 1;
+
+            html += `
+
+            <tr>
+
+            <td>${number}</td>
+
+            <td>${n.title || ""}</td>
+
+            <td>${n.date || ""}</td>
+
+            <td>
+            <button onclick="viewNotice('${item.id}')">
+            보기
+            </button>
+            </td>
+
+            <td>
+            <button onclick="editNotice('${item.id}')">
+            수정
+            </button>
+            </td>
+
+            <td>
+            <button onclick="deleteNotice('${item.id}')">
+            삭제
+            </button>
+            </td>
+
+            </tr>
+
+            `;
+
+        });
+
+    }
+
+    body.innerHTML = html;
+
+    renderPagination();
+
+}
+
+
+/* =========================
+   페이지 번호 출력
+========================= */
+
+function renderPagination(){
+
+    const pagination =
+        document.getElementById("pagination");
+
+    const totalPages =
+        Math.ceil(
+            filteredNotices.length / PAGE_SIZE
+        );
+
+    if(totalPages <= 1){
+
+        pagination.innerHTML = "";
+
+        return;
+
+    }
+
+    let html = "";
+
+    /* 이전 */
+
+    if(currentPage > 1){
+
+        html += `
+        <button
+        class="arrow"
+        onclick="changePage(${currentPage-1})">
+        ◀
+        </button>
+        `;
+
+    }
+
+
+    /* 페이지 번호 */
+
+    for(let i=1;i<=totalPages;i++){
+
+        html += `
+
+        <button
+        class="${i === currentPage ? "active" : ""}"
+        onclick="changePage(${i})">
+
+        ${i}
+
+        </button>
+
+        `;
+
+    }
+
+
+    /* 다음 */
+
+    if(currentPage < totalPages){
+
+        html += `
+        <button
+        class="arrow"
+        onclick="changePage(${currentPage+1})">
+        ▶
+        </button>
+        `;
+
+    }
+
+    pagination.innerHTML = html;
+
+}
+
+
+/* =========================
+   페이지 이동
+========================= */
+
+window.changePage = function(page){
+
+    currentPage = page;
+
+    renderNotice();
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+};
+
+
+/* =========================
+   공지 저장
+========================= */
+
+document.getElementById("saveNotice").onclick =
+async () => {
+
+    let title =
+        document.getElementById("noticeTitle")
+        .value.trim();
+
+    let content =
+        document.getElementById("noticeContent")
+        .value.trim();
+
+    let selectedDate =
+        document.getElementById("noticeDate")
+        .value;
+
+
+    if(title === ""){
+
+        alert("제목을 입력하세요.");
+
+        document.getElementById("noticeTitle")
+        .focus();
+
+        return;
+
+    }
+
+
+    if(content === ""){
+
+        alert("공지 내용을 입력하세요.");
+
+        document.getElementById("noticeContent")
+        .focus();
+
+        return;
+
+    }
+
+
+    const data = {
+
+        title:title,
+
+        content:content,
+
+        pinned:
+        document.getElementById("pinned")
+        .checked,
+
+        date:selectedDate,
+
+        timestamp:Date.now()
+
+    };
+
+
+    if(window.editId){
+
+        await updateDoc(
+
+            doc(
+                db,
+                "notice",
+                window.editId
+            ),
+
+            data
+
+        );
+
+        alert("공지가 수정되었습니다.");
+
+        window.editId = null;
+
+    }else{
+
+        await addDoc(
+
+            collection(db,"notice"),
+
+            data
+
+        );
+
+        alert("공지가 등록되었습니다.");
+
+    }
+
+
+    document.getElementById("noticeTitle")
+    .value="";
+
+    document.getElementById("noticeContent")
+    .value="";
+
+    document.getElementById("noticeDate")
+    .value=todayString();
+
+    document.getElementById("pinned")
+    .checked=false;
+
+
+    loadNotice();
+
+};
+
+
+/* =========================
+   삭제
+========================= */
+
 async function deleteNotice(id){
 
-if(!confirm("정말 삭제하시겠습니까?")) return;
+    if(!confirm("정말 삭제하시겠습니까?"))
+        return;
 
-await deleteDoc(
-    doc(db,"notice",id)
-);
+    await deleteDoc(
 
-loadNotice();
+        doc(
+            db,
+            "notice",
+            id
+        )
+
+    );
+
+    loadNotice();
 
 }
 
 window.deleteNotice = deleteNotice;
+
+
+/* =========================
+   수정
+========================= */
+
 async function editNotice(id){
 
     window.editId = id;
 
-    const snap = await getDoc(doc(db,"notice",id));
+    const snap =
+        await getDoc(
+            doc(db,"notice",id)
+        );
 
-    if(!snap.exists()) return;
+    if(!snap.exists())
+        return;
 
     const n = snap.data();
 
-    document.getElementById("noticeTitle").value = n.title;
-    document.getElementById("noticeContent").value = n.content;
-document.getElementById("noticeDate").value =
-    n.date || todayString();
-    document.getElementById("pinned").checked = n.pinned === true;
+
+    document.getElementById("noticeTitle")
+    .value = n.title || "";
+
+
+    document.getElementById("noticeContent")
+    .value = n.content || "";
+
+
+    document.getElementById("noticeDate")
+    .value = n.date || todayString();
+
+
+    document.getElementById("pinned")
+    .checked = n.pinned === true;
+
+
     window.scrollTo({
+
         top:document.body.scrollHeight,
+
         behavior:"smooth"
+
     });
 
 }
 
 window.editNotice = editNotice;
 
+
+/* =========================
+   보기
+========================= */
+
 window.viewNotice = function(id){
 
-    location.href="notice_view.html?id="+id;
+    location.href =
+        "notice_view.html?id=" +
+        encodeURIComponent(id);
 
 };
 
-document.getElementById("searchBtn").onclick = async ()=>{
 
-const keyword = document.getElementById("searchText").value.toLowerCase();
+/* =========================
+   검색
+========================= */
 
-const snapshot = await getDocs(collection(db,"notice"));
+document.getElementById("searchBtn")
+.onclick = async () => {
 
-let html = "";
-let no = 1;
+    const keyword =
+        document.getElementById("searchText")
+        .value
+        .trim()
+        .toLowerCase();
 
-snapshot.forEach(docItem=>{
 
-const n = docItem.data();
+    if(keyword === ""){
 
-if(
-    n.title.toLowerCase().includes(keyword) ||
-    n.content.toLowerCase().includes(keyword)
-){
+        filteredNotices = [...allNotices];
 
-html += `
+    }else{
 
-<tr>
+        filteredNotices =
+            allNotices.filter(item => {
 
-<td>${no++}</td>
+                const n = item.data;
 
-<td>${n.title}</td>
+                const title =
+                    (n.title || "")
+                    .toLowerCase();
 
-<td>${n.date}</td>
+                const content =
+                    (n.content || "")
+                    .toLowerCase();
 
-<td><button onclick="viewNotice('${docItem.id}')">보기</button></td>
 
-<td><button onclick="editNotice('${docItem.id}')">수정</button></td>
+                return (
 
-<td><button onclick="deleteNotice('${docItem.id}')">삭제</button></td>
+                    title.includes(keyword) ||
 
-</tr>
+                    content.includes(keyword)
 
-`;
+                );
 
-}
+            });
 
-});
+    }
 
-document.getElementById("noticeBody").innerHTML = html;
+
+    currentPage = 1;
+
+    renderNotice();
 
 };
+
+
+/* =========================
+   시작
+========================= */
 
 loadNotice();
 
 </script>
 
-</div>
-
 </body>
-
-</html>    
+</html>
