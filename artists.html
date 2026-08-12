@@ -373,37 +373,46 @@ function renderArtists() {
 
 
     /*
-     * 고정 8개 + 관리자방 등록 가수
+     * 현재 8개 박스는 항상 고정합니다.
+     *
+     * 1번 박스 = 대표 아티스트(이명로) 고정
+     * 2~8번 = 관리자방에서 등록된 가수가 순서대로 들어갑니다.
+     *
+     * 8개가 모두 차기 전에는 절대로 새 박스를 만들지 않습니다.
+     *
+     * 8개가 모두 차고 9번째 가수가 등록되면
+     * 그때 9~12번 4개 박스를 한 번에 추가합니다.
+     *
+     * 이후에도 13번째, 17번째 가수가 들어올 때마다
+     * 4개 단위로 한 줄씩 추가합니다.
      */
-    const allArtists =
-        fixedArtists.concat(firebaseArtists);
 
+    const firstFixedArtist =
+        fixedArtists[0];
 
-    /*
-     * 고정 8개는 항상 유지합니다.
-     *
-     * 관리자방에서 1명이 추가되면:
-     * 9번 가수 + 빈칸 3개
-     *
-     * 4명이 추가되면:
-     * 9~12번 4칸
-     *
-     * 5명이 추가되면:
-     * 9~12번 + 13~16번을 미리 확보
-     */
-    const dynamicCount =
-        firebaseArtists.length;
+    const visibleArtists = [
+        firstFixedArtist,
+        ...firebaseArtists
+    ];
 
+    const singerCount =
+        visibleArtists.length;
 
     let totalCount =
         FIXED_BOX_COUNT;
 
 
-    if (dynamicCount > 0) {
+    /*
+     * 8명이 모두 들어온 이후부터만
+     * 4개 단위로 새 줄을 추가합니다.
+     */
+    if (singerCount > FIXED_BOX_COUNT) {
 
         totalCount =
             FIXED_BOX_COUNT +
-            Math.ceil(dynamicCount / ROW_SIZE) * ROW_SIZE;
+            Math.ceil(
+                (singerCount - FIXED_BOX_COUNT) / ROW_SIZE
+            ) * ROW_SIZE;
 
     }
 
@@ -414,7 +423,7 @@ function renderArtists() {
     for (let i = 0; i < totalCount; i++) {
 
         const artist =
-            allArtists[i];
+            visibleArtists[i];
 
 
         if (artist) {
@@ -463,10 +472,10 @@ function renderArtists() {
     }
 
 
-    grid.innerHTML = html;
+    grid.innerHTML =
+        html;
 
 }
-
 
 /*
  * 가수 박스 공통 클릭 기능
@@ -629,7 +638,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
 
-            const allArtists = fixedArtists.concat(firebaseArtists);
+            const allArtists = [
+                fixedArtists[0],
+                ...firebaseArtists
+            ];
+
             const artist = allArtists[index];
 
 
@@ -677,7 +690,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
 
-            const allArtists = fixedArtists.concat(firebaseArtists);
+            const allArtists = [
+                fixedArtists[0],
+                ...firebaseArtists
+            ];
+
             const artist = allArtists[index];
 
 
