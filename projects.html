@@ -82,6 +82,100 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
     .notice{font-size:18px;color:var(--muted)}
     footer{text-align:center;padding:80px 20px;color:#aaa}
     footer img{width:160px;height:160px;object-fit:contain;border-radius:50%;display:block;margin:0 auto 24px}
+
+    /* 실적: 2열 × 3줄, 총 6개 카드 */
+    .projects-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:16px 20px;
+    }
+    .project-card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:22px 24px 20px;
+      display:flex;
+      flex-direction:column;
+      min-height:0;
+    }
+    .project-card h3{
+      font-size:26px;
+      line-height:1.35;
+      margin:10px 0 12px;
+    }
+    .project-card p{
+      font-size:16px;
+      color:var(--muted);
+      line-height:1.62;
+      margin:0;
+    }
+    .project-card strong{color:var(--gold2)}
+    .project-card .tag{
+      align-self:flex-start;
+      padding:5px 12px;
+      border-radius:999px;
+      background:#3a3120;
+      color:var(--gold2);
+      font-size:14px;
+      font-weight:900;
+    }
+    .detail-btn{
+      align-self:flex-start;
+      margin-top:14px;
+      padding:8px 17px;
+      border:1px solid var(--gold);
+      border-radius:999px;
+      color:var(--gold2);
+      background:transparent;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .project-detail{
+      display:none;
+      margin-top:14px;
+      padding-top:14px;
+      border-top:1px solid #4a402d;
+      color:var(--muted);
+      font-size:15px;
+    }
+    .project-card.open .project-detail{display:block}
+    .project-list-title{
+      color:var(--gold2);
+      font-size:27px;
+      margin:32px 0 12px;
+    }
+    .project-list{
+      width:100%;
+      border-collapse:collapse;
+      background:#0f0f11;
+      border:1px solid var(--line);
+    }
+    .project-list th{
+      background:#2d2d30;
+      padding:10px 12px;
+      text-align:center;
+      font-size:15px;
+    }
+    .project-list td{
+      padding:10px 12px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      text-align:center;
+      font-size:15px;
+    }
+    .project-list td:nth-child(3){color:var(--text);text-align:left}
+    .list-btn{
+      padding:6px 12px;
+      border:1px solid var(--gold);
+      border-radius:999px;
+      background:transparent;
+      color:var(--gold2);
+      font-size:13px;
+      font-weight:900;
+      cursor:pointer;
+    }
+
     @media(max-width:1020px){
       .desktop-nav{display:none}
       .menu-btn{display:block}
@@ -110,6 +204,12 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
       section{padding:58px 0;scroll-margin-top:88px}
       .section-head{margin-bottom:32px}
       .grid,.grid3,.gallery,.contact-grid{grid-template-columns:1fr}
+      .projects-grid{grid-template-columns:1fr}
+      .project-card{padding:20px;border-radius:20px}
+      .project-card h3{font-size:24px}
+      .project-card p{font-size:16px}
+      .project-list{display:block;overflow-x:auto;white-space:nowrap}
+
       .news-photos{grid-template-columns:1fr}
       .card{padding:27px 23px;border-radius:24px}
       .card p{font-size:17px;line-height:1.7}
@@ -154,105 +254,88 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
 
 <section id="projects">
 <div class="wrap">
-<div class="section-head"><div class="eyebrow">PROJECTS</div><h2>주요 실적 및 프로젝트</h2><p class="lead">각 항목의 세부보기를 누르면 해당 내용만 펼쳐집니다.</p></div>
-<div class="grid" id="projectsGrid">
+<div class="section-head">
+  <div class="eyebrow">PROJECTS</div>
+  <h2>주요 실적 및 프로젝트</h2>
+  <p class="lead">각 항목의 자세히 보기를 누르면 해당 내용이 펼쳐집니다.</p>
+</div>
 
-<div class="card">
+<div class="projects-grid">
 
-<img src="healingconcert.jpg"
-     alt="나가수 힐링콘서트"
-     style="width:100%;height:220px;object-fit:cover;border-radius:18px;margin-bottom:20px;">
-
+<article class="project-card">
 <span class="tag">대표 공연</span>
-
 <h3>나가수 힐링콘서트</h3>
+<p><strong>주최</strong><br>한국가수인생활협회<br><br>
+<strong>내용</strong><br>지역 주민과 함께하는 힐링 공연, 문화예술 공연 및 재능기부 행사<br><br>
+<strong>실적</strong><br>다양한 지역 공연 및 문화행사 진행</p>
+<button class="detail-btn">자세히 보기</button>
+<div class="project-detail">지역 주민과 함께하는 문화예술 공연과 재능기부를 통해 지역사회 문화복지 향상에 기여했습니다.</div>
+</article>
 
-<p>
-<strong>주최</strong><br>
-한국가수인생활협회
-<br><br>
-
-<strong>내용</strong><br>
-지역 주민과 함께하는 힐링 공연,
-문화예술 공연 및 재능기부 행사
-<br><br>
-
-<strong>실적</strong><br>
-다양한 지역 공연 및 문화행사 진행
-</p>
-
-</div>
-<div class="card">
-
-<img src="marketconcert.jpg"
-     alt="전통시장 희망음악회"
-     style="width:100%;height:220px;object-fit:cover;border-radius:18px;margin-bottom:20px;">
-
+<article class="project-card">
 <span class="tag">문화공연</span>
-
 <h3>전통시장 희망음악회</h3>
+<p><strong>주최</strong><br>한국가수인생활협회<br><br>
+<strong>내용</strong><br>전통시장 활성화를 위한 문화공연과 지역상생 음악회 개최<br><br>
+<strong>실적</strong><br>전통시장 문화행사 및 주민 참여 공연 추진</p>
+<button class="detail-btn">자세히 보기</button>
+<div class="project-detail">전통시장 상인과 지역주민이 함께 참여하는 문화행사를 통해 전통시장 활성화를 추진했습니다.</div>
+</article>
 
-<p>
-<strong>주최</strong><br>
-한국가수인생활협회
-<br><br>
+<article class="project-card">
+<span class="tag">축제</span>
+<h3>수성못 나가수 가요제</h3>
+<p><strong>주최</strong><br>한국가수인생활협회<br><br>
+<strong>내용</strong><br>지역 문화예술 활성화를 위한 가요제 및 시민 참여 공연<br><br>
+<strong>실적</strong><br>가요제 기획 및 문화예술 공연 추진</p>
+<button class="detail-btn">자세히 보기</button>
+<div class="project-detail">지역 시민이 직접 참여하는 가요제와 공연을 통해 지역 문화예술 활성화를 추진했습니다.</div>
+</article>
 
-<strong>내용</strong><br>
-전통시장 활성화를 위한 문화공연과
-지역상생 음악회 개최
-<br><br>
+<article class="project-card">
+<span class="tag">복지공연</span>
+<h3>찾아가는 복지공연</h3>
+<p><strong>주최</strong><br>한국가수인생활협회<br><br>
+<strong>내용</strong><br>복지시설과 취약계층을 위한 찾아가는 문화공연<br><br>
+<strong>실적</strong><br>다수의 복지시설 순회 공연 진행</p>
+<button class="detail-btn">자세히 보기</button>
+<div class="project-detail">요양원, 복지관, 장애인시설 등을 직접 찾아가 문화공연과 재능기부를 진행했습니다.</div>
+</article>
 
-<strong>실적</strong><br>
-전통시장 문화행사 및 주민 참여 공연 추진
-</p>
+<article class="project-card">
+<span class="tag">봉사활동</span>
+<h3>나가수 봉사단 문화나눔 공연</h3>
+<p><strong>주최</strong><br>한국가수인생활협회<br><br>
+<strong>내용</strong><br>요양원, 복지관, 장애인시설 등을 찾아 무료 문화공연과 재능기부 진행<br><br>
+<strong>실적</strong><br>지역사회 문화복지 증진 및 봉사공연 지속 추진</p>
+<button class="detail-btn">자세히 보기</button>
+<div class="project-detail">정기적인 봉사공연과 재능기부를 통해 문화향유 기회를 넓히고 지역사회에 나눔을 실천했습니다.</div>
+</article>
+
+<article class="project-card">
+<span class="tag">문화예술</span>
+<h3>기타 문화예술 프로젝트</h3>
+<p><strong>주최</strong><br>한국가수인생활협회<br><br>
+<strong>내용</strong><br>다양한 문화예술 프로젝트 운영 및 지역상생 활동<br><br>
+<strong>실적</strong><br>문화예술 프로젝트 다수 기획 및 추진</p>
+<button class="detail-btn">자세히 보기</button>
+<div class="project-detail">지역사회와 함께하는 다양한 문화예술 활동 및 공연 프로젝트를 지속적으로 기획하고 추진했습니다.</div>
+</article>
 
 </div>
-<div class="card">
-<img src="suseongfestival.jpg"
-     alt="수성못 나가수 가요제"
-     style="width:100%;height:220px;object-fit:cover;border-radius:18px;margin-bottom:20px;">
-<span class="tag">축제</span>
 
-<h3>수성못 나가수 가요제</h3>
-
-<p>
-<strong>주최</strong><br>
-한국가수인생활협회
-<br><br>
-
-<strong>내용</strong><br>
-지역 문화예술 활성화를 위한
-가요제 및 시민 참여 공연
-<br><br>
-
-<strong>실적</strong><br>
-가요제 기획 및 문화예술 공연 추진
-</p>
-
-</div> 
-<div class="card">
-<img src="volunteerconcert.jpg"
-     alt="나가수 봉사단 문화나눔 공연"
-     style="width:100%;height:220px;object-fit:cover;border-radius:18px;margin-bottom:20px;">
-<span class="tag">봉사활동</span>
-
-<h3>나가수 봉사단 문화나눔 공연</h3>
-
-<p>
-<strong>주최</strong><br>
-한국가수인생활협회
-<br><br>
-
-<strong>내용</strong><br>
-요양원, 복지관, 장애인시설 등을 찾아
-무료 문화공연과 재능기부를 진행
-<br><br>
-
-<strong>실적</strong><br>
-지역사회 문화복지 증진 및 봉사공연 지속 추진
-</p>
-
-</div>    
+<h3 class="project-list-title">전체 실적 및 프로젝트 목록</h3>
+<table class="project-list">
+<thead><tr>
+<th>번호</th><th>구분</th><th>프로젝트명</th><th>주최</th><th>내용 요약</th><th>기간</th><th>자세히</th>
+</tr></thead>
+<tbody>
+<tr><td>7</td><td>공연</td><td>동성로 나가수 가요제</td><td>한국가수인생활협회</td><td>지역상권 활성화를 위한 가요제 및 공연</td><td>2025.06.15</td><td><button class="list-btn">자세히 보기</button></td></tr>
+<tr><td>8</td><td>캠페인</td><td>전통시장 살리기 캠페인</td><td>한국가수인생활협회</td><td>전통시장 이용 활성화를 위한 캠페인 활동</td><td>2025.03 ~ 2025.12</td><td><button class="list-btn">자세히 보기</button></td></tr>
+<tr><td>9</td><td>교육</td><td>문화예술 교육 프로그램</td><td>한국가수인생활협회</td><td>지역 주민 대상 문화예술 교육 프로그램 운영</td><td>2025.04 ~ 2025.11</td><td><button class="list-btn">자세히 보기</button></td></tr>
+<tr><td>10</td><td>협력</td><td>지역상생 협력사업</td><td>한국가수인생활협회</td><td>지역사회와 함께하는 상생 협력 프로그램</td><td>2025.01 ~ 2025.12</td><td><button class="list-btn">자세히 보기</button></td></tr>
+</tbody>
+</table>
 </div>
 </section>
 
@@ -289,19 +372,11 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(window.innerWidth>1020) closeMobileMenu();
   });
 
-  document.querySelectorAll('.detailBtn').forEach(btn=>{
+  document.querySelectorAll('.detail-btn').forEach(btn=>{
     btn.addEventListener('click',()=>{
       const card=btn.closest('.project-card');
-      const parent=card.parentElement;
-      parent.querySelectorAll('.project-card.open').forEach(other=>{
-        if(other!==card){
-          other.classList.remove('open');
-          const otherBtn=other.querySelector('.detailBtn');
-          if(otherBtn) otherBtn.textContent=otherBtn.dataset.label||'세부보기';
-        }
-      });
-      card.classList.toggle('open');
-      btn.textContent=card.classList.contains('open')?'접기':(btn.dataset.label||'세부보기');
+      const open=card.classList.toggle('open');
+      btn.textContent=open?'접기':'자세히 보기';
     });
   });
 
