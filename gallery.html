@@ -4,197 +4,981 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>갤러리 | 가수인생활 엔터테인먼트</title>
+
 <style>
-:root{--bg:#080808;--panel:#151515;--line:#333;--gold:#d9a928;--gold2:#f0c94d}
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:#fff;font-family:"Noto Sans KR","Malgun Gothic",Arial,sans-serif}
-a{text-decoration:none;color:inherit}
-.wrap{width:min(1200px,calc(100% - 42px));margin:auto}
-header{background:#050505;border-bottom:1px solid #222}
-.head{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:25px}
-.brand{display:flex;align-items:center;gap:12px;font-size:20px;font-weight:800;white-space:nowrap}
-.brand img{width:42px;height:42px;object-fit:contain}
-.brand b{color:var(--gold2)}
-.desktop-nav{display:flex;align-items:center;gap:15px}
-.desktop-nav a{font-size:13px;padding:10px 7px;border-radius:10px;white-space:nowrap}
-.desktop-nav a:hover{color:var(--gold2)}
-.desktop-nav a.active{color:var(--gold2);background:#2a210d}
-.menu-btn{display:none}
-.gallery-head{text-align:center;padding:55px 15px 34px}
-.gallery-head .eyebrow{color:var(--gold2);font-size:14px;font-weight:800;letter-spacing:.18em;margin-bottom:8px}
-.gallery-head h1{margin:0;font-size:50px;line-height:1.15;font-weight:900}
-.gallery-head p{margin:22px 0 0;color:#ddd;font-size:19px}
-.gallery-wrap{width:min(1200px,calc(100% - 42px));margin:auto;padding-bottom:38px}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.gallery-card{background:var(--panel);border:1px solid #333;border-radius:18px;overflow:hidden;cursor:pointer;transition:.15s}
-.gallery-card:hover{transform:translateY(-2px);border-color:#5b4a20}
-.gallery-image{width:100%;height:190px;background:linear-gradient(135deg,#332e26,#19181b);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.gallery-image img{width:100%;height:100%;object-fit:cover;display:block}
-.no-image{color:#888;font-size:16px}
-.gallery-info{min-height:70px;padding:14px 15px 16px;background:#151515}
-.gallery-title{font-size:16px;font-weight:800;line-height:1.35;margin-bottom:8px}
-.gallery-date{color:#aaa;font-size:13px}
-.gallery-content{color:#aaa;font-size:13px;line-height:1.5;margin-top:5px}
-.gallery-bottom{margin-top:25px;min-height:38px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
-.gallery-notice{color:#ddd;font-size:14px}
-.pagination{display:flex;align-items:center;gap:8px}
-.page-btn{height:30px;padding:0 12px;border:1px solid #444;border-radius:7px;background:#242424;color:#fff;font-size:12px;cursor:pointer}
-.page-btn:hover:not(:disabled){border-color:#765e31;color:var(--gold2)}
-.page-btn:disabled{opacity:.4;cursor:default}
-.page-info{min-width:38px;text-align:center;font-size:13px}
-footer{border-top:1px solid #222;margin-top:35px;padding:55px 20px 65px;text-align:center}
-footer img{width:100px;height:100px;object-fit:contain;display:block;margin:0 auto 22px}
-footer p{margin:0;color:#aaa;font-size:13px}
-@media(max-width:1020px){.desktop-nav{gap:8px}.desktop-nav a{font-size:11px;padding:8px 5px}}
-@media(max-width:760px){
-.wrap{width:calc(100% - 30px)}
-.head{min-height:70px}.brand{font-size:17px}.brand img{width:38px;height:38px}
-.desktop-nav{display:none}.menu-btn{display:block;width:44px;height:44px;border:1px solid #444;border-radius:10px;background:#151515;color:#fff;font-size:22px}
-.gallery-head{padding:42px 15px 30px}.gallery-head h1{font-size:40px}.gallery-head p{font-size:16px;line-height:1.6}
-.gallery-wrap{width:calc(100% - 30px)}.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery-image{height:180px}
+:root{
+    --bg:#080808;
+    --panel:#151515;
+    --line:#333;
+    --gold:#d9a928;
+    --gold2:#f0c94d
 }
-@media(max-width:520px){.gallery-grid{grid-template-columns:1fr}.gallery-image{height:220px}.gallery-notice{width:100%;text-align:center}}
+
+*{box-sizing:border-box}
+
+html,body{
+    margin:0;
+    background:var(--bg);
+    color:#fff;
+    font-family:"Noto Sans KR","Malgun Gothic",Arial,sans-serif
+}
+
+a{
+    text-decoration:none;
+    color:inherit
+}
+
+.wrap{
+    width:min(1200px,calc(100% - 42px));
+    margin:auto
+}
+
+header{
+    background:#050505;
+    border-bottom:1px solid #222
+}
+
+.head{
+    min-height:78px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:25px
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:20px;
+    font-weight:800;
+    white-space:nowrap
+}
+
+.brand img{
+    width:42px;
+    height:42px;
+    object-fit:contain
+}
+
+.brand b{
+    color:var(--gold2)
+}
+
+.desktop-nav{
+    display:flex;
+    align-items:center;
+    gap:15px
+}
+
+.desktop-nav a{
+    font-size:13px;
+    padding:10px 7px;
+    border-radius:10px;
+    white-space:nowrap
+}
+
+.desktop-nav a:hover{
+    color:var(--gold2)
+}
+
+.desktop-nav a.active{
+    color:var(--gold2);
+    background:#2a210d
+}
+
+.menu-btn{
+    display:none
+}
+
+.gallery-head{
+    text-align:center;
+    padding:55px 15px 34px
+}
+
+.gallery-head .eyebrow{
+    color:var(--gold2);
+    font-size:14px;
+    font-weight:800;
+    letter-spacing:.18em;
+    margin-bottom:8px
+}
+
+.gallery-head h1{
+    margin:0;
+    font-size:50px;
+    line-height:1.15;
+    font-weight:900
+}
+
+.gallery-head p{
+    margin:22px 0 0;
+    color:#ddd;
+    font-size:19px
+}
+
+.gallery-wrap{
+    width:min(1200px,calc(100% - 42px));
+    margin:auto;
+    padding-bottom:38px
+}
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:18px
+}
+
+.gallery-card{
+    background:var(--panel);
+    border:1px solid #333;
+    border-radius:18px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:.15s
+}
+
+.gallery-card:hover{
+    transform:translateY(-2px);
+    border-color:#5b4a20
+}
+
+.gallery-image{
+    width:100%;
+    height:190px;
+    background:linear-gradient(135deg,#332e26,#19181b);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden
+}
+
+.gallery-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block
+}
+
+.no-image{
+    color:#888;
+    font-size:16px
+}
+
+.gallery-info{
+    min-height:70px;
+    padding:14px 15px 16px;
+    background:#151515
+}
+
+.gallery-title{
+    font-size:16px;
+    font-weight:800;
+    line-height:1.35;
+    margin-bottom:8px
+}
+
+.gallery-date{
+    color:#aaa;
+    font-size:13px
+}
+
+.gallery-content{
+    color:#aaa;
+    font-size:13px;
+    line-height:1.5;
+    margin-top:5px
+}
+
+.gallery-bottom{
+    margin-top:25px;
+    min-height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap
+}
+
+.gallery-notice{
+    color:#ddd;
+    font-size:14px
+}
+
+.pagination{
+    display:flex;
+    align-items:center;
+    gap:8px
+}
+
+.page-btn{
+    height:30px;
+    padding:0 12px;
+    border:1px solid #444;
+    border-radius:7px;
+    background:#242424;
+    color:#fff;
+    font-size:12px;
+    cursor:pointer
+}
+
+.page-btn:hover:not(:disabled){
+    border-color:#765e31;
+    color:var(--gold2)
+}
+
+.page-btn:disabled{
+    opacity:.4;
+    cursor:default
+}
+
+.page-info{
+    min-width:38px;
+    text-align:center;
+    font-size:13px
+}
+
+footer{
+    border-top:1px solid #222;
+    margin-top:35px;
+    padding:55px 20px 65px;
+    text-align:center
+}
+
+footer img{
+    width:100px;
+    height:100px;
+    object-fit:contain;
+    display:block;
+    margin:0 auto 22px
+}
+
+footer p{
+    margin:0;
+    color:#aaa;
+    font-size:13px
+}
+
+@media(max-width:1020px){
+    .desktop-nav{
+        gap:8px
+    }
+
+    .desktop-nav a{
+        font-size:11px;
+        padding:8px 5px
+    }
+}
+
+@media(max-width:760px){
+
+    .wrap{
+        width:calc(100% - 30px)
+    }
+
+    .head{
+        min-height:70px
+    }
+
+    .brand{
+        font-size:17px
+    }
+
+    .brand img{
+        width:38px;
+        height:38px
+    }
+
+    .desktop-nav{
+        display:none
+    }
+
+    .menu-btn{
+        display:block;
+        width:44px;
+        height:44px;
+        border:1px solid #444;
+        border-radius:10px;
+        background:#151515;
+        color:#fff;
+        font-size:22px
+    }
+
+    .gallery-head{
+        padding:42px 15px 30px
+    }
+
+    .gallery-head h1{
+        font-size:40px
+    }
+
+    .gallery-head p{
+        font-size:16px;
+        line-height:1.6
+    }
+
+    .gallery-wrap{
+        width:calc(100% - 30px)
+    }
+
+    .gallery-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr))
+    }
+
+    .gallery-image{
+        height:180px
+    }
+}
+
+@media(max-width:520px){
+
+    .gallery-grid{
+        grid-template-columns:1fr
+    }
+
+    .gallery-image{
+        height:220px
+    }
+
+    .gallery-notice{
+        width:100%;
+        text-align:center
+    }
+}
 </style>
 </head>
+
 <body>
 
 <header>
 <div class="wrap head">
+
 <a class="brand" href="index.html">
 <img src="logo.png" alt="가수인생활 엔터테인먼트 로고">
 <span>가수인생활 <b>엔터테인먼트</b></span>
 </a>
+
 <nav class="desktop-nav" aria-label="PC 주요 메뉴">
-<a href="index.html">홈</a><a href="about.html">회사소개</a><a href="partners.html">함께하는 단체</a>
-<a href="artists.html">소속가수</a><a href="news.html">뉴스</a><a href="notice.html">공지</a>
-<a href="schedule.html">일정</a><a href="projects.html">실적</a><a href="resources.html">자료실</a>
-<a href="video.html">영상센터</a><a href="gallery.html" class="active">갤러리</a><a href="contact.html">문의</a>
+<a href="index.html">홈</a>
+<a href="about.html">회사소개</a>
+<a href="partners.html">함께하는 단체</a>
+<a href="artists.html">소속가수</a>
+<a href="news.html">뉴스</a>
+<a href="notice.html">공지</a>
+<a href="schedule.html">일정</a>
+<a href="projects.html">실적</a>
+<a href="resources.html">자료실</a>
+<a href="video.html">영상센터</a>
+<a href="gallery.html" class="active">갤러리</a>
+<a href="contact.html">문의</a>
 </nav>
+
 <button class="menu-btn" type="button">☰</button>
+
 </div>
 </header>
 
+
 <section class="gallery-head">
+
 <div class="eyebrow">GALLERY</div>
+
 <h1>갤러리</h1>
-<p>공연, 행사, 봉사활동 등의 현장 모습을 분야별로 기록해 공개합니다.</p>
+
+<p>
+공연, 행사, 봉사활동 등의 현장 모습을 분야별로 기록해 공개합니다.
+</p>
+
 </section>
 
+
 <main class="gallery-wrap">
-<section id="galleryGrid" class="gallery-grid"></section>
+
+<section
+id="galleryGrid"
+class="gallery-grid">
+</section>
+
 
 <div class="gallery-bottom">
-<div class="gallery-notice">관리자에서 등록한 사진이 자동으로 갤러리에 표시됩니다.</div>
+
+<div class="gallery-notice">
+관리자에서 등록한 사진이 자동으로 갤러리에 표시됩니다.
+</div>
+
 <div class="pagination">
-<button id="prevBtn" class="page-btn" type="button">◀ 이전</button>
-<span id="pageInfo" class="page-info">1 / 1</span>
-<button id="nextBtn" class="page-btn" type="button">다음 ▶</button>
+
+<button
+id="prevBtn"
+class="page-btn"
+type="button">
+◀ 이전
+</button>
+
+<span
+id="pageInfo"
+class="page-info">
+1 / 1
+</span>
+
+<button
+id="nextBtn"
+class="page-btn"
+type="button">
+다음 ▶
+</button>
+
 </div>
+
 </div>
+
 </main>
 
+
 <footer>
-<img src="logo.png" alt="가수인생활 엔터테인먼트">
-<p>© 2026 가수인생활 엔터테인먼트. All rights reserved.</p>
+
+<img
+src="logo.png"
+alt="가수인생활 엔터테인먼트">
+
+<p>
+© 2026 가수인생활 엔터테인먼트. All rights reserved.
+</p>
+
 </footer>
 
+
 <script type="module">
-import{initializeApp}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-import{getFirestore,collection,getDocs,query,orderBy}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+import {
+initializeApp
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs,
+query,
+orderBy
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
 
 const firebaseConfig={
+
 apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+
 authDomain:"gasuinent.firebaseapp.com",
+
 projectId:"gasuinent",
+
 storageBucket:"gasuinent.firebasestorage.app",
+
 messagingSenderId:"122370674182",
+
 appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",
+
 measurementId:"G-39M5K1M6K7"
+
 };
 
-const db=getFirestore(initializeApp(firebaseConfig));
+
+const db =
+getFirestore(
+initializeApp(firebaseConfig)
+);
+
+
+/*
+    한 페이지 5개
+*/
+
 const PAGE_SIZE=5;
+
 let currentPage=1;
+
 let galleryItems=[];
 
+
+/*
+    HTML 문자 처리
+*/
+
 function esc(v){
-return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+
+return String(v ?? "")
+
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
 }
+
+
+/*
+    카드 생성
+
+    중요:
+    관리자에서 저장하는 기존 필드인
+    g.image 를 그대로 사용합니다.
+*/
 
 function card(item){
-const g=item.data||{},title=esc(g.title||""),date=esc(g.date||""),content=esc(g.content||"");
-const imageUrl = g.image || g.imageUrl || g.photo || g.photoUrl || g.img || "";
-const image=imageUrl
-? `<img src="${esc(imageUrl)}" alt="${title}" loading="lazy"
-    onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-   <div class="no-image" style="display:none;">사진 없음</div>`
-: `<div class="no-image">사진 없음</div>`;
-return `<article class="gallery-card" data-id="${esc(item.id)}" tabindex="0" role="button">
-<div class="gallery-image">${image}</div>
-<div class="gallery-info">
-<div class="gallery-title">${title}</div>
-${date?`<div class="gallery-date">📅 ${date}</div>`:""}
-${content?`<div class="gallery-content">${content}</div>`:""}
-</div></article>`;
+
+const g=item.data || {};
+
+const title=
+esc(g.title || "");
+
+const date=
+esc(g.date || "");
+
+const content=
+esc(g.content || "");
+
+const imageUrl=
+g.image || "";
+
+
+let imageHTML;
+
+
+if(imageUrl){
+
+imageHTML=`
+
+<img
+src="${esc(imageUrl)}"
+alt="${title}"
+loading="lazy"
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+
+<div
+class="no-image"
+style="display:none;">
+사진 없음
+</div>
+
+`;
+
+}else{
+
+imageHTML=`
+
+<div class="no-image">
+사진 없음
+</div>
+
+`;
+
 }
+
+
+return `
+
+<article
+class="gallery-card"
+data-id="${esc(item.id)}"
+tabindex="0"
+role="button">
+
+<div class="gallery-image">
+
+${imageHTML}
+
+</div>
+
+<div class="gallery-info">
+
+<div class="gallery-title">
+${title}
+</div>
+
+${
+
+date
+?
+`
+<div class="gallery-date">
+📅 ${date}
+</div>
+`
+:
+""
+
+}
+
+${
+
+content
+?
+`
+<div class="gallery-content">
+${content}
+</div>
+`
+:
+""
+
+}
+
+</div>
+
+</article>
+
+`;
+
+}
+
+
+/*
+    Firebase에서 갤러리 불러오기
+*/
 
 async function loadGallery(){
+
 try{
-const snap=await getDocs(query(collection(db,"gallery"),orderBy("timestamp","desc")));
+
+const q=
+query(
+collection(db,"gallery"),
+orderBy("timestamp","desc")
+);
+
+
+const snapshot=
+await getDocs(q);
+
+
 galleryItems=[];
-snap.forEach(d=>galleryItems.push({id:d.id,data:d.data()}));
+
+
+snapshot.forEach(docItem=>{
+
+galleryItems.push({
+
+id:docItem.id,
+
+data:docItem.data()
+
+});
+
+});
+
+
+/*
+    관리자에서 고정한 사진은
+    기존 기능대로 먼저 표시
+*/
 
 galleryItems.sort((a,b)=>{
-const ap=a.data.pinned===true?1:0,bp=b.data.pinned===true?1:0;
-if(ap!==bp)return bp-ap;
-return(b.data.timestamp||0)-(a.data.timestamp||0);
+
+const ap=
+a.data.pinned===true ? 1 : 0;
+
+const bp=
+b.data.pinned===true ? 1 : 0;
+
+
+if(ap!==bp){
+
+return bp-ap;
+
+}
+
+
+return
+(b.data.timestamp || 0) -
+(a.data.timestamp || 0);
+
 });
+
+
 currentPage=1;
+
 render();
-}catch(e){
-console.error(e);
-document.getElementById("galleryGrid").innerHTML='<div style="grid-column:1/-1;text-align:center;padding:70px 20px;color:#aaa">갤러리를 불러오지 못했습니다.</div>';
+
+
+}catch(error){
+
+console.error(
+"갤러리 불러오기 오류:",
+error
+);
+
+
+document.getElementById(
+"galleryGrid"
+).innerHTML=`
+
+<div
+style="
+grid-column:1/-1;
+text-align:center;
+padding:70px 20px;
+color:#aaa;
+">
+
+갤러리를 불러오지 못했습니다.
+
+</div>
+
+`;
+
 updatePage();
+
 }
+
 }
+
+
+/*
+    현재 페이지 표시
+*/
 
 function render(){
-const total=Math.max(1,Math.ceil(galleryItems.length/PAGE_SIZE));
-if(currentPage>total)currentPage=total;
-const start=(currentPage-1)*PAGE_SIZE;
-const items=galleryItems.slice(start,start+PAGE_SIZE);
-document.getElementById("galleryGrid").innerHTML=items.length?items.map(card).join(""):'<div style="grid-column:1/-1;text-align:center;padding:70px 20px;color:#888">등록된 사진이 없습니다.</div>';
-updatePage();
+
+const total=
+Math.max(
+1,
+Math.ceil(
+galleryItems.length /
+PAGE_SIZE
+)
+);
+
+
+if(currentPage>total){
+
+currentPage=total;
+
 }
+
+
+const start=
+(currentPage-1) *
+PAGE_SIZE;
+
+
+const items=
+galleryItems.slice(
+start,
+start+PAGE_SIZE
+);
+
+
+const grid=
+document.getElementById(
+"galleryGrid"
+);
+
+
+if(items.length){
+
+grid.innerHTML=
+items
+.map(card)
+.join("");
+
+}else{
+
+grid.innerHTML=`
+
+<div
+style="
+grid-column:1/-1;
+text-align:center;
+padding:70px 20px;
+color:#888;
+">
+
+등록된 사진이 없습니다.
+
+</div>
+
+`;
+
+}
+
+
+updatePage();
+
+}
+
+
+/*
+    이전 / 다음
+*/
 
 function updatePage(){
-const total=Math.max(1,Math.ceil(galleryItems.length/PAGE_SIZE));
-document.getElementById("pageInfo").textContent=currentPage+" / "+total;
-document.getElementById("prevBtn").disabled=currentPage<=1;
-document.getElementById("nextBtn").disabled=currentPage>=total;
+
+const total=
+Math.max(
+1,
+Math.ceil(
+galleryItems.length /
+PAGE_SIZE
+)
+);
+
+
+document.getElementById(
+"pageInfo"
+).textContent=
+currentPage+
+" / "+
+total;
+
+
+document.getElementById(
+"prevBtn"
+).disabled=
+currentPage<=1;
+
+
+document.getElementById(
+"nextBtn"
+).disabled=
+currentPage>=total;
+
 }
 
-document.getElementById("prevBtn").onclick=()=>{
-if(currentPage>1){currentPage--;render();window.scrollTo({top:0,behavior:"smooth"});}
+
+document.getElementById(
+"prevBtn"
+).onclick=()=>{
+
+if(currentPage>1){
+
+currentPage--;
+
+render();
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+}
+
 };
 
-document.getElementById("nextBtn").onclick=()=>{
-const total=Math.max(1,Math.ceil(galleryItems.length/PAGE_SIZE));
-if(currentPage<total){currentPage++;render();window.scrollTo({top:0,behavior:"smooth"});}
+
+document.getElementById(
+"nextBtn"
+).onclick=()=>{
+
+const total=
+Math.max(
+1,
+Math.ceil(
+galleryItems.length /
+PAGE_SIZE
+)
+);
+
+
+if(currentPage<total){
+
+currentPage++;
+
+render();
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+}
+
 };
 
-document.getElementById("galleryGrid").onclick=e=>{
-const c=e.target.closest(".gallery-card");
-if(c)location.href="gallery_view.html?id="+encodeURIComponent(c.dataset.id);
+
+/*
+    자세히 보기
+*/
+
+document.getElementById(
+"galleryGrid"
+).onclick=event=>{
+
+const cardElement=
+event.target.closest(
+".gallery-card"
+);
+
+
+if(!cardElement){
+
+return;
+
+}
+
+
+location.href=
+"gallery_view.html?id="+
+encodeURIComponent(
+cardElement.dataset.id
+);
+
 };
 
-document.getElementById("galleryGrid").onkeydown=e=>{
-if(e.key!=="Enter"&&e.key!==" ")return;
-const c=e.target.closest(".gallery-card");
-if(c){e.preventDefault();location.href="gallery_view.html?id="+encodeURIComponent(c.dataset.id);}
+
+document.getElementById(
+"galleryGrid"
+).onkeydown=event=>{
+
+if(
+event.key!=="Enter" &&
+event.key!==" "
+){
+
+return;
+
+}
+
+
+const cardElement=
+event.target.closest(
+".gallery-card"
+);
+
+
+if(!cardElement){
+
+return;
+
+}
+
+
+event.preventDefault();
+
+
+location.href=
+"gallery_view.html?id="+
+encodeURIComponent(
+cardElement.dataset.id
+);
+
 };
+
+
+/*
+    시작
+*/
 
 loadGallery();
+
 </script>
+
 </body>
 </html>
