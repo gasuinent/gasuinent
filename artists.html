@@ -166,154 +166,544 @@ content="가수인생활 엔터테인먼트 소속 아티스트와 대표가수 
 </div>
 </footer>
 
-<script>
+<script type="module">
 /*
  * 현재 홈페이지 표시 데이터
  * Firebase 연결 전에는 이 부분만 사용합니다.
  * 디자인(CSS)은 기존 그대로 사용합니다.
  */
-const artistData = [
+/* =========================================
+   Firebase 소속가수 자동 연결
+   관리자방에서 등록한 가수를 자동으로 표시합니다.
+   ========================================= */
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+import {
+    getFirestore,
+    collection,
+    onSnapshot,
+    query,
+    orderBy
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+
+    authDomain: "gasuinent.firebaseapp.com",
+
+    projectId: "gasuinent",
+
+    storageBucket: "gasuinent.firebasestorage.app",
+
+    messagingSenderId: "122370674182",
+
+    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+
+    measurementId: "G-39M5K1M6K7"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+/*
+ * 현재 8개 박스는 기본 영역으로 유지합니다.
+ * 가수가 9명째가 되면 9~12번 줄을 만들고,
+ * 그 줄은 4칸으로 유지합니다.
+ * 13명째가 되면 13~16번 줄을 추가합니다.
+ */
+const FIXED_BOX_COUNT = 8;
+const ROW_SIZE = 4;
+
+
+/*
+ * 현재 화면의 8개 박스는 고정입니다.
+ * 이 8개는 관리자방의 가수 등록과 관계없이 그대로 유지합니다.
+ */
+const fixedArtists = [
+
     {
         image: "lee-myungro.jpg",
         alt: "이명로",
         title: "이명로",
-        text: "대표 아티스트 · CEO<br>트로트 가수"
+        text: "대표 아티스트 · CEO<br>트로트 가수",
+        profile: "대한민국 가수이자 가수인생활 엔터테인먼트 대표입니다.",
+        activities: "",
+        songs: "",
+        videoUrl: ""
     },
+
     {
         image: "logo.png",
         alt: "신인가수 모집",
         title: "신인가수 모집",
-        text: "트로트 · 발라드 · K-POP<br>오디션 상시 접수"
+        text: "트로트 · 발라드 · K-POP<br>오디션 상시 접수",
+        profile: "가수인생활 엔터테인먼트 신인가수 모집 안내입니다.",
+        activities: "",
+        songs: "",
+        videoUrl: ""
     },
+
     {
         image: "logo.png",
         alt: "아티스트 준비중",
         title: "아티스트 준비중",
-        text: "새로운 아티스트 영입 진행 중<br>Coming Soon"
+        text: "새로운 아티스트 영입 진행 중<br>Coming Soon",
+        profile: "새로운 아티스트 영입을 준비하고 있습니다.",
+        activities: "",
+        songs: "",
+        videoUrl: ""
     },
+
     {
         image: "logo.png",
         alt: "아티스트 준비중",
         title: "아티스트 준비중",
-        text: "새로운 아티스트 영입 진행 중<br>Coming Soon"
+        text: "새로운 아티스트 영입 진행 중<br>Coming Soon",
+        profile: "새로운 아티스트 영입을 준비하고 있습니다.",
+        activities: "",
+        songs: "",
+        videoUrl: ""
     },
+
     {
         image: "logo.png",
         alt: "아티스트 준비중",
         title: "아티스트 준비중",
-        text: "새로운 아티스트 영입 진행 중<br>Coming Soon"
+        text: "새로운 아티스트 영입 진행 중<br>Coming Soon",
+        profile: "새로운 아티스트 영입을 준비하고 있습니다.",
+        activities: "",
+        songs: "",
+        videoUrl: ""
     },
+
     {
         image: "logo.png",
         alt: "아티스트 준비중",
         title: "아티스트 준비중",
-        text: "새로운 아티스트 영입 진행 중<br>Coming Soon"
+        text: "새로운 아티스트 영입 진행 중<br>Coming Soon",
+        profile: "새로운 아티스트 영입을 준비하고 있습니다.",
+        activities: "",
+        songs: "",
+        videoUrl: ""
     },
+
     {
         image: "logo.png",
         alt: "아티스트 준비중",
         title: "아티스트 준비중",
-        text: "새로운 아티스트 영입 진행 중<br>Coming Soon"
+        text: "새로운 아티스트 영입 진행 중<br>Coming Soon",
+        profile: "새로운 아티스트 영입을 준비하고 있습니다.",
+        activities: "",
+        songs: "",
+        videoUrl: ""
     },
+
     {
         image: "logo.png",
         alt: "아티스트 준비중",
         title: "아티스트 준비중",
-        text: "새로운 아티스트 영입 진행 중<br>Coming Soon"
+        text: "새로운 아티스트 영입 진행 중<br>Coming Soon",
+        profile: "새로운 아티스트 영입을 준비하고 있습니다.",
+        activities: "",
+        songs: "",
+        videoUrl: ""
     }
+
 ];
 
-function renderArtists() {
-    const grid = document.getElementById("artistGrid");
 
-    grid.innerHTML = artistData.map((artist, index) => `
-        <div class="artist-card"
-             data-artist-index="${index}"
-             role="button"
-             tabindex="0"
-             aria-label="${artist.title} 프로필 보기">
-            <img src="${artist.image}" alt="${artist.alt}">
-            <h3>${artist.title}</h3>
-            <p>${artist.text}</p>
-        </div>
-    `).join("");
+let firebaseArtists = [];
+
+
+function normalizeArtist(item) {
+
+    const a = item.data();
+
+    return {
+
+        id: item.id,
+
+        image: a.photoUrl || "logo.png",
+
+        alt: a.stageName || a.name || "소속가수",
+
+        title: a.stageName || a.name || "소속가수",
+
+        text:
+            (a.genre || "가수") +
+            (a.shortIntro ? "<br>" + a.shortIntro : ""),
+
+        profile: a.profile || "",
+
+        activities: a.activities || "",
+
+        songs: a.songs || "",
+
+        videoUrl: a.videoUrl || "",
+
+        name: a.name || "",
+
+        stageName: a.stageName || "",
+
+        genre: a.genre || "",
+
+        shortIntro: a.shortIntro || "",
+
+        date: a.date || ""
+
+    };
+
 }
+
+
+function renderArtists() {
+
+    const grid =
+        document.getElementById("artistGrid");
+
+    if (!grid) return;
+
+
+    /*
+     * 고정 8개 + 관리자방 등록 가수
+     */
+    const allArtists =
+        fixedArtists.concat(firebaseArtists);
+
+
+    /*
+     * 고정 8개는 항상 유지합니다.
+     *
+     * 관리자방에서 1명이 추가되면:
+     * 9번 가수 + 빈칸 3개
+     *
+     * 4명이 추가되면:
+     * 9~12번 4칸
+     *
+     * 5명이 추가되면:
+     * 9~12번 + 13~16번을 미리 확보
+     */
+    const dynamicCount =
+        firebaseArtists.length;
+
+
+    let totalCount =
+        FIXED_BOX_COUNT;
+
+
+    if (dynamicCount > 0) {
+
+        totalCount =
+            FIXED_BOX_COUNT +
+            Math.ceil(dynamicCount / ROW_SIZE) * ROW_SIZE;
+
+    }
+
+
+    let html = "";
+
+
+    for (let i = 0; i < totalCount; i++) {
+
+        const artist =
+            allArtists[i];
+
+
+        if (artist) {
+
+            html += `
+
+                <div class="artist-card"
+                     data-artist-index="${i}"
+                     role="button"
+                     tabindex="0"
+                     aria-label="${artist.title} 프로필 보기">
+
+                    <img
+                        src="${artist.image}"
+                        alt="${artist.alt}">
+
+                    <h3>${artist.title}</h3>
+
+                    <p>${artist.text}</p>
+
+                </div>
+
+            `;
+
+        } else {
+
+            html += `
+
+                <div class="artist-card artist-empty-slot"
+                     aria-hidden="true">
+
+                    <img
+                        src="logo.png"
+                        alt="">
+
+                    <h3>아티스트 준비중</h3>
+
+                    <p>새로운 아티스트 영입 진행 중<br>Coming Soon</p>
+
+                </div>
+
+            `;
+
+        }
+
+    }
+
+
+    grid.innerHTML = html;
+
+}
+
 
 /*
  * 가수 박스 공통 클릭 기능
- * artistGrid에 새 박스가 추가되어도 이벤트 위임으로 자동 적용됩니다.
+ * 현재 박스와 앞으로 Firebase에서 새로 생성되는 박스 모두
+ * 같은 방식으로 작동합니다.
  */
 function openArtistProfile(artist) {
-    const modal = document.getElementById("artistProfileModal");
-    const image = document.getElementById("artistProfileImage");
-    const title = document.getElementById("artistProfileTitle");
-    const text = document.getElementById("artistProfileText");
-    const activities = document.getElementById("artistProfileActivities");
-    const songs = document.getElementById("artistProfileSongs");
-    const video = document.getElementById("artistProfileVideo");
 
-    image.src = artist.image || "";
-    image.alt = artist.alt || artist.title || "";
-    title.textContent = artist.title || "";
-    text.innerHTML = artist.profile || artist.text || "";
+    const modal =
+        document.getElementById("artistProfileModal");
 
-    activities.innerHTML = artist.activities
-        ? `<h3>주요 활동</h3><p>${artist.activities}</p>`
-        : "";
+    const image =
+        document.getElementById("artistProfileImage");
 
-    songs.innerHTML = artist.songs
-        ? `<h3>대표곡</h3><p>${artist.songs}</p>`
-        : "";
+    const title =
+        document.getElementById("artistProfileTitle");
 
-    video.innerHTML = artist.videoUrl
-        ? `<a href="${artist.videoUrl}" target="_blank" rel="noopener" class="artist-profile-video">대표 영상 보기</a>`
-        : "";
+    const text =
+        document.getElementById("artistProfileText");
+
+    const activities =
+        document.getElementById("artistProfileActivities");
+
+    const songs =
+        document.getElementById("artistProfileSongs");
+
+    const video =
+        document.getElementById("artistProfileVideo");
+
+
+    image.src =
+        artist.image || "logo.png";
+
+    image.alt =
+        artist.alt || artist.title || "소속가수";
+
+    title.textContent =
+        artist.title || "";
+
+    text.innerHTML =
+        artist.profile || artist.text || "";
+
+    activities.innerHTML =
+        artist.activities
+            ? `<h3>주요 활동</h3><p>${artist.activities}</p>`
+            : "";
+
+    songs.innerHTML =
+        artist.songs
+            ? `<h3>대표곡</h3><p>${artist.songs}</p>`
+            : "";
+
+    video.innerHTML =
+        artist.videoUrl
+            ? `<a href="${artist.videoUrl}"
+                 target="_blank"
+                 rel="noopener"
+                 class="artist-profile-video">
+                    대표 영상 보기
+               </a>`
+            : "";
+
 
     modal.classList.add("show");
-    document.body.style.overflow = "hidden";
+
+    document.body.style.overflow =
+        "hidden";
+
 }
+
 
 function closeArtistProfile() {
-    document.getElementById("artistProfileModal").classList.remove("show");
+
+    document
+        .getElementById("artistProfileModal")
+        .classList
+        .remove("show");
+
     document.body.style.overflow = "";
+
 }
 
-/*
- * 한 번만 연결합니다.
- * 이후 새로 생성되는 가수 박스에도 자동으로 적용됩니다.
- */
+
 document.addEventListener("DOMContentLoaded", () => {
-    renderArtists();
 
-    const grid = document.getElementById("artistGrid");
 
-    grid.addEventListener("click", event => {
-        const card = event.target.closest(".artist-card");
-        if (!card || !grid.contains(card)) return;
+    const grid =
+        document.getElementById("artistGrid");
 
-        const index = Number(card.dataset.artistIndex);
-        const artist = artistData[index];
 
-        if (artist) {
-            openArtistProfile(artist);
+    /*
+     * Firebase artists 컬렉션을 실시간으로 읽습니다.
+     * 관리자방에서 가수를 추가/수정하면
+     * 홈페이지도 자동으로 다시 그립니다.
+     */
+    const artistQuery =
+        query(
+            collection(db, "artists"),
+            orderBy("timestamp", "desc")
+        );
+
+
+    onSnapshot(
+
+        artistQuery,
+
+        snapshot => {
+
+            firebaseArtists =
+                snapshot.docs.map(normalizeArtist);
+
+            renderArtists();
+
+        },
+
+        error => {
+
+            console.error(
+                "Firebase 소속가수 불러오기 오류:",
+                error
+            );
+
+            /*
+             * Firebase를 읽지 못하더라도
+             * 화면의 기본 8개 박스 구조는 유지합니다.
+             */
+            firebaseArtists = [];
+
+            renderArtists();
+
         }
-    });
 
-    grid.addEventListener("keydown", event => {
-        if (event.key !== "Enter" && event.key !== " ") return;
+    );
 
-        const card = event.target.closest(".artist-card");
-        if (!card || !grid.contains(card)) return;
 
-        event.preventDefault();
+    /*
+     * 이벤트 위임:
+     * 새 가수 박스가 생겨도 별도의 이벤트 등록 없이
+     * 자동으로 클릭 기능이 적용됩니다.
+     */
+    grid.addEventListener(
+        "click",
+        event => {
 
-        const index = Number(card.dataset.artistIndex);
-        const artist = artistData[index];
+            const card =
+                event.target.closest(".artist-card");
 
-        if (artist) {
-            openArtistProfile(artist);
+            if (
+                !card ||
+                !grid.contains(card) ||
+                card.classList.contains("artist-empty-slot")
+            ) {
+                return;
+            }
+
+
+            const index =
+                Number(
+                    card.dataset.artistIndex
+                );
+
+
+            const allArtists = fixedArtists.concat(firebaseArtists);
+            const artist = allArtists[index];
+
+
+            if (artist) {
+
+                openArtistProfile(artist);
+
+            }
+
         }
-    });
+    );
+
+
+    grid.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key !== "Enter" &&
+                event.key !== " "
+            ) {
+                return;
+            }
+
+
+            const card =
+                event.target.closest(".artist-card");
+
+
+            if (
+                !card ||
+                !grid.contains(card) ||
+                card.classList.contains("artist-empty-slot")
+            ) {
+                return;
+            }
+
+
+            event.preventDefault();
+
+
+            const index =
+                Number(
+                    card.dataset.artistIndex
+                );
+
+
+            const allArtists = fixedArtists.concat(firebaseArtists);
+            const artist = allArtists[index];
+
+
+            if (artist) {
+
+                openArtistProfile(artist);
+
+            }
+
+        }
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (event.key === "Escape") {
+
+                closeArtistProfile();
+
+            }
+
+        }
+    );
+
 });
 </script>
 
