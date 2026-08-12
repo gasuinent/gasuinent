@@ -3,416 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>갤러리 상세보기 | 가수인생활 엔터테인먼트</title>
-
 <style>
-*{
-    box-sizing:border-box;
-}
-
-body{
-    margin:0;
-    background:#080808;
-    color:#fff;
-    font-family:"Malgun Gothic",sans-serif;
-}
-
-header{
-    height:70px;
-    background:#050505;
-    border-bottom:1px solid #222;
-    display:flex;
-    align-items:center;
-}
-
-.header-inner{
-    width:92%;
-    max-width:1200px;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.logo{
-    color:#FFD700;
-    font-size:18px;
-    font-weight:bold;
-}
-
-nav{
-    display:flex;
-    gap:20px;
-}
-
-nav a{
-    color:#ddd;
-    text-decoration:none;
-    font-size:14px;
-}
-
-nav a:hover{
-    color:#FFD700;
-}
-
-.container{
-    width:92%;
-    max-width:1000px;
-    margin:55px auto 80px;
-}
-
-.back{
-    display:inline-block;
-    margin-bottom:25px;
-    padding:10px 18px;
-    border:1px solid #FFD700;
-    border-radius:20px;
-    color:#FFD700;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-.back:hover{
-    background:#FFD700;
-    color:#000;
-}
-
-.card{
-    background:#151515;
-    border:1px solid #333;
-    border-radius:18px;
-    overflow:hidden;
-}
-
-.image-box{
-    width:100%;
-    background:#111;
-    text-align:center;
-}
-
-.image-box img{
-    width:100%;
-    max-height:650px;
-    object-fit:contain;
-    display:block;
-    margin:auto;
-}
-
-.no-image{
-    height:350px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#888;
-    font-size:20px;
-}
-
-.content{
-    padding:30px;
-}
-
-.content h1{
-    margin:0 0 15px;
-    font-size:32px;
-    color:#fff;
-}
-
-.date{
-    color:#aaa;
-    margin-bottom:25px;
-}
-
-.description{
-    color:#ddd;
-    font-size:17px;
-    line-height:1.9;
-    white-space:pre-wrap;
-}
-
-.error{
-    text-align:center;
-    padding:100px 20px;
-    color:#aaa;
-    font-size:20px;
-}
-
-@media(max-width:700px){
-
-    nav{
-        display:none;
-    }
-
-    .container{
-        width:94%;
-        margin-top:35px;
-    }
-
-    .content{
-        padding:22px;
-    }
-
-    .content h1{
-        font-size:25px;
-    }
-
-    .description{
-        font-size:15px;
-    }
+*{box-sizing:border-box}
+body{margin:0;background:#080808;color:#fff;font-family:"Noto Sans KR","Malgun Gothic",Arial,sans-serif}
+.wrap{width:min(1000px,calc(100% - 36px));margin:0 auto}
+header{background:#050505;border-bottom:1px solid #222}
+.head{min-height:78px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;font-size:20px;font-weight:800}
+.brand img{width:42px;height:42px;object-fit:contain}
+.brand b{color:#f0c94d}
+.back{padding:9px 13px;border:1px solid #444;border-radius:8px;background:#222;color:#fff;text-decoration:none;font-size:13px}
+.article{margin:48px auto 70px;background:#111;border:1px solid #333;border-radius:18px;overflow:hidden}
+.article-head{padding:34px 42px 26px;border-bottom:1px solid #333}
+.kicker{color:#f0c94d;font-size:13px;font-weight:800;letter-spacing:.15em;margin-bottom:12px}
+h1{margin:0;font-size:38px;line-height:1.3}
+.meta{margin-top:15px;color:#aaa;font-size:14px}
+.hero{width:100%;background:#151515;text-align:center}
+.hero img{display:block;width:100%;max-height:650px;object-fit:contain;background:#111}
+.no-image{padding:120px 20px;color:#777}
+.article-body{padding:34px 42px 45px}
+.article-body p{margin:0;white-space:pre-wrap;color:#ddd;font-size:17px;line-height:1.9}
+.file-box{margin-top:30px;padding-top:20px;border-top:1px solid #333}
+.file-box a{color:#f0c94d;text-decoration:none}
+.error{text-align:center;padding:100px 20px;color:#aaa}
+@media(max-width:650px){
+.article-head{padding:26px 22px 22px}
+.article-body{padding:25px 22px 35px}
+h1{font-size:28px}
+.article-body p{font-size:15px}
 }
 </style>
 </head>
-
 <body>
-
 <header>
-
-    <div class="header-inner">
-
-        <div class="logo">
-            가수인생활 엔터테인먼트
-        </div>
-
-        <nav>
-            <a href="index.html">홈</a>
-            <a href="news.html">뉴스</a>
-            <a href="notice.html">공지</a>
-            <a href="schedule.html">일정</a>
-            <a href="projects.html">실적</a>
-            <a href="files.html">자료실</a>
-            <a href="video.html">영상센터</a>
-            <a href="gallery.html">갤러리</a>
-        </nav>
-
-    </div>
-
+<div class="wrap head">
+<a class="brand" href="gallery.html">
+<img src="logo.png" alt="가수인생활 엔터테인먼트">
+<span>가수인생활 <b>엔터테인먼트</b></span>
+</a>
+<a class="back" href="gallery.html">← 갤러리로 돌아가기</a>
+</div>
 </header>
 
-
-<div class="container">
-
-    <a href="gallery.html" class="back">
-        ← 갤러리로 돌아가기
-    </a>
-
-    <div id="detail"></div>
-
-</div>
-
+<main class="wrap">
+<article class="article" id="article">
+<div class="error">자료를 불러오는 중입니다.</div>
+</article>
+</main>
 
 <script type="module">
-
-import {
-    initializeApp
-}
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-
-import {
-    getFirestore,
-    doc,
-    getDoc
-}
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-
+import{initializeApp}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import{getFirestore,doc,getDoc}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 const firebaseConfig={
-
-    apiKey:
-    "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
-
-    authDomain:
-    "gasuinent.firebaseapp.com",
-
-    projectId:
-    "gasuinent",
-
-    storageBucket:
-    "gasuinent.firebasestorage.app",
-
-    messagingSenderId:
-    "122370674182",
-
-    appId:
-    "1:122370674182:web:3bb831917d8d6ed36d7d87",
-
-    measurementId:
-    "G-39M5K1M6K7"
+apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+authDomain:"gasuinent.firebaseapp.com",
+projectId:"gasuinent",
+storageBucket:"gasuinent.firebasestorage.app",
+messagingSenderId:"122370674182",
+appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",
+measurementId:"G-39M5K1M6K7"
 };
 
+const db=getFirestore(initializeApp(firebaseConfig));
 
-const app=initializeApp(firebaseConfig);
+function esc(v){
+return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
 
-const db=getFirestore(app);
+const id=new URLSearchParams(location.search).get("id");
+const article=document.getElementById("article");
 
-
-/* 주소에서 id 가져오기 */
-
-const params=
-new URLSearchParams(
-    window.location.search
-);
-
-const id=params.get("id");
-
-
-const detail=
-document.getElementById("detail");
-
-
-/* id가 없을 경우 */
-
+async function load(){
 if(!id){
-
-    detail.innerHTML=`
-        <div class="error">
-            갤러리 정보를 찾을 수 없습니다.
-        </div>
-    `;
-
-}else{
-
-    loadGallery();
-
+article.innerHTML='<div class="error">잘못된 접근입니다.</div>';
+return;
 }
-
-
-/* 갤러리 상세정보 */
-
-async function loadGallery(){
-
-    try{
-
-        const snap=
-        await getDoc(
-            doc(db,"gallery",id)
-        );
-
-
-        if(!snap.exists()){
-
-            detail.innerHTML=`
-                <div class="error">
-                    해당 갤러리 자료가 존재하지 않습니다.
-                </div>
-            `;
-
-            return;
-
-        }
-
-
-        const g=snap.data();
-
-
-        let imageHTML="";
-
-
-        if(g.image){
-
-            imageHTML=`
-                <div class="image-box">
-
-                    <img
-                        src="${escapeAttribute(g.image)}"
-                        alt="${escapeAttribute(g.title || "갤러리 사진")}"
-                    >
-
-                </div>
-            `;
-
-        }else{
-
-            imageHTML=`
-                <div class="image-box">
-
-                    <div class="no-image">
-                        사진이 없습니다.
-                    </div>
-
-                </div>
-            `;
-
-        }
-
-
-        detail.innerHTML=`
-
-            <div class="card">
-
-                ${imageHTML}
-
-                <div class="content">
-
-                    <h1>
-                        ${escapeHtml(g.title || "")}
-                    </h1>
-
-                    ${
-                        g.date
-                        ?
-                        `<div class="date">
-                            📅 ${escapeHtml(g.date)}
-                        </div>`
-                        :
-                        ""
-                    }
-
-                    <div class="description">
-                        ${escapeHtml(g.content || "등록된 설명이 없습니다.")}
-                    </div>
-
-                </div>
-
-            </div>
-
-        `;
-
-
-    }catch(error){
-
-        console.error(
-            "갤러리 상세 오류:",
-            error
-        );
-
-        detail.innerHTML=`
-            <div class="error">
-                갤러리 내용을 불러오지 못했습니다.
-                <br><br>
-                ${escapeHtml(error.message || "")}
-            </div>
-        `;
-
-    }
-
+try{
+const snap=await getDoc(doc(db,"gallery",id));
+if(!snap.exists()){
+article.innerHTML='<div class="error">갤러리 자료를 찾을 수 없습니다.</div>';
+return;
 }
+const g=snap.data();
+const title=esc(g.title||"갤러리");
+const date=esc(g.date||"");
+const content=esc(g.content||"");
+const image=g.image||"";
 
-
-/* HTML 문자 처리 */
-
-function escapeHtml(value){
-
-    return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-
+article.innerHTML=`
+<div class="article-head">
+<div class="kicker">GALLERY</div>
+<h1>${title}</h1>
+${date?`<div class="meta">📅 ${date}</div>`:""}
+</div>
+<div class="hero">
+${image?`<img src="${esc(image)}" alt="${title}">`:`<div class="no-image">등록된 사진이 없습니다.</div>`}
+</div>
+<div class="article-body">
+<p>${content||"등록된 내용이 없습니다."}</p>
+${g.fileUrl?`<div class="file-box"><a href="${esc(g.fileUrl)}" target="_blank" rel="noopener">첨부파일 보기</a></div>`:""}
+</div>`;
+}catch(e){
+console.error(e);
+article.innerHTML='<div class="error">상세 내용을 불러오지 못했습니다.</div>';
 }
-
-
-function escapeAttribute(value){
-
-    return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;");
-
 }
-
+load();
 </script>
-
 </body>
 </html>
