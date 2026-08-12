@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>뉴스관리</title>
+
+<style>
+body{margin:0;background:#111;color:#fff;font-family:Malgun Gothic,sans-serif;}
+header{background:#222;padding:20px;text-align:center;}
+header h1{margin:0;color:#FFD700;font-size:34px;}
+.container{width:95%;max-width:1200px;margin:30px auto;}
+input,textarea,select{width:100%;padding:12px;border:none;border-radius:8px;font-size:18px;box-sizing:border-box;}
+textarea{height:250px;resize:vertical;}
+label{display:block;margin-top:20px;margin-bottom:8px;font-weight:bold;}
+button{background:#FFD700;color:#000;border:none;border-radius:8px;padding:12px 25px;font-size:17px;font-weight:bold;cursor:pointer;}
+button:hover{background:#ffcc00;}
+table{width:100%;border-collapse:collapse;margin-top:20px;}
+th{background:#333;padding:12px;}
+td{padding:10px;border-bottom:1px solid #444;text-align:center;}
+.thumb{width:80px;border-radius:5px;}
+
+.pagination{
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ gap:8px;
+ margin:25px 0 35px;
+}
+.pagination button{
+ min-width:42px;
+ padding:9px 13px;
+ background:#333;
+ color:#fff;
+ border:1px solid #555;
+ border-radius:6px;
+ font-size:15px;
+}
+.pagination button:hover,
+.pagination button.active{
+ background:#FFD700;
+ color:#000;
+ border-color:#FFD700;
+}
+.pagination button.arrow{
+ background:#555;
+}
+
+.news-form-grid{width:100%;border:1px solid #444;border-radius:8px;overflow:hidden;margin-top:10px;}
+.form-row{display:grid;grid-template-columns:125px 1fr;min-height:58px;border-bottom:1px solid #444;}
+.form-row:last-child{border-bottom:none;}
+.form-label{background:#2d2d2d;display:flex;align-items:center;padding:10px 14px;font-size:17px;font-weight:bold;box-sizing:border-box;}
+.form-field{background:#111;padding:8px 10px;display:flex;align-items:center;box-sizing:border-box;}
+.form-field input[type="text"],.form-field input[type="date"],.form-field select{width:100%;height:42px;padding:8px 12px;border:none;border-radius:6px;font-size:17px;box-sizing:border-box;}
+.form-field input[type="file"]{font-size:16px;}
+.form-field textarea{width:100%;height:130px;padding:12px;border:none;border-radius:6px;font-size:17px;box-sizing:border-box;resize:vertical;}
+.checkbox-field{justify-content:flex-start;}
+.checkbox-field input{width:20px;height:20px;}
+.calendar-icon{font-size:30px;margin-right:7px;line-height:1;}
+.content-row{min-height:150px;}
+
+@media(max-width:700px){
+.form-row{grid-template-columns:100px 1fr;}
+.form-label{font-size:14px;padding:8px;}
+.calendar-icon{font-size:26px;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>📰 뉴스관리</h1>
+<div style="margin-top:20px">
+<input id="searchText" type="text" placeholder="뉴스 검색..." style="width:320px;padding:10px;border-radius:6px;border:none;">
+<button id="searchBtn">검색</button>
+</div>
+</header>
+
+<div class="container">
+
+<h2>등록된 뉴스</h2>
+<table>
+<thead>
+<tr>
+<th>번호</th>
+<th>분류</th>
+<th>사진</th>
+<th>제목</th>
+<th>작성일</th>
+<th>보기</th>
+<th>수정</th>
+<th>삭제</th>
+</tr>
+</thead>
+<tbody id="noticeBody"></tbody>
+</table>
+<div id="pagination" class="pagination"></div>
+<hr>
+
+<h2>뉴스 등록</h2>
+
+<div class="news-form-grid">
+
+<div class="form-row">
+<div class="form-label">뉴스 제목</div>
+<div class="form-field">
+<input type="text" id="noticeTitle" placeholder="뉴스 제목을 입력하세요">
+</div>
+</div>
+
+<div class="form-row">
+<div class="form-label"><span class="calendar-icon">📅</span>작성 날짜</div>
+<div class="form-field">
+<input type="date" id="noticeDate">
+</div>
+</div>
+
+<div class="form-row">
+<div class="form-label">사진 선택</div>
+<div class="form-field" style="flex-wrap:wrap;">
+<input type="file" id="noticeImage" accept="image/*">
+<img id="previewImage" style="max-width:250px;margin-top:10px;display:none;border-radius:8px;">
+</div>
+</div>
+
+<div class="form-row">
+<div class="form-label">뉴스 분류</div>
+<div class="form-field">
+<select id="category">
+<option value="행사안내">행사안내</option>
+<option value="무료공연">무료공연</option>
+<option value="봉사활동">봉사활동</option>
+<option value="노래교실">노래교실</option>
+<option value="사회환원">사회환원</option>
+<option value="보도자료">보도자료</option>
+</select>
+</div>
+</div>
+
+<div class="form-row">
+<div class="form-label">📌 공지 / 상단 고정</div>
+<div class="form-field checkbox-field">
+<input type="checkbox" id="pinned">
+</div>
+</div>
+
+<div class="form-row content-row">
+<div class="form-label">뉴스 내용</div>
+<div class="form-field">
+<textarea id="noticeContent" placeholder="뉴스 내용을 입력하세요"></textarea>
+</div>
+</div>
+
+</div>
+
+<button id="saveNotice" style="margin-top:15px;">뉴스 저장</button>
+
+<button onclick="location.href='admin.html'" style="margin-left:15px;padding:12px 25px;background:#555;color:#fff;border:none;border-radius:8px;font-size:18px;font-weight:bold;cursor:pointer;">
+🏠 관리 메인
+</button>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import {
+ getFirestore, collection, addDoc, getDocs, deleteDoc, doc, getDoc, updateDoc, query, orderBy
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+import {
+ getStorage, ref, uploadBytes, getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
+
+const firebaseConfig={
+ apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+ authDomain:"gasuinent.firebaseapp.com",
+ projectId:"gasuinent",
+ storageBucket:"gasuinent.firebasestorage.app",
+ messagingSenderId:"122370674182",
+ appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",
+ measurementId:"G-39M5K1M6K7"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+const storage=getStorage(app);
+
+let editId=null;
+
+function getToday(){
+ const now=new Date();
+ return now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
+}
+
+const noticeDate=document.getElementById("noticeDate");
+noticeDate.value=getToday();
+
+document.getElementById("noticeImage").addEventListener("change",function(){
+ const file=this.files[0];
+ const img=document.getElementById("previewImage");
+ if(!file){img.style.display="none";return;}
+ const reader=new FileReader();
+ reader.onload=e=>{img.src=e.target.result;img.style.display="block";};
+ reader.readAsDataURL(file);
+});
+
+const PAGE_SIZE = 5;
+let currentPage = 1;
+let allNews = [];
+let filteredNews = [];
+
+async function loadNotice(){
+
+ try{
+
+  const q=query(
+   collection(db,"notice"),
+   orderBy("timestamp","desc")
+  );
+
+  const snapshot=await getDocs(q);
+
+  allNews=[];
+
+  snapshot.forEach(item=>{
+   allNews.push({
+    id:item.id,
+    data:item.data()
+   });
+  });
+
+  filteredNews=[...allNews];
+  currentPage=1;
+  renderNews();
+
+ }catch(error){
+
+  console.error(error);
+
+  document.getElementById("noticeBody").innerHTML=
+   '<tr><td colspan="8">뉴스를 불러오지 못했습니다.</td></tr>';
+
+  document.getElementById("pagination").innerHTML="";
+ }
+}
+
+function renderNews(){
+
+ const body=document.getElementById("noticeBody");
+ const start=(currentPage-1)*PAGE_SIZE;
+ const pageItems=filteredNews.slice(start,start+PAGE_SIZE);
+
+ let html="";
+
+ if(pageItems.length===0){
+
+  html='<tr><td colspan="8">등록된 뉴스가 없습니다.</td></tr>';
+
+ }else{
+
+  pageItems.forEach((item,index)=>{
+
+   const n=item.data;
+
+   html+=`
+   <tr>
+    <td>${start+index+1}</td>
+    <td>${n.category||"행사안내"}</td>
+    <td>${n.image?`<img src="${n.image}" class="thumb">`:"-"}</td>
+    <td>${n.title||""}</td>
+    <td>${n.date||""}</td>
+    <td><button onclick="viewNotice('${item.id}')">보기</button></td>
+    <td><button onclick="editNotice('${item.id}')">수정</button></td>
+    <td><button onclick="deleteNotice('${item.id}')">삭제</button></td>
+   </tr>`;
+  });
+ }
+
+ body.innerHTML=html;
+ renderPagination();
+}
+
+function renderPagination(){
+
+ const pagination=document.getElementById("pagination");
+ const totalPages=Math.ceil(filteredNews.length/PAGE_SIZE);
+
+ if(totalPages<=1){
+  pagination.innerHTML="";
+  return;
+ }
+
+ let html="";
+
+ if(currentPage>1){
+  html+=`<button class="arrow" onclick="changePage(${currentPage-1})">◀</button>`;
+ }
+
+ for(let i=1;i<=totalPages;i++){
+  html+=`<button class="${i===currentPage?"active":""}" onclick="changePage(${i})">${i}</button>`;
+ }
+
+ if(currentPage<totalPages){
+  html+=`<button class="arrow" onclick="changePage(${currentPage+1})">▶</button>`;
+ }
+
+ pagination.innerHTML=html;
+}
+
+window.changePage=function(page){
+
+ currentPage=page;
+ renderNews();
+
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
+};
+
+document.getElementById("saveNotice").addEventListener("click",async()=>{
+ try{
+  const title=document.getElementById("noticeTitle").value.trim();
+  const content=document.getElementById("noticeContent").value.trim();
+  const selectedDate=noticeDate.value;
+  const file=document.getElementById("noticeImage").files[0];
+
+  if(!title){alert("제목을 입력하세요.");return;}
+  if(!selectedDate){alert("📅 작성 날짜를 선택하세요.");return;}
+
+  let imageUrl="";
+  if(editId){
+   const old=await getDoc(doc(db,"notice",editId));
+   if(old.exists()) imageUrl=old.data().image||"";
+  }
+
+  if(file){
+   const storageRef=ref(storage,"notice/"+Date.now()+"_"+file.name);
+   await uploadBytes(storageRef,file);
+   imageUrl=await getDownloadURL(storageRef);
+  }
+
+  const data={
+   title,
+   content,
+   image:imageUrl,
+   category:document.getElementById("category").value,
+   pinned:document.getElementById("pinned").checked,
+   date:selectedDate,
+   timestamp:Date.now()
+  };
+
+  if(editId){
+   await updateDoc(doc(db,"notice",editId),data);
+   alert("뉴스가 수정되었습니다.");
+  }else{
+   await addDoc(collection(db,"notice"),data);
+   alert("뉴스가 등록되었습니다.");
+  }
+
+  editId=null;
+  document.getElementById("noticeTitle").value="";
+  document.getElementById("noticeContent").value="";
+  document.getElementById("category").value="행사안내";
+  document.getElementById("pinned").checked=false;
+  document.getElementById("noticeImage").value="";
+  document.getElementById("previewImage").style.display="none";
+  noticeDate.value=getToday();
+  await loadNotice();
+
+ }catch(error){
+  console.error(error);
+  alert("저장 중 오류가 발생했습니다. 오류 내용을 확인해주세요.");
+ }
+});
+
+window.deleteNotice=async function(id){
+ if(!confirm("정말 삭제하시겠습니까?"))return;
+ await deleteDoc(doc(db,"notice",id));
+ await loadNotice();
+};
+
+window.editNotice=async function(id){
+ editId=id;
+ const snap=await getDoc(doc(db,"notice",id));
+ if(!snap.exists())return;
+ const n=snap.data();
+
+ document.getElementById("noticeTitle").value=n.title||"";
+ document.getElementById("noticeContent").value=n.content||"";
+ noticeDate.value=n.date||getToday();
+ document.getElementById("category").value=n.category||"행사안내";
+ document.getElementById("pinned").checked=n.pinned===true;
+
+ const img=document.getElementById("previewImage");
+ if(n.image){img.src=n.image;img.style.display="block";}
+ else{img.style.display="none";}
+
+ window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});
+};
+
+window.viewNotice=function(id){
+ location.href="../notice_view.html?id="+encodeURIComponent(id);
+};
+
+document.getElementById("searchBtn").addEventListener("click",async()=>{
+
+ const keyword=
+  document.getElementById("searchText")
+  .value
+  .trim()
+  .toLowerCase();
+
+ if(keyword===""){
+
+  filteredNews=[...allNews];
+
+ }else{
+
+  filteredNews=allNews.filter(item=>{
+
+   const n=item.data;
+
+   const title=(n.title||"").toLowerCase();
+   const content=(n.content||"").toLowerCase();
+
+   return title.includes(keyword) ||
+          content.includes(keyword);
+  });
+ }
+
+ currentPage=1;
+ renderNews();
+
+});
+
+loadNotice();
+</script>
+
+</body>
+</html>
