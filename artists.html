@@ -1,242 +1,158 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>소속가수 | 가수인생활 엔터테인먼트</title>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
-<meta name="description"
-content="가수인생활 엔터테인먼트 소속 아티스트와 대표가수 이명로를 소개합니다. 공연, 매니지먼트, 신인가수 육성 정보를 확인하세요.">
+import {
+    getFirestore,
+    collection,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="artists.css">
-</head>
+const firebaseConfig = {
+    apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
+    authDomain: "gasuinent.firebaseapp.com",
+    projectId: "gasuinent",
+    storageBucket: "gasuinent.firebasestorage.app",
+    messagingSenderId: "122370674182",
+    appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
+    measurementId: "G-39M5K1M6K7"
+};
 
-<body>
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-<header>
-<div class="wrap head">
+async function loadArtists() {
 
-<a class="brand" href="index.html">
-    <img src="logo.png" alt="가수인생활 엔터테인먼트">
-    <span>가수인생활 <b>엔터테인먼트</b></span>
-</a>
-
-<nav class="desktop-nav">
-    <a href="index.html">홈</a>
-    <a href="about.html">회사소개</a>
-    <a href="partners.html">함께하는 단체</a>
-    <a class="active" href="artists.html">소속가수</a>
-    <a href="news.html">뉴스</a>
-    <a href="notice.html">공지</a>
-    <a href="schedule.html">일정</a>
-    <a href="projects.html">실적</a>
-    <a href="resources.html">자료실</a>
-    <a href="video.html">영상센터</a>
-    <a href="gallery.html">갤러리</a>
-    <a href="contact.html">문의</a>
-</nav>
-
-</div>
-</header>
-
-<section class="hero">
-<div>
-<h1>소속가수</h1>
-<p>최고의 아티스트와 함께 감동의 무대를 만들어갑니다.</p>
-</div>
-</section>
-
-<section class="ceo-section">
-<div class="container">
-
-<div class="section-title">
-<h2>대표 아티스트 · CEO</h2>
-<p>대한민국 가수이자 가수인생활 엔터테인먼트 대표를 소개합니다.</p>
-</div>
-
-<div class="ceo-card">
-
-<div class="ceo-photo">
-<img src="lee-myungro.jpg" alt="대표가수 이명로">
-</div>
-
-<div class="ceo-info">
-
-<h3>이명로</h3>
-<h4>대표 아티스트 · CEO</h4>
-
-<p>
-대한민국 가수이자 가수인생활 엔터테인먼트 대표입니다.<br><br>
-공연기획, 아티스트 매니지먼트, 신인가수 발굴 및 육성,
-문화예술 공연과 지역문화 활성화를 위해
-전국의 다양한 공연과 문화행사를 기획·운영하고 있습니다.
-</p>
-
-<ul>
-<li>대한민국 가수</li>
-<li>가수인생활 엔터테인먼트 대표</li>
-<li>한국가수인생활협회 회장</li>
-<li>나가수공연단 단장</li>
-<li>전국 공연 및 축제 기획</li>
-<li>신인가수 발굴 및 육성</li>
-</ul>
-
-<a href="contact.html" class="gold-btn">공연문의</a>
-
-</div>
-</div>
-</div>
-</section>
-
-<section class="artist-list">
-<div class="container">
-
-<div class="section-title">
-<h2>소속가수</h2>
-<p>실력과 개성을 갖춘 가수인생활 엔터테인먼트 소속 아티스트를 소개합니다.</p>
-</div>
-
-<!-- 현재 화면 디자인은 그대로 유지하고,
-     나중에 Firebase 연결 시 이 영역의 데이터만 교체합니다. -->
-<div class="artist-grid" id="artistGrid"></div>
-
-</div>
-</section>
-
-<section class="audition-section">
-<div class="container">
-
-<div class="section-title">
-<h2>AUDITION</h2>
-<p>꿈을 노래하는 새로운 스타를 기다립니다.</p>
-</div>
-
-<div class="audition-box">
-
-<h3>가수인생활 엔터테인먼트 공개 오디션</h3>
-
-<p>
-트로트 · 발라드 · K-POP<br>
-행사 전문 가수를 모집합니다.<br><br>
-꿈과 열정을 가진 여러분의 도전을 기다립니다.
-</p>
-
-<a href="audition.html" class="gold-btn">오디션 지원하기</a>
-
-</div>
-</div>
-</section>
-
-<section class="contact-section">
-<div class="container">
-
-<div class="section-title">
-<h2>공연문의</h2>
-<p>행사 및 공연 섭외 문의</p>
-</div>
-
-<div class="contact-box">
-
-<h3>가수인생활 엔터테인먼트</h3>
-<p>대표 : 이명로</p>
-<p>전화 : 010-5070-3175</p>
-<p>이메일 : myung4002@naver.com</p>
-
-<p>
-기업행사 · 축제 · 방송 · 복지공연 · 행사기획 등<br>
-모든 공연 문의를 환영합니다.
-</p>
-
-<a href="contact.html" class="gold-btn">문의하기</a>
-
-</div>
-</div>
-</section>
-
-<footer>
-<div class="container">
-
-<h3>가수인생활 엔터테인먼트</h3>
-<p>대표 : 이명로</p>
-<p>전화 : 010-5070-3175</p>
-<p>E-mail : myung4002@naver.com</p>
-<p>© 2026 Gausin Saenghwal Entertainment. All Rights Reserved.</p>
-
-</div>
-</footer>
-
-<script>
-/*
- * 현재 홈페이지 표시 데이터
- * Firebase 연결 전에는 이 부분만 사용합니다.
- * 디자인(CSS)은 기존 그대로 사용합니다.
- */
-const artistData = [
-    {
-        image: "lee-myungro.jpg",
-        alt: "이명로",
-        title: "이명로",
-        text: "대표 아티스트 · CEO<br>트로트 가수"
-    },
-    {
-        image: "logo.png",
-        alt: "신인가수 모집",
-        title: "신인가수 모집",
-        text: "트로트 · 발라드 · K-POP<br>오디션 상시 접수"
-    },
-    {
-        image: "logo.png",
-        alt: "아티스트 준비중",
-        title: "아티스트 준비중",
-        text: "새로운 아티스트 영입 진행 중<br>Coming Soon"
-    },
-    {
-        image: "logo.png",
-        alt: "아티스트 준비중",
-        title: "아티스트 준비중",
-        text: "새로운 아티스트 영입 진행 중<br>Coming Soon"
-    },
-    {
-        image: "logo.png",
-        alt: "아티스트 준비중",
-        title: "아티스트 준비중",
-        text: "새로운 아티스트 영입 진행 중<br>Coming Soon"
-    },
-    {
-        image: "logo.png",
-        alt: "아티스트 준비중",
-        title: "아티스트 준비중",
-        text: "새로운 아티스트 영입 진행 중<br>Coming Soon"
-    },
-    {
-        image: "logo.png",
-        alt: "아티스트 준비중",
-        title: "아티스트 준비중",
-        text: "새로운 아티스트 영입 진행 중<br>Coming Soon"
-    },
-    {
-        image: "logo.png",
-        alt: "아티스트 준비중",
-        title: "아티스트 준비중",
-        text: "새로운 아티스트 영입 진행 중<br>Coming Soon"
-    }
-];
-
-function renderArtists() {
     const grid = document.getElementById("artistGrid");
 
-    grid.innerHTML = artistData.map(artist => `
-        <div class="artist-card">
-            <img src="${artist.image}" alt="${artist.alt}">
-            <h3>${artist.title}</h3>
-            <p>${artist.text}</p>
-        </div>
-    `).join("");
+    if (!grid) {
+        return;
+    }
+
+    try {
+
+        const snapshot = await getDocs(
+            collection(db, "artists")
+        );
+
+        let html = "";
+
+        snapshot.forEach(function(item) {
+
+            const artist = item.data();
+
+            const image = artist.photoUrl || "logo.png";
+
+            const name =
+                artist.stageName ||
+                artist.name ||
+                "소속가수";
+
+            const genre =
+                artist.genre ||
+                "가수";
+
+            const intro =
+                artist.shortIntro ||
+                "";
+
+            html += `
+                <div
+                    class="artist-card"
+                    onclick="location.href='artist_detail.html?id=${item.id}'"
+                    style="cursor:pointer;"
+                >
+
+                    <img
+                        src="${image}"
+                        alt="${name}"
+                    >
+
+                    <h3>${name}</h3>
+
+                    <p>
+                        ${genre}<br>
+                        ${intro}
+                    </p>
+
+                </div>
+            `;
+
+        });
+
+        html += `
+            <div class="artist-card">
+
+                <img
+                    src="logo.png"
+                    alt="신인가수 모집"
+                >
+
+                <h3>신인가수 모집</h3>
+
+                <p>
+                    트로트 · 발라드 · K-POP<br>
+                    오디션 상시 접수
+                </p>
+
+            </div>
+        `;
+
+        if (snapshot.empty) {
+
+            html += `
+                <div class="artist-card">
+
+                    <img
+                        src="logo.png"
+                        alt="아티스트 준비중"
+                    >
+
+                    <h3>아티스트 준비중</h3>
+
+                    <p>
+                        새로운 아티스트 영입 진행 중<br>
+                        Coming Soon
+                    </p>
+
+                </div>
+            `;
+
+        }
+
+        grid.innerHTML = html;
+
+    } catch (error) {
+
+        console.error(
+            "소속가수 불러오기 오류:",
+            error
+        );
+
+        grid.innerHTML = `
+            <div class="artist-card">
+
+                <img
+                    src="logo.png"
+                    alt="아티스트 준비중"
+                >
+
+                <h3>아티스트 준비중</h3>
+
+                <p>
+                    새로운 아티스트 영입 진행 중<br>
+                    Coming Soon
+                </p>
+
+            </div>
+        `;
+
+    }
+
 }
 
-document.addEventListener("DOMContentLoaded", renderArtists);
-</script>
+document.addEventListener(
+    "DOMContentLoaded",
+    loadArtists
+);
 
-</body>
-</html>
+</script>
