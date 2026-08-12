@@ -57,6 +57,17 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
     .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
     .card{background:var(--panel);border:1px solid var(--line);border-radius:34px;padding:44px}
     .card p{font-size:19px;color:var(--muted);line-height:1.78}
+
+    /* 뉴스 카드의 자세히 보기 버튼을 모든 카드에서 같은 위치에 정렬 */
+    .news-card{
+      display:flex;
+      flex-direction:column;
+      height:100%;
+    }
+    .news-card .btn{
+      margin-top:auto;
+      align-self:flex-start;
+    }
     .tag{display:inline-block;padding:9px 16px;border-radius:999px;background:#3a3120;color:var(--gold2);font-weight:900;margin-right:8px}
     .status{display:inline-block;padding:9px 16px;border:1px solid #594a2c;border-radius:999px;color:var(--gold2);font-weight:900}
     .btn{display:inline-block;margin-top:22px;padding:16px 28px;border:2px solid var(--gold);border-radius:999px;color:var(--gold2);font-size:21px;font-weight:900;background:transparent;cursor:pointer}
