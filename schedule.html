@@ -62,13 +62,14 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
     .btn{display:inline-block;margin-top:22px;padding:16px 28px;border:2px solid var(--gold);border-radius:999px;color:var(--gold2);font-size:21px;font-weight:900;background:transparent;cursor:pointer}
     .btn.fill{background:var(--gold);color:#16120b}
 
-    /* 행사 카드: 자세히 보기 버튼 위치만 아래로 일치 */
+    /* 행사 카드 높이만 맞춤 - 기존 버튼 디자인은 그대로 유지 */
     #scheduleGrid .card{
       display:flex;
       flex-direction:column;
     }
     #scheduleGrid .card .btn.fill{
       margin-top:auto;
+      align-self:flex-start;
     }
 
     .filters{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:30px 0 46px}
@@ -419,29 +420,6 @@ async function loadSchedule(){
                     position:relative;
                     border-color:${event.pinned ? '#e0b354' : '#34343a'};
                  ">
-
-                ${
-                    event.pinned
-                    ?
-                    `
-                    <div style="
-                        position:absolute;
-                        top:18px;
-                        right:20px;
-                        padding:6px 12px;
-                        border-radius:999px;
-                        background:#e0b354;
-                        color:#111;
-                        font-size:13px;
-                        font-weight:900;
-                    ">
-                        📌 일정 고정
-                    </div>
-                    `
-                    :
-                    ""
-                }
-
 
                 <h3>
                     ${event.title}
