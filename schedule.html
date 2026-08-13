@@ -61,6 +61,16 @@ section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108
     .status{display:inline-block;padding:9px 16px;border:1px solid #594a2c;border-radius:999px;color:var(--gold2);font-weight:900}
     .btn{display:inline-block;margin-top:22px;padding:16px 28px;border:2px solid var(--gold);border-radius:999px;color:var(--gold2);font-size:21px;font-weight:900;background:transparent;cursor:pointer}
     .btn.fill{background:var(--gold);color:#16120b}
+
+    /* 행사 카드: 자세히 보기 버튼 위치만 아래로 일치 */
+    #scheduleGrid .card{
+      display:flex;
+      flex-direction:column;
+    }
+    #scheduleGrid .card .btn.fill{
+      margin-top:auto;
+    }
+
     .filters{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:30px 0 46px}
     .filters button{padding:14px 24px;border-radius:999px;border:1px solid var(--line);background:#090909;color:var(--muted);font-weight:900;font-size:20px}
     .filters button.active{background:var(--gold);color:#111}
@@ -445,7 +455,7 @@ async function loadSchedule(){
 
 
                 <p>
-                    <b>📍 장소</b>
+                    <b>📍 장소</b><br>
                     ${event.place}
                 </p>
 
