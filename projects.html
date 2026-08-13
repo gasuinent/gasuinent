@@ -1,588 +1,443 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>주요 실적 및 프로젝트</title>
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>주요 실적 | 가수인생활 엔터테인먼트</title>
+<meta content="가수인생활 엔터테인먼트 공식 홈페이지. 공연기획, 가수 매니지먼트, 무료공연, 문화예술교육, 지역상생, 사회환원 활동 안내." name="description"/>
+<!-- V46: 메뉴별 완전 분리 화면 + 강제 숨김 적용 -->
 <style>
-*{
-    box-sizing:border-box;
-}
+    :root{
+      --bg:#080808;--panel:#151518;--panel2:#101116;--gold:#e0b354;--gold2:#f2cf7a;
+      --text:#f6f2e9;--muted:#c9c1b5;--line:#34343a;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:"Pretendard","Noto Sans KR",Arial,sans-serif;line-height:1.72}
+    a{color:inherit;text-decoration:none}
+    button,input,select,textarea{font:inherit}
+    .wrap{max-width:1240px;margin:auto;padding:0 24px}
+    header{position:sticky;top:0;z-index:100;background:#050505;border-bottom:1px solid var(--line);box-shadow:0 8px 28px rgba(0,0,0,.28)}
+    .head{min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .brand{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;white-space:nowrap;flex:0 0 auto}
+    .brand img{width:54px;height:54px;object-fit:contain;border-radius:50%}
+    .brand b{color:var(--gold2)}
+    .desktop-nav{display:flex;align-items:center;justify-content:flex-end;gap:1px;flex-wrap:nowrap}
+    .desktop-nav a{padding:10px 7px;border-radius:9px;color:var(--muted);font-size:14px;font-weight:850;white-space:nowrap}
+    .desktop-nav a:hover,.desktop-nav a.active{background:rgba(224,179,84,.13);color:var(--gold2)}
+    .menu-btn{display:none;width:58px;height:58px;border:1px solid var(--line);border-radius:18px;background:#141519;color:var(--gold2);font-size:30px;cursor:pointer;flex:0 0 auto}
+    .mobile-nav{display:none;position:fixed;inset:86px 0 0;z-index:1000;background:rgba(0,0,0,.985);padding:22px;overflow-y:auto;overscroll-behavior:contain;border-top:1px solid var(--line);box-shadow:0 18px 40px rgba(0,0,0,.55)}
+    .mobile-nav.open{display:block}
+    .mobile-nav a{display:block;max-width:620px;margin:0 auto 10px;padding:15px 18px;border:1px solid var(--line);border-radius:14px;background:#111217;color:var(--text);font-size:19px;font-weight:800}
+    .mobile-nav a:hover,.mobile-nav a.active{background:var(--gold);color:#111;border-color:var(--gold)}
+    .hero{min-height:calc(100vh - 86px);display:grid;place-items:center;text-align:center;padding:26px 0 24px;position:relative;overflow:hidden;background:
+      radial-gradient(circle at 50% 0%,rgba(255,195,63,.34),transparent 28%),
+      radial-gradient(circle at 50% 78%,rgba(224,179,84,.16),transparent 38%),
+      linear-gradient(180deg,#070604 0%,#080808 56%,#050505 100%)}
+    .hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.78;background-image:
+      radial-gradient(circle,rgba(255,211,102,.95) 0 1px,transparent 1.8px),
+      radial-gradient(circle,rgba(255,184,48,.55) 0 1.4px,transparent 2.1px);background-size:120px 120px,190px 190px;background-position:15px 20px,70px 35px}
+    .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:150px;background:linear-gradient(180deg,transparent,rgba(224,179,84,.06));border-bottom:1px solid rgba(224,179,84,.45)}
+    .hero .wrap{position:relative;z-index:1;max-width:1280px}
+    .hero-logo{display:block;width:min(620px,52vw);max-height:390px;object-fit:contain;margin:0 auto 2px;background:transparent;filter:drop-shadow(0 0 32px rgba(224,179,84,.38))}
+    .hero h1{font-size:clamp(48px,5.5vw,78px);line-height:1.08;margin:4px 0 10px;text-shadow:0 4px 20px rgba(0,0,0,.75)}
+    .hero .lead{font-size:clamp(18px,1.6vw,25px);max-width:920px}
+    .hero-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:20px}
+    .hero-actions .btn{min-width:190px;margin-top:0;padding:12px 20px;background:rgba(8,8,8,.72);backdrop-filter:blur(4px)}
+    .hero-actions .btn.fill{box-shadow:0 8px 28px rgba(224,179,84,.25)}
+    .eyebrow{color:var(--gold);font-weight:900;letter-spacing:.18em;font-size:22px}
+    h1{font-size:clamp(48px,8vw,86px);line-height:1.15;margin:18px 0 24px}
+    h2{font-size:clamp(40px,6vw,66px);line-height:1.2;margin:12px 0 20px}
+    h3{font-size:32px;line-height:1.35;margin:0 0 26px}
+    .lead{font-size:clamp(20px,3vw,31px);color:var(--muted);max-width:900px;margin:auto}
+section{padding:82px 0;border-bottom:1px solid var(--line);scroll-margin-top:108px}
+    .section-head{text-align:center;margin-bottom:56px}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:34px;padding:44px}
+    .card p{font-size:19px;color:var(--muted);line-height:1.78}
+    .tag{display:inline-block;padding:9px 16px;border-radius:999px;background:#3a3120;color:var(--gold2);font-weight:900;margin-right:8px}
+    .status{display:inline-block;padding:9px 16px;border:1px solid #594a2c;border-radius:999px;color:var(--gold2);font-weight:900}
+    .btn{display:inline-block;margin-top:22px;padding:16px 28px;border:2px solid var(--gold);border-radius:999px;color:var(--gold2);font-size:21px;font-weight:900;background:transparent;cursor:pointer}
+    .btn.fill{background:var(--gold);color:#16120b}
+    .filters{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:30px 0 46px}
+    .filters button{padding:14px 24px;border-radius:999px;border:1px solid var(--line);background:#090909;color:var(--muted);font-weight:900;font-size:20px}
+    .filters button.active{background:var(--gold);color:#111}
+    details{border:1px solid #594a2c;border-radius:24px;padding:26px 30px;margin:18px 0;background:var(--panel2)}
+    summary{cursor:pointer;font-size:24px;font-weight:900}
+    details p{font-size:20px;color:var(--muted)}
+    .project-card .bar{background:#372e20;color:var(--gold2);padding:12px 18px;border-radius:999px;font-weight:900;margin-bottom:26px}
+    .project-detail{display:none;margin-top:26px;border-top:1px solid #4a402d;padding-top:24px}
+    .project-card.open .project-detail{display:block}
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .photo{min-height:320px;border:1px solid #765e31;border-radius:32px;background:linear-gradient(135deg,#3d3528,#1c1c22);display:grid;place-items:center;text-align:center;color:var(--muted);font-size:24px;overflow:hidden}
+    .photo img{width:100%;height:100%;min-height:320px;object-fit:cover;display:block}
+    .news-photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+    .news-photos img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px;border:1px solid #765e31}
+    .contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:28px}
+    label{display:block;font-weight:900;margin:20px 0 8px}
+    input,select,textarea{width:100%;background:#111217;color:#fff;border:1px solid #765e31;border-radius:18px;padding:18px}
+    textarea{min-height:200px;resize:vertical}
+    .notice{font-size:18px;color:var(--muted)}
+    footer{text-align:center;padding:80px 20px;color:#aaa}
+    footer img{width:160px;height:160px;object-fit:contain;border-radius:50%;display:block;margin:0 auto 24px}
 
-body{
-    margin:0;
-    background:#080808;
-    color:#fff;
-    font-family:"Malgun Gothic",sans-serif;
-}
-
-/* =========================
-   상단 메뉴
-========================= */
-
-header{
-    height:72px;
-    background:#050505;
-    border-bottom:1px solid #222;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:sticky;
-    top:0;
-    z-index:100;
-}
-
-.nav{
-    width:92%;
-    max-width:1200px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.logo{
-    color:#FFD700;
-    font-size:20px;
-    font-weight:bold;
-}
-
-.menu{
-    display:flex;
-    gap:22px;
-    align-items:center;
-}
-
-.menu a{
-    color:#fff;
-    text-decoration:none;
-    font-size:14px;
-}
-
-.menu a:hover{
-    color:#FFD700;
-}
-
-/* =========================
-   제목
-========================= */
-
-.hero{
-    text-align:center;
-    padding:60px 20px 35px;
-}
-
-.hero small{
-    color:#FFD700;
-    font-size:17px;
-    font-weight:bold;
-    letter-spacing:4px;
-}
-
-.hero h1{
-    margin:12px 0;
-    font-size:48px;
-}
-
-.hero p{
-    margin:0;
-    color:#ddd;
-    font-size:18px;
-}
-
-/* =========================
-   6개 카드
-   2열 3줄
-========================= */
-
-.project-grid{
-    width:92%;
-    max-width:1200px;
-    margin:0 auto;
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:16px;
-}
-
-/* 카드 */
-
-.project-card{
-    background:#151515;
-    border:1px solid #333;
-    border-radius:18px;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-    min-height:500px;
-}
-
-/* 사진 부분 크게 */
-
-.project-image{
-    width:100%;
-    aspect-ratio:3 / 2;
-    height:auto;
-    overflow:hidden;
-    background:#222;
-}
-
-.project-image img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-}
-
-/* 글 부분 */
-
-.project-info{
-    padding:14px 18px 16px;
-    flex:1;
-    display:flex;
-    flex-direction:column;
-}
-
-.badge{
-    display:inline-block;
-    width:max-content;
-    background:#40361b;
-    color:#FFD700;
-    border-radius:20px;
-    padding:7px 12px;
-    font-size:13px;
-    margin-bottom:10px;
-}
-
-.project-info h2{
-    margin:0 0 10px;
-    font-size:23px;
-}
-
-.project-info p{
-    margin:5px 0;
-    line-height:1.45;
-    color:#ddd;
-    font-size:14px;
-}
-
-.project-info strong{
-    color:#FFD700;
-}
-
-.detail-btn{
-    margin-top:auto;
-    width:max-content;
-    padding:9px 18px;
-    border:1px solid #FFD700;
-    border-radius:25px;
-    background:transparent;
-    color:#FFD700;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.detail-btn:hover{
-    background:#FFD700;
-    color:#000;
-}
-
-/* =========================
-   7번째부터 목록
-========================= */
-
-.project-list{
-    width:92%;
-    max-width:1200px;
-    margin:45px auto 80px;
-}
-
-.project-list h2{
-    color:#FFD700;
-    font-size:24px;
-    margin-bottom:15px;
-}
-
-.list-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-.list-table th{
-    background:#252525;
-    color:#fff;
-    padding:13px 10px;
-    border-bottom:1px solid #555;
-}
-
-.list-table td{
-    padding:12px 10px;
-    border-bottom:1px solid #333;
-    text-align:center;
-    color:#ddd;
-}
-
-.list-table td:nth-child(3){
-    text-align:left;
-}
-
-.list-btn{
-    padding:7px 14px;
-    border:1px solid #FFD700;
-    border-radius:18px;
-    background:transparent;
-    color:#FFD700;
-    cursor:pointer;
-}
-
-.list-btn:hover{
-    background:#FFD700;
-    color:#000;
-}
-
-/* =========================
-   모바일
-========================= */
-
-@media(max-width:800px){
-
-    .menu{
-        gap:10px;
+    /* 실적: 2열 × 3줄, 총 6개 카드 */
+    .projects-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:16px 20px;
+    }
+    .project-card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:22px 24px 20px;
+      display:flex;
+      flex-direction:column;
+      min-height:0;
+    }
+    .project-card h3{
+      font-size:26px;
+      line-height:1.35;
+      margin:10px 0 12px;
+    }
+    .project-card p{
+      font-size:16px;
+      color:var(--muted);
+      line-height:1.62;
+      margin:0;
+    }
+    .project-card strong{color:var(--gold2)}
+    .project-card .tag{
+      align-self:flex-start;
+      padding:5px 12px;
+      border-radius:999px;
+      background:#3a3120;
+      color:var(--gold2);
+      font-size:14px;
+      font-weight:900;
+    }
+    .detail-btn{
+      align-self:flex-start;
+      margin-top:14px;
+      padding:8px 17px;
+      border:1px solid var(--gold);
+      border-radius:999px;
+      color:var(--gold2);
+      background:transparent;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .project-detail{
+      display:none;
+      margin-top:14px;
+      padding-top:14px;
+      border-top:1px solid #4a402d;
+      color:var(--muted);
+      font-size:15px;
+    }
+    .project-card.open .project-detail{display:block}
+    .project-list-title{
+      color:var(--gold2);
+      font-size:27px;
+      margin:32px 0 12px;
+    }
+    .project-list{
+      width:100%;
+      border-collapse:collapse;
+      background:#0f0f11;
+      border:1px solid var(--line);
+    }
+    .project-list th{
+      background:#2d2d30;
+      padding:10px 12px;
+      text-align:center;
+      font-size:15px;
+    }
+    .project-list td{
+      padding:10px 12px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      text-align:center;
+      font-size:15px;
+    }
+    .project-list td:nth-child(3){color:var(--text);text-align:left}
+    .list-btn{
+      padding:6px 12px;
+      border:1px solid var(--gold);
+      border-radius:999px;
+      background:transparent;
+      color:var(--gold2);
+      font-size:13px;
+      font-weight:900;
+      cursor:pointer;
     }
 
-    .menu a{
-        font-size:11px;
+    @media(max-width:1020px){
+      .desktop-nav{display:none}
+      .menu-btn{display:block}
+      .head{min-height:86px}
+      .mobile-nav{inset:86px 0 0}
     }
+    @media(max-width:760px){
+      .wrap{padding:0 21px}
+      .head{min-height:78px}
+      .brand{font-size:18px;gap:9px;min-width:0}
+      .brand img{width:50px;height:50px}
+      .brand span{overflow:hidden;text-overflow:ellipsis}
+      .menu-btn{width:50px;height:50px;font-size:26px;border-radius:15px}
+      .mobile-nav{inset:78px 0 0;padding:15px}
+      .mobile-nav a{font-size:17px;padding:12px 15px}
+      .hero{min-height:calc(100vh - 78px);padding:38px 0 34px}
+      .hero-logo{width:min(300px,76vw);max-height:280px;margin-bottom:8px}
+      .hero h1{font-size:clamp(36px,10vw,52px);margin:8px 0 14px}
+      .hero .lead{font-size:17px;line-height:1.65}
+      .hero-actions{gap:10px;margin-top:24px}
+      .hero-actions .btn{min-width:calc(50% - 8px);font-size:15px;padding:11px 12px}
+      .eyebrow{font-size:14px;letter-spacing:.11em}
+      h1{font-size:clamp(36px,10vw,52px)}
+      h2{font-size:clamp(32px,9vw,45px)}
+      .lead{font-size:18px;line-height:1.7}
+      section{padding:58px 0;scroll-margin-top:88px}
+      .section-head{margin-bottom:32px}
+      .grid,.grid3,.gallery,.contact-grid{grid-template-columns:1fr}
+      .projects-grid{grid-template-columns:1fr}
+      .project-card{padding:20px;border-radius:20px}
+      .project-card h3{font-size:24px}
+      .project-card p{font-size:16px}
+      .project-list{display:block;overflow-x:auto;white-space:nowrap}
 
-    .hero h1{
-        font-size:34px;
+      .news-photos{grid-template-columns:1fr}
+      .card{padding:27px 23px;border-radius:24px}
+      .card p{font-size:17px;line-height:1.7}
+      h3{font-size:25px;margin-bottom:18px}
+      .filters{gap:8px;margin:20px 0 30px}
+      .filters button{font-size:15px;padding:10px 14px}
+      details{padding:19px 20px;border-radius:18px}
+      summary{font-size:18px}
+      details p{font-size:16px}
+      .btn{font-size:17px;padding:12px 18px}
+      .photo{min-height:210px;font-size:19px}
+      footer{padding:48px 20px}
+      footer img{width:112px;height:112px}
     }
-
-    .project-grid{
-        grid-template-columns:1fr;
-    }
-
-    .project-image{
-        height:auto;
-        aspect-ratio:3 / 2;
-    }
-
-    .list-table{
-        font-size:12px;
-    }
-
-}
-</style>
+  </style>
 </head>
-
 <body>
-
 <header>
-    <div class="nav">
-
-        <div class="logo">
-            가수인생활 엔터테인먼트
-        </div>
-
-        <nav class="menu">
-            <a href="index.html">홈</a>
-            <a href="company.html">회사소개</a>
-            <a href="group.html">함께하는 단체</a>
-            <a href="artists.html">소속가수</a>
-            <a href="news.html">뉴스</a>
-            <a href="notice.html">공지</a>
-            <a href="schedule.html">일정</a>
-            <a href="projects.html" style="color:#FFD700;">실적</a>
-            <a href="files.html">자료실</a>
-            <a href="video.html">영상센터</a>
-            <a href="gallery.html">갤러리</a>
-            <a href="contact.html">문의</a>
-        </nav>
-
-    </div>
+<div class="wrap head">
+<a class="brand" href="index.html"><img alt="가수인생활 엔터테인먼트 로고" src="logo.png"/><span>가수인생활 <b>엔터테인먼트</b></span></a>
+<nav aria-label="PC 주요 메뉴" class="desktop-nav">
+<a href="index.html">홈</a><a href="about.html">회사소개</a><a href="partners.html">함께하는 단체</a><a href="artists.html">소속가수</a>
+<a href="news.html">뉴스</a><a href="notice.html">공지</a><a href="schedule.html">일정</a>
+<a class="active" href="projects.html">실적</a><a href="resources.html">자료실</a><a href="video.html">영상센터</a>
+<a href="gallery.html">갤러리</a><a href="contact.html">문의</a>
+</nav>
+<button aria-expanded="false" aria-label="모바일 메뉴 열기" class="menu-btn" id="menuBtn">☰</button>
+</div>
 </header>
+<nav aria-hidden="true" aria-label="모바일 주요 메뉴" class="mobile-nav" id="mobileNav">
+<a href="index.html">홈</a><a href="about.html">회사소개</a><a href="partners.html">함께하는 단체</a><a href="artists.html">소속가수</a>
+<a href="news.html">공식 뉴스</a><a href="notice.html">공지사항</a><a href="schedule.html">행사일정</a>
+<a class="active" href="projects.html">주요 실적</a><a href="resources.html">자료실</a><a href="video.html">영상센터</a>
+<a href="gallery.html">갤러리</a><a href="contact.html">문의</a>
+</nav>
+<main>
 
 
-<section class="hero">
 
-    <small>PROJECTS</small>
 
-    <h1>주요 실적 및 프로젝트</h1>
 
-    <p>
-        각 항목의 자세히 보기를 누르면 해당 내용이 펼쳐집니다.
-    </p>
 
+<section id="projects">
+<div class="wrap">
+<div class="section-head">
+  <div class="eyebrow">PROJECTS</div>
+  <h2>주요 실적 및 프로젝트</h2>
+  <p class="lead">각 항목의 자세히 보기를 누르면 해당 내용이 펼쳐집니다.</p>
+</div>
+
+<div class="projects-grid">
+
+<article class="project-card">
+<span class="tag">대표 공연</span>
+<h3>나가수 힐링콘서트</h3>
+<p><strong>주최</strong><br>한국가수인생활협회<br><br>
+<strong>내용</strong><br>지역 주민과 함께하는 힐링 공연, 문화예술 공연 및 재능기부 행사<br><br>
+<strong>실적</strong><br>다양한 지역 공연 및 문화행사 진행</p>
+<button class="detail-btn">자세히 보기</button>
+<div class="project-detail">지역 주민과 함께하는 문화예술 공연과 재능기부를 통해 지역사회 문화복지 향상에 기여했습니다.</div>
+</article>
+
+<article class="project-card">
+<span class="tag">문화공연</span>
+<h3>전통시장 희망음악회</h3>
+<p><strong>주최</strong><br>한국가수인생활협회<br><br>
+<strong>내용</strong><br>전통시장 활성화를 위한 문화공연과 지역상생 음악회 개최<br><br>
+<strong>실적</strong><br>전통시장 문화행사 및 주민 참여 공연 추진</p>
+<button class="detail-btn">자세히 보기</button>
+<div class="project-detail">전통시장 상인과 지역주민이 함께 참여하는 문화행사를 통해 전통시장 활성화를 추진했습니다.</div>
+</article>
+
+<article class="project-card">
+<span class="tag">축제</span>
+<h3>수성못 나가수 가요제</h3>
+<p><strong>주최</strong><br>한국가수인생활협회<br><br>
+<strong>내용</strong><br>지역 문화예술 활성화를 위한 가요제 및 시민 참여 공연<br><br>
+<strong>실적</strong><br>가요제 기획 및 문화예술 공연 추진</p>
+<button class="detail-btn">자세히 보기</button>
+<div class="project-detail">지역 시민이 직접 참여하는 가요제와 공연을 통해 지역 문화예술 활성화를 추진했습니다.</div>
+</article>
+
+<article class="project-card">
+<span class="tag">복지공연</span>
+<h3>찾아가는 복지공연</h3>
+<p><strong>주최</strong><br>한국가수인생활협회<br><br>
+<strong>내용</strong><br>복지시설과 취약계층을 위한 찾아가는 문화공연<br><br>
+<strong>실적</strong><br>다수의 복지시설 순회 공연 진행</p>
+<button class="detail-btn">자세히 보기</button>
+<div class="project-detail">요양원, 복지관, 장애인시설 등을 직접 찾아가 문화공연과 재능기부를 진행했습니다.</div>
+</article>
+
+<article class="project-card">
+<span class="tag">봉사활동</span>
+<h3>나가수 봉사단 문화나눔 공연</h3>
+<p><strong>주최</strong><br>한국가수인생활협회<br><br>
+<strong>내용</strong><br>요양원, 복지관, 장애인시설 등을 찾아 무료 문화공연과 재능기부 진행<br><br>
+<strong>실적</strong><br>지역사회 문화복지 증진 및 봉사공연 지속 추진</p>
+<button class="detail-btn">자세히 보기</button>
+<div class="project-detail">정기적인 봉사공연과 재능기부를 통해 문화향유 기회를 넓히고 지역사회에 나눔을 실천했습니다.</div>
+</article>
+
+<article class="project-card">
+<span class="tag">문화예술</span>
+<h3>기타 문화예술 프로젝트</h3>
+<p><strong>주최</strong><br>한국가수인생활협회<br><br>
+<strong>내용</strong><br>다양한 문화예술 프로젝트 운영 및 지역상생 활동<br><br>
+<strong>실적</strong><br>문화예술 프로젝트 다수 기획 및 추진</p>
+<button class="detail-btn">자세히 보기</button>
+<div class="project-detail">지역사회와 함께하는 다양한 문화예술 활동 및 공연 프로젝트를 지속적으로 기획하고 추진했습니다.</div>
+</article>
+
+</div>
+
+<h3 class="project-list-title">전체 실적 및 프로젝트 목록</h3>
+<table class="project-list">
+<thead><tr>
+<th>번호</th><th>구분</th><th>프로젝트명</th><th>주최</th><th>내용 요약</th><th>기간</th><th>자세히</th>
+</tr></thead>
+<tbody>
+<tr><td>7</td><td>공연</td><td>동성로 나가수 가요제</td><td>한국가수인생활협회</td><td>지역상권 활성화를 위한 가요제 및 공연</td><td>2025.06.15</td><td><button class="list-btn">자세히 보기</button></td></tr>
+<tr><td>8</td><td>캠페인</td><td>전통시장 살리기 캠페인</td><td>한국가수인생활협회</td><td>전통시장 이용 활성화를 위한 캠페인 활동</td><td>2025.03 ~ 2025.12</td><td><button class="list-btn">자세히 보기</button></td></tr>
+<tr><td>9</td><td>교육</td><td>문화예술 교육 프로그램</td><td>한국가수인생활협회</td><td>지역 주민 대상 문화예술 교육 프로그램 운영</td><td>2025.04 ~ 2025.11</td><td><button class="list-btn">자세히 보기</button></td></tr>
+<tr><td>10</td><td>협력</td><td>지역상생 협력사업</td><td>한국가수인생활협회</td><td>지역사회와 함께하는 상생 협력 프로그램</td><td>2025.01 ~ 2025.12</td><td><button class="list-btn">자세히 보기</button></td></tr>
+</tbody>
+</table>
+</div>
 </section>
 
 
-<!-- =========================
-     1~6번 : 2열 × 3줄
-========================= -->
 
-<section class="project-grid">
 
-
-<!-- 1 -->
-
-<div class="project-card">
-
-    <div class="project-image">
-        <img src="healingconcert.jpg" alt="나가수 힐링콘서트">
-    </div>
-
-    <div class="project-info">
-
-        <span class="badge">대표 공연</span>
-
-        <h2>나가수 힐링콘서트</h2>
-
-        <p><strong>주최</strong> 한국가수인생활협회</p>
-        <p><strong>내용</strong> 지역 주민과 함께하는 힐링 공연</p>
-        <p><strong>실적</strong> 지역 공연 및 문화행사 진행</p>
-
-        <button class="detail-btn"
-        onclick="location.href='project_view.html?id=1'">
-            자세히 보기
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- 2 -->
-
-<div class="project-card">
-
-    <div class="project-image">
-        <img src="marketconcert.jpg" alt="전통시장 희망음악회">
-    </div>
-
-    <div class="project-info">
-
-        <span class="badge">문화공연</span>
-
-        <h2>전통시장 희망음악회</h2>
-
-        <p><strong>주최</strong> 한국가수인생활협회</p>
-        <p><strong>내용</strong> 전통시장 활성화 문화공연</p>
-        <p><strong>실적</strong> 주민 참여 음악회 추진</p>
-
-        <button class="detail-btn"
-        onclick="location.href='project_view.html?id=2'">
-            자세히 보기
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- 3 -->
-
-<div class="project-card">
-
-    <div class="project-image">
-        <img src="suseongfestival.jpg" alt="수성못 나가수 가요제">
-    </div>
-
-    <div class="project-info">
-
-        <span class="badge">축제</span>
-
-        <h2>수성못 나가수 가요제</h2>
-
-        <p><strong>주최</strong> 한국가수인생활협회</p>
-        <p><strong>내용</strong> 지역 문화예술 가요제</p>
-        <p><strong>실적</strong> 시민 참여 문화행사</p>
-
-        <button class="detail-btn"
-        onclick="location.href='project_view.html?id=3'">
-            자세히 보기
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- 4 -->
-
-<div class="project-card">
-
-    <div class="project-image">
-        <img src="volunteerconcert.jpg" alt="찾아가는 복지공연">
-    </div>
-
-    <div class="project-info">
-
-        <span class="badge">복지공연</span>
-
-        <h2>찾아가는 복지공연</h2>
-
-        <p><strong>주최</strong> 한국가수인생활협회</p>
-        <p><strong>내용</strong> 찾아가는 복지 문화공연</p>
-        <p><strong>실적</strong> 복지시설 순회 공연</p>
-
-        <button class="detail-btn"
-        onclick="location.href='project_view.html?id=4'">
-            자세히 보기
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- 5 -->
-
-<div class="project-card">
-
-    <div class="project-image">
-        <img src="healingconcert.jpg" alt="나가수 봉사단 문화나눔 공연">
-    </div>
-
-    <div class="project-info">
-
-        <span class="badge">봉사활동</span>
-
-        <h2>나가수 봉사단 문화나눔 공연</h2>
-
-        <p><strong>주최</strong> 한국가수인생활협회</p>
-        <p><strong>내용</strong> 복지시설 문화공연 및 재능나눔</p>
-        <p><strong>실적</strong> 정기 봉사공연</p>
-
-        <button class="detail-btn"
-        onclick="location.href='project_view.html?id=5'">
-            자세히 보기
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- 6 -->
-
-<div class="project-card">
-
-    <div class="project-image">
-        <img src="marketconcert.jpg" alt="기타 문화예술 프로젝트">
-    </div>
-
-    <div class="project-info">
-
-        <span class="badge">기타</span>
-
-        <h2>기타 문화예술 프로젝트</h2>
-
-        <p><strong>주최</strong> 한국가수인생활협회</p>
-        <p><strong>내용</strong> 문화예술 프로젝트 운영</p>
-        <p><strong>실적</strong> 다양한 프로젝트 추진</p>
-
-        <button class="detail-btn"
-        onclick="location.href='project_view.html?id=6'">
-            자세히 보기
-        </button>
-
-    </div>
-
-</div>
-
-</section>
-
-
-<!-- =========================
-     7번부터 목록
-========================= -->
-
-<section class="project-list">
-
-    <h2>전체 실적 및 프로젝트 목록</h2>
-
-    <table class="list-table">
-
-        <thead>
-
-            <tr>
-                <th>번호</th>
-                <th>구분</th>
-                <th>프로젝트명</th>
-                <th>주최</th>
-                <th>내용</th>
-                <th>기간</th>
-                <th>자세히</th>
-            </tr>
-
-        </thead>
-
-        <tbody>
-
-            <tr>
-                <td>7</td>
-                <td>공연</td>
-                <td>동성로 나가수 가요제</td>
-                <td>한국가수인생활협회</td>
-                <td>지역상권 활성화를 위한 가요제 및 공연</td>
-                <td>2025.06.15</td>
-                <td>
-                    <button class="list-btn"
-                    onclick="location.href='project_view.html?id=7'">
-                    자세히 보기
-                    </button>
-                </td>
-            </tr>
-
-            <tr>
-                <td>8</td>
-                <td>캠페인</td>
-                <td>전통시장 살리기 캠페인</td>
-                <td>한국가수인생활협회</td>
-                <td>전통시장 이용 활성화를 위한 캠페인</td>
-                <td>2025.03 ~ 2025.12</td>
-                <td>
-                    <button class="list-btn"
-                    onclick="location.href='project_view.html?id=8'">
-                    자세히 보기
-                    </button>
-                </td>
-            </tr>
-
-            <tr>
-                <td>9</td>
-                <td>교육</td>
-                <td>문화예술 교육 프로그램</td>
-                <td>한국가수인생활협회</td>
-                <td>지역 주민 대상 문화예술 교육</td>
-                <td>2025.04 ~ 2025.11</td>
-                <td>
-                    <button class="list-btn"
-                    onclick="location.href='project_view.html?id=9'">
-                    자세히 보기
-                    </button>
-                </td>
-            </tr>
-
-            <tr>
-                <td>10</td>
-                <td>협력</td>
-                <td>지역상생 협력사업</td>
-                <td>한국가수인생활협회</td>
-                <td>지역사회와 함께하는 상생 협력 프로그램</td>
-                <td>2025.01 ~ 2025.12</td>
-                <td>
-                    <button class="list-btn"
-                    onclick="location.href='project_view.html?id=10'">
-                    자세히 보기
-                    </button>
-                </td>
-            </tr>
-
-        </tbody>
-
-    </table>
-
-</section>
+</main>
+<footer><img alt="가수인생활 엔터테인먼트 로고" src="logo.png"/><div>© 2026 가수인생활 엔터테인먼트. All rights reserved.</div></footer>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const menuBtn=document.getElementById('menuBtn');
+  const mobileNav=document.getElementById('mobileNav');
+
+  function closeMobileMenu(){
+    mobileNav.classList.remove('open');
+    mobileNav.setAttribute('aria-hidden','true');
+    menuBtn.setAttribute('aria-expanded','false');
+    menuBtn.textContent='☰';
+    document.body.style.overflow='';
+  }
+
+  menuBtn.addEventListener('click',()=>{
+    const open=!mobileNav.classList.contains('open');
+    mobileNav.classList.toggle('open',open);
+    mobileNav.setAttribute('aria-hidden',String(!open));
+    menuBtn.setAttribute('aria-expanded',String(open));
+    menuBtn.textContent=open?'×':'☰';
+    document.body.style.overflow=open?'hidden':'';
+  });
+
+  mobileNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMobileMenu));
+
+  window.addEventListener('resize',()=>{
+    if(window.innerWidth>1020) closeMobileMenu();
+  });
+
+  document.querySelectorAll('.detail-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const card=btn.closest('.project-card');
+      const open=card.classList.toggle('open');
+      btn.textContent=open?'접기':'자세히 보기';
+    });
+  });
+
+  document.querySelectorAll('details').forEach(detail=>{
+    detail.addEventListener('toggle',()=>{
+      if(!detail.open) return;
+      const group=detail.closest('.card');
+      if(!group) return;
+      group.querySelectorAll('details[open]').forEach(other=>{
+        if(other!==detail) other.open=false;
+      });
+    });
+  });
+
+  const filterButtons=document.querySelectorAll('.filters button[data-filter]');
+  const newsCards=document.querySelectorAll('.news-card');
+  filterButtons.forEach(button=>{
+    button.addEventListener('click',()=>{
+      filterButtons.forEach(b=>b.classList.remove('active'));
+      button.classList.add('active');
+      const filter=button.dataset.filter;
+      newsCards.forEach(card=>{
+        card.style.display=(filter==='전체'||card.dataset.category===filter)?'block':'none';
+      });
+    });
+  });
+
+  const form=document.getElementById('contactForm');
+  if(form) form.addEventListener('submit',e=>{
+    e.preventDefault();
+    const g=id=>document.getElementById(id).value.trim();
+    const subject=encodeURIComponent('[홈페이지 문의] '+g('type')+' - '+g('name'));
+    const body=encodeURIComponent(
+`이름 또는 단체명: ${g('name')}
+연락처: ${g('phone')}
+문의 구분: ${g('type')}
+행사명: ${g('event')}
+예상 관객 수: ${g('audience')}
+
+요청사항:
+${g('request')}`);
+    location.href=`mailto:myung4002@naver.com?subject=${subject}&body=${body}`;
+  });
+});
+</script>
+
+<!-- Netlify Identity: 초대·로그인 링크 처리 -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on('init', function(user) {
+      const hasAuthToken = /(?:invite_token|confirmation_token|recovery_token|email_change_token)=/.test(window.location.hash);
+      if (!user && hasAuthToken) {
+        window.netlifyIdentity.open();
+      }
+    });
+    window.netlifyIdentity.on('login', function() {
+      window.netlifyIdentity.close();
+    });
+  }
+</script>
 
 </body>
 </html>
