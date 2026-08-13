@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: gasuinent/gasuinent
   branch: main
 
 locale: ko
