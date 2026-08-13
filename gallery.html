@@ -168,7 +168,9 @@ header{
 .gallery-info{
     min-height:58px;
     padding:11px 15px 12px;
-    background:#151515
+    background:#151515;
+    display:flex;
+    flex-direction:column;
 }
 
 .gallery-title{
@@ -195,18 +197,20 @@ header{
 }
 
 .detail-btn{
-    margin-top:10px;
-    padding:7px 12px;
-    border:1px solid #4a4a4a;
-    border-radius:7px;
-    background:#242424;
-    color:#fff;
-    font-size:12px;
+    margin-top:auto;
+    align-self:flex-start;
+    padding:10px 20px;
+    border:0;
+    border-radius:999px;
+    background:var(--gold);
+    color:#16120b;
+    font-size:13px;
+    font-weight:800;
     cursor:pointer
 }
 .detail-btn:hover{
-    color:var(--gold2);
-    border-color:#765e31
+    background:var(--gold2);
+    color:#16120b
 }
 
 .gallery-bottom{
