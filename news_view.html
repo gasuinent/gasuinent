@@ -12,7 +12,7 @@ header{background:#222;padding:20px;text-align:center}header h1{margin:0;color:#
 #reporter{color:#FFD700;font-size:18px;margin-bottom:25px;border-bottom:1px solid #444;padding-bottom:15px}
 #image{width:100%;max-height:600px;object-fit:contain;border-radius:10px;margin-bottom:15px;display:none}
 #caption{text-align:center;color:#aaa;margin-bottom:30px}
-#content{font-size:21px;line-height:2;white-space:pre-wrap}
+#content{font-size:21px;line-height:2;white-space:normal}
 .article-photo{display:block;width:100%;max-height:600px;object-fit:contain;border-radius:10px;margin:35px 0 10px}
 .article-photo-caption{text-align:center;color:#aaa;margin-bottom:30px}
 #relatedNews{margin-top:20px}
@@ -31,7 +31,6 @@ button{padding:14px 30px;background:#FFD700;color:#000;border:none;border-radius
 <img id="image">
 <div id="caption"></div>
 <div id="content"></div>
-<div id="supportingPhotos"></div>
 <h2 style="margin-top:70px;color:#FFD700;">📰 관련 기사</h2>
 <div id="relatedNews"></div>
 <div class="articleNav"><button id="prevBtn">◀ 이전 기사</button><button onclick="location.href='myung/news.html'">📰 뉴스 목록</button><button id="nextBtn">다음 기사 ▶</button></div>
@@ -43,7 +42,21 @@ const firebaseConfig={apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",authDomai
 const app=initializeApp(firebaseConfig),db=getFirestore(app),params=new URLSearchParams(location.search),id=params.get("id");
 function esc(v){return String(v??"").replace(/[&<>\"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'\"':"&quot;"}[m]))}
 function photoHtml(url,index){if(!url)return"";return `<img class="article-photo" src="${url}" alt="기사 관련 사진 ${index}"><div class="article-photo-caption">▲ 기사 관련 사진 ${index}</div>`}
-async function loadNews(){if(!id){document.getElementById("title").textContent="뉴스를 찾을 수 없습니다.";return}const snap=await getDoc(doc(db,"notice",id));if(!snap.exists()){document.getElementById("title").textContent="뉴스가 존재하지 않습니다.";return}const news=snap.data();document.getElementById("title").textContent=news.title||"";document.getElementById("reporter").innerHTML=`📅 ${esc(news.date||"")} &nbsp;&nbsp; | &nbsp;&nbsp; ✍ 가수인생활 엔터테인먼트`;if(news.image){const image=document.getElementById("image");image.src=news.image;image.style.display="block";document.getElementById("caption").textContent="▲ 기사 관련 사진"}document.getElementById("content").textContent=news.content||"";const photos=Array.isArray(news.images)?news.images.filter(Boolean):[];const box=document.getElementById("supportingPhotos");box.innerHTML=photos.slice(0,3).map((u,i)=>photoHtml(u,i+2)).join("")}
+function renderArticleContent(content,photos){
+  const text=String(content||"");
+  const markerPattern=/\[사진\s*([②③④234])\s*삽입\]/g;
+  let html="",last=0,match;
+  while((match=markerPattern.exec(text))!==null){
+    html+=esc(text.slice(last,match.index)).replace(/\n/g,"<br>");
+    const raw=match[1];
+    const number={"②":0,"③":1,"④":2,"2":0,"3":1,"4":2}[raw];
+    if(number!==undefined&&photos[number]) html+=photoHtml(photos[number],number+2);
+    last=markerPattern.lastIndex;
+  }
+  html+=esc(text.slice(last)).replace(/\n/g,"<br>");
+  return html;
+}
+async function loadNews(){if(!id){document.getElementById("title").textContent="뉴스를 찾을 수 없습니다.";return}const snap=await getDoc(doc(db,"notice",id));if(!snap.exists()){document.getElementById("title").textContent="뉴스가 존재하지 않습니다.";return}const news=snap.data();document.getElementById("title").textContent=news.title||"";document.getElementById("reporter").innerHTML=`📅 ${esc(news.date||"")} &nbsp;&nbsp; | &nbsp;&nbsp; ✍ 가수인생활 엔터테인먼트`;if(news.image){const image=document.getElementById("image");image.src=news.image;image.style.display="block";document.getElementById("caption").textContent="▲ 기사 관련 사진"}const photos=Array.isArray(news.images)?news.images.filter(Boolean).slice(0,3):[];document.getElementById("content").innerHTML=renderArticleContent(news.content||"",photos)}
 async function loadRelatedNews(){if(!id)return;const currentSnap=await getDoc(doc(db,"notice",id));if(!currentSnap.exists())return;const category=currentSnap.data().category||"";const q=query(collection(db,"notice"),orderBy("timestamp","desc"));const snap=await getDocs(q);let html="",count=0;snap.forEach(item=>{if(item.id===id)return;const news=item.data();if((news.category||"")!==category||count>=3)return;html+=`<div class="related"><img src="${news.image||'logo.png'}"><div><a href="news_view.html?id=${item.id}">${esc(news.title||"")}</a><div style="margin-top:8px;color:#aaa;font-size:14px;">📅 ${esc(news.date||"")}</div></div></div>`;count++});document.getElementById("relatedNews").innerHTML=html||"<p style='color:#aaa;'>관련 기사가 없습니다.</p>"}
 async function loadPrevNext(){if(!id)return;const q=query(collection(db,"notice"),orderBy("timestamp","desc"));const snap=await getDocs(q);const list=[];snap.forEach(item=>list.push({id:item.id,...item.data()}));const index=list.findIndex(item=>item.id===id),prevBtn=document.getElementById("prevBtn"),nextBtn=document.getElementById("nextBtn");if(index>=0&&index<list.length-1)prevBtn.onclick=()=>location.href="news_view.html?id="+list[index+1].id;else{prevBtn.disabled=true;prevBtn.innerHTML="첫 기사"}if(index>0)nextBtn.onclick=()=>location.href="news_view.html?id="+list[index-1].id;else{nextBtn.disabled=true;nextBtn.innerHTML="마지막 기사"}}
 loadNews();loadRelatedNews();loadPrevNext();
