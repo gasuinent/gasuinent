@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
 <meta charset="utf-8"/>
@@ -89,56 +88,15 @@ head{text-align:center;margin-bottom:56px}
       .mobile-nav{inset:86px 0 0}
     }
  @media(max-width:760px){
-/* 최신뉴스 */
-#latestNews{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:20px;
-}
-.news-card .info{
-    text-align:center;
-}
-
-.news-card .btn{
-    margin:25px auto 0;
-}
-/* 카드 */
-.news-card{
-    width:100%;
-    max-width:420px;
-    margin:0 auto;
-}
-
-/* 로고 */
-.news-card img{
-    width:180px;
-    height:auto;
-    display:block;
-    margin:20px auto;
-}
-
-/* 제목 */
-.news-card h3{
-    font-size:30px;
-    line-height:1.4;
-    white-space:normal;
-    word-break:keep-all;
-}
-
-/* 버튼 */
-.news-card .btn{
-    margin-top:auto;
-}
-#latestNews{
-    grid-template-columns:1fr;
-}
-
-.news-card{
-    width:100%;
-    max-width:420px;
-    margin:0 auto 25px;
-}
-
+#latestNews{display:grid;grid-template-columns:1fr;gap:20px}
+.news-card .info{text-align:center}
+.news-card .btn{margin:25px auto 0}
+.news-card{width:100%;max-width:420px;margin:0 auto}
+.news-card img{width:180px;height:auto;display:block;margin:20px auto}
+.news-card h3{font-size:30px;line-height:1.4;white-space:normal;word-break:keep-all}
+.news-card .btn{margin-top:auto}
+#latestNews{grid-template-columns:1fr}
+.news-card{width:100%;max-width:420px;margin:0 auto 25px}
     .wrap{padding:0 21px}
     .head{min-height:78px}
       .brand{font-size:18px;gap:9px;min-width:0}
@@ -175,87 +133,18 @@ head{text-align:center;margin-bottom:56px}
       footer{padding:48px 20px}
       footer img{width:112px;height:112px}
     }
-   #latest-news{
-    background:#111;
-    padding:80px 0;
-}
-
-#latestNews{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:25px;
-    max-width:1400px;
-    margin:0 auto;
-}
-@media (max-width:760px){
-
-    #latestNews{
-        grid-template-columns:1fr !important;
-    }
-
-    .news-card{
-        max-width:100%;
-        margin:0 0 25px 0;
-    }
-
-}
-.news-card{
-    background:#1a1a1a;
-    border-radius:15px;
-    overflow:hidden;
-
-    display:flex;
-    flex-direction:column;
-}
-
-.news-card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 15px 35px rgba(224,179,84,.25);
-}
-
-.news-card img{
-    width:100%;
-    height:220px;
-    object-fit:cover;
-}
-
-.news-card .info{
-    padding:20px;
-    display:flex;
-    flex-direction:column;
-    flex:1;
-}
-
-.news-card p{
-    flex:1;
-}
-
-.news-card .btn{
-    margin-top:auto;
-    align-self:flex-start;
-}
-
-.news-card h3{
-    margin:0 0 10px;
-    color:#FFD700;
-}
-
-.news-card p{
-    color:#ddd;
-    line-height:1.7;
-}
- .news-category{
-    display:inline-block;
-    width:auto;
-    align-self:flex-start;
-    padding:6px 12px;
-    background:#FFD700;
-    color:#111;
-    border-radius:20px;
-    font-size:12px;
-    font-weight:bold;
-    margin-bottom:12px;
-}   
+   #latest-news{background:#111;padding:80px 0}
+#latestNews{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;max-width:1400px;margin:0 auto}
+@media (max-width:760px){#latestNews{grid-template-columns:1fr !important}.news-card{max-width:100%;margin:0 0 25px 0}}
+.news-card{background:#1a1a1a;border-radius:15px;overflow:hidden;display:flex;flex-direction:column}
+.news-card:hover{transform:translateY(-5px);box-shadow:0 15px 35px rgba(224,179,84,.25)}
+.news-card img{width:100%;height:220px;object-fit:cover}
+.news-card .info{padding:20px;display:flex;flex-direction:column;flex:1}
+.news-card p{flex:1}
+.news-card .btn{margin-top:auto;align-self:flex-start}
+.news-card h3{margin:0 0 10px;color:#FFD700}
+.news-card p{color:#ddd;line-height:1.7}
+ .news-category{display:inline-block;width:auto;align-self:flex-start;padding:6px 12px;background:#FFD700;color:#111;border-radius:20px;font-size:12px;font-weight:bold;margin-bottom:12px}
   </style>
 </head>
 <body>
@@ -264,7 +153,7 @@ head{text-align:center;margin-bottom:56px}
 <a class="brand" href="index.html"><img alt="가수인생활 엔터테인먼트 로고" src="logo.png"/><span>가수인생활 <b>엔터테인먼트</b></span></a>
 <nav aria-label="PC 주요 메뉴" class="desktop-nav">
 <a class="active" href="index.html">홈</a><a href="about.html">회사소개</a><a href="partners.html">함께하는 단체</a><a href="artists.html">소속가수</a>
-<a href="news.html">뉴스</a><a href="notice.html">공지</a><a href="schedule.html">일정</a>
+<a href="news.html">뉴스</a><a href="midam.html">미담</a><a href="notice.html">공지</a><a href="schedule.html">일정</a>
 <a href="projects.html">실적</a><a href="resources.html">자료실</a><a href="video.html">영상센터</a>
 <a href="gallery.html">갤러리</a><a href="contact.html">문의</a>
 </nav>
@@ -273,7 +162,7 @@ head{text-align:center;margin-bottom:56px}
 </header>
 <nav aria-hidden="true" aria-label="모바일 주요 메뉴" class="mobile-nav" id="mobileNav">
 <a class="active" href="index.html">홈</a><a href="about.html">회사소개</a><a href="partners.html">함께하는 단체</a><a href="artists.html">소속가수</a>
-<a href="news.html">공식 뉴스</a><a href="notice.html">공지사항</a><a href="schedule.html">행사일정</a>
+<a href="news.html">공식 뉴스</a><a href="midam.html">미담</a><a href="notice.html">공지사항</a><a href="schedule.html">행사일정</a>
 <a href="projects.html">주요 실적</a><a href="resources.html">자료실</a><a href="video.html">영상센터</a>
 <a href="gallery.html">갤러리</a><a href="contact.html">문의</a>
 </nav>
@@ -292,51 +181,27 @@ head{text-align:center;margin-bottom:56px}
 </div>
 </div>
 </section>
-
 <section id="latest-news">
-
 <div class="wrap">
-
 <div style="text-align:center;margin-bottom:35px;">
-
-    <img src="logo.png"
-         alt="GSE"
-         style="width:90px;height:auto;display:block;margin:0 auto 15px;">
-
-    <h2 style="margin:0;">
-        최신 뉴스
-    </h2>
-
+<img src="logo.png" alt="GSE" style="width:90px;height:auto;display:block;margin:0 auto 15px;">
+<h2 style="margin:0;">최신 뉴스</h2>
 </div>
-
 <div id="latestNews"></div>
-
 </div>
-
 </section>
-
 </main>
-
 <section id="v55-intro" style="padding:40px;background:#111;color:#fff;border-top:4px solid #c9a227;">
 <h2>가수인생활 엔터테인먼트</h2>
-
 <p><strong>문화와 예술로 사람을 잇고, 감동을 전합니다.</strong></p>
-
 <p>공연기획 · 가수 매니지먼트 · 문화예술 콘텐츠 제작</p>
-
 <div style="margin:20px 0; line-height:2.2; font-size:18px;">
     <div><span style="color:#d9a227;font-weight:bold;">👤 대표</span> : 이명로</div>
     <div><span style="color:#d9a227;font-weight:bold;">☎ 전화</span> : 010-5070-3175</div>
     <div><span style="color:#d9a227;font-weight:bold;">✉ 이메일</span> : myung4002@naver.com</div>
 </div>
-
-<p style="margin-top:25px;">
-    <a href="about.html">회사소개</a>
-    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-    <a href="contact.html">공연문의</a>
-</p>
+<p style="margin-top:25px;"><a href="about.html">회사소개</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="contact.html">공연문의</a></p>
 </section>
-
 <footer>
 <img alt="가수인생활 엔터테인먼트 로고" src="logo.png"/>
 <div>© 2026 가수인생활 엔터테인먼트. All rights reserved.</div>
@@ -345,175 +210,34 @@ head{text-align:center;margin-bottom:56px}
 document.addEventListener('DOMContentLoaded',()=>{
   const menuBtn=document.getElementById('menuBtn');
   const mobileNav=document.getElementById('mobileNav');
-
-  function closeMobileMenu(){
-    mobileNav.classList.remove('open');
-    mobileNav.setAttribute('aria-hidden','true');
-    menuBtn.setAttribute('aria-expanded','false');
-    menuBtn.textContent='☰';
-    document.body.style.overflow='';
-  }
-
-  menuBtn.addEventListener('click',()=>{
-    const open=!mobileNav.classList.contains('open');
-    mobileNav.classList.toggle('open',open);
-    mobileNav.setAttribute('aria-hidden',String(!open));
-    menuBtn.setAttribute('aria-expanded',String(open));
-    menuBtn.textContent=open?'×':'☰';
-    document.body.style.overflow=open?'hidden':'';
-  });
-
+  function closeMobileMenu(){mobileNav.classList.remove('open');mobileNav.setAttribute('aria-hidden','true');menuBtn.setAttribute('aria-expanded','false');menuBtn.textContent='☰';document.body.style.overflow='';}
+  menuBtn.addEventListener('click',()=>{const open=!mobileNav.classList.contains('open');mobileNav.classList.toggle('open',open);mobileNav.setAttribute('aria-hidden',String(!open));menuBtn.setAttribute('aria-expanded',String(open));menuBtn.textContent=open?'×':'☰';document.body.style.overflow=open?'hidden':'';});
   mobileNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMobileMenu));
-
-  window.addEventListener('resize',()=>{
-    if(window.innerWidth>1020) closeMobileMenu();
-  });
-
-  document.querySelectorAll('.detailBtn').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const card=btn.closest('.project-card');
-      const parent=card.parentElement;
-      parent.querySelectorAll('.project-card.open').forEach(other=>{
-        if(other!==card){
-          other.classList.remove('open');
-          const otherBtn=other.querySelector('.detailBtn');
-          if(otherBtn) otherBtn.textContent=otherBtn.dataset.label||'세부보기';
-        }
-      });
-      card.classList.toggle('open');
-      btn.textContent=card.classList.contains('open')?'접기':(btn.dataset.label||'세부보기');
-    });
-  });
-
-  document.querySelectorAll('details').forEach(detail=>{
-    detail.addEventListener('toggle',()=>{
-      if(!detail.open) return;
-      const group=detail.closest('.card');
-      if(!group) return;
-      group.querySelectorAll('details[open]').forEach(other=>{
-        if(other!==detail) other.open=false;
-      });
-    });
-  });
-
-  const filterButtons=document.querySelectorAll('.filters button[data-filter]');
-  const newsCards=document.querySelectorAll('.news-card');
-  filterButtons.forEach(button=>{
-    button.addEventListener('click',()=>{
-      filterButtons.forEach(b=>b.classList.remove('active'));
-      button.classList.add('active');
-      const filter=button.dataset.filter;
-      newsCards.forEach(card=>{
-        card.style.display=(filter==='전체'||card.dataset.category===filter)?'block':'none';
-      });
-    });
-  });
-
-  const form=document.getElementById('contactForm');
-  if(form) form.addEventListener('submit',e=>{
-    e.preventDefault();
-    const g=id=>document.getElementById(id).value.trim();
-    const subject=encodeURIComponent('[홈페이지 문의] '+g('type')+' - '+g('name'));
-    const body=encodeURIComponent(
-`이름 또는 단체명: ${g('name')}
-연락처: ${g('phone')}
-문의 구분: ${g('type')}
-행사명: ${g('event')}
-예상 관객 수: ${g('audience')}
-
-요청사항:
-${g('request')}`);
-    location.href=`mailto:myung4002@naver.com?subject=${subject}&body=${body}`;
-  });
+  window.addEventListener('resize',()=>{if(window.innerWidth>1020) closeMobileMenu();});
+  document.querySelectorAll('.detailBtn').forEach(btn=>{btn.addEventListener('click',()=>{const card=btn.closest('.project-card');const parent=card.parentElement;parent.querySelectorAll('.project-card.open').forEach(other=>{if(other!==card){other.classList.remove('open');const otherBtn=other.querySelector('.detailBtn');if(otherBtn) otherBtn.textContent=otherBtn.dataset.label||'세부보기';}});card.classList.toggle('open');btn.textContent=card.classList.contains('open')?'접기':(btn.dataset.label||'세부보기');});});
+  document.querySelectorAll('details').forEach(detail=>{detail.addEventListener('toggle',()=>{if(!detail.open)return;const group=detail.closest('.card');if(!group)return;group.querySelectorAll('details[open]').forEach(other=>{if(other!==detail)other.open=false;});});});
+  const filterButtons=document.querySelectorAll('.filters button[data-filter]');const newsCards=document.querySelectorAll('.news-card');filterButtons.forEach(button=>{button.addEventListener('click',()=>{filterButtons.forEach(b=>b.classList.remove('active'));button.classList.add('active');const filter=button.dataset.filter;newsCards.forEach(card=>{card.style.display=(filter==='전체'||card.dataset.category===filter)?'block':'none';});});});
+  const form=document.getElementById('contactForm');if(form)form.addEventListener('submit',e=>{e.preventDefault();const g=id=>document.getElementById(id).value.trim();const subject=encodeURIComponent('[홈페이지 문의] '+g('type')+' - '+g('name'));const body=encodeURIComponent(`이름 또는 단체명: ${g('name')}\n연락처: ${g('phone')}\n문의 구분: ${g('type')}\n행사명: ${g('event')}\n예상 관객 수: ${g('audience')}\n요청사항:\n${g('request')}`);location.href=`mailto:myung4002@naver.com?subject=${subject}&body=${body}`;});
 });
 </script>
-
 <!-- Netlify Identity: 초대·로그인 링크 처리 -->
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
   if (window.netlifyIdentity) {
     window.netlifyIdentity.on('init', function(user) {
       const hasAuthToken = /(?:invite_token|confirmation_token|recovery_token|email_change_token)=/.test(window.location.hash);
-      if (!user && hasAuthToken) {
-        window.netlifyIdentity.open();
-      }
+      if (!user && hasAuthToken) window.netlifyIdentity.open();
     });
-    window.netlifyIdentity.on('login', function() {
-      window.netlifyIdentity.close();
-    });
+    window.netlifyIdentity.on('login', function() { window.netlifyIdentity.close(); });
   }
 </script>
-
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  query,
-  orderBy,
-  limit
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
-  authDomain: "gasuinent.firebaseapp.com",
-  projectId: "gasuinent",
-  storageBucket: "gasuinent.firebasestorage.app",
-  messagingSenderId: "122370674182",
-  appId: "1:122370674182:web:3bb831917d8d6ed36d7d87",
-  measurementId: "G-39M5K1M6K7"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-async function loadLatestNews(){
-
-    const q = query(
-    collection(db,"notice"),
-    orderBy("timestamp","desc"),
-    limit(3)
-);
-
-    const snap = await getDocs(q);
-
-    let html = "";
-
-    snap.forEach(doc=>{
-
-        const n = doc.data();
-
-        html += `
-        <div class="news-card">
-            <img src="${n.image || 'logo.png'}" alt="">
-            <div class="info">
-<div class="news-category">문화예술</div>
-               <h3>${n.title}</h3>
-
-<div style="color:#bbb;font-size:14px;margin:8px 0 15px;">
-📅 ${n.date} &nbsp;&nbsp; | &nbsp;&nbsp; ✍ 가수인생활 엔터테인먼트
-</div>
-
-<p>${(n.content || "").substring(0,120)}...</p>
-                <a class="btn"
-   style="margin-top:auto;"
-   href="notice_view.html?id=${doc.id}">
-    자세히 보기
-</a>
-            </div>
-        </div>
-        `;
-
-    });
-
-    document.getElementById("latestNews").innerHTML = html;
-
-}
-
+import { getFirestore, collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+const firebaseConfig={apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",authDomain:"gasuinent.firebaseapp.com",projectId:"gasuinent",storageBucket:"gasuinent.firebasestorage.app",messagingSenderId:"122370674182",appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",measurementId:"G-39M5K1M6K7"};
+const app=initializeApp(firebaseConfig);const db=getFirestore(app);
+async function loadLatestNews(){const q=query(collection(db,"notice"),orderBy("timestamp","desc"),limit(3));const snap=await getDocs(q);let html="";snap.forEach(doc=>{const n=doc.data();html+=`<div class="news-card"><img src="${n.image||'logo.png'}" alt=""><div class="info"><div class="news-category">문화예술</div><h3>${n.title}</h3><div style="color:#bbb;font-size:14px;margin:8px 0 15px;">📅 ${n.date} &nbsp;&nbsp; | &nbsp;&nbsp; ✍ 가수인생활 엔터테인먼트</div><p>${(n.content||"").substring(0,120)}...</p><a class="btn" style="margin-top:auto;" href="notice_view.html?id=${doc.id}">자세히 보기</a></div></div>`;});document.getElementById("latestNews").innerHTML=html;}
 loadLatestNews();
-
 </script>
 </body>
 </html>
