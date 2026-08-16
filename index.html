@@ -239,5 +239,6 @@ const app=initializeApp(firebaseConfig);const db=getFirestore(app);
 async function loadLatestNews(){const q=query(collection(db,"notice"),orderBy("timestamp","desc"),limit(3));const snap=await getDocs(q);let html="";snap.forEach(doc=>{const n=doc.data();html+=`<div class="news-card"><img src="${n.image||'logo.png'}" alt=""><div class="info"><div class="news-category">문화예술</div><h3>${n.title}</h3><div style="color:#bbb;font-size:14px;margin:8px 0 15px;">📅 ${n.date} &nbsp;&nbsp; | &nbsp;&nbsp; ✍ 가수인생활 엔터테인먼트</div><p>${(n.content||"").substring(0,120)}...</p><a class="btn" style="margin-top:auto;" href="notice_view.html?id=${doc.id}">자세히 보기</a></div></div>`;});document.getElementById("latestNews").innerHTML=html;}
 loadLatestNews();
 </script>
+<script type="module" src="visitor_tracker.js"></script>
 </body>
 </html>

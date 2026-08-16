@@ -17,4 +17,5 @@ const firebaseConfig={apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",authDomai
 const db=getFirestore(initializeApp(firebaseConfig));const id=new URLSearchParams(location.search).get("id");
 async function load(){if(!id){document.getElementById("title").textContent="행사를 찾을 수 없습니다.";return}const snap=await getDoc(doc(db,"schedule",id));if(!snap.exists()){document.getElementById("title").textContent="행사를 찾을 수 없습니다.";return}const e=snap.data();document.getElementById("title").textContent=e.title||"";document.getElementById("eventDate").textContent=e.date||e.eventDate||"";document.getElementById("eventPlace").textContent=e.place||"";document.getElementById("content").textContent=e.content||"등록된 행사 내용이 없습니다."}load().catch(e=>{console.error(e);document.getElementById("title").textContent="행사 정보를 불러오지 못했습니다."});
 </script>
+<script type="module" src="visitor_tracker.js"></script>
 </body></html>
