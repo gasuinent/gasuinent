@@ -19,19 +19,25 @@ header{background:#050505;border-bottom:1px solid #222}
 .kicker{color:#f0c94d;font-size:13px;font-weight:800;letter-spacing:.15em;margin-bottom:12px}
 h1{margin:0;font-size:38px;line-height:1.3}
 .meta{margin-top:15px;color:#aaa;font-size:14px}
-.hero{width:100%;background:#151515;text-align:center}
-.hero img{display:block;width:100%;max-height:650px;object-fit:contain;background:#111}
-.no-image{padding:120px 20px;color:#777}
+.gallery-photos{display:grid;grid-template-columns:2fr 1fr;gap:10px;background:#151515;padding:10px}
+.photo{background:#0b0b0b;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:260px}
+.photo img{display:block;width:100%;height:100%;object-fit:cover}
+.photo-main{grid-row:span 2;min-height:530px}
+.photo-side{min-height:260px}
+.no-image{width:100%;height:100%;min-height:260px;display:flex;align-items:center;justify-content:center;color:#777;background:#111}
 .article-body{padding:34px 42px 45px}
 .article-body p{margin:0;white-space:pre-wrap;color:#ddd;font-size:17px;line-height:1.9}
 .file-box{margin-top:30px;padding-top:20px;border-top:1px solid #333}
 .file-box a{color:#f0c94d;text-decoration:none}
 .error{text-align:center;padding:100px 20px;color:#aaa}
 @media(max-width:650px){
+.wrap{width:calc(100% - 30px)}
 .article-head{padding:26px 22px 22px}
 .article-body{padding:25px 22px 35px}
 h1{font-size:28px}
 .article-body p{font-size:15px}
+.gallery-photos{grid-template-columns:1fr;gap:8px;padding:8px}
+.photo-main,.photo-side{grid-row:auto;min-height:220px}
 }
 </style>
 </head>
@@ -45,70 +51,26 @@ h1{font-size:28px}
 <a class="back" href="gallery.html">← 갤러리로 돌아가기</a>
 </div>
 </header>
-
 <main class="wrap">
-<article class="article" id="article">
-<div class="error">자료를 불러오는 중입니다.</div>
-</article>
+<article class="article" id="article"><div class="error">자료를 불러오는 중입니다.</div></article>
 </main>
-
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 import{getFirestore,doc,getDoc}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-
-const firebaseConfig={
-apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
-authDomain:"gasuinent.firebaseapp.com",
-projectId:"gasuinent",
-storageBucket:"gasuinent.firebasestorage.app",
-messagingSenderId:"122370674182",
-appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",
-measurementId:"G-39M5K1M6K7"
-};
-
+const firebaseConfig={apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",authDomain:"gasuinent.firebaseapp.com",projectId:"gasuinent",storageBucket:"gasuinent.firebasestorage.app",messagingSenderId:"122370674182",appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",measurementId:"G-39M5K1M6K7"};
 const db=getFirestore(initializeApp(firebaseConfig));
-
-function esc(v){
-return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
-}
-
-const id=new URLSearchParams(location.search).get("id");
-const article=document.getElementById("article");
-
+function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+const id=new URLSearchParams(location.search).get("id"),article=document.getElementById("article");
+function photo(url,title,cls){return url?`<div class="photo ${cls}"><img src="${esc(url)}" alt="${title}"></div>`:`<div class="photo ${cls}"><div class="no-image">사진 없음</div></div>`}
 async function load(){
-if(!id){
-article.innerHTML='<div class="error">잘못된 접근입니다.</div>';
-return;
-}
-try{
-const snap=await getDoc(doc(db,"gallery",id));
-if(!snap.exists()){
-article.innerHTML='<div class="error">갤러리 자료를 찾을 수 없습니다.</div>';
-return;
-}
-const g=snap.data();
-const title=esc(g.title||"갤러리");
-const date=esc(g.date||"");
-const content=esc(g.content||"");
-const image=g.image||"";
-
-article.innerHTML=`
-<div class="article-head">
-<div class="kicker">GALLERY</div>
-<h1>${title}</h1>
-${date?`<div class="meta">📅 ${date}</div>`:""}
-</div>
-<div class="hero">
-${image?`<img src="${esc(image)}" alt="${title}">`:`<div class="no-image">등록된 사진이 없습니다.</div>`}
-</div>
-<div class="article-body">
-<p>${content||"등록된 내용이 없습니다."}</p>
-${g.fileUrl?`<div class="file-box"><a href="${esc(g.fileUrl)}" target="_blank" rel="noopener">첨부파일 보기</a></div>`:""}
-</div>`;
-}catch(e){
-console.error(e);
-article.innerHTML='<div class="error">상세 내용을 불러오지 못했습니다.</div>';
-}
+ if(!id){article.innerHTML='<div class="error">잘못된 접근입니다.</div>';return}
+ try{
+  const snap=await getDoc(doc(db,"gallery",id));
+  if(!snap.exists()){article.innerHTML='<div class="error">갤러리 자료를 찾을 수 없습니다.</div>';return}
+  const g=snap.data(),title=esc(g.title||"갤러리"),date=esc(g.date||""),content=esc(g.content||"");
+  const images=[g.image,g.image2,g.image3];
+  article.innerHTML=`<div class="article-head"><div class="kicker">GALLERY</div><h1>${title}</h1>${date?`<div class="meta">📅 ${date}</div>`:""}</div><div class="gallery-photos">${photo(images[0],title,"photo-main")}${photo(images[1],title,"photo-side")}${photo(images[2],title,"photo-side")}</div><div class="article-body"><p>${content||"등록된 내용이 없습니다."}</p>${g.fileUrl?`<div class="file-box"><a href="${esc(g.fileUrl)}" target="_blank" rel="noopener">첨부파일 보기</a></div>`:""}</div>`;
+ }catch(e){console.error(e);article.innerHTML='<div class="error">상세 내용을 불러오지 못했습니다.</div>'}
 }
 load();
 </script>
