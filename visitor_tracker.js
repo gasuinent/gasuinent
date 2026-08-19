@@ -11,9 +11,9 @@ if(!visitorId){visitorId=crypto.randomUUID?crypto.randomUUID():Date.now().toStri
 setDoc(doc(db,'visitor_stats',day),{date:day,views:increment(1),['pages.'+page]:increment(1)},{merge:true}).catch(()=>{});
 setDoc(doc(db,'visitor_unique',day+'_'+visitorId),{date:day,visitorId,updatedAt:Date.now()},{merge:true}).catch(()=>{});
 
-/* 실적 페이지: 카드와 하단 목록 모두 간결하게 표시하고 자세히 보기에서 상세내용을 펼침 */
 if(page==='projects'){
   const esc=(v)=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]));
+  const label=(name)=>`<strong style="display:block;color:#FFD700;font-size:18px;font-weight:800;margin-bottom:8px;letter-spacing:.02em">${name}</strong>`;
 
   function moveContentToDetail(card){
     const p=card.querySelector(':scope > p');
@@ -30,7 +30,7 @@ if(page==='projects'){
     let detail=card.querySelector(':scope > .project-detail');
     if(!detail){detail=document.createElement('div');detail.className='project-detail';card.appendChild(detail)}
     const existing=detail.innerHTML.trim();
-    detail.innerHTML=`<strong>내용</strong><br>${content}<br><br><strong>실적</strong><br>${result}${existing?`<br><br>${existing}`:''}`;
+    detail.innerHTML=`${label('내용')}${content}<br><br>${label('실적')}${result}${existing?`<br><br>${existing}`:''}`;
   }
 
   const normalizeExistingCards=()=>document.querySelectorAll('.projects-grid .project-card').forEach(moveContentToDetail);
@@ -57,7 +57,7 @@ if(page==='projects'){
             <p><strong>주최·주관</strong><br>${esc(p.organizer||'')}<br><br>
             <strong>기간·날짜</strong><br>${esc(p.date||'')}</p>
             <button class="detail-btn" type="button">자세히 보기</button>
-            <div class="project-detail"><strong>내용</strong><br>${esc(p.content||'')}<br><br><strong>실적</strong><br>${esc(p.result||'')}<br><br><strong>상세 내용</strong><br>${esc(p.detail||p.content||'')}</div>`;
+            <div class="project-detail"><div>${label('내용')}${esc(p.content||'')}</div><div style="margin-top:22px">${label('실적')}${esc(p.result||'')}</div><div style="margin-top:22px">${label('자세한 내용')}${esc(p.detail||p.content||'')}</div></div>`;
           const btn=article.querySelector('.detail-btn');
           btn.addEventListener('click',()=>{const open=article.classList.toggle('open');btn.textContent=open?'접기':'자세히 보기'});
           grid.prepend(article);
@@ -73,7 +73,7 @@ if(page==='projects'){
           const detailTr=document.createElement('tr');
           detailTr.className='project-detail-row';
           detailTr.style.display='none';
-          detailTr.innerHTML=`<td colspan="6"><div class="project-list-detail"><strong>주최·주관</strong><br>${esc(p.organizer||'')}<br><br><strong>기간·날짜</strong><br>${esc(p.date||'')}<br><br><strong>내용</strong><br>${esc(p.content||'')}<br><br><strong>실적</strong><br>${esc(p.result||'')}<br><br><strong>자세한 내용</strong><br>${esc(p.detail||p.content||'')}</div></td>`;
+          detailTr.innerHTML=`<td colspan="6"><div class="project-list-detail" style="padding:28px 35px;text-align:center;line-height:1.9"><div>${label('주최·주관')}${esc(p.organizer||'')}</div><div style="margin-top:22px">${label('기간·날짜')}${esc(p.date||'')}</div><div style="margin-top:22px">${label('내용')}${esc(p.content||'')}</div><div style="margin-top:22px">${label('실적')}${esc(p.result||'')}</div><div style="margin-top:22px">${label('자세한 내용')}${esc(p.detail||p.content||'')}</div></div></td>`;
           const btn=tr.querySelector('.list-btn');
           btn.addEventListener('click',()=>{const open=detailTr.style.display!=='none';detailTr.style.display=open?'none':'table-row';btn.textContent=open?'자세히 보기':'접기'});
           tbody.appendChild(tr);
