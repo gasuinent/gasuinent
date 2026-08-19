@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>갤러리 관리</title>
-
 <style>
 body{margin:0;background:#111;color:#fff;font-family:Malgun Gothic,sans-serif}
 header{background:#222;padding:20px;text-align:center}
@@ -18,723 +17,78 @@ button:hover{background:#ffcc00}
 table{width:100%;border-collapse:collapse;margin-top:20px}
 th{background:#333;padding:12px}
 td{padding:10px;border-bottom:1px solid #444;text-align:center}
-.thumb{width:90px;border-radius:6px}
-
-/* 페이지 번호 */
-.pagination{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:8px;
-    margin:25px 0 35px;
-}
-.pagination button{
-    min-width:42px;
-    padding:9px 13px;
-    background:#333;
-    color:#fff;
-    border:1px solid #555;
-}
-.pagination button:hover{
-    background:#FFD700;
-    color:#000;
-}
-.pagination button.active{
-    background:#FFD700;
-    color:#000;
-    border-color:#FFD700;
-}
-.pagination button.arrow{
-    background:#555;
-}
+.thumb{width:90px;height:65px;object-fit:cover;border-radius:6px}
+.pagination{display:flex;justify-content:center;align-items:center;gap:8px;margin:25px 0 35px}
+.pagination button{min-width:42px;padding:9px 13px;background:#333;color:#fff;border:1px solid #555}
+.pagination button:hover,.pagination button.active{background:#FFD700;color:#000;border-color:#FFD700}
+.pagination button.arrow{background:#555}
+.photo-inputs{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.photo-box{background:#1b1b1b;border:1px solid #444;border-radius:10px;padding:14px}
+.photo-box h3{margin:0 0 10px;color:#FFD700;font-size:18px}
+.photo-box input[type=file]{background:#fff;color:#111;font-size:15px}
+.photo-preview{width:100%;height:180px;object-fit:cover;border-radius:8px;margin-top:10px;display:none;background:#0b0b0b}
+.photo-note{color:#aaa;font-size:14px;line-height:1.6;margin-top:10px}
+@media(max-width:700px){.photo-inputs{grid-template-columns:1fr}.photo-preview{height:220px}}
 </style>
-
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-import {getFirestore,collection,addDoc,getDocs,deleteDoc,doc,getDoc,updateDoc,query,orderBy}
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-import {getStorage,ref,uploadBytes,getDownloadURL}
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
-
-const firebaseConfig={
-apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",
-authDomain:"gasuinent.firebaseapp.com",
-projectId:"gasuinent",
-storageBucket:"gasuinent.firebasestorage.app",
-messagingSenderId:"122370674182",
-appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",
-measurementId:"G-39M5K1M6K7"
-};
-
-const app=initializeApp(firebaseConfig);
-window.db=getFirestore(app);
-window.storage=getStorage(app);
-window.editId=null;
+import{initializeApp}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import{getFirestore,collection,addDoc,getDocs,deleteDoc,doc,getDoc,updateDoc,query,orderBy}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+import{getStorage,ref,uploadBytes,getDownloadURL}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
+const firebaseConfig={apiKey:"AIzaSyDTiST7xB7YFnuzdPJ8q418qmx_d5LJupo",authDomain:"gasuinent.firebaseapp.com",projectId:"gasuinent",storageBucket:"gasuinent.firebasestorage.app",messagingSenderId:"122370674182",appId:"1:122370674182:web:3bb831917d8d6ed36d7d87",measurementId:"G-39M5K1M6K7"};
+const app=initializeApp(firebaseConfig);window.db=getFirestore(app);window.storage=getStorage(app);window.editId=null;
 </script>
 </head>
-
 <body>
-
-<header>
-<h1>🖼 갤러리 관리</h1>
-<div style="margin-top:20px">
-<input id="searchText" type="text" placeholder="사진 검색..." style="width:320px;padding:10px;border-radius:6px;border:none;">
-<button id="searchBtn">검색</button>
-</div>
-</header>
-
+<header><h1>🖼 갤러리 관리</h1><div style="margin-top:20px"><input id="searchText" type="text" placeholder="사진 검색..." style="width:320px;padding:10px;border-radius:6px;border:none;"><button id="searchBtn">검색</button></div></header>
 <div class="container">
-
 <h2>등록된 사진</h2>
-
-<table>
-<tr>
-<th>번호</th>
-<th>사진</th>
-<th>제목</th>
-<th>장소</th>
-<th>고정여부</th>
-<th>등록일</th>
-<th>보기</th>
-<th>수정</th>
-<th>삭제</th>
-</tr>
-
-<tbody id="galleryBody"></tbody>
-</table>
-
-<div id="pagination" class="pagination"></div>
-
-<hr>
-
+<table><tr><th>번호</th><th>대표사진</th><th>제목</th><th>장소</th><th>고정여부</th><th>등록일</th><th>보기</th><th>수정</th><th>삭제</th></tr><tbody id="galleryBody"></tbody></table>
+<div id="pagination" class="pagination"></div><hr>
 <h2>사진 등록 및 수정</h2>
-
-<label>사진 제목</label>
-<input type="text" id="galleryTitle">
-
-<label>장소</label>
-<input type="text" id="galleryPlace" placeholder="행사 장소를 입력하세요">
-
-<label style="display:flex;align-items:center;gap:10px;cursor:pointer;margin-top:20px;">
-<input type="checkbox" id="galleryPinned" style="width:20px;height:20px;">
-<span>상단 3개 고정하기</span>
-</label>
-
-<label>사진 선택</label>
-<input type="file" id="galleryImage">
-
-<label style="display:flex;align-items:center;gap:10px;font-size:22px;">
-<span style="font-size:32px;">📅</span>
-<span>작성 날짜</span>
-</label>
-
-<input type="date" id="galleryDate" style="height:50px;font-size:18px;">
-
-<img id="previewImage" style="max-width:250px;margin-top:10px;display:none;border-radius:8px;">
-
-<label>사진 설명</label>
-<textarea id="galleryContent"></textarea>
-
-<button id="saveGallery" style="margin-top:20px">사진 저장</button>
-
-<button onclick="location.href='admin.html'" style="margin-left:15px;background:#555;color:#fff">
-🏠 관리 메인
-</button>
-
+<label>사진 제목</label><input type="text" id="galleryTitle">
+<label>장소</label><input type="text" id="galleryPlace" placeholder="행사 장소를 입력하세요">
+<label style="display:flex;align-items:center;gap:10px;cursor:pointer;margin-top:20px"><input type="checkbox" id="galleryPinned" style="width:20px;height:20px"><span>상단 3개 고정하기</span></label>
+<label>사진 선택 <span style="color:#FFD700">(최대 3장)</span></label>
+<div class="photo-inputs">
+<div class="photo-box"><h3>사진 1 · 대표사진</h3><input type="file" id="galleryImage1" accept="image/*"><img id="previewImage1" class="photo-preview"><div class="photo-note">메인 갤러리에 먼저 보여지는 대표사진입니다.</div></div>
+<div class="photo-box"><h3>사진 2</h3><input type="file" id="galleryImage2" accept="image/*"><img id="previewImage2" class="photo-preview"><div class="photo-note">상세보기 오른쪽 위에 표시됩니다.</div></div>
+<div class="photo-box"><h3>사진 3</h3><input type="file" id="galleryImage3" accept="image/*"><img id="previewImage3" class="photo-preview"><div class="photo-note">상세보기 오른쪽 아래에 표시됩니다.</div></div>
 </div>
-
+<label style="display:flex;align-items:center;gap:10px;font-size:22px"><span style="font-size:32px">📅</span><span>작성 날짜</span></label><input type="date" id="galleryDate" style="height:50px;font-size:18px">
+<label>사진 설명</label><textarea id="galleryContent"></textarea>
+<button id="saveGallery" style="margin-top:20px">사진 저장</button><button onclick="location.href='admin.html'" style="margin-left:15px;background:#555;color:#fff">🏠 관리 메인</button>
+</div>
 <script type="module">
-
-import {collection,addDoc,getDocs,deleteDoc,doc,getDoc,updateDoc,query,orderBy}
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-
-import {ref,uploadBytes,getDownloadURL}
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
-
-const db=window.db, storage=window.storage;
-
-function todayString(){
-
-const d=new Date();
-
-return d.getFullYear()+"-"+
-String(d.getMonth()+1).padStart(2,"0")+"-"+
-String(d.getDate()).padStart(2,"0");
-
-}
-
+import{collection,addDoc,getDocs,deleteDoc,doc,getDoc,updateDoc,query,orderBy}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+import{ref,uploadBytes,getDownloadURL}from"https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
+const db=window.db,storage=window.storage;
+function todayString(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 document.getElementById("galleryDate").value=todayString();
-
-
-document.getElementById("galleryImage").onchange=function(){
-
-const file=this.files[0];
-
-if(!file)return;
-
-const reader=new FileReader();
-
-reader.onload=e=>{
-
-const img=document.getElementById("previewImage");
-
-img.src=e.target.result;
-
-img.style.display="block";
-
-};
-
-reader.readAsDataURL(file);
-
-};
-
-
-document.getElementById("saveGallery").onclick=async()=>{
-
-const title=document.getElementById("galleryTitle").value.trim();
-
-const place=document.getElementById("galleryPlace").value.trim();
-
-const content=document.getElementById("galleryContent").value.trim();
-
-const pinned=document.getElementById("galleryPinned").checked;
-
-const selectedDate=document.getElementById("galleryDate").value;
-
-const file=document.getElementById("galleryImage").files[0];
-
-
-if(!title){
-
-alert("사진 제목을 입력하세요.");
-
-return;
-
-}
-
-
-if(!selectedDate){
-
-alert("작성 날짜를 선택하세요.");
-
-document.getElementById("galleryDate").focus();
-
-return;
-
-}
-
-
-let imageUrl="";
-
-let oldTimestamp=Date.now();
-
-
-if(window.editId){
-
-const snap=await getDoc(
-doc(db,"gallery",window.editId)
-);
-
-if(snap.exists()){
-
-imageUrl=snap.data().image||"";
-
-oldTimestamp=snap.data().timestamp||oldTimestamp;
-
-}
-
-}
-
-
-if(pinned){
-
-const snapshot=await getDocs(
-collection(db,"gallery")
-);
-
-let count=0;
-
-snapshot.forEach(d=>{
-
-if(
-d.id!==window.editId &&
-d.data().pinned===true
-)count++;
-
-});
-
-
-if(count>=3){
-
-alert("상단 고정은 최대 3개까지만 가능합니다.");
-
-return;
-
-}
-
-}
-
-
-if(file){
-
-try{
-
-const storageRef=ref(
-storage,
-"gallery/"+Date.now()+"_"+file.name
-);
-
-await uploadBytes(
-storageRef,
-file
-);
-
-imageUrl=await getDownloadURL(
-storageRef
-);
-
-}catch(error){
-
-console.error("사진 업로드 오류:",error);
-
-alert(
-"사진 업로드에 실패했습니다.\n\n"+
-"오류 내용: "+(error.message||error)
-);
-
-return;
-
-}
-
-}
-
-
-const data={
-title:title,
-place:place,
-content:content,
-image:imageUrl,
-pinned:pinned,
-date:selectedDate,
-timestamp:oldTimestamp
-};
-
-
-if(window.editId){
-
-await updateDoc(
-doc(db,"gallery",window.editId),
-data
-);
-
-alert("사진이 수정되었습니다.");
-
-window.editId=null;
-
-}else{
-
-await addDoc(
-collection(db,"gallery"),
-data
-);
-
-alert("사진이 등록되었습니다.");
-
-}
-
-
-document.getElementById("galleryTitle").value="";
-
-document.getElementById("galleryPlace").value="";
-
-document.getElementById("galleryContent").value="";
-
-document.getElementById("galleryPinned").checked=false;
-
-document.getElementById("galleryDate").value=todayString();
-
-document.getElementById("galleryImage").value="";
-
-document.getElementById("previewImage").style.display="none";
-
+[1,2,3].forEach(n=>{document.getElementById("galleryImage"+n).onchange=function(){const file=this.files[0];if(!file)return;const reader=new FileReader();reader.onload=e=>{const img=document.getElementById("previewImage"+n);img.src=e.target.result;img.style.display="block"};reader.readAsDataURL(file)}});
+async function uploadPhoto(file){if(!file)return"";const storageRef=ref(storage,"gallery/"+Date.now()+"_"+Math.random().toString(36).slice(2)+"_"+file.name);await uploadBytes(storageRef,file);return await getDownloadURL(storageRef)}
+document.getElementById("saveGallery").onclick=async()=>{try{
+const title=document.getElementById("galleryTitle").value.trim(),place=document.getElementById("galleryPlace").value.trim(),content=document.getElementById("galleryContent").value.trim(),pinned=document.getElementById("galleryPinned").checked,selectedDate=document.getElementById("galleryDate").value;
+const file1=document.getElementById("galleryImage1").files[0],file2=document.getElementById("galleryImage2").files[0],file3=document.getElementById("galleryImage3").files[0];
+if(!title){alert("사진 제목을 입력하세요.");return}if(!selectedDate){alert("작성 날짜를 선택하세요.");return}
+let old={};if(window.editId){const snap=await getDoc(doc(db,"gallery",window.editId));if(snap.exists())old=snap.data()}
+if(pinned){const snapshot=await getDocs(collection(db,"gallery"));let count=0;snapshot.forEach(d=>{if(d.id!==window.editId&&d.data().pinned===true)count++});if(count>=3){alert("상단 고정은 최대 3개까지만 가능합니다.");return}}
+const image1=file1?await uploadPhoto(file1):(old.image||"");
+const image2=file2?await uploadPhoto(file2):(old.image2||"");
+const image3=file3?await uploadPhoto(file3):(old.image3||"");
+const data={title,place,content,image:image1,image2,image3,pinned,date:selectedDate,timestamp:old.timestamp||Date.now()};
+if(window.editId){await updateDoc(doc(db,"gallery",window.editId),data);alert("사진이 수정되었습니다.");window.editId=null}else{await addDoc(collection(db,"gallery"),data);alert("사진이 등록되었습니다.")}
+["galleryTitle","galleryPlace","galleryContent"].forEach(id=>document.getElementById(id).value="");document.getElementById("galleryPinned").checked=false;document.getElementById("galleryDate").value=todayString();[1,2,3].forEach(n=>{document.getElementById("galleryImage"+n).value="";document.getElementById("previewImage"+n).style.display="none"});loadGallery();
+}catch(error){console.error(error);alert("사진 저장 중 오류가 발생했습니다.\n\n"+(error.message||error))}};
+const PAGE_SIZE=5;let currentPage=1,allGallery=[],filteredGallery=[];
+async function loadGallery(){const q=query(collection(db,"gallery"),orderBy("timestamp","desc"));const snapshot=await getDocs(q);allGallery=[];snapshot.forEach(d=>allGallery.push({id:d.id,data:d.data()}));filteredGallery=[...allGallery];currentPage=1;renderGallery()}
+function renderGallery(){const start=(currentPage-1)*PAGE_SIZE,pageItems=filteredGallery.slice(start,start+PAGE_SIZE);let html="";if(!pageItems.length)html='<tr><td colspan="9">등록된 사진이 없습니다.</td></tr>';else pageItems.forEach((item,index)=>{const g=item.data;html+=`<tr><td>${start+index+1}</td><td>${g.image?`<img src="${g.image}" class="thumb">`:"-"}</td><td>${g.title||""}</td><td>${g.place||""}</td><td>${g.pinned?'<span style="color:#FFD700;font-weight:bold">고정됨</span>':"-"}</td><td>${g.date||""}</td><td><button onclick="viewGallery('${item.id}')">보기</button></td><td><button onclick="editGallery('${item.id}')">수정</button></td><td><button onclick="deleteGallery('${item.id}')">삭제</button></td></tr>`});document.getElementById("galleryBody").innerHTML=html;renderPagination()}
+function renderPagination(){const pagination=document.getElementById("pagination"),totalPages=Math.ceil(filteredGallery.length/PAGE_SIZE);if(totalPages<=1){pagination.innerHTML="";return}let html="";if(currentPage>1)html+=`<button class="arrow" onclick="changePage(${currentPage-1})">◀</button>`;for(let i=1;i<=totalPages;i++)html+=`<button class="${i===currentPage?"active":""}" onclick="changePage(${i})">${i}</button>`;if(currentPage<totalPages)html+=`<button class="arrow" onclick="changePage(${currentPage+1})">▶</button>`;pagination.innerHTML=html}
+window.changePage=page=>{currentPage=page;renderGallery();window.scrollTo({top:0,behavior:"smooth"})};
+window.deleteGallery=async id=>{if(!confirm("정말 삭제하시겠습니까?"))return;await deleteDoc(doc(db,"gallery",id));await loadGallery()};
+window.editGallery=async id=>{window.editId=id;const snap=await getDoc(doc(db,"gallery",id));if(!snap.exists())return;const g=snap.data();document.getElementById("galleryTitle").value=g.title||"";document.getElementById("galleryPlace").value=g.place||"";document.getElementById("galleryContent").value=g.content||"";document.getElementById("galleryPinned").checked=g.pinned===true;document.getElementById("galleryDate").value=g.date||todayString();[1,2,3].forEach(n=>{const url=g["image"+(n===1?"":n)]||"";const img=document.getElementById("previewImage"+n);if(url){img.src=url;img.style.display="block"}else img.style.display="none"});window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"})};
+window.viewGallery=id=>{location.href="gallery_view.html?id="+encodeURIComponent(id)};
+document.getElementById("searchBtn").onclick=async()=>{const keyword=document.getElementById("searchText").value.trim().toLowerCase();if(!keyword)filteredGallery=[...allGallery];else filteredGallery=allGallery.filter(item=>{const g=item.data;return(g.title||"").toLowerCase().includes(keyword)||(g.place||"").toLowerCase().includes(keyword)||(g.content||"").toLowerCase().includes(keyword)});currentPage=1;renderGallery()};
 loadGallery();
-
-};
-
-
-/* =========================
-   갤러리 페이지 처리
-========================= */
-
-const PAGE_SIZE=5;
-
-let currentPage=1;
-
-let allGallery=[];
-
-let filteredGallery=[];
-
-
-async function loadGallery(){
-
-const q=query(
-collection(db,"gallery"),
-orderBy("timestamp","desc")
-);
-
-const snapshot=await getDocs(q);
-
-allGallery=[];
-
-snapshot.forEach(d=>{
-
-allGallery.push({
-
-id:d.id,
-
-data:d.data()
-
-});
-
-});
-
-filteredGallery=[...allGallery];
-
-currentPage=1;
-
-renderGallery();
-
-}
-
-
-function renderGallery(){
-
-const start=(currentPage-1)*PAGE_SIZE;
-
-const pageItems=
-filteredGallery.slice(
-start,
-start+PAGE_SIZE
-);
-
-let html="";
-
-
-if(pageItems.length===0){
-
-html=`
-<tr>
-<td colspan="9">
-등록된 사진이 없습니다.
-</td>
-</tr>
-`;
-
-}else{
-
-pageItems.forEach((item,index)=>{
-
-const g=item.data;
-
-html+=`
-<tr>
-
-<td>${start+index+1}</td>
-
-<td>
-${
-g.image
-?
-`<img src="${g.image}" class="thumb">`
-:
-"-"
-}
-</td>
-
-<td>${g.title||""}</td>
-
-<td>${g.place||""}</td>
-
-<td>
-${
-g.pinned
-?
-'<span style="color:#FFD700;font-weight:bold">고정됨</span>'
-:
-"-"
-}
-</td>
-
-<td>${g.date||""}</td>
-
-<td>
-<button onclick="viewGallery('${item.id}')">
-보기
-</button>
-</td>
-
-<td>
-<button onclick="editGallery('${item.id}')">
-수정
-</button>
-</td>
-
-<td>
-<button onclick="deleteGallery('${item.id}')">
-삭제
-</button>
-</td>
-
-</tr>
-`;
-
-});
-
-}
-
-
-document.getElementById("galleryBody").innerHTML=html;
-
-renderPagination();
-
-}
-
-
-function renderPagination(){
-
-const pagination=
-document.getElementById("pagination");
-
-const totalPages=
-Math.ceil(
-filteredGallery.length/PAGE_SIZE
-);
-
-
-if(totalPages<=1){
-
-pagination.innerHTML="";
-
-return;
-
-}
-
-
-let html="";
-
-
-if(currentPage>1){
-
-html+=`
-<button
-class="arrow"
-onclick="changePage(${currentPage-1})">
-◀
-</button>
-`;
-
-}
-
-
-for(let i=1;i<=totalPages;i++){
-
-html+=`
-<button
-class="${i===currentPage?"active":""}"
-onclick="changePage(${i})">
-${i}
-</button>
-`;
-
-}
-
-
-if(currentPage<totalPages){
-
-html+=`
-<button
-class="arrow"
-onclick="changePage(${currentPage+1})">
-▶
-</button>
-`;
-
-}
-
-
-pagination.innerHTML=html;
-
-}
-
-
-window.changePage=function(page){
-
-currentPage=page;
-
-renderGallery();
-
-window.scrollTo({
-
-top:0,
-
-behavior:"smooth"
-
-});
-
-};
-
-
-/* =========================
-   삭제
-========================= */
-
-async function deleteGallery(id){
-
-if(!confirm("정말 삭제하시겠습니까?"))
-return;
-
-await deleteDoc(
-doc(db,"gallery",id)
-);
-
-await loadGallery();
-
-}
-
-window.deleteGallery=deleteGallery;
-
-
-/* =========================
-   수정
-========================= */
-
-async function editGallery(id){
-
-window.editId=id;
-
-const snap=
-await getDoc(
-doc(db,"gallery",id)
-);
-
-if(!snap.exists())
-return;
-
-const g=snap.data();
-
-document.getElementById("galleryTitle").value=
-g.title||"";
-
-document.getElementById("galleryPlace").value=
-g.place||"";
-
-document.getElementById("galleryContent").value=
-g.content||"";
-
-document.getElementById("galleryPinned").checked=
-g.pinned===true;
-
-document.getElementById("galleryDate").value=
-g.date||todayString();
-
-
-const img=
-document.getElementById("previewImage");
-
-
-if(g.image){
-
-img.src=g.image;
-
-img.style.display="block";
-
-}else{
-
-img.style.display="none";
-
-}
-
-
-window.scrollTo({
-
-top:document.body.scrollHeight,
-
-behavior:"smooth"
-
-});
-
-}
-
-window.editGallery=editGallery;
-
-
-/* =========================
-   보기
-========================= */
-
-window.viewGallery=function(id){
-
-location.href=
-"gallery_view.html?id="+
-encodeURIComponent(id);
-
-};
-
-
-/* =========================
-   검색
-========================= */
-
-document.getElementById("searchBtn").onclick=async()=>{
-
-const keyword=
-document.getElementById("searchText")
-.value
-.trim()
-.toLowerCase();
-
-
-if(keyword===""){
-
-filteredGallery=[...allGallery];
-
-}else{
-
-filteredGallery=
-allGallery.filter(item=>{
-
-const g=item.data;
-
-const title=
-(g.title||"").toLowerCase();
-
-const place=
-(g.place||"").toLowerCase();
-
-const content=
-(g.content||"").toLowerCase();
-
-return(
-title.includes(keyword)||
-place.includes(keyword)||
-content.includes(keyword)
-);
-
-});
-
-}
-
-
-currentPage=1;
-
-renderGallery();
-
-};
-
-
-loadGallery();
-
 </script>
-
 </body>
 </html>
