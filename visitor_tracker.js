@@ -11,10 +11,32 @@ if(!visitorId){visitorId=crypto.randomUUID?crypto.randomUUID():Date.now().toStri
 setDoc(doc(db,'visitor_stats',day),{date:day,views:increment(1),['pages.'+page]:increment(1)},{merge:true}).catch(()=>{});
 setDoc(doc(db,'visitor_unique',day+'_'+visitorId),{date:day,visitorId,updatedAt:Date.now()},{merge:true}).catch(()=>{});
 
-/* 실적 페이지: 관리자에서 등록한 Firebase 실적을 기존 화면에 자동 추가 */
+/* 실적 페이지: 내용·실적은 카드 본문에서 숨기고 '자세히 보기'에서 표시 */
 if(page==='projects'){
   const esc=(v)=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]));
-  const text=(v)=>String(v??'').trim();
+
+  function moveContentToDetail(card){
+    const p=card.querySelector(':scope > p');
+    if(!p)return;
+    const html=p.innerHTML;
+    const contentMark='<strong>내용</strong>';
+    const resultMark='<strong>실적</strong>';
+    const ci=html.indexOf(contentMark), ri=html.indexOf(resultMark);
+    if(ci===-1||ri===-1||ri<ci)return;
+    const before=html.slice(0,ci).replace(/(<br\s*\/?>\s*){2,}$/i,'');
+    const content=html.slice(ci+contentMark.length,ri).replace(/^(<br\s*\/?>\s*)+/i,'').replace(/(<br\s*\/?>\s*){2,}$/i,'');
+    const result=html.slice(ri+resultMark.length).replace(/^(<br\s*\/?>\s*)+/i,'');
+    p.innerHTML=before;
+    let detail=card.querySelector(':scope > .project-detail');
+    if(!detail){detail=document.createElement('div');detail.className='project-detail';card.appendChild(detail)}
+    const existing=detail.innerHTML.trim();
+    detail.innerHTML=`<strong>내용</strong><br>${content}<br><br><strong>실적</strong><br>${result}${existing?`<br><br>${existing}`:''}`;
+  }
+
+  const normalizeExistingCards=()=>{
+    document.querySelectorAll('.projects-grid .project-card').forEach(moveContentToDetail);
+  };
+
   const loadProjects=async()=>{
     try{
       const snap=await getDocs(collection(db,'projects'));
@@ -24,7 +46,6 @@ if(page==='projects'){
         if(Boolean(a.pinned)!==Boolean(b.pinned)) return a.pinned?-1:1;
         return (b.createdAt||0)-(a.createdAt||0);
       });
-      if(!items.length)return;
 
       const grid=document.querySelector('.projects-grid');
       if(grid){
@@ -36,11 +57,9 @@ if(page==='projects'){
             <span class="tag">${esc(p.category||'실적')}</span>
             <h3>${esc(p.title)}</h3>
             <p><strong>주최·주관</strong><br>${esc(p.organizer||'')}<br><br>
-            <strong>기간·날짜</strong><br>${esc(p.date||'')}<br><br>
-            <strong>내용</strong><br>${esc(p.content||'')}<br><br>
-            <strong>실적</strong><br>${esc(p.result||'')}</p>
+            <strong>기간·날짜</strong><br>${esc(p.date||'')}</p>
             <button class="detail-btn" type="button">자세히 보기</button>
-            <div class="project-detail">${esc(p.detail||p.content||'')}</div>`;
+            <div class="project-detail"><strong>내용</strong><br>${esc(p.content||'')}<br><br><strong>실적</strong><br>${esc(p.result||'')}<br><br><strong>상세 내용</strong><br>${esc(p.detail||p.content||'')}</div>`;
           const btn=article.querySelector('.detail-btn');
           btn.addEventListener('click',()=>{
             const open=article.classList.toggle('open');
@@ -60,7 +79,10 @@ if(page==='projects'){
           tbody.prepend(tr);
         });
       }
+
+      normalizeExistingCards();
     }catch(e){console.error('projects load error',e)}
   };
+
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',loadProjects);else loadProjects();
 }
