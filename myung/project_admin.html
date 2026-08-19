@@ -29,6 +29,7 @@ th{background:#333;padding:12px;border:1px solid #444}td{padding:10px;border:1px
 .search{display:flex;gap:8px;margin-bottom:15px}.search input{max-width:360px}
 .empty{text-align:center;color:#aaa;padding:25px}
 .note{color:#aaa;font-size:14px;margin-top:10px;line-height:1.6}
+.pin-btn{background:#555;color:#fff}.pin-btn.pinned{background:#FFD700;color:#000}
 @media(max-width:700px){.form-row{grid-template-columns:100px 1fr}.form-label{font-size:14px;padding:9px}.form-field{padding:7px}table{font-size:13px;display:block;overflow-x:auto;white-space:nowrap}.search{flex-direction:column}.search input{max-width:none}}
 </style>
 </head>
@@ -47,12 +48,12 @@ th{background:#333;padding:12px;border:1px solid #444}td{padding:10px;border:1px
 <div class="form-row"><div class="form-label">자세한 내용</div><div class="form-field"><textarea id="detail" placeholder="홈페이지에서 '자세히 보기'를 눌렀을 때 펼쳐질 상세 내용을 입력하세요."></textarea></div></div>
 </div>
 <div class="btn-row"><button id="saveProject">실적 저장</button><button id="resetProject" class="btn-secondary">입력 초기화</button><button id="adminHome" class="btn-secondary">🏠 관리 메인</button></div>
-<p class="note">※ 이곳에서 저장한 실적은 홈페이지의 '실적' 페이지에 추가됩니다. 기존 홈페이지 디자인과 기존 실적은 그대로 유지됩니다.</p>
+<p class="note">※ 저장한 실적은 홈페이지의 '실적' 페이지에 자동으로 표시됩니다. 등록 후 아래 목록에서 📌 고정/해제를 선택할 수 있습니다.</p>
 </div>
 <div class="card">
 <h2>등록된 실적</h2>
 <div class="search"><input id="searchText" type="text" placeholder="실적 제목 검색"><button id="searchBtn">검색</button></div>
-<table><thead><tr><th>번호</th><th>구분</th><th>실적 제목</th><th>날짜</th><th>수정</th><th>삭제</th></tr></thead><tbody id="projectBody"></tbody></table>
+<table><thead><tr><th>번호</th><th>구분</th><th>실적 제목</th><th>날짜</th><th>고정</th><th>수정</th><th>삭제</th></tr></thead><tbody id="projectBody"></tbody></table>
 </div>
 </div>
 <script type="module">
@@ -64,10 +65,11 @@ let editId=null,allProjects=[];
 const $=id=>document.getElementById(id);
 function resetForm(){editId=null;$('formTitle').textContent='실적 등록';$('category').value='대표 공연';$('title').value='';$('organizer').value='한국가수인생활협회 / 나가수공연단·봉사단';$('date').value='';$('content').value='';$('result').value='';$('detail').value=''}
 function escapeHtml(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-async function loadProjects(){try{const snap=await getDocs(collection(db,'projects'));allProjects=[];snap.forEach(x=>allProjects.push({id:x.id,data:x.data()}));allProjects.sort((a,b)=>(b.data.createdAt||0)-(a.data.createdAt||0));renderProjects()}catch(e){console.error(e);$('projectBody').innerHTML='<tr><td colspan="6">실적을 불러오지 못했습니다.</td></tr>'}}
-function renderProjects(){const key=$('searchText').value.trim().toLowerCase();const items=key?allProjects.filter(x=>(x.data.title||'').toLowerCase().includes(key)||(x.data.content||'').toLowerCase().includes(key)):allProjects;$('projectBody').innerHTML=items.length?items.map((x,i)=>`<tr><td>${i+1}</td><td>${escapeHtml(x.data.category||'')}</td><td>${escapeHtml(x.data.title||'')}</td><td>${escapeHtml(x.data.date||'')}</td><td><button class="small-btn" onclick="editProject('${x.id}')">수정</button></td><td><button class="small-btn" onclick="deleteProject('${x.id}')">삭제</button></td></tr>`).join(''):'<tr><td colspan="6" class="empty">등록된 실적이 없습니다.</td></tr>'}
-$('saveProject').onclick=async()=>{try{const title=$('title').value.trim();if(!title){alert('실적 제목을 입력하세요.');return}const data={category:$('category').value,title,organizer:$('organizer').value.trim(),date:$('date').value.trim(),content:$('content').value.trim(),result:$('result').value.trim(),detail:$('detail').value.trim(),updatedAt:Date.now()};if(editId){await updateDoc(doc(db,'projects',editId),data);alert('실적이 수정되었습니다.')}else{data.createdAt=Date.now();await addDoc(collection(db,'projects'),data);alert('실적이 등록되었습니다.')}resetForm();await loadProjects()}catch(e){console.error(e);alert('저장 중 오류가 발생했습니다.')}};
+async function loadProjects(){try{const snap=await getDocs(collection(db,'projects'));allProjects=[];snap.forEach(x=>allProjects.push({id:x.id,data:x.data()}));allProjects.sort((a,b)=>{if(Boolean(a.data.pinned)!==Boolean(b.data.pinned))return a.data.pinned?-1:1;return(b.data.createdAt||0)-(a.data.createdAt||0)});renderProjects()}catch(e){console.error(e);$('projectBody').innerHTML='<tr><td colspan="7">실적을 불러오지 못했습니다.</td></tr>'}}
+function renderProjects(){const key=$('searchText').value.trim().toLowerCase();const items=key?allProjects.filter(x=>(x.data.title||'').toLowerCase().includes(key)||(x.data.content||'').toLowerCase().includes(key)):allProjects;$('projectBody').innerHTML=items.length?items.map((x,i)=>`<tr><td>${i+1}</td><td>${escapeHtml(x.data.category||'')}</td><td>${escapeHtml(x.data.title||'')}</td><td>${escapeHtml(x.data.date||'')}</td><td><button class="small-btn pin-btn ${x.data.pinned?'pinned':''}" onclick="togglePin('${x.id}',${Boolean(x.data.pinned)})">${x.data.pinned?'📌 고정됨':'📌 고정'}</button></td><td><button class="small-btn" onclick="editProject('${x.id}')">수정</button></td><td><button class="small-btn" onclick="deleteProject('${x.id}')">삭제</button></td></tr>`).join(''):'<tr><td colspan="7" class="empty">등록된 실적이 없습니다.</td></tr>'}
+$('saveProject').onclick=async()=>{try{const title=$('title').value.trim();if(!title){alert('실적 제목을 입력하세요.');return}const data={category:$('category').value,title,organizer:$('organizer').value.trim(),date:$('date').value.trim(),content:$('content').value.trim(),result:$('result').value.trim(),detail:$('detail').value.trim(),updatedAt:Date.now()};if(editId){await updateDoc(doc(db,'projects',editId),data);alert('실적이 수정되었습니다.')}else{data.createdAt=Date.now();data.pinned=false;await addDoc(collection(db,'projects'),data);alert('실적이 등록되었습니다.')}resetForm();await loadProjects()}catch(e){console.error(e);alert('저장 중 오류가 발생했습니다.')}};
 $('resetProject').onclick=resetForm;$('adminHome').onclick=()=>location.href='admin.html';$('searchBtn').onclick=renderProjects;$('searchText').addEventListener('keydown',e=>{if(e.key==='Enter')renderProjects()});
+window.togglePin=async(id,current)=>{try{await updateDoc(doc(db,'projects',id),{pinned:!current,updatedAt:Date.now()});await loadProjects()}catch(e){console.error(e);alert('고정 상태 변경 중 오류가 발생했습니다.')}};
 window.editProject=async id=>{const snap=await getDoc(doc(db,'projects',id));if(!snap.exists())return;const p=snap.data();editId=id;$('formTitle').textContent='실적 수정';$('category').value=p.category||'대표 공연';$('title').value=p.title||'';$('organizer').value=p.organizer||'';$('date').value=p.date||'';$('content').value=p.content||'';$('result').value=p.result||'';$('detail').value=p.detail||'';window.scrollTo({top:0,behavior:'smooth'})};
 window.deleteProject=async id=>{if(!confirm('이 실적을 삭제하시겠습니까?'))return;try{await deleteDoc(doc(db,'projects',id));await loadProjects()}catch(e){console.error(e);alert('삭제 중 오류가 발생했습니다.')}};
 loadProjects();
