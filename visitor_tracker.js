@@ -11,7 +11,7 @@ if(!visitorId){visitorId=crypto.randomUUID?crypto.randomUUID():Date.now().toStri
 setDoc(doc(db,'visitor_stats',day),{date:day,views:increment(1),['pages.'+page]:increment(1)},{merge:true}).catch(()=>{});
 setDoc(doc(db,'visitor_unique',day+'_'+visitorId),{date:day,visitorId,updatedAt:Date.now()},{merge:true}).catch(()=>{});
 
-/* 실적 페이지: 내용·실적은 카드 본문에서 숨기고 '자세히 보기'에서 표시 */
+/* 실적 페이지: 카드와 하단 목록 모두 간결하게 표시하고 자세히 보기에서 상세내용을 펼침 */
 if(page==='projects'){
   const esc=(v)=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]));
 
@@ -21,7 +21,7 @@ if(page==='projects'){
     const html=p.innerHTML;
     const contentMark='<strong>내용</strong>';
     const resultMark='<strong>실적</strong>';
-    const ci=html.indexOf(contentMark), ri=html.indexOf(resultMark);
+    const ci=html.indexOf(contentMark),ri=html.indexOf(resultMark);
     if(ci===-1||ri===-1||ri<ci)return;
     const before=html.slice(0,ci).replace(/(<br\s*\/?>\s*){2,}$/i,'');
     const content=html.slice(ci+contentMark.length,ri).replace(/^(<br\s*\/?>\s*)+/i,'').replace(/(<br\s*\/?>\s*){2,}$/i,'');
@@ -33,9 +33,7 @@ if(page==='projects'){
     detail.innerHTML=`<strong>내용</strong><br>${content}<br><br><strong>실적</strong><br>${result}${existing?`<br><br>${existing}`:''}`;
   }
 
-  const normalizeExistingCards=()=>{
-    document.querySelectorAll('.projects-grid .project-card').forEach(moveContentToDetail);
-  };
+  const normalizeExistingCards=()=>document.querySelectorAll('.projects-grid .project-card').forEach(moveContentToDetail);
 
   const loadProjects=async()=>{
     try{
@@ -43,7 +41,7 @@ if(page==='projects'){
       const items=[];
       snap.forEach(d=>items.push({id:d.id,...d.data()}));
       items.sort((a,b)=>{
-        if(Boolean(a.pinned)!==Boolean(b.pinned)) return a.pinned?-1:1;
+        if(Boolean(a.pinned)!==Boolean(b.pinned))return a.pinned?-1:1;
         return (b.createdAt||0)-(a.createdAt||0);
       });
 
@@ -61,22 +59,25 @@ if(page==='projects'){
             <button class="detail-btn" type="button">자세히 보기</button>
             <div class="project-detail"><strong>내용</strong><br>${esc(p.content||'')}<br><br><strong>실적</strong><br>${esc(p.result||'')}<br><br><strong>상세 내용</strong><br>${esc(p.detail||p.content||'')}</div>`;
           const btn=article.querySelector('.detail-btn');
-          btn.addEventListener('click',()=>{
-            const open=article.classList.toggle('open');
-            btn.textContent=open?'접기':'자세히 보기';
-          });
+          btn.addEventListener('click',()=>{const open=article.classList.toggle('open');btn.textContent=open?'접기':'자세히 보기'});
           grid.prepend(article);
         });
       }
 
       const tbody=document.querySelector('.project-list tbody');
       if(tbody){
-        items.slice().reverse().forEach(p=>{
+        tbody.innerHTML='';
+        items.slice().reverse().forEach((p,index)=>{
           const tr=document.createElement('tr');
-          tr.innerHTML=`<td>${p.pinned?'📌':''}</td><td>${esc(p.category||'실적')}</td><td>${esc(p.title)}</td><td>${esc(p.organizer||'')}</td><td>${esc(p.content||'')}</td><td>${esc(p.date||'')}</td><td><button class="list-btn" type="button">자세히 보기</button></td>`;
+          tr.innerHTML=`<td>${p.pinned?'📌':''}</td><td>${esc(p.category||'실적')}</td><td>${esc(p.title)}</td><td>${esc(p.date||'')}</td><td><button class="list-btn" type="button">자세히 보기</button></td>`;
+          const detailTr=document.createElement('tr');
+          detailTr.className='project-detail-row';
+          detailTr.style.display='none';
+          detailTr.innerHTML=`<td colspan="5"><div class="project-list-detail"><strong>주최·주관</strong><br>${esc(p.organizer||'')}<br><br><strong>기간·날짜</strong><br>${esc(p.date||'')}<br><br><strong>내용</strong><br>${esc(p.content||'')}<br><br><strong>실적</strong><br>${esc(p.result||'')}<br><br><strong>자세한 내용</strong><br>${esc(p.detail||p.content||'')}</div></td>`;
           const btn=tr.querySelector('.list-btn');
-          btn.addEventListener('click',()=>alert((p.detail||p.content||'').trim()||'상세 내용이 없습니다.'));
-          tbody.prepend(tr);
+          btn.addEventListener('click',()=>{const open=detailTr.style.display!=='none';detailTr.style.display=open?'none':'table-row';btn.textContent=open?'자세히 보기':'접기'});
+          tbody.appendChild(tr);
+          tbody.appendChild(detailTr);
         });
       }
 
