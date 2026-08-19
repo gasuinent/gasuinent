@@ -69,11 +69,11 @@ if(page==='projects'){
         tbody.innerHTML='';
         items.slice().reverse().forEach((p,index)=>{
           const tr=document.createElement('tr');
-          tr.innerHTML=`<td>${p.pinned?'📌':''}</td><td>${esc(p.category||'실적')}</td><td>${esc(p.title)}</td><td>${esc(p.date||'')}</td><td><button class="list-btn" type="button">자세히 보기</button></td>`;
+          tr.innerHTML=`<td>${index+1}</td><td>${p.pinned?'📌':''}</td><td>${esc(p.category||'실적')}</td><td>${esc(p.title)}</td><td>${esc(p.date||'')}</td><td><button class="list-btn" type="button">자세히 보기</button></td>`;
           const detailTr=document.createElement('tr');
           detailTr.className='project-detail-row';
           detailTr.style.display='none';
-          detailTr.innerHTML=`<td colspan="5"><div class="project-list-detail"><strong>주최·주관</strong><br>${esc(p.organizer||'')}<br><br><strong>기간·날짜</strong><br>${esc(p.date||'')}<br><br><strong>내용</strong><br>${esc(p.content||'')}<br><br><strong>실적</strong><br>${esc(p.result||'')}<br><br><strong>자세한 내용</strong><br>${esc(p.detail||p.content||'')}</div></td>`;
+          detailTr.innerHTML=`<td colspan="6"><div class="project-list-detail"><strong>주최·주관</strong><br>${esc(p.organizer||'')}<br><br><strong>기간·날짜</strong><br>${esc(p.date||'')}<br><br><strong>내용</strong><br>${esc(p.content||'')}<br><br><strong>실적</strong><br>${esc(p.result||'')}<br><br><strong>자세한 내용</strong><br>${esc(p.detail||p.content||'')}</div></td>`;
           const btn=tr.querySelector('.list-btn');
           btn.addEventListener('click',()=>{const open=detailTr.style.display!=='none';detailTr.style.display=open?'none':'table-row';btn.textContent=open?'자세히 보기':'접기'});
           tbody.appendChild(tr);
