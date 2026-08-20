@@ -60,16 +60,16 @@ if(page==='projects'){
             <div class="project-detail"><div>${label('내용')}${esc(p.content||'')}</div><div style="margin-top:22px">${label('실적')}${esc(p.result||'')}</div><div style="margin-top:22px">${label('자세한 내용')}${esc(p.detail||p.content||'')}</div></div>`;
           const btn=article.querySelector('.detail-btn');
           btn.addEventListener('click',()=>{const open=article.classList.toggle('open');btn.textContent=open?'접기':'자세히 보기'});
-          grid.prepend(article);
+          grid.appendChild(article);
         });
       }
 
       const tbody=document.querySelector('.project-list tbody');
       if(tbody){
         tbody.innerHTML='';
-        items.slice().reverse().forEach((p,index)=>{
+        items.forEach((p,index)=>{
           const tr=document.createElement('tr');
-          tr.innerHTML=`<td>${index+1}</td><td>${p.pinned?'📌':''}</td><td>${esc(p.category||'실적')}</td><td>${esc(p.title)}</td><td>${esc(p.date||'')}</td><td><button class="list-btn" type="button">자세히 보기</button></td>`;
+          tr.innerHTML=`<td>${index+1}</td><td>${p.pinned?'📌':''}</td><td>${esc(p.category||'실적')}</td><td>${esc(p.title||'')}</td><td>${esc(p.date||'')}</td><td><button class="list-btn" type="button">자세히 보기</button></td>`;
           const detailTr=document.createElement('tr');
           detailTr.className='project-detail-row';
           detailTr.style.display='none';
