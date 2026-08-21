@@ -20,3 +20,32 @@ if(page==='projects'){
  }catch(e){console.error('projects load error',e)}};
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',loadProjects);else loadProjects();
 }
+if(page==='artists'){
+ const normalizeArtistGrid=()=>{
+  const grid=document.getElementById('artistGrid');
+  if(!grid)return;
+  const first=grid.querySelector('.artist-card[data-artist-index="0"]');
+  if(first && !first.classList.contains('artist-empty-slot')){
+   const img=first.querySelector('img');
+   const title=first.querySelector('h3');
+   if(img && title && img.getAttribute('src')==='lee-myungro.jpg' && title.textContent.trim()==='이명로'){
+    first.remove();
+    const cards=grid.querySelectorAll('.artist-card');
+    if(cards.length%4!==0){
+     const empty=document.createElement('div');
+     empty.className='artist-card artist-empty-slot';
+     empty.setAttribute('aria-hidden','true');
+     empty.innerHTML='<img src="logo.png" alt=""><h3>아티스트 준비중</h3><p>새로운 아티스트 영입 진행 중<br>Coming Soon</p>';
+     grid.appendChild(empty);
+    }
+   }
+  }
+ };
+ const start=()=>{
+  const grid=document.getElementById('artistGrid');
+  if(!grid)return;
+  normalizeArtistGrid();
+  new MutationObserver(normalizeArtistGrid).observe(grid,{childList:true});
+ };
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+}
