@@ -66,6 +66,18 @@ textarea{
     height:130px;
 }
 
+.date-time-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.field-note{
+    color:#aaa;
+    font-size:14px;
+    margin-top:6px;
+}
+
 .pin-box{
     margin-top:20px;
     padding:15px;
@@ -149,6 +161,13 @@ button{
     color:#aaa;
     text-align:center;
 }
+
+@media(max-width:700px){
+    .date-time-grid{
+        grid-template-columns:1fr;
+        gap:0;
+    }
+}
 </style>
 </head>
 
@@ -168,7 +187,7 @@ button{
 <tr>
     <th>번호</th>
     <th>행사명</th>
-    <th>날짜</th>
+    <th>날짜 / 시간</th>
     <th>고정</th>
     <th>보기</th>
     <th>수정</th>
@@ -190,8 +209,29 @@ button{
 <label>공연 내용</label>
 <textarea id="eventContent" placeholder="공연 내용을 입력하세요"></textarea>
 
-<label>공연 날짜</label>
-<input type="date" id="eventDate">
+<label>공연 기간</label>
+<div class="date-time-grid">
+    <div>
+        <input type="date" id="eventStartDate">
+        <div class="field-note">공연 시작일</div>
+    </div>
+    <div>
+        <input type="date" id="eventEndDate">
+        <div class="field-note">공연 종료일 · 하루 공연이면 비워두세요</div>
+    </div>
+</div>
+
+<label>공연 시간</label>
+<div class="date-time-grid">
+    <div>
+        <input type="time" id="eventStartTime">
+        <div class="field-note">공연 시작 시간</div>
+    </div>
+    <div>
+        <input type="time" id="eventEndTime">
+        <div class="field-note">공연 종료 시간 · 필요 없으면 비워두세요</div>
+    </div>
+</div>
 
 <label>공연 장소</label>
 <input type="text" id="eventPlace" placeholder="공연 장소를 입력하세요">
@@ -266,7 +306,10 @@ let allEvents = [];
 
 const titleInput = document.getElementById("eventTitle");
 const contentInput = document.getElementById("eventContent");
-const dateInput = document.getElementById("eventDate");
+const startDateInput = document.getElementById("eventStartDate");
+const endDateInput = document.getElementById("eventEndDate");
+const startTimeInput = document.getElementById("eventStartTime");
+const endTimeInput = document.getElementById("eventEndTime");
 const placeInput = document.getElementById("eventPlace");
 const pinnedInput = document.getElementById("eventPinned");
 const saveButton = document.getElementById("saveEvent");
@@ -275,8 +318,50 @@ const eventBody = document.getElementById("eventBody");
 const pagination = document.getElementById("pagination");
 
 
-/* 고정 일정 개수 확인 */
+/* 날짜와 시간을 홈페이지에 보여줄 문구로 변환 */
+function makeDisplayDate(startDate,endDate,startTime,endTime){
 
+    let dateText = startDate || "";
+
+    if(endDate && endDate !== startDate){
+        dateText += " ~ " + endDate;
+    }
+
+    let timeText = "";
+
+    if(startTime){
+        timeText = startTime;
+        if(endTime){
+            timeText += " ~ " + endTime;
+        }
+    }
+
+    if(timeText){
+        dateText += " / " + timeText;
+    }
+
+    return dateText;
+}
+
+
+/* 기존 단일 날짜 자료도 수정할 수 있도록 시작일 자동 인식 */
+function getLegacyStartDate(event){
+
+    if(event.startDate){
+        return event.startDate;
+    }
+
+    const value = String(event.date || event.eventDate || "");
+
+    if(/^\d{4}-\d{2}-\d{2}$/.test(value)){
+        return value;
+    }
+
+    return "";
+}
+
+
+/* 고정 일정 개수 확인 */
 async function getPinnedCount(excludeId = null){
 
     const q = query(
@@ -304,12 +389,14 @@ async function getPinnedCount(excludeId = null){
 
 
 /* 등록 / 수정 */
-
 saveButton.onclick = async function(){
 
     const title = titleInput.value.trim();
     const content = contentInput.value.trim();
-    const date = dateInput.value;
+    const startDate = startDateInput.value;
+    const endDate = endDateInput.value;
+    const startTime = startTimeInput.value;
+    const endTime = endTimeInput.value;
     const place = placeInput.value.trim();
     const pinned = pinnedInput.checked;
 
@@ -318,6 +405,37 @@ saveButton.onclick = async function(){
         titleInput.focus();
         return;
     }
+
+    if(startDate === ""){
+        alert("공연 시작일을 입력하세요.");
+        startDateInput.focus();
+        return;
+    }
+
+    if(endDate && endDate < startDate){
+        alert("공연 종료일은 시작일보다 빠를 수 없습니다.");
+        endDateInput.focus();
+        return;
+    }
+
+    if(endTime && !startTime){
+        alert("공연 종료 시간을 입력하려면 시작 시간도 입력하세요.");
+        startTimeInput.focus();
+        return;
+    }
+
+    if(endTime && startTime && endTime < startTime){
+        alert("공연 종료 시간은 시작 시간보다 빠를 수 없습니다.");
+        endTimeInput.focus();
+        return;
+    }
+
+    const displayDate = makeDisplayDate(
+        startDate,
+        endDate,
+        startTime,
+        endTime
+    );
 
     try{
 
@@ -338,7 +456,11 @@ saveButton.onclick = async function(){
                 {
                     title:title,
                     content:content,
-                    date:date,
+                    date:displayDate,
+                    startDate:startDate,
+                    endDate:endDate,
+                    startTime:startTime,
+                    endTime:endTime,
                     place:place,
                     pinned:pinned,
                     timestamp:Date.now()
@@ -364,7 +486,11 @@ saveButton.onclick = async function(){
                 {
                     title:title,
                     content:content,
-                    date:date,
+                    date:displayDate,
+                    startDate:startDate,
+                    endDate:endDate,
+                    startTime:startTime,
+                    endTime:endTime,
                     place:place,
                     pinned:pinned,
                     timestamp:Date.now()
@@ -390,7 +516,6 @@ saveButton.onclick = async function(){
 
 
 /* 목록 불러오기 */
-
 async function loadEvent(){
 
     try{
@@ -442,7 +567,6 @@ async function loadEvent(){
 
 
 /* 행사 표시 - 한 페이지 5개 */
-
 function renderEvents(){
 
     const start = (currentPage - 1) * PAGE_SIZE;
@@ -477,7 +601,7 @@ function renderEvents(){
 
                 <td>${escapeHtml(event.title || "")}</td>
 
-                <td>${escapeHtml(event.date || "")}</td>
+                <td>${escapeHtml(event.date || event.eventDate || "")}</td>
 
                 <td>
                     ${
@@ -522,7 +646,6 @@ function renderEvents(){
 
 
 /* 페이지 번호 */
-
 function renderPagination(){
 
     const totalPages = Math.ceil(
@@ -596,7 +719,6 @@ window.changePage = function(page){
 
 
 /* 삭제 */
-
 async function deleteEvent(id){
 
     if(!confirm("정말 삭제하시겠습니까?")){
@@ -628,7 +750,6 @@ window.deleteEvent = deleteEvent;
 
 
 /* 보기 */
-
 function viewEvent(id){
 
     window.location.href =
@@ -640,7 +761,6 @@ window.viewEvent = viewEvent;
 
 
 /* 수정 */
-
 async function editEvent(id){
 
     try{
@@ -661,7 +781,12 @@ async function editEvent(id){
 
         titleInput.value = event.title || "";
         contentInput.value = event.content || "";
-        dateInput.value = event.date || "";
+
+        startDateInput.value = getLegacyStartDate(event);
+        endDateInput.value = event.endDate || "";
+        startTimeInput.value = event.startTime || "";
+        endTimeInput.value = event.endTime || "";
+
         placeInput.value = event.place || "";
         pinnedInput.checked = event.pinned === true;
 
@@ -685,7 +810,6 @@ window.editEvent = editEvent;
 
 
 /* 수정 취소 */
-
 cancelButton.onclick = function(){
 
     clearForm();
@@ -694,14 +818,16 @@ cancelButton.onclick = function(){
 
 
 /* 입력창 초기화 */
-
 function clearForm(){
 
     editId = null;
 
     titleInput.value = "";
     contentInput.value = "";
-    dateInput.value = "";
+    startDateInput.value = "";
+    endDateInput.value = "";
+    startTimeInput.value = "";
+    endTimeInput.value = "";
     placeInput.value = "";
     pinnedInput.checked = false;
 
@@ -711,7 +837,6 @@ function clearForm(){
 
 
 /* HTML 문자 처리 */
-
 function escapeHtml(value){
 
     return String(value)
@@ -724,7 +849,6 @@ function escapeHtml(value){
 
 
 /* 처음 실행 */
-
 loadEvent();
 
 </script>
