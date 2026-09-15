@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오디션 지원 | 가수인생활 엔터테인먼트</title>
+<meta name="description" content="가수인생활 엔터테인먼트 공개 오디션 지원 페이지입니다. 트로트, 발라드, K-POP 행사 전문 가수를 모집합니다.">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="artists.css">
+<style>
+.audition-page{background:#0b0b0b;color:#f6f2e9;min-height:calc(100vh - 86px);padding:80px 20px}
+.audition-wrap{max-width:900px;margin:0 auto}
+.audition-title{text-align:center;margin-bottom:45px}
+.audition-title .eyebrow{color:#e0b354;font-weight:900;letter-spacing:.16em;font-size:18px}
+.audition-title h1{color:#f2cf7a;font-size:clamp(36px,5vw,58px);margin:12px 0 18px}
+.audition-title p{color:#c9c1b5;font-size:18px;line-height:1.8}
+.audition-card{background:#151518;border:1px solid #594a2c;border-radius:28px;padding:42px}
+.audition-card h2{color:#f2cf7a;font-size:30px;margin:0 0 24px;text-align:center}
+.info-box{background:#101116;border:1px solid #34343a;border-radius:18px;padding:24px;margin-bottom:30px;color:#c9c1b5;line-height:1.9}
+.info-box strong{color:#f2cf7a}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 22px}
+.field{margin-bottom:20px}
+.field.full{grid-column:1/-1}
+.field label{display:block;color:#f6f2e9;font-weight:900;margin:0 0 8px}
+.field input,.field select,.field textarea{width:100%;background:#0e0f12;color:#fff;border:1px solid #765e31;border-radius:14px;padding:15px;font-size:16px;outline:none}
+.field textarea{min-height:150px;resize:vertical}
+.actions{text-align:center;margin-top:10px}
+.submit-btn{border:2px solid #e0b354;border-radius:999px;background:#e0b354;color:#16120b;padding:15px 34px;font-size:18px;font-weight:900;cursor:pointer}
+.back-btn{display:inline-block;margin-top:14px;color:#f2cf7a;font-weight:800}
+.notice{text-align:center;color:#aaa;font-size:14px;margin-top:20px;line-height:1.7}
+@media(max-width:760px){
+.audition-page{padding:50px 16px}
+.audition-card{padding:27px 20px;border-radius:22px}
+.audition-card h2{font-size:25px}
+.form-grid{grid-template-columns:1fr}
+.field.full{grid-column:auto}
+.audition-title p{font-size:16px}
+}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap head">
+<a class="brand" href="index.html"><img src="logo.png" alt="가수인생활 엔터테인먼트"><span>가수인생활 <b>엔터테인먼트</b></span></a>
+<nav class="desktop-nav">
+<a href="index.html">홈</a>
+<a href="about.html">회사소개</a>
+<a href="partners.html">함께하는 단체</a>
+<a href="artists.html">소속가수</a>
+<a href="news.html">뉴스</a>
+<a href="notice.html">공지</a>
+<a href="schedule.html">일정</a>
+<a href="projects.html">실적</a>
+<a href="resources.html">자료실</a>
+<a href="video.html">영상센터</a>
+<a href="gallery.html">갤러리</a>
+<a href="contact.html">문의</a>
+</nav>
+<button class="menu-btn" id="menuBtn" aria-label="모바일 메뉴 열기" aria-expanded="false">☰</button>
+</div>
+</header>
+<nav class="mobile-nav" id="mobileNav" aria-hidden="true">
+<a href="index.html">홈</a>
+<a href="about.html">회사소개</a>
+<a href="partners.html">함께하는 단체</a>
+<a href="artists.html">소속가수</a>
+<a href="news.html">공식 뉴스</a>
+<a href="notice.html">공지사항</a>
+<a href="schedule.html">행사일정</a>
+<a href="projects.html">주요 실적</a>
+<a href="resources.html">자료실</a>
+<a href="video.html">영상센터</a>
+<a href="gallery.html">갤러리</a>
+<a href="contact.html">문의</a>
+</nav>
+
+<main class="audition-page">
+<div class="audition-wrap">
+<div class="audition-title">
+<div class="eyebrow">AUDITION</div>
+<h1>가수인생활 엔터테인먼트 공개 오디션</h1>
+<p>트로트 · 발라드 · K-POP<br>행사 전문 가수를 모집합니다.</p>
+</div>
+
+<div class="audition-card">
+<h2>오디션 지원서</h2>
+<div class="info-box">
+<strong>지원 안내</strong><br>
+꿈과 열정을 가진 새로운 가수를 기다립니다.<br>
+지원 내용을 작성하여 보내주시면 확인 후 연락드립니다.<br>
+<strong>문의전화 : 010-5070-3175</strong> / <strong>이메일 : myung4002@naver.com</strong>
+</div>
+
+<form id="auditionForm">
+<div class="form-grid">
+<div class="field">
+<label for="name">이름 *</label>
+<input id="name" name="name" type="text" required>
+</div>
+<div class="field">
+<label for="phone">연락처 *</label>
+<input id="phone" name="phone" type="tel" required>
+</div>
+<div class="field">
+<label for="genre">지원 분야 *</label>
+<select id="genre" name="genre" required>
+<option value="">선택해주세요</option>
+<option>트로트</option>
+<option>발라드</option>
+<option>K-POP</option>
+<option>기타</option>
+</select>
+</div>
+<div class="field">
+<label for="career">활동 경력</label>
+<input id="career" name="career" type="text" placeholder="예: 무대공연 3년">
+</div>
+<div class="field full">
+<label for="video">공연·노래 영상 링크</label>
+<input id="video" name="video" type="url" placeholder="유튜브 등 영상 주소가 있다면 입력해주세요.">
+</div>
+<div class="field full">
+<label for="message">자기소개 및 지원 내용 *</label>
+<textarea id="message" name="message" required placeholder="간단한 자기소개와 활동하고 싶은 분야를 작성해주세요."></textarea>
+</div>
+</div>
+<div class="actions">
+<button class="submit-btn" type="submit">오디션 지원서 보내기</button><br>
+<a class="back-btn" href="artists.html">← 소속가수 페이지로 돌아가기</a>
+</div>
+<p class="notice">버튼을 누르면 이메일 작성창이 열립니다. 내용을 확인한 뒤 이메일의 ‘보내기’를 눌러 접수를 완료해주세요.</p>
+</form>
+</div>
+</div>
+</main>
+
+<script>
+const menuBtn=document.getElementById('menuBtn');
+const mobileNav=document.getElementById('mobileNav');
+menuBtn?.addEventListener('click',()=>{
+  const open=mobileNav.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded',String(open));
+  mobileNav.setAttribute('aria-hidden',String(!open));
+});
+mobileNav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  mobileNav.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded','false');
+  mobileNav.setAttribute('aria-hidden','true');
+}));
+
+document.getElementById('auditionForm').addEventListener('submit',(e)=>{
+  e.preventDefault();
+  const f=new FormData(e.target);
+  const subject='[오디션 지원] '+f.get('name');
+  const body=[
+    '가수인생활 엔터테인먼트 오디션 지원서',
+    '',
+    '이름: '+f.get('name'),
+    '연락처: '+f.get('phone'),
+    '지원 분야: '+f.get('genre'),
+    '활동 경력: '+(f.get('career')||''),
+    '영상 링크: '+(f.get('video')||''),
+    '',
+    '자기소개 및 지원 내용:',
+    f.get('message')
+  ].join('\n');
+  window.location.href='mailto:myung4002@naver.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+});
+</script>
+</body>
+</html>
