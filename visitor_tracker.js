@@ -17,6 +17,45 @@ if(page==='index'){
  };
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fixNewsImages);else fixNewsImages();
 }
+if(page==='gallery'){
+ const esc=(v)=>String(v??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));
+ const PAGE_SIZE=15;
+ let currentPage=1;
+ let items=[];
+ const grid=document.getElementById('galleryGrid');
+ const prev=document.getElementById('prevBtn');
+ const next=document.getElementById('nextBtn');
+ const info=document.getElementById('pageInfo');
+ const render=()=>{
+  if(!grid)return;
+  const total=Math.max(1,Math.ceil(items.length/PAGE_SIZE));
+  if(currentPage>total)currentPage=total;
+  const start=(currentPage-1)*PAGE_SIZE;
+  const pageItems=items.slice(start,start+PAGE_SIZE);
+  grid.innerHTML=pageItems.length?pageItems.map(item=>{
+   const g=item.data||{};const title=esc(g.title||'');const place=esc(g.place||'');const date=esc(g.date||'');const content=esc(g.content||'');
+   const image=g.image||'';
+   const imageHTML=image?`<img src="${esc(image)}" alt="${title}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="no-image" style="display:none;">사진 없음</div>`:'<div class="no-image">사진 없음</div>';
+   return `<article class="gallery-card" data-id="${esc(item.id)}" tabindex="0" role="button"><div class="gallery-image">${imageHTML}</div><div class="gallery-info"><div class="gallery-title">사진 제목 : ${title}</div>${place?`<div class="gallery-date">📍 ${place}</div>`:''}${date?`<div class="gallery-date">📅 ${date}</div>`:''}${content?`<div class="gallery-content">${content}</div>`:''}<button type="button" class="detail-btn">자세히 보기</button></div></article>`;
+  }).join(''):'<div style="grid-column:1/-1;text-align:center;padding:70px 20px;color:#888;">등록된 사진이 없습니다.</div>';
+  if(info)info.textContent=currentPage+' / '+total;
+  if(prev)prev.disabled=currentPage<=1;
+  if(next)next.disabled=currentPage>=total;
+ };
+ const load=async()=>{try{
+  const snap=await getDocs(collection(db,'gallery'));
+  items=[];snap.forEach(d=>items.push({id:d.id,data:d.data()}));
+  items.sort((a,b)=>{const ap=a.data.pinned===true?1:0;const bp=b.data.pinned===true?1:0;if(ap!==bp)return bp-ap;return (b.data.timestamp||0)-(a.data.timestamp||0)});
+  currentPage=1;render();
+ }catch(e){console.error('gallery page error',e)}};
+ const bind=()=>{
+  if(prev)prev.onclick=()=>{if(currentPage>1){currentPage--;render();window.scrollTo({top:0,behavior:'smooth'})}};
+  if(next)next.onclick=()=>{const total=Math.max(1,Math.ceil(items.length/PAGE_SIZE));if(currentPage<total){currentPage++;render();window.scrollTo({top:0,behavior:'smooth'})}};
+  if(grid){grid.onclick=event=>{const card=event.target.closest('.gallery-card');if(card)location.href='gallery_view.html?id='+encodeURIComponent(card.dataset.id)};grid.onkeydown=event=>{if(event.key!=='Enter'&&event.key!==' ')return;const card=event.target.closest('.gallery-card');if(!card)return;event.preventDefault();location.href='gallery_view.html?id='+encodeURIComponent(card.dataset.id)}}
+ };
+ const start=()=>{bind();load()};
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+}
 if(page==='projects'){
  const esc=(v)=>String(v??'').replace(/[&<>'\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]));
  const label=(name)=>`<strong style="display:block;color:#FFD700;font-size:18px;font-weight:800;margin-bottom:8px;letter-spacing:.02em">${name}</strong>`;
