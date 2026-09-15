@@ -8,6 +8,15 @@ let visitorId=localStorage.getItem('gse_visitor_id');
 if(!visitorId){visitorId=crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);localStorage.setItem('gse_visitor_id',visitorId)}
 setDoc(doc(db,'visitor_stats',day),{date:day,views:increment(1),['pages.'+page]:increment(1)},{merge:true}).catch(()=>{});
 setDoc(doc(db,'visitor_unique',day+'_'+visitorId),{date:day,visitorId,updatedAt:Date.now()},{merge:true}).catch(()=>{});
+if(page==='index'){
+ const fixNewsImages=()=>{
+  if(document.getElementById('gse-news-image-fix'))return;
+  const style=document.createElement('style');style.id='gse-news-image-fix';
+  style.textContent='#latestNews .news-card img{object-fit:contain !important;background:#1a1a1a;}';
+  document.head.appendChild(style);
+ };
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fixNewsImages);else fixNewsImages();
+}
 if(page==='projects'){
  const esc=(v)=>String(v??'').replace(/[&<>'\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]));
  const label=(name)=>`<strong style="display:block;color:#FFD700;font-size:18px;font-weight:800;margin-bottom:8px;letter-spacing:.02em">${name}</strong>`;
