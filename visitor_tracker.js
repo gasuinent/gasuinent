@@ -63,8 +63,9 @@ if(page==='artists'){
     return aa.registeredAt-bb.registeredAt;
    });
    if(!artistCards.length)return;
+   const alreadyCorrect=artistCards.every((card,index)=>card===cards[index]);
+   if(alreadyCorrect)return;
    reordering=true;
-   const firstArtist=artistCards[0];
    const fragment=document.createDocumentFragment();
    artistCards.forEach(card=>fragment.appendChild(card));
    const firstGridCard=grid.querySelector('.artist-card');
