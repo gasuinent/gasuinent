@@ -42,33 +42,41 @@ if(page==='artists'){
   }
  };
  let reordering=false;
- const movePinnedArtistToTop=async()=>{
+ const sortArtistsByRegistration=async()=>{
   if(reordering)return;
   const grid=document.getElementById('artistGrid');
   if(!grid)return;
   try{
    const snap=await getDocs(collection(db,'artists'));
-   const pinnedNames=new Set();
-   snap.forEach(d=>{const a=d.data();if(a.pinned===true){const name=(a.stageName||a.name||'').trim();if(name)pinnedNames.add(name)}});
-   if(!pinnedNames.size)return;
+   const orderMap=new Map();
+   snap.forEach(d=>{
+    const a=d.data();
+    const name=(a.stageName||a.name||'').trim();
+    if(name)orderMap.set(name,{pinned:a.pinned===true,registeredAt:a.registeredAt||a.timestamp||0});
+   });
    const cards=[...grid.querySelectorAll('.artist-card')].filter(card=>!card.classList.contains('artist-empty-slot'));
-   const pinnedCards=cards.filter(card=>pinnedNames.has((card.querySelector('h3')?.textContent||'').trim()));
-   if(!pinnedCards.length)return;
-   const firstCard=cards[0];
-   if(firstCard && pinnedCards.includes(firstCard))return;
+   const artistCards=cards.filter(card=>orderMap.has((card.querySelector('h3')?.textContent||'').trim()));
+   artistCards.sort((a,b)=>{
+    const aa=orderMap.get((a.querySelector('h3')?.textContent||'').trim());
+    const bb=orderMap.get((b.querySelector('h3')?.textContent||'').trim());
+    if(aa.pinned!==bb.pinned)return aa.pinned?-1:1;
+    return aa.registeredAt-bb.registeredAt;
+   });
+   if(!artistCards.length)return;
    reordering=true;
+   const firstArtist=artistCards[0];
    const fragment=document.createDocumentFragment();
-   pinnedCards.forEach(card=>fragment.appendChild(card));
-   const firstVisible=grid.querySelector('.artist-card');
-   if(firstVisible)grid.insertBefore(fragment,firstVisible);else grid.appendChild(fragment);
-  }catch(e){console.error('artist pinned order error',e)}finally{reordering=false}
+   artistCards.forEach(card=>fragment.appendChild(card));
+   const firstGridCard=grid.querySelector('.artist-card');
+   if(firstGridCard)grid.insertBefore(fragment,firstGridCard);else grid.appendChild(fragment);
+  }catch(e){console.error('artist registration order error',e)}finally{reordering=false}
  };
  const start=()=>{
   const grid=document.getElementById('artistGrid');
   if(!grid)return;
   normalizeArtistGrid();
-  movePinnedArtistToTop();
-  const observer=new MutationObserver(()=>{normalizeArtistGrid();movePinnedArtistToTop()});
+  sortArtistsByRegistration();
+  const observer=new MutationObserver(()=>{normalizeArtistGrid();sortArtistsByRegistration()});
   observer.observe(grid,{childList:true});
  };
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
