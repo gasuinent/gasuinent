@@ -9,7 +9,7 @@ if(!visitorId){visitorId=crypto.randomUUID?crypto.randomUUID():Date.now().toStri
 setDoc(doc(db,'visitor_stats',day),{date:day,views:increment(1),['pages.'+page]:increment(1)},{merge:true}).catch(()=>{});
 setDoc(doc(db,'visitor_unique',day+'_'+visitorId),{date:day,visitorId,updatedAt:Date.now()},{merge:true}).catch(()=>{});
 if(page==='projects'){
- const esc=(v)=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]));
+ const esc=(v)=>String(v??'').replace(/[&<>'\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]));
  const label=(name)=>`<strong style="display:block;color:#FFD700;font-size:18px;font-weight:800;margin-bottom:8px;letter-spacing:.02em">${name}</strong>`;
  const loadProjects=async()=>{try{
   const snap=await getDocs(collection(db,'projects'));const items=[];snap.forEach(d=>items.push({id:d.id,...d.data()}));
@@ -41,11 +41,35 @@ if(page==='artists'){
    }
   }
  };
+ let reordering=false;
+ const movePinnedArtistToTop=async()=>{
+  if(reordering)return;
+  const grid=document.getElementById('artistGrid');
+  if(!grid)return;
+  try{
+   const snap=await getDocs(collection(db,'artists'));
+   const pinnedNames=new Set();
+   snap.forEach(d=>{const a=d.data();if(a.pinned===true){const name=(a.stageName||a.name||'').trim();if(name)pinnedNames.add(name)}});
+   if(!pinnedNames.size)return;
+   const cards=[...grid.querySelectorAll('.artist-card')].filter(card=>!card.classList.contains('artist-empty-slot'));
+   const pinnedCards=cards.filter(card=>pinnedNames.has((card.querySelector('h3')?.textContent||'').trim()));
+   if(!pinnedCards.length)return;
+   const firstCard=cards[0];
+   if(firstCard && pinnedCards.includes(firstCard))return;
+   reordering=true;
+   const fragment=document.createDocumentFragment();
+   pinnedCards.forEach(card=>fragment.appendChild(card));
+   const firstVisible=grid.querySelector('.artist-card');
+   if(firstVisible)grid.insertBefore(fragment,firstVisible);else grid.appendChild(fragment);
+  }catch(e){console.error('artist pinned order error',e)}finally{reordering=false}
+ };
  const start=()=>{
   const grid=document.getElementById('artistGrid');
   if(!grid)return;
   normalizeArtistGrid();
-  new MutationObserver(normalizeArtistGrid).observe(grid,{childList:true});
+  movePinnedArtistToTop();
+  const observer=new MutationObserver(()=>{normalizeArtistGrid();movePinnedArtistToTop()});
+  observer.observe(grid,{childList:true});
  };
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 }
