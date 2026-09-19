@@ -357,7 +357,11 @@ function normalizeArtist(item) {
 
         shortIntro: a.shortIntro || "",
 
-        date: a.date || ""
+        date: a.date || "",
+
+        pinned: a.pinned === true,
+
+        registeredAt: Number(a.registeredAt || a.timestamp || 0)
 
     };
 
@@ -625,7 +629,14 @@ document.addEventListener("DOMContentLoaded", () => {
         snapshot => {
 
             firebaseArtists =
-                snapshot.docs.map(normalizeArtist);
+                snapshot.docs
+                    .map(normalizeArtist)
+                    .sort((a, b) => {
+                        if (a.pinned !== b.pinned) {
+                            return a.pinned ? -1 : 1;
+                        }
+                        return a.registeredAt - b.registeredAt;
+                    });
 
             renderArtists();
 
